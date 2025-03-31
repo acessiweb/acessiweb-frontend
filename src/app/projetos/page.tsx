@@ -3,7 +3,7 @@
 import { ButtonDefault } from "@/common/styles/button";
 import { Heading1 } from "@/common/styles/heading";
 import SecondPage from "@/components/second-page";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const ProjectsWrapper = styled.div`
@@ -39,6 +39,10 @@ const NotFoundWrapper = styled.div`
 export default function Projects() {
   const [projects, setProjects] = useState([]);
   const [isSecPageOpen, setIsSecPageOpen] = useState(false);
+
+  useEffect(() => {
+    setProjects([]);
+  }, []);
 
   return (
     <div>
