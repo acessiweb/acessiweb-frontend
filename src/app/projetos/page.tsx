@@ -1,8 +1,10 @@
 "use client";
 
-import { ButtonDefault } from "@/common/styles/button";
 import { Heading1 } from "@/common/styles/heading";
+import CardList from "@/components/card-list";
 import SecondPage from "@/components/second-page";
+import { getProjects } from "@/data/projects";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -18,30 +20,13 @@ const ProjectsWrapperHeader = styled.div`
   column-gap: ${(props) => props.theme.spacing.sm};
 `;
 
-const NotFoundWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 350px;
-  margin: 0 auto;
-  row-gap: ${(props) => props.theme.spacing.sm};
-
-  > span {
-    font-weight: ${(props) => props.theme.fontWeight.semibold};
-  }
-
-  > img {
-    object-fit: contain;
-    width: 100%;
-  }
-`;
-
 export default function Projects() {
   const [projects, setProjects] = useState([]);
   const [isSecPageOpen, setIsSecPageOpen] = useState(false);
 
   useEffect(() => {
-    setProjects([]);
+    const projs = getProjects();
+    setProjects(projs ? JSON.parse(projs) : []);
   }, []);
 
   return (
@@ -49,20 +34,14 @@ export default function Projects() {
       <ProjectsWrapper>
         <ProjectsWrapperHeader>
           <Heading1>Meus projetos</Heading1>
-          <ButtonDefault onClick={() => setIsSecPageOpen(true)}>
+          <Link className="btn-link" href="/projetos/cadastrar">
             Cadastrar
-          </ButtonDefault>
+          </Link>
         </ProjectsWrapperHeader>
-        <div>
-          {projects.length > 0 ? (
-            <div></div>
-          ) : (
-            <NotFoundWrapper>
-              <span>Oops! Você ainda não possui projetos.</span>
-              <img src="acessibility-1.png" />
-            </NotFoundWrapper>
-          )}
-        </div>
+        <CardList
+          data={projects}
+          errorMsg="Oops! Você ainda não possui projetos."
+        />
       </ProjectsWrapper>
       {isSecPageOpen && (
         <SecondPage closeSecPage={() => setIsSecPageOpen(false)}></SecondPage>

@@ -1,7 +1,10 @@
 "use client";
 
+import { getCart, setCart } from "@/common/localStorage";
 import Header from "@/components/header";
 import AuthProvider from "@/context/auth";
+import { getProjects, setProjects } from "@/data/projects";
+import { useEffect } from "react";
 import styled, { ThemeProvider } from "styled-components";
 
 const theme = {
@@ -48,6 +51,28 @@ const Wrapper = styled.div`
     color: ${(props) => props.theme.colors.grayDefault};
   }
 
+  .default-link {
+    padding: ${(props) => props.theme.spacing.sm};
+    border-radius: ${(props) => props.theme.borderRadius.small};
+
+    &:hover {
+      background-color: ${(props) => props.theme.colors.lightPurpleDefault};
+    }
+  }
+
+  .btn-link {
+    background-color: transparent;
+    border: 1px solid ${(props) => props.theme.colors.grayDefault};
+    border-radius: ${(props) => props.theme.borderRadius.medium};
+    padding: ${(props) => props.theme.spacing.sm};
+    cursor: pointer;
+    font-size: ${(props) => props.theme.fontSize.small};
+
+    &:hover {
+      background-color: ${(props) => props.theme.colors.lightPurpleDefault};
+    }
+  }
+
   > main {
     display: flex;
     flex: 1;
@@ -64,6 +89,23 @@ const Wrapper = styled.div`
 `;
 
 export default function App({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    const cart = getCart();
+    const projects = getProjects();
+
+    if (!cart) {
+      setCart({
+        name: "",
+        desc: "",
+        guidelines: [],
+      });
+    }
+
+    if (!projects) {
+      setProjects([]);
+    }
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <AuthProvider>

@@ -3,6 +3,8 @@ import Link from "next/link";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Person from "@mui/icons-material/Person";
 import styled from "styled-components";
+import { usePathname } from "next/navigation";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 const HeaderWrapper = styled.header`
   display: flex;
@@ -16,15 +18,6 @@ const HeaderWrapper = styled.header`
     font-weight: ${(props) => props.theme.fontWeight.semibold};
     font-size: ${(props) => props.theme.fontSize.medium};
   }
-
-  a {
-    padding: ${(props) => props.theme.spacing.sm};
-    border-radius: ${(props) => props.theme.borderRadius.small};
-  }
-
-  a:hover {
-    background-color: ${(props) => props.theme.colors.lightPurpleDefault};
-  }
 `;
 
 const List = styled.ul`
@@ -34,34 +27,67 @@ const List = styled.ul`
 `;
 
 export default function Header() {
-  const { accessType, username } = useSession();
+  const pathname = usePathname();
+  const { username } = useSession();
 
-  if (accessType === "USER") {
+  if (!pathname.includes("admin")) {
     return (
       <HeaderWrapper>
         <span>Olá {username}</span>
         <List>
           <li>
-            <Link href="/">Tela inicial</Link>
+            <Link className="default-link" href="/">
+              Tela inicial
+            </Link>
           </li>
           <li>
-            <Link href="/projetos">Meus projetos</Link>
+            <Link className="default-link" href="/projetos">
+              Meus projetos
+            </Link>
           </li>
           <li>
-            <Link href="/solicitacoes">Minhas solicitações</Link>
+            <Link className="default-link" href="/solicitacoes">
+              Minhas solicitações
+            </Link>
           </li>
         </List>
         <List>
           <li>
-            <ShoppingCartIcon />
+            <Link className="default-link" href="/projetos/cadastrar">
+              <ShoppingCartIcon />
+            </Link>
           </li>
           <li>
-            <Person />
+            <Link className="default-link" href="/config/perfil">
+              <Person />
+            </Link>
           </li>
         </List>
       </HeaderWrapper>
     );
   }
 
-  return <HeaderWrapper></HeaderWrapper>;
+  return (
+    <HeaderWrapper>
+      <List>
+        <li>
+          <Link className="default-link" href="/admin">
+            Tela inicial
+          </Link>
+        </li>
+        <li>
+          <Link className="default-link" href="/admin/solicitacoes">
+            Solicitações
+          </Link>
+        </li>
+      </List>
+      <List>
+        <li>
+          <Link className="default-link" href="/admin/config">
+            <SettingsIcon />
+          </Link>
+        </li>
+      </List>
+    </HeaderWrapper>
+  );
 }
