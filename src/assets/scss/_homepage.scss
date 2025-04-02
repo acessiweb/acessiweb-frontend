@@ -1,0 +1,8 @@
+@use "var";
+
+.homepage {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  row-gap: var.$space-lg;
+}

@@ -1,0 +1,40 @@
+@use "var";
+
+%input-default {
+  border: 1px solid var.$grayDefault;
+  border-radius: var.$border-r-medium;
+  padding: var.$space-md;
+  outline: none;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  row-gap: var.$space-sm;
+
+  * {
+    font-size: var.$fs-medium;
+
+    &::placeholder {
+      font-size: var.$fs-medium;
+    }
+  }
+}
+
+.input-transparent {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  padding: var.$space-sm;
+  width: min-content;
+
+  &:hover {
+    border: 1px solid var.$grayDefault;
+    border-radius: var.$border-r-medium;
+  }
+}
+
+.textarea {
+  @extend %input-default;
+}

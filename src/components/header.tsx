@@ -2,29 +2,8 @@ import { useSession } from "@/context/auth";
 import Link from "next/link";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Person from "@mui/icons-material/Person";
-import styled from "styled-components";
 import { usePathname } from "next/navigation";
 import SettingsIcon from "@mui/icons-material/Settings";
-
-const HeaderWrapper = styled.header`
-  display: flex;
-  border: 1px solid ${(props) => props.theme.colors.grayDefault};
-  padding: ${(props) => props.theme.spacing.md};
-  border-radius: ${(props) => props.theme.borderRadius.small};
-  align-items: center;
-  justify-content: space-between;
-
-  > span {
-    font-weight: ${(props) => props.theme.fontWeight.semibold};
-    font-size: ${(props) => props.theme.fontSize.medium};
-  }
-`;
-
-const List = styled.ul`
-  display: flex;
-  list-style: none;
-  column-gap: ${(props) => props.theme.spacing.lg};
-`;
 
 export default function Header() {
   const pathname = usePathname();
@@ -32,9 +11,9 @@ export default function Header() {
 
   if (!pathname.includes("admin")) {
     return (
-      <HeaderWrapper>
+      <header className="header">
         <span>Olá {username}</span>
-        <List>
+        <ul>
           <li>
             <Link className="default-link" href="/">
               Tela inicial
@@ -50,8 +29,8 @@ export default function Header() {
               Minhas solicitações
             </Link>
           </li>
-        </List>
-        <List>
+        </ul>
+        <ul>
           <li>
             <Link className="default-link" href="/projetos/cadastrar">
               <ShoppingCartIcon />
@@ -62,14 +41,14 @@ export default function Header() {
               <Person />
             </Link>
           </li>
-        </List>
-      </HeaderWrapper>
+        </ul>
+      </header>
     );
   }
 
   return (
-    <HeaderWrapper>
-      <List>
+    <header className="header">
+      <ul>
         <li>
           <Link className="default-link" href="/admin">
             Tela inicial
@@ -80,14 +59,14 @@ export default function Header() {
             Solicitações
           </Link>
         </li>
-      </List>
-      <List>
+      </ul>
+      <ul>
         <li>
           <Link className="default-link" href="/admin/config">
             <SettingsIcon />
           </Link>
         </li>
-      </List>
-    </HeaderWrapper>
+      </ul>
+    </header>
   );
 }

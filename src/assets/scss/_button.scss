@@ -1,0 +1,22 @@
+@use "var";
+
+%button {
+  background-color: transparent;
+  border: 1px solid var.$grayDefault;
+  border-radius: var.$border-r-medium;
+  padding: var.$space-sm;
+  cursor: pointer;
+  font-size: var.$fs-small;
+
+  &:hover {
+    background-color: var.$lightPurpleDefault;
+  }
+}
+
+.btn-default {
+  @extend %button;
+}
+
+.btn-link-default {
+  @extend %button;
+}

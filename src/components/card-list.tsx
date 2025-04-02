@@ -1,35 +1,4 @@
-import styled from "styled-components";
 import Card from "./card";
-
-const ListWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex: 1;
-  gap: ${(props) => props.theme.spacing.md};
-
-  > div {
-    display: flex;
-    flex: 1;
-  }
-`;
-
-const NotFoundWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 350px;
-  margin: 0 auto;
-  row-gap: ${(props) => props.theme.spacing.sm};
-
-  > span {
-    font-weight: ${(props) => props.theme.fontWeight.semibold};
-  }
-
-  > img {
-    object-fit: contain;
-    width: 100%;
-  }
-`;
 
 type CardListType = {
   data: {
@@ -59,7 +28,7 @@ export default function CardList({
 }: CardListType) {
   if (data.length > 0) {
     return (
-      <ListWrapper>
+      <div className="card-list">
         {data.map((dt, i) => (
           <div key={i}>
             <Card
@@ -75,14 +44,14 @@ export default function CardList({
             />
           </div>
         ))}
-      </ListWrapper>
+      </div>
     );
   }
 
   return (
-    <NotFoundWrapper>
+    <div className="card-list-not-found">
       <span>{errorMsg}</span>
       <img src="acessibility-1.png" />
-    </NotFoundWrapper>
+    </div>
   );
 }

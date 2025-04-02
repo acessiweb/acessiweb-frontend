@@ -1,37 +1,8 @@
 "use client";
 
-import styled from "styled-components";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
-
-const CardWrapper = styled.article`
-  display: flex;
-  flex: 1;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: auto;
-  background-color: ${(props) => props.theme.colors.lightPurpleDefault};
-  padding: ${(props) => props.theme.spacing.sm};
-  border-radius: ${(props) => props.theme.borderRadius.medium};
-
-  &:hover {
-    background-color: rgba(222, 222, 222, 0.7);
-  }
-
-  button {
-    background-color: transparent;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    padding: ${(props) => props.theme.spacing.sm};
-
-    &:hover {
-      border-radius: ${(props) => props.theme.borderRadius.small};
-      background-color: ${(props) => props.theme.colors.lightPurpleDefault};
-    }
-  }
-`;
 
 type CardType = {
   id: number;
@@ -57,7 +28,7 @@ export default function Card({
   onUpdate,
 }: CardType) {
   return (
-    <CardWrapper>
+    <article className="card">
       <span>{mainText}</span>
       {secondaryText && <span>{secondaryText}</span>}
       {hasAdd && (
@@ -80,6 +51,6 @@ export default function Card({
           </button>
         </div>
       )}
-    </CardWrapper>
+    </article>
   );
 }

@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sass": "sass src/assets/scss/main.scss src/assets/css/index.css --watch",
+    "sass-migrate": "npx sass-migrator module --migrate-deps src/assets/scss/main.scss"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -16,7 +18,8 @@
     "next": "15.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "styled-components": "^6.1.16"
+    "sass": "^1.86.1",
+    "sass-migrator": "^2.3.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

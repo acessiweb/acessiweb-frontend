@@ -1,0 +1,16 @@
+@mixin heading($font-size, $font-weight) {
+  font-size: $font-size;
+  font-weight: $font-weight;
+}
+
+.heading-1 {
+  @include heading(2rem, 900);
+}
+
+.heading-2 {
+  @include heading(1.4rem, 700);
+}
+
+.heading-3 {
+  @include heading(1rem, 600);
+}

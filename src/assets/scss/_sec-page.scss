@@ -1,0 +1,8 @@
+@use "var";
+
+.sec-page {
+  display: flex;
+  flex: 1;
+  border-left: 1px solid var.$grayDefault;
+  padding-left: var.$space-sm;
+}

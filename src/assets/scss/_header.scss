@@ -1,0 +1,21 @@
+@use "var";
+
+.header {
+  display: flex;
+  border: 1px solid var.$grayDefault;
+  padding: var.$space-md;
+  border-radius: var.$border-r-small;
+  align-items: center;
+  justify-content: space-between;
+
+  > span {
+    font-weight: var.$semibold;
+    font-size: var.$fs-medium;
+  }
+
+  ul {
+    display: flex;
+    list-style: none;
+    column-gap: var.$space-lg;
+  }
+}

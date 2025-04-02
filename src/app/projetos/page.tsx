@@ -1,24 +1,10 @@
 "use client";
 
-import { Heading1 } from "@/common/styles/heading";
 import CardList from "@/components/card-list";
 import SecondPage from "@/components/second-page";
 import { getProjects } from "@/data/projects";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import styled from "styled-components";
-
-const ProjectsWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  row-gap: ${(props) => props.theme.spacing.md};
-`;
-
-const ProjectsWrapperHeader = styled.div`
-  display: flex;
-  column-gap: ${(props) => props.theme.spacing.sm};
-`;
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
@@ -31,18 +17,18 @@ export default function Projects() {
 
   return (
     <div>
-      <ProjectsWrapper>
-        <ProjectsWrapperHeader>
-          <Heading1>Meus projetos</Heading1>
-          <Link className="btn-link" href="/projetos/cadastrar">
+      <div className="projects">
+        <div className="projects__header">
+          <h1 className="heading-1">Meus projetos</h1>
+          <Link className="btn-link-default" href="/projetos/cadastrar">
             Cadastrar
           </Link>
-        </ProjectsWrapperHeader>
+        </div>
         <CardList
           data={projects}
           errorMsg="Oops! Você ainda não possui projetos."
         />
-      </ProjectsWrapper>
+      </div>
       {isSecPageOpen && (
         <SecondPage closeSecPage={() => setIsSecPageOpen(false)}></SecondPage>
       )}
