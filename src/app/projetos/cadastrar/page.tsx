@@ -92,7 +92,9 @@ export default function AddProject() {
             setName(e.target.value)
           }
         />
-        <p className="form-error-msg">{errors.name?.message}</p>
+        {errors.name?.message && (
+          <p className="form-error-msg">{errors.name?.message}</p>
+        )}
         <textarea
           {...register("description")}
           className="textarea"
