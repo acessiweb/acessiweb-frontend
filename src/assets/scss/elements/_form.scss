@@ -28,10 +28,15 @@
   border: none;
   padding: var.$space-sm;
   width: min-content;
+  transition: width ease-in 10s;
 
   &:hover {
     border: 1px solid var.$grayDefault;
     border-radius: var.$border-r-medium;
+  }
+
+  &:focus {
+    width: auto;
   }
 }
 

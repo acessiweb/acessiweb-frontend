@@ -83,42 +83,47 @@ export default function AddProject() {
   return (
     <div className="add-project">
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
-        <input
-          {...register("name")}
-          className="input-transparent"
-          value={name}
-          placeholder="Acessibiweb"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setName(e.target.value)
-          }
-        />
-        {errors.name?.message && (
-          <p className="form-error-msg">{errors.name?.message}</p>
-        )}
-        <textarea
-          {...register("description")}
-          className="textarea"
-          value={desc}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-            setDesc(e.target.value)
-          }
-          rows={6}
-          placeholder="Centralizar e organizar diretrizes de acessibilidade digital em uma plataforma acessível e intuitiva, facilitando o acesso a informações essenciais e incentivando a criação de experiências digitais mais inclusivas e alinhadas aos padrões de acessibilidade digital."
-        />
-        <div className="guidelines">
-          <div>
-            <h3 className="heading-3">Diretrizes selecionadas</h3>
-            <Link className="btn-link-default" href="/">
-              +
-            </Link>
+        <div className="add-project__wrapper-left">
+          <div className="add-project__wrapper-left__left">
+            <input
+              {...register("name")}
+              className="input-transparent"
+              value={name}
+              maxLength={150}
+              placeholder="Acessibiweb"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setName(e.target.value)
+              }
+            />
+            {errors.name?.message && (
+              <p className="form-error-msg">{errors.name?.message}</p>
+            )}
+            <textarea
+              {...register("description")}
+              className="textarea"
+              value={desc}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                setDesc(e.target.value)
+              }
+              rows={11}
+              placeholder="Centralizar e organizar diretrizes de acessibilidade digital em uma plataforma acessível e intuitiva, facilitando o acesso a informações essenciais e incentivando a criação de experiências digitais mais inclusivas e alinhadas aos padrões de acessibilidade digital."
+            />
           </div>
-          <CardList
-            data={guidelines}
-            hasDelete={true}
-            onDelete={deleteGuidelineFromProject}
-            errorMsg="Você ainda não incluiu diretrizes no seu projeto"
-            showErrorMsgImage={false}
-          />
+          <div className="add-project__wrapper-left__guidelines">
+            <div className="add-project__wrapper-left__guidelines__header">
+              <h3 className="heading-3">Diretrizes selecionadas</h3>
+              <Link className="btn-link-default" href="/">
+                +
+              </Link>
+            </div>
+            <CardList
+              data={guidelines}
+              hasDelete={true}
+              onDelete={deleteGuidelineFromProject}
+              errorMsg="Você ainda não incluiu diretrizes no seu projeto"
+              showErrorMsgImage={false}
+            />
+          </div>
         </div>
         <div style={{ margin: "30px auto 0" }}>
           <button type="submit" className="btn-default">
