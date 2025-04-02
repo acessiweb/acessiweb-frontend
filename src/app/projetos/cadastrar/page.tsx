@@ -3,8 +3,13 @@
 import { getCart, setCart } from "@/common/localStorage";
 import CardList from "@/components/card-list";
 import { addProject } from "@/data/projects";
+import createProjectSchema, {
+  type AddProject,
+} from "@/schemas/projects/add-project";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 
 export default function AddProject() {
   const [name, setName] = useState("");
@@ -12,6 +17,14 @@ export default function AddProject() {
   const [guidelines, setGuidelines] = useState<{ id: number; name: string }[]>(
     []
   );
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(createProjectSchema),
+  });
 
   useEffect(() => {
     const cart = getCart();
@@ -58,19 +71,20 @@ export default function AddProject() {
     }
   };
 
-  const createProject = () => {
+  const onSubmit = (data: AddProject) => {
     addProject({
       userId: 1,
-      name,
-      desc,
+      name: data.name,
+      desc: data.description,
       guidelines,
     });
   };
 
   return (
     <div className="add-project">
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <input
+          {...register("name")}
           className="input-transparent"
           value={name}
           placeholder="Acessibiweb"
@@ -78,7 +92,9 @@ export default function AddProject() {
             setName(e.target.value)
           }
         />
+        <p className="form-error-msg">{errors.name?.message}</p>
         <textarea
+          {...register("description")}
           className="textarea"
           value={desc}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -87,27 +103,27 @@ export default function AddProject() {
           rows={6}
           placeholder="Centralizar e organizar diretrizes de acessibilidade digital em uma plataforma acessível e intuitiva, facilitando o acesso a informações essenciais e incentivando a criação de experiências digitais mais inclusivas e alinhadas aos padrões de acessibilidade digital."
         />
-      </form>
-      <div>
-        <div>
-          <h3 className="heading-3">Diretrizes selecionadas</h3>
-          <Link className="btn-link-default" href="/">
-            +
-          </Link>
+        <div className="guidelines">
+          <div>
+            <h3 className="heading-3">Diretrizes selecionadas</h3>
+            <Link className="btn-link-default" href="/">
+              +
+            </Link>
+          </div>
+          <CardList
+            data={guidelines}
+            hasDelete={true}
+            onDelete={deleteGuidelineFromProject}
+            errorMsg="Você ainda não incluiu diretrizes no seu projeto"
+            showErrorMsgImage={false}
+          />
         </div>
-        <CardList
-          data={guidelines}
-          hasDelete={true}
-          onDelete={deleteGuidelineFromProject}
-          errorMsg="Você ainda não incluiu diretrizes no seu projeto"
-          showErrorMsgImage={false}
-        />
-      </div>
-      <div style={{ margin: "30px auto 0" }}>
-        <button className="btn-default" onClick={createProject}>
-          Criar
-        </button>
-      </div>
+        <div style={{ margin: "30px auto 0" }}>
+          <button type="submit" className="btn-default">
+            Criar
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

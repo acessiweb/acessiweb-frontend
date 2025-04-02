@@ -38,3 +38,13 @@
 .textarea {
   @extend %input-default;
 }
+
+.form-error-msg {
+  color: var.$red;
+  font-size: var.$fs-x-small;
+  text-align: center;
+  border: 2px solid var.$red;
+  margin: 0 auto;
+  padding: var.$space-sm;
+  border-radius: var.$border-r-small;
+}
