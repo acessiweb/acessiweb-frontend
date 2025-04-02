@@ -68,7 +68,7 @@ export default function AddProject() {
   };
 
   return (
-    <div>
+    <div className="add-project">
       <form className="form">
         <input
           className="input-transparent"

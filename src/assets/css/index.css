@@ -217,4 +217,30 @@ body {
   column-gap: 0.7rem;
 }
 
+.add-project {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  flex: 1;
+}
+
+.add-project form > input:nth-child(1) {
+  margin: 0 auto;
+}
+
+.add-project > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.1rem;
+  margin-top: 1.1rem;
+}
+
+.add-project > div > div:nth-child(1) {
+  display: flex;
+  align-items: center;
+  column-gap: 0.7rem;
+}
+
 /*# sourceMappingURL=index.css.map */

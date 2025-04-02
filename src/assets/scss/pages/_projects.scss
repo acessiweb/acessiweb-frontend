@@ -1,0 +1,13 @@
+@use "../var";
+
+.projects {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  row-gap: var.$space-md;
+
+  &__header {
+    display: flex;
+    column-gap: var.$space-sm;
+  }
+}
