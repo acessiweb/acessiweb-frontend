@@ -53,8 +53,10 @@ export default function CardList({
     <div className="card-list-not-found">
       <span>{errorMsg}</span>
       <Image
-        src="acessibility-1.png"
-        alt="Desenho de um homem cadeirante e uma mulher sentada em cima de livros"
+        src="https://ik.imagekit.io/6vdq2o9vy/acessibiweb/acessibility-1"
+        alt="Desenho de um homem em cadeira de rodas e uma mulher sentada em cima de livros"
+        width="1000"
+        height="100"
       />
     </div>
   );
