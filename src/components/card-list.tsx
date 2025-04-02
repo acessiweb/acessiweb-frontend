@@ -1,4 +1,5 @@
 import Card from "./card";
+import Image from "next/image";
 
 type CardListType = {
   data: {
@@ -51,7 +52,10 @@ export default function CardList({
   return (
     <div className="card-list-not-found">
       <span>{errorMsg}</span>
-      <img src="acessibility-1.png" />
+      <Image
+        src="acessibility-1.png"
+        alt="Desenho de um homem cadeirante e uma mulher sentada em cima de livros"
+      />
     </div>
   );
 }
