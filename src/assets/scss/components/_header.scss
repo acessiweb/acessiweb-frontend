@@ -3,7 +3,7 @@
 .header {
   display: flex;
   border: 1px solid var.$grayDefault;
-  padding: var.$space-md;
+  padding: var.$space-sm var.$space-lg;
   border-radius: var.$border-r-small;
   align-items: center;
   justify-content: space-between;
@@ -16,6 +16,13 @@
   ul {
     display: flex;
     list-style: none;
-    column-gap: var.$space-lg;
+
+    &:first-of-type {
+      column-gap: var.$space-lg;
+    }
+
+    &:nth-of-type(2) {
+      column-gap: var.$space-sm;
+    }
   }
 }

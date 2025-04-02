@@ -100,6 +100,7 @@ export default function AddProject() {
           hasDelete={true}
           onDelete={deleteGuidelineFromProject}
           errorMsg="Você ainda não incluiu diretrizes no seu projeto"
+          showErrorMsgImage={false}
         />
       </div>
       <div style={{ margin: "30px auto 0" }}>

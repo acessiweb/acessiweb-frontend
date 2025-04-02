@@ -35,6 +35,8 @@ body {
   }
 
   .default-link {
+    display: flex;
+    align-items: center;
     padding: var.$space-sm;
     border-radius: var.$border-r-small;
 
@@ -55,6 +57,11 @@ body {
       flex: 1;
       column-gap: var.$space-md;
     }
+  }
+
+  svg {
+    width: 1.8rem;
+    height: 1.8rem;
   }
 }
 

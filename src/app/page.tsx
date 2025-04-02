@@ -19,7 +19,11 @@ export default function Home() {
       const cartParsed = JSON.parse(cart);
       const guides = [...cartParsed.guidelines];
 
-      guides.push({ id, name });
+      const guideAlreadyExists = guides.find((guide) => guide.id === id);
+
+      if (!guideAlreadyExists) {
+        guides.push({ id, name });
+      }
 
       setCart({
         ...cartParsed,

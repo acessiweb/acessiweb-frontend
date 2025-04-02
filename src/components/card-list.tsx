@@ -14,6 +14,7 @@ type CardListType = {
   onDelete?: (id: number) => void;
   onAdd?: (id: number, name: string) => void;
   errorMsg: string;
+  showErrorMsgImage?: boolean;
 };
 
 export default function CardList({
@@ -26,6 +27,7 @@ export default function CardList({
   onDelete,
   onUpdate,
   errorMsg,
+  showErrorMsgImage = true,
 }: CardListType) {
   if (data.length > 0) {
     return (
@@ -52,12 +54,14 @@ export default function CardList({
   return (
     <div className="card-list-not-found">
       <span>{errorMsg}</span>
-      <Image
-        src="https://ik.imagekit.io/6vdq2o9vy/acessibiweb/acessibility-1"
-        alt="Desenho de um homem em cadeira de rodas e uma mulher sentada em cima de livros"
-        width="1000"
-        height="100"
-      />
+      {showErrorMsgImage && (
+        <Image
+          src="https://ik.imagekit.io/6vdq2o9vy/acessibiweb/acessibility-1"
+          alt="Desenho de um homem em cadeira de rodas e uma mulher sentada em cima de livros"
+          width="1000"
+          height="100"
+        />
+      )}
     </div>
   );
 }

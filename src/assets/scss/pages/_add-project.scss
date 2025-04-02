@@ -26,4 +26,17 @@
       column-gap: var.$space-sm;
     }
   }
+
+  .card-list-not-found {
+    margin: 0;
+    max-width: fit-content;
+
+    > span {
+      font-weight: var.$light;
+    }
+  }
+
+  .btn-link-default {
+    font-weight: var.$bold;
+  }
 }
