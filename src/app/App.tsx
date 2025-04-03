@@ -1,35 +1,23 @@
 "use client";
 
-import { getCart, setCart } from "@/common/localStorage";
 import Header from "@/components/header";
+import Push from "@/components/push";
 import AuthProvider from "@/context/auth";
-import { getProjects, setProjects } from "@/data/projects";
-import { useEffect } from "react";
+import CartProvider from "@/context/cart";
+import { usePush } from "@/context/push";
 
 export default function App({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    const cart = getCart();
-    const projects = getProjects();
-
-    if (!cart) {
-      setCart({
-        name: "",
-        desc: "",
-        guidelines: [],
-      });
-    }
-
-    if (!projects) {
-      setProjects([]);
-    }
-  }, []);
+  const { showPush } = usePush();
 
   return (
-    <AuthProvider>
-      <div id="app">
-        <Header />
-        <main>{children}</main>
-      </div>
-    </AuthProvider>
+    <div id="app">
+      <AuthProvider>
+        <CartProvider>
+          <Header />
+          <main>{children}</main>
+          {showPush && <Push />}
+        </CartProvider>
+      </AuthProvider>
+    </div>
   );
 }

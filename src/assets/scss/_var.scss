@@ -3,6 +3,7 @@ $grayDefault: #1c1917;
 $lightPurpleDefault: #dedede;
 $pageColor: #f8f8f8;
 $red: #dc2626;
+$lightPurpleDefaultLighter: rgba(222, 222, 222, 0.7);
 
 //font weight
 $light: 300;
@@ -28,3 +29,8 @@ $space-xl: 3rem;
 $border-r-small: 5px;
 $border-r-medium: 10px;
 $border-r-large: 20px;
+
+//effects
+$shadow-small: 2px 2px 3px $grayDefault;
+// $shadow-medium: 2px 1px 3px $grayDefault;
+// $shadow-large: 2px 1px 3px $grayDefault;

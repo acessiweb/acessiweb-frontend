@@ -9,21 +9,9 @@
   background-color: var.$lightPurpleDefault;
   padding: var.$space-sm;
   border-radius: var.$border-r-medium;
+  column-gap: var.$space-sm;
 
   &:hover {
-    background-color: rgba(222, 222, 222, 0.7);
-  }
-
-  button {
-    background-color: transparent;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    padding: var.$space-sm;
-
-    &:hover {
-      border-radius: var.$border-r-small;
-      background-color: var.$lightPurpleDefault;
-    }
+    background-color: var.$lightPurpleDefaultLighter;
   }
 }

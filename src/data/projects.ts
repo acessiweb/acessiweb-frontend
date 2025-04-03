@@ -1,10 +1,10 @@
 type ProjectType = {
-  id: number;
+  id: string;
   name: string;
   desc?: string;
   feedback: string;
   guidelines: string;
-  userId: number;
+  userId: string;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -12,10 +12,10 @@ type ProjectType = {
 export const projects: ProjectType[] = [];
 
 export function addProject(project: {
-  userId: number;
+  userId: string;
   name: string;
   desc?: string;
-  guidelines: { id: number; name: string }[];
+  guidelines: { id: string; name: string }[];
 }) {
   const projs = localStorage.getItem("acessibiweb-projects");
 

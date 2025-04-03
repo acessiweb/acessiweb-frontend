@@ -5,15 +5,15 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 
 type CardType = {
-  id: number;
+  id: string;
   mainText: string;
   secondaryText?: string;
   hasAdd?: boolean;
   hasDelete?: boolean;
   hasUpdate?: boolean;
   onUpdate?: () => void;
-  onDelete?: (id: number) => void;
-  onAdd?: (id: number, name: string) => void;
+  onDelete?: (id: string) => void;
+  onAdd?: (obj: { id: string; name: string }) => void;
 };
 
 export default function Card({
@@ -32,12 +32,18 @@ export default function Card({
       <span>{mainText}</span>
       {secondaryText && <span>{secondaryText}</span>}
       {hasAdd && (
-        <button onClick={() => onAdd && onAdd(id, mainText)}>
+        <button
+          className="btn-transparent"
+          onClick={() => onAdd && onAdd({ id, name: mainText })}
+        >
           <AddShoppingCartIcon />
         </button>
       )}
       {hasDelete && (
-        <button onClick={() => onDelete && onDelete(id)}>
+        <button
+          className="btn-transparent"
+          onClick={() => onDelete && onDelete(id)}
+        >
           <DeleteForeverIcon />
         </button>
       )}

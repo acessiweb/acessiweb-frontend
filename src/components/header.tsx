@@ -4,10 +4,12 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Person from "@mui/icons-material/Person";
 import { usePathname } from "next/navigation";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { useCart } from "@/context/cart";
 
 export default function Header() {
   const pathname = usePathname();
   const { username } = useSession();
+  const { guidelinesTotal } = useCart();
 
   if (!pathname.includes("admin")) {
     return (
@@ -32,8 +34,13 @@ export default function Header() {
         </ul>
         <ul>
           <li>
-            <Link className="default-link" href="/projetos/cadastrar">
+            <Link
+              className="default-link"
+              href="/projetos/cadastrar"
+              style={{ position: "relative" }}
+            >
               <ShoppingCartIcon />
+              <span className="header__cart-total">{guidelinesTotal}</span>
             </Link>
           </li>
           <li>

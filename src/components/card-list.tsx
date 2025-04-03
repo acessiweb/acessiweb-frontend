@@ -1,9 +1,10 @@
+import imageKitLoader from "@/image/loader";
 import Card from "./card";
 import Image from "next/image";
 
 type CardListType = {
   data: {
-    id: number;
+    id: string;
     name: string;
   }[];
   secondaryText?: string;
@@ -11,8 +12,8 @@ type CardListType = {
   hasDelete?: boolean;
   hasUpdate?: boolean;
   onUpdate?: () => void;
-  onDelete?: (id: number) => void;
-  onAdd?: (id: number, name: string) => void;
+  onDelete?: (id: string) => void;
+  onAdd?: (obj: { id: string; name: string }) => void;
   errorMsg: string;
   showErrorMsgImage?: boolean;
 };
@@ -56,10 +57,12 @@ export default function CardList({
       <span>{errorMsg}</span>
       {showErrorMsgImage && (
         <Image
-          src="https://ik.imagekit.io/6vdq2o9vy/acessibiweb/acessibility-1"
+          loader={() => imageKitLoader("acessibility-1")}
+          src="acessibility-1"
           alt="Desenho de um homem em cadeira de rodas e uma mulher sentada em cima de livros"
-          width="1000"
-          height="100"
+          width={1000}
+          height={100}
+          quality={90}
         />
       )}
     </div>

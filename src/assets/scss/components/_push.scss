@@ -1,0 +1,14 @@
+@use "../var";
+
+.push {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  column-gap: 20px;
+  align-items: center;
+  right: 10px;
+  background-color: var.$lightPurpleDefaultLighter;
+  padding: var.$space-sm var.$space-md;
+  border-radius: var.$border-r-small;
+  box-shadow: var.$shadow-small;
+}

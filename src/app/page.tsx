@@ -1,36 +1,17 @@
 "use client";
 
-import { getCart, setCart } from "@/common/localStorage";
 import CardList from "@/components/card-list";
+import { useCart } from "@/context/cart";
 import { guidelinesStore } from "@/data/guidelines";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [guidelines, setGuidelines] = useState(guidelinesStore);
+  const { addGuidelinesToCart } = useCart();
 
   useEffect(() => {
     setGuidelines(guidelinesStore);
   }, []);
-
-  const addGuidelineToProject = (id: number, name: string) => {
-    const cart = getCart();
-
-    if (cart) {
-      const cartParsed = JSON.parse(cart);
-      const guides = [...cartParsed.guidelines];
-
-      const guideAlreadyExists = guides.find((guide) => guide.id === id);
-
-      if (!guideAlreadyExists) {
-        guides.push({ id, name });
-      }
-
-      setCart({
-        ...cartParsed,
-        guidelines: guides,
-      });
-    }
-  };
 
   return (
     <div className="homepage">
@@ -40,7 +21,7 @@ export default function Home() {
       <CardList
         data={guidelines}
         hasAdd={true}
-        onAdd={addGuidelineToProject}
+        onAdd={addGuidelinesToCart}
         errorMsg="Ainda não existem diretrizes cadastradas"
       />
     </div>

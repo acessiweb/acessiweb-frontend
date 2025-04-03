@@ -8,6 +8,19 @@
   align-items: center;
   justify-content: space-between;
 
+  &__cart-total {
+    background-color: #000;
+    position: absolute;
+    right: -18px;
+    top: 0;
+    color: #fff;
+    padding: var.$space-xs var.$space-sm;
+    border-radius: var.$border-r-large;
+    width: auto;
+    height: auto;
+    font-weight: var.$bold;
+  }
+
   > span {
     font-weight: var.$semibold;
     font-size: var.$fs-medium;

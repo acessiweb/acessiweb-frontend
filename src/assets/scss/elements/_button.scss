@@ -13,6 +13,19 @@
   }
 }
 
+.btn-transparent {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: var.$space-sm;
+
+  &:hover {
+    border-radius: var.$border-r-small;
+    background-color: var.$lightPurpleDefault;
+  }
+}
+
 .btn-default {
   @extend %button;
 }

@@ -14,6 +14,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
 }
 
 * {
@@ -75,8 +76,12 @@ body {
 @include meta.load-css("components/header");
 @include meta.load-css("components/card");
 @include meta.load-css("components/card-list");
+@include meta.load-css("components/push");
 
 //pages
 @include meta.load-css("pages/homepage");
 @include meta.load-css("pages/projects");
 @include meta.load-css("pages/add-project");
+
+//animations
+@include meta.load-css("animation");
