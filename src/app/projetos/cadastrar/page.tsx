@@ -2,48 +2,65 @@
 
 import CardList from "@/components/card-list";
 import { useCart } from "@/context/cart";
-import { addProject } from "@/data/projects";
-import createProjectSchema, {
-  type AddProject,
-} from "@/schemas/projects/add-project";
+import { useProjects } from "@/context/projects";
+import { usePush } from "@/context/push";
+import createProjectSchema from "@/schemas/projects/add-project";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
 export default function AddProject() {
-  const { cart, removeGuidelineOfCart, addDescriptionToCart, addNameToCart } =
-    useCart();
+  const {
+    cart,
+    removeGuidelineOfCart,
+    addDescriptionToCart,
+    addNameToCart,
+    cleanCart,
+  } = useCart();
+  const { setShowPush, setPushMsg } = usePush();
+  const { addProject } = useProjects();
 
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
+    getValues,
+    setValue,
   } = useForm({
     resolver: yupResolver(createProjectSchema),
-    reValidateMode: "onChange",
   });
 
   const onSubmit = () => {
-    addProject({
-      userId: "1",
-      name: cart.name,
-      desc: cart.description,
-      guidelines: cart.guidelines,
+    const values = getValues();
+
+    const id = addProject({
+      userId: values.userId,
+      name: values.name,
+      description: values.description,
+      guidelines: values.guidelines || [],
     });
+
+    if (id) {
+      cleanCart();
+      setShowPush(true);
+      setPushMsg("Projeto cadastrado com sucesso 🥳");
+    }
   };
 
   return (
-    <div className="add-project">
+    <div className="cart">
       <form
         className="form"
         onSubmit={(e) => {
+          setValue("userId", "1");
+          setValue("name", cart.name);
+          setValue("description", cart.description);
           setValue("guidelines", cart.guidelines);
           handleSubmit(onSubmit)(e);
         }}
       >
-        <div className="add-project__wrapper-left">
-          <div className="add-project__wrapper-left__left">
+        <div className="cart__wrapper-left">
+          <div className="cart__wrapper-left__left">
             <input
               {...register("name")}
               className="input-transparent"
@@ -54,7 +71,7 @@ export default function AddProject() {
                 addNameToCart(e.target.value)
               }
             />
-            {errors.name?.message && (
+            {errors.name && (
               <p className="form-error-msg">{errors.name?.message}</p>
             )}
             <textarea
@@ -68,8 +85,8 @@ export default function AddProject() {
               placeholder="Centralizar e organizar diretrizes de acessibilidade digital em uma plataforma acessível e intuitiva, facilitando o acesso a informações essenciais e incentivando a criação de experiências digitais mais inclusivas e alinhadas aos padrões de acessibilidade digital."
             />
           </div>
-          <div className="add-project__wrapper-left__guidelines">
-            <div className="add-project__wrapper-left__guidelines__header">
+          <div className="cart__wrapper-left__guidelines">
+            <div className="cart__wrapper-left__guidelines__header">
               <h3 className="heading-3">Diretrizes selecionadas</h3>
               <Link className="btn-link-default" href="/">
                 +
@@ -82,7 +99,7 @@ export default function AddProject() {
               errorMsg="Você ainda não incluiu diretrizes no seu projeto"
               showErrorMsgImage={false}
             />
-            {errors.guidelines?.message && (
+            {errors.guidelines && (
               <p className="form-error-msg">{errors.guidelines?.message}</p>
             )}
           </div>

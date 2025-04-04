@@ -1,6 +1,6 @@
 @use "../var";
 
-.add-project {
+.cart {
   display: flex;
   justify-content: center;
   margin: 0 auto;
@@ -43,7 +43,8 @@
   }
 
   .card-list {
-    flex: none;
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .card > span {

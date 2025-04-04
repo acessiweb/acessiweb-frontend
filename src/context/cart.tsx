@@ -3,8 +3,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { usePush } from "./push";
 
-type GuidelineType = { id: string; name: string };
-
 type CartType = {
   name: string;
   description: string;
@@ -18,6 +16,7 @@ type CartContextType = {
   removeGuidelineOfCart: (_guideId: string) => void;
   addNameToCart: (_name: string) => void;
   addDescriptionToCart: (_desc: string) => void;
+  cleanCart: () => void;
 };
 
 const CartContext = createContext<CartContextType>({} as CartContextType);
@@ -54,22 +53,26 @@ export default function CartProvider({
 
     if (!alreadyExists) {
       setGuidelinesTotal((prevTotal: number) => prevTotal + 1);
+
+      setCart((prevCart: CartType) => {
+        const guides = [...prevCart.guidelines];
+
+        if (!alreadyExists) {
+          guides.push(guideline);
+        }
+
+        const newCart = { ...prevCart, guidelines: guides };
+
+        saveCart(newCart);
+
+        return newCart;
+      });
     } else {
       setShowPush(true);
       setPushMsg(
         "Essa diretriz já foi adicionada ao seu projeto. Acesse ele pelo ícone de carrinho no menu"
       );
     }
-
-    setCart((prevCart: CartType) => {
-      const guides = [...prevCart.guidelines];
-
-      if (!alreadyExists) {
-        guides.push(guideline);
-      }
-
-      return { ...prevCart, guidelines: guides };
-    });
   };
 
   const removeGuidelineOfCart = (guidelineId: string) => {
@@ -81,22 +84,54 @@ export default function CartProvider({
         (guideline: GuidelineType) => guideline.id !== guidelineId
       );
 
-      return { ...prevCart, guidelines: newGuides };
+      const newCart = { ...prevCart, guidelines: newGuides };
+
+      saveCart(newCart);
+
+      return newCart;
     });
   };
 
   const addNameToCart = (name: string) => {
-    setCart((prevCart: CartType) => ({
-      ...prevCart,
-      name,
-    }));
+    setCart((prevCart: CartType) => {
+      const newCart = {
+        ...prevCart,
+        name,
+      };
+
+      saveCart(newCart);
+
+      return newCart;
+    });
   };
 
   const addDescriptionToCart = (desc: string) => {
-    setCart((prevCart: CartType) => ({
-      ...prevCart,
-      description: desc,
-    }));
+    setCart((prevCart: CartType) => {
+      const newCart = {
+        ...prevCart,
+        description: desc,
+      };
+
+      saveCart(newCart);
+
+      return newCart;
+    });
+  };
+
+  const cleanCart = () => {
+    const newCart = {
+      name: "",
+      description: "",
+      guidelines: [],
+    };
+
+    setCart(newCart);
+    setGuidelinesTotal(0);
+    saveCart(newCart);
+  };
+
+  const saveCart = (cart: CartType) => {
+    localStorage.setItem("acessibiweb-cart", JSON.stringify(cart));
   };
 
   return (
@@ -108,6 +143,7 @@ export default function CartProvider({
         removeGuidelineOfCart,
         addDescriptionToCart,
         addNameToCart,
+        cleanCart,
       }}
     >
       {children}

@@ -11,7 +11,7 @@ type CardListType = {
   hasAdd?: boolean;
   hasDelete?: boolean;
   hasUpdate?: boolean;
-  onUpdate?: () => void;
+  updateRoute?: string;
   onDelete?: (id: string) => void;
   onAdd?: (obj: { id: string; name: string }) => void;
   errorMsg: string;
@@ -26,7 +26,7 @@ export default function CardList({
   hasUpdate,
   onAdd,
   onDelete,
-  onUpdate,
+  updateRoute,
   errorMsg,
   showErrorMsgImage = true,
 }: CardListType) {
@@ -44,7 +44,7 @@ export default function CardList({
               hasUpdate={hasUpdate}
               onAdd={onAdd}
               onDelete={onDelete}
-              onUpdate={onUpdate}
+              updateRoute={updateRoute}
             />
           </div>
         ))}

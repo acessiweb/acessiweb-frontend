@@ -1,10 +1,10 @@
 @use "../var";
 
 .card-list {
-  display: flex;
-  flex-wrap: wrap;
-  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: var.$space-md;
+  flex: none;
 
   > div {
     display: flex;

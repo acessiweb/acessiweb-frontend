@@ -3,6 +3,10 @@
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
+import PushDelete from "./push-delete";
+import { useState } from "react";
+import { createPortal } from "react-dom";
+import Link from "next/link";
 
 type CardType = {
   id: string;
@@ -11,7 +15,7 @@ type CardType = {
   hasAdd?: boolean;
   hasDelete?: boolean;
   hasUpdate?: boolean;
-  onUpdate?: () => void;
+  updateRoute?: string;
   onDelete?: (id: string) => void;
   onAdd?: (obj: { id: string; name: string }) => void;
 };
@@ -25,8 +29,10 @@ export default function Card({
   hasUpdate,
   onAdd,
   onDelete,
-  onUpdate,
+  updateRoute,
 }: CardType) {
+  const [showDeletePush, setShowDeletePush] = useState(false);
+
   return (
     <article className="card">
       <span>{mainText}</span>
@@ -39,24 +45,40 @@ export default function Card({
           <AddShoppingCartIcon />
         </button>
       )}
-      {hasDelete && (
+      {hasDelete && !hasUpdate && (
         <button
           className="btn-transparent"
-          onClick={() => onDelete && onDelete(id)}
+          onClick={() => setShowDeletePush(true)}
         >
           <DeleteForeverIcon />
         </button>
       )}
       {hasUpdate && hasDelete && (
-        <div>
-          <button onClick={onUpdate}>
+        <div style={{ display: "flex" }}>
+          <Link
+            className="btn-transparent"
+            href={`${updateRoute?.replace("[id]", id)}`}
+          >
             <EditIcon />
-          </button>
-          <button onClick={() => onDelete && onDelete(id)}>
+          </Link>
+          <button
+            className="btn-transparent"
+            onClick={() => setShowDeletePush(true)}
+          >
             <DeleteForeverIcon />
           </button>
         </div>
       )}
+      {showDeletePush &&
+        createPortal(
+          <PushDelete
+            pushMsg={`Tem certeza que deseja excluir "${mainText}"?`}
+            id={id}
+            handleDelete={onDelete}
+            handleCancel={() => setShowDeletePush(false)}
+          />,
+          document.getElementById("app")!
+        )}
     </article>
   );
 }

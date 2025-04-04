@@ -12,8 +12,7 @@ const createProjectSchema = yup.object().shape({
     .array()
     .of(guidelinesSchema)
     .min(1, "Você ainda não incluiu diretrizes no seu projeto"),
+  userId: yup.string().trim().required(),
 });
-
-export type AddProject = yup.InferType<typeof createProjectSchema>;
 
 export default createProjectSchema;

@@ -11,7 +11,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  position: relative;
 }
 
 * {
@@ -26,6 +25,8 @@ body {
   flex: 1;
   margin: 0.3rem;
   row-gap: 0.3rem;
+  position: relative;
+  z-index: 100;
 }
 #app a {
   text-decoration: none;
@@ -89,7 +90,7 @@ body {
 }
 
 .heading-2 {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 700;
 }
 
@@ -155,6 +156,19 @@ body {
   padding-left: 0.7rem;
 }
 
+.sec-page__header {
+  display: flex;
+  margin-bottom: auto;
+  align-items: center;
+  flex: 1;
+  column-gap: 1.1rem;
+}
+
+.sec-page__header .heading-2 {
+  text-align: center;
+  flex: 1;
+}
+
 .header {
   display: flex;
   border: 1px solid #1c1917;
@@ -212,10 +226,10 @@ body {
 }
 
 .card-list {
-  display: flex;
-  flex-wrap: wrap;
-  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.1rem;
+  flex: none;
 }
 
 .card-list > div {
@@ -242,17 +256,81 @@ body {
   height: 100%;
 }
 
-.push {
+.push-wrapper {
+  background-color: rgba(222, 222, 222, 0.7);
   position: absolute;
+  z-index: 1000;
   bottom: 0;
+  right: 10px;
+  border-radius: 5px;
+  max-width: 30rem;
+}
+
+.push-wrapper__push {
   display: flex;
   column-gap: 20px;
   align-items: center;
-  right: 10px;
-  background-color: rgba(222, 222, 222, 0.7);
-  padding: 0.7rem 1.1rem;
+  background-color: #dedede;
   border-radius: 5px;
-  box-shadow: 2px 2px 3px #1c1917;
+  padding: 0.7rem 1.1rem;
+  box-shadow: 1px 1px 3px #1c1917;
+  border: 1px solid #1c1917;
+  line-height: 1.4;
+}
+
+.push-wrapper__push button:hover {
+  background-color: #c4b4ff !important;
+}
+
+.push-delete-wrapper {
+  background-color: rgba(222, 222, 222, 0.7);
+  position: absolute;
+  z-index: 1000;
+  top: 50%;
+  left: 30%;
+  border-radius: 5px;
+  flex: none;
+  width: max-content;
+  margin: 0 auto;
+}
+
+.push-delete-wrapper__push {
+  display: flex;
+  column-gap: 20px;
+  align-items: center;
+  background-color: #dedede;
+  border-radius: 5px;
+  padding: 0.7rem 1.1rem;
+  box-shadow: 1px 1px 3px #1c1917;
+  border: 1px solid #1c1917;
+  line-height: 1.4;
+}
+
+.push-delete-wrapper__push__btn-wrapper {
+  display: flex;
+  column-gap: 0.7rem;
+}
+
+.push-delete-wrapper__push .delete {
+  font-size: 1.3rem;
+  border: 1px solid #dc2626;
+  border-radius: 5px;
+}
+
+.push-delete-wrapper__push .delete:hover {
+  background-color: #dc2626;
+  color: #fff;
+}
+
+.push-delete-wrapper__push .not-delete {
+  font-size: 1.3rem;
+  border: 1px solid #16a34a;
+  border-radius: 5px;
+}
+
+.push-delete-wrapper__push .not-delete:hover {
+  background-color: #16a34a;
+  color: #fff;
 }
 
 .homepage {
@@ -266,7 +344,7 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  row-gap: 1.1rem;
+  row-gap: 1.9rem;
 }
 
 .projects__header {
@@ -274,31 +352,31 @@ body {
   column-gap: 0.7rem;
 }
 
-.add-project {
+.cart {
   display: flex;
   justify-content: center;
   margin: 0 auto;
   flex: 1;
 }
 
-.add-project form > input:nth-child(1) {
+.cart form > input:nth-child(1) {
   margin: 0 auto;
 }
 
-.add-project__wrapper-left {
+.cart__wrapper-left {
   display: flex;
   flex: 1;
   column-gap: 1.9rem;
 }
 
-.add-project__wrapper-left__left {
+.cart__wrapper-left__left {
   display: flex;
   flex: 1;
   flex-direction: column;
   row-gap: 1.1rem;
 }
 
-.add-project__wrapper-left__guidelines {
+.cart__wrapper-left__guidelines {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -307,7 +385,7 @@ body {
   align-items: flex-start;
 }
 
-.add-project__wrapper-left__guidelines__header {
+.cart__wrapper-left__guidelines__header {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -315,24 +393,25 @@ body {
   flex: none;
 }
 
-.add-project .card-list {
-  flex: none;
+.cart .card-list {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.add-project .card > span {
+.cart .card > span {
   font-size: 0.9rem;
 }
 
-.add-project .card-list-not-found {
+.cart .card-list-not-found {
   margin: 0;
   max-width: fit-content;
 }
 
-.add-project .card-list-not-found > span {
+.cart .card-list-not-found > span {
   font-weight: 300;
 }
 
-.add-project .btn-link-default {
+.cart .btn-link-default {
   font-weight: 700;
 }
 

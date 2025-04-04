@@ -14,7 +14,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  position: relative;
 }
 
 * {
@@ -29,6 +28,8 @@ body {
   flex: 1;
   margin: var.$space-xs;
   row-gap: var.$space-xs;
+  position: relative;
+  z-index: 100;
 
   a {
     text-decoration: none;
@@ -77,11 +78,12 @@ body {
 @include meta.load-css("components/card");
 @include meta.load-css("components/card-list");
 @include meta.load-css("components/push");
+@include meta.load-css("components/push-delete");
 
 //pages
 @include meta.load-css("pages/homepage");
 @include meta.load-css("pages/projects");
-@include meta.load-css("pages/add-project");
+@include meta.load-css("pages/cart");
 
 //animations
 @include meta.load-css("animation");

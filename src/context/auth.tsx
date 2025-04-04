@@ -18,21 +18,19 @@ export default function AuthProvider({
   const [currentSession, setCurrentSession] = useState(sessionInitalValue);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const cs = localStorage.getItem("acessibiweb-cs");
+    const cs = localStorage.getItem("acessibiweb-cs");
 
-      const obj = { accessType: "USER", username: "Laura" };
+    const obj = { accessType: "USER", username: "Laura" };
 
-      if (!cs) {
-        localStorage.setItem("acessibiweb-cs", JSON.stringify(obj));
-      }
-
-      if (cs) {
-        setCurrentSession(JSON.parse(cs));
-      }
-
-      setCurrentSession(obj);
+    if (!cs) {
+      localStorage.setItem("acessibiweb-cs", JSON.stringify(obj));
     }
+
+    if (cs) {
+      setCurrentSession(JSON.parse(cs));
+    }
+
+    setCurrentSession(obj);
   }, []);
 
   return (

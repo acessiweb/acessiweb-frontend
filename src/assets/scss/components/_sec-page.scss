@@ -5,4 +5,17 @@
   flex: 1;
   border-left: 1px solid var.$grayDefault;
   padding-left: var.$space-sm;
+
+  &__header {
+    display: flex;
+    margin-bottom: auto;
+    align-items: center;
+    flex: 1;
+    column-gap: var.$space-md;
+
+    .heading-2 {
+      text-align: center;
+      flex: 1;
+    }
+  }
 }

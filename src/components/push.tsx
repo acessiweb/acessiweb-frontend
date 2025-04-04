@@ -24,11 +24,13 @@ export default function Push() {
   }, [onMount]);
 
   return (
-    <div className="push slide-fwd-top">
-      <p>{pushMsg}</p>
-      <button onClick={() => clear()} className="btn-transparent">
-        <ClearIcon />
-      </button>
+    <div className="push-wrapper slide-fwd-top">
+      <div className="push-wrapper__push">
+        <p>{pushMsg}</p>
+        <button onClick={() => clear()} className="btn-transparent">
+          <ClearIcon />
+        </button>
+      </div>
     </div>
   );
 }
