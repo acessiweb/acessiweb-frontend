@@ -1,32 +1,43 @@
+import { createPortal } from "react-dom";
+
 type PushDeleteType = {
   pushMsg: string;
   handleDelete?: (id: string) => void;
   id: string;
-  handleCancel: () => void;
+  handlePortal: (open: boolean) => void;
 };
 
 export default function PushDelete({
   pushMsg,
   handleDelete,
   id,
-  handleCancel,
+  handlePortal,
 }: PushDeleteType) {
-  return (
+  return createPortal(
     <div className="push-delete-wrapper slide-fwd-top">
       <div className="push-delete-wrapper__push">
         <p>{pushMsg}</p>
         <div className="push-delete-wrapper__push__btn-wrapper">
           <button
             className="btn-transparent delete"
-            onClick={() => handleDelete && handleDelete(id)}
+            onClick={() => {
+              if (handleDelete) {
+                handleDelete(id);
+              }
+              handlePortal(false);
+            }}
           >
             Sim
           </button>
-          <button className="btn-transparent not-delete" onClick={handleCancel}>
+          <button
+            className="btn-transparent not-delete"
+            onClick={() => handlePortal(false)}
+          >
             Cancelar
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.getElementById("app")!
   );
 }

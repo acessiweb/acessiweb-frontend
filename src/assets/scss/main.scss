@@ -45,6 +45,12 @@ body {
     &:hover {
       background-color: var.$lightPurpleDefault;
     }
+
+    &--active {
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      background-color: var.$lightPurpleDefault;
+    }
   }
 
   > main {
@@ -84,6 +90,7 @@ body {
 @include meta.load-css("pages/homepage");
 @include meta.load-css("pages/projects");
 @include meta.load-css("pages/cart");
+@include meta.load-css("pages/edit-project");
 
 //animations
 @include meta.load-css("animation");

@@ -11,23 +11,39 @@ export default function Header() {
   const { username } = useSession();
   const { guidelinesTotal } = useCart();
 
+  const setLinkToActive = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const activeLink = document.querySelector(".default-link--active");
+
+    activeLink?.classList.remove("default-link--active");
+
+    e.currentTarget.classList.add("default-link--active");
+  };
+
   if (!pathname.includes("admin")) {
     return (
       <header className="header">
         <span>Olá {username}</span>
         <ul>
           <li>
-            <Link className="default-link" href="/">
+            <Link className="default-link" href="/" onClick={setLinkToActive}>
               Tela inicial
             </Link>
           </li>
           <li>
-            <Link className="default-link" href="/projetos">
+            <Link
+              className="default-link"
+              href="/projetos"
+              onClick={setLinkToActive}
+            >
               Meus projetos
             </Link>
           </li>
           <li>
-            <Link className="default-link" href="/solicitacoes">
+            <Link
+              className="default-link"
+              href="/solicitacoes"
+              onClick={setLinkToActive}
+            >
               Minhas solicitações
             </Link>
           </li>
@@ -57,12 +73,20 @@ export default function Header() {
     <header className="header">
       <ul>
         <li>
-          <Link className="default-link" href="/admin">
+          <Link
+            className="default-link"
+            href="/admin"
+            onClick={setLinkToActive}
+          >
             Tela inicial
           </Link>
         </li>
         <li>
-          <Link className="default-link" href="/admin/solicitacoes">
+          <Link
+            className="default-link"
+            href="/admin/solicitacoes"
+            onClick={setLinkToActive}
+          >
             Solicitações
           </Link>
         </li>

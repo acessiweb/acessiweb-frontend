@@ -7,7 +7,7 @@ const guidelinesSchema = yup.object().shape({
 
 const createProjectSchema = yup.object().shape({
   name: yup.string().trim().max(150).required("Nome é obrigatório"),
-  description: yup.string().trim(),
+  description: yup.string().trim().optional(),
   guidelines: yup
     .array()
     .of(guidelinesSchema)

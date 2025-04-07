@@ -21,7 +21,7 @@ export default function Push() {
     setTimeout(() => {
       clear();
     }, 4500);
-  }, [onMount, clear]);
+  }, [onMount]);
 
   return (
     <div className="push-wrapper slide-fwd-top">

@@ -5,7 +5,6 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import PushDelete from "./push-delete";
 import { useState } from "react";
-import { createPortal } from "react-dom";
 import Link from "next/link";
 
 type CardType = {
@@ -69,16 +68,14 @@ export default function Card({
           </button>
         </div>
       )}
-      {showDeletePush &&
-        createPortal(
-          <PushDelete
-            pushMsg={`Tem certeza que deseja excluir "${mainText}"?`}
-            id={id}
-            handleDelete={onDelete}
-            handleCancel={() => setShowDeletePush(false)}
-          />,
-          document.getElementById("app")!
-        )}
+      {showDeletePush && (
+        <PushDelete
+          pushMsg={`Tem certeza que deseja excluir "${mainText}"?`}
+          id={id}
+          handleDelete={onDelete}
+          handlePortal={setShowDeletePush}
+        />
+      )}
     </article>
   );
 }

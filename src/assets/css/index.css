@@ -41,6 +41,11 @@ body {
 #app .default-link:hover {
   background-color: #dedede;
 }
+#app .default-link--active {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  background-color: #dedede;
+}
 #app > main {
   display: flex;
   flex: 1;
@@ -99,7 +104,7 @@ body {
   font-weight: 600;
 }
 
-.textarea {
+.textarea, .input-default {
   border: 1px solid #1c1917;
   border-radius: 10px;
   padding: 1.1rem;
@@ -151,16 +156,17 @@ body {
 
 .sec-page {
   display: flex;
+  flex-direction: column;
   flex: 1;
   border-left: 1px solid #1c1917;
   padding-left: 0.7rem;
+  row-gap: 1.1rem;
 }
 
 .sec-page__header {
   display: flex;
   margin-bottom: auto;
   align-items: center;
-  flex: 1;
   column-gap: 1.1rem;
 }
 
@@ -413,6 +419,26 @@ body {
 
 .cart .btn-link-default {
   font-weight: 700;
+}
+
+.edit-project__guidelines {
+  margin-top: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.1rem;
+}
+
+.edit-project__guidelines p {
+  font-weight: 600;
+}
+
+.edit-project__guidelines .card-list-not-found {
+  margin: 0;
+  max-width: fit-content;
+}
+
+.edit-project__guidelines .card-list-not-found > span {
+  font-weight: 300;
 }
 
 /* ----------------------------------------------

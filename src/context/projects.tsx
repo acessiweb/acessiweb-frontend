@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { usePush } from "./push";
 
-type ProjectType = {
+export type ProjectType = {
   id: string;
   name: string;
   description?: string;
@@ -25,6 +25,10 @@ type ProjectContextType = {
   projects: ProjectType[];
   addProject: (_project: AddProjectType) => string;
   deleteProject: (_projectId: string) => void;
+  removeGuidelineFromProject: (
+    _projectId: string,
+    _guidelineId: string
+  ) => void;
 };
 
 const ProjectContext = createContext<ProjectContextType>(
@@ -37,8 +41,6 @@ export default function ProjectProvider({
   children: React.ReactNode;
 }) {
   const [projects, setProjects] = useState<ProjectType[]>([]);
-  const [randomNumber, setRandomNumber] = useState(0);
-  const [creationDate, setCreationDate] = useState<Date>(new Date());
   const { setPushMsg, setShowPush } = usePush();
 
   useEffect(() => {
@@ -51,12 +53,8 @@ export default function ProjectProvider({
     }
   }, []);
 
-  useEffect(() => {
-    setRandomNumber(Math.floor(Math.random() * 10000000));
-    setCreationDate(new Date());
-  }, []);
-
   const addProject = (project: AddProjectType): string => {
+    const randomNumber = Math.floor(Math.random() * 10000000);
     const id = `project-${randomNumber}`;
 
     setProjects((prevProjects: ProjectType[]) => {
@@ -65,8 +63,8 @@ export default function ProjectProvider({
       newProjects.push({
         ...project,
         id,
-        createdAt: creationDate,
-        updatedAt: creationDate,
+        createdAt: new Date(),
+        updatedAt: new Date(),
         feedback: "",
       });
 
@@ -92,6 +90,28 @@ export default function ProjectProvider({
     setPushMsg("Projeto deletado com sucesso");
   };
 
+  const removeGuidelineFromProject = (id: string, guidelineId: string) => {
+    setProjects((prevProjects: ProjectType[]) => {
+      let newProjects = [...prevProjects];
+
+      newProjects = newProjects.map((project) => {
+        if (project.id === id) {
+          let newGuidelines = [...project.guidelines];
+
+          newGuidelines = newGuidelines.filter(
+            (guideline) => guideline.id !== guidelineId
+          );
+
+          project.guidelines = newGuidelines;
+        }
+
+        return project;
+      });
+
+      return newProjects;
+    });
+  };
+
   const saveProjects = (projects: ProjectType[]) => {
     localStorage.setItem("acessibiweb-projects", JSON.stringify(projects));
   };
@@ -102,6 +122,7 @@ export default function ProjectProvider({
         projects,
         addProject,
         deleteProject,
+        removeGuidelineFromProject,
       }}
     >
       {children}

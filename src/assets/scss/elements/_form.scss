@@ -40,6 +40,10 @@
   }
 }
 
+.input-default {
+  @extend %input-default;
+}
+
 .textarea {
   @extend %input-default;
 }

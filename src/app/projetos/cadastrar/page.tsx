@@ -25,9 +25,14 @@ export default function AddProject() {
     handleSubmit,
     formState: { errors },
     getValues,
-    setValue,
   } = useForm({
     resolver: yupResolver(createProjectSchema),
+    values: {
+      name: cart.name,
+      description: cart.description,
+      guidelines: cart.guidelines,
+      userId: "1",
+    },
   });
 
   const onSubmit = () => {
@@ -49,22 +54,12 @@ export default function AddProject() {
 
   return (
     <div className="cart">
-      <form
-        className="form"
-        onSubmit={(e) => {
-          setValue("userId", "1");
-          setValue("name", cart.name);
-          setValue("description", cart.description);
-          setValue("guidelines", cart.guidelines);
-          handleSubmit(onSubmit)(e);
-        }}
-      >
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <div className="cart__wrapper-left">
           <div className="cart__wrapper-left__left">
             <input
               {...register("name")}
               className="input-transparent"
-              value={cart.name}
               maxLength={150}
               placeholder="Acessibiweb"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -77,7 +72,6 @@ export default function AddProject() {
             <textarea
               {...register("description")}
               className="textarea"
-              value={cart.description}
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                 addDescriptionToCart(e.target.value)
               }

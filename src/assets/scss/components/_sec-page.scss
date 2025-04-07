@@ -2,15 +2,16 @@
 
 .sec-page {
   display: flex;
+  flex-direction: column;
   flex: 1;
   border-left: 1px solid var.$grayDefault;
   padding-left: var.$space-sm;
+  row-gap: var.$space-md;
 
   &__header {
     display: flex;
     margin-bottom: auto;
     align-items: center;
-    flex: 1;
     column-gap: var.$space-md;
 
     .heading-2 {
