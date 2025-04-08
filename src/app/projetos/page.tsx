@@ -22,6 +22,7 @@ export default function Projects() {
         hasDelete={true}
         onDelete={deleteProject}
         updateRoute="/projetos/[id]/editar"
+        readRoute="/projetos/[id]"
       />
     </div>
   );

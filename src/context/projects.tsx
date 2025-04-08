@@ -21,6 +21,13 @@ type AddProjectType = {
   guidelines: GuidelineType[];
 };
 
+type EditProjectType = {
+  name: string;
+  description?: string;
+  guidelines: GuidelineType[];
+  feedback?: string;
+};
+
 type ProjectContextType = {
   projects: ProjectType[];
   addProject: (_project: AddProjectType) => string;
@@ -29,6 +36,7 @@ type ProjectContextType = {
     _projectId: string,
     _guidelineId: string
   ) => void;
+  updateProject: (_projectId: string, _project: EditProjectType) => string;
 };
 
 const ProjectContext = createContext<ProjectContextType>(
@@ -112,6 +120,30 @@ export default function ProjectProvider({
     });
   };
 
+  const updateProject = (id: string, data: EditProjectType): string => {
+    setProjects((prevProjects: ProjectType[]) => {
+      let newProjects = [...prevProjects];
+
+      newProjects = newProjects.filter((p) => {
+        if (p.id === id) {
+          p.name = data.name;
+          p.description = data.description;
+          p.guidelines = data.guidelines;
+          p.guidelines = data.guidelines;
+          p.updatedAt = new Date();
+        }
+
+        return p;
+      });
+
+      saveProjects(newProjects);
+
+      return newProjects;
+    });
+
+    return id;
+  };
+
   const saveProjects = (projects: ProjectType[]) => {
     localStorage.setItem("acessibiweb-projects", JSON.stringify(projects));
   };
@@ -123,6 +155,7 @@ export default function ProjectProvider({
         addProject,
         deleteProject,
         removeGuidelineFromProject,
+        updateProject,
       }}
     >
       {children}

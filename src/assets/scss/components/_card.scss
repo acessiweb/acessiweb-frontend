@@ -1,15 +1,20 @@
 @use "../var";
 
+.card-link {
+  display: flex;
+  flex: 1;
+}
+
 .card {
   display: flex;
   flex: 1;
   justify-content: space-between;
   align-items: center;
+  column-gap: var.$space-sm;
   margin-bottom: auto;
   background-color: var.$lightPurpleDefault;
   padding: var.$space-sm;
   border-radius: var.$border-r-medium;
-  column-gap: var.$space-sm;
 
   &:hover {
     background-color: var.$lightPurpleDefaultLighter;

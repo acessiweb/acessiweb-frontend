@@ -2,7 +2,6 @@
 
 .edit-project {
   &__guidelines {
-    margin-top: var.$space-md;
     display: flex;
     flex-direction: column;
     row-gap: var.$space-md;
@@ -19,5 +18,9 @@
         font-weight: var.$light;
       }
     }
+  }
+
+  .form {
+    row-gap: var.$space-lg;
   }
 }

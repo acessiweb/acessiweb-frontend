@@ -6,13 +6,13 @@ const guidelinesSchema = yup.object().shape({
 });
 
 const updateProjectSchema = yup.object().shape({
-  name: yup.string().trim().max(150).optional(),
+  name: yup.string().trim().max(150).required("Nome é obrigatório"),
   description: yup.string().trim().optional(),
   guidelines: yup
     .array()
     .of(guidelinesSchema)
     .min(1, "Você ainda não incluiu diretrizes no seu projeto"),
-  // userId: yup.string().trim().required(),
+  feedback: yup.string().trim().optional(),
 });
 
 export default updateProjectSchema;

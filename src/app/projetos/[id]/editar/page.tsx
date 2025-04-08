@@ -1,57 +1,82 @@
 "use client";
 
-import SecondPage from "@/components/second-page";
 import { useEffect, useState } from "react";
-import Projects from "../../page";
 import { ProjectType, useProjects } from "@/context/projects";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import updateProjectSchema from "@/schemas/projects/update-project";
 import CardList from "@/components/card-list";
+import { usePush } from "@/context/push";
+import { useSecPage } from "@/context/sec-page";
+import SecondPage from "@/components/second-page";
+import Projects from "../../page";
 
 export default function EditProject({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const [isSecPageOpen, setIsSecPageOpen] = useState(true);
-  const [projectId, setProjectId] = useState("");
-  const { projects, removeGuidelineFromProject } = useProjects();
-  const [project, setProject] = useState<ProjectType>({} as ProjectType);
-  const [projectName, setProjectName] = useState("");
+  const { setIsOpen, isOpen } = useSecPage();
+  const { projects, removeGuidelineFromProject, updateProject } = useProjects();
+  const { setShowPush, setPushMsg } = usePush();
+  const [project, setProject] = useState({} as ProjectType);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+    reset,
+  } = useForm({
+    resolver: yupResolver(updateProjectSchema),
+  });
 
   useEffect(() => {
     const getParams = async () => {
       const p = await params;
 
       if (p.id) {
-        setProjectId(p.id);
+        const proj =
+          projects.find((proj) => proj.id === p.id) || ({} as ProjectType);
+
+        setProject(proj);
+
+        reset({
+          name: proj.name,
+          description: proj.description,
+          guidelines: proj.guidelines,
+          feedback: proj.feedback,
+        });
       }
     };
 
     getParams();
   }, []);
 
-  useEffect(() => {
-    const p: ProjectType =
-      projects.find((p) => p.id === projectId) || ({} as ProjectType);
-    setProject(p);
-  }, [projectId]);
+  const onSubmit: SubmitHandler<{
+    description?: string | undefined;
+    guidelines?:
+      | {
+          name: string;
+          id: string;
+        }[]
+      | undefined;
+    feedback?: string | undefined;
+    name: string;
+  }> = (data) => {
+    const id = updateProject(project.id, {
+      name: data.name,
+      description: data.description,
+      guidelines: data.guidelines || [],
+      feedback: data.feedback,
+    });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(updateProjectSchema),
-    values: {
-      name: project.name,
-      description: project.description,
-      guidelines: project.guidelines,
-    },
-  });
-
-  const onSubmit = () => {};
+    if (id) {
+      setShowPush(true);
+      setPushMsg("Projeto atualizado com sucesso 🥳");
+      setIsOpen(false);
+    }
+  };
 
   const deleteGuidelineFromProject = (guidelineId: string) => {
     removeGuidelineFromProject(project.id, guidelineId);
@@ -60,35 +85,39 @@ export default function EditProject({
   return (
     <div className="edit-project">
       <Projects />
-      {isSecPageOpen && (
-        <SecondPage
-          title={`Editar ${projectName || project.name}`}
-          closeSecPage={() => setIsSecPageOpen(false)}
-        >
+      {isOpen && (
+        <SecondPage title={`Editar ${getValues()["name"] || project.name}`}>
           <form className="form" onSubmit={handleSubmit(onSubmit)}>
-            <input
-              type="text"
-              {...register("name")}
-              className="input-default"
-              maxLength={150}
-              placeholder="Acessibiweb"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setProjectName(e.target.value)
-              }
-            />
-            {errors.name && (
-              <p className="form-error-msg">{errors.name?.message}</p>
-            )}
-            <textarea
-              {...register("description")}
-              className="textarea"
-              placeholder="Crie uma descrição para o seu projeto..."
-              rows={11}
-            />
+            <div className="input-wrapper">
+              <label htmlFor="name">Nome do projeto</label>
+              <input
+                {...register("name")}
+                type="text"
+                className="input-default"
+                maxLength={150}
+                placeholder="Acessibiweb"
+                id="name"
+                name="name"
+              />
+              {errors.name && (
+                <p className="form-error-msg">{errors.name?.message}</p>
+              )}
+            </div>
+            <div className="input-wrapper">
+              <label htmlFor="description">Descrição do projeto</label>
+              <textarea
+                {...register("description")}
+                className="textarea"
+                placeholder="Crie uma descrição para o seu projeto..."
+                rows={11}
+                id="description"
+                name="description"
+              />
+            </div>
             <div className="edit-project__guidelines">
               <p>Minhas diretrizes</p>
               <CardList
-                data={project.guidelines || []}
+                data={getValues()["guidelines"] || []}
                 hasDelete={true}
                 onDelete={deleteGuidelineFromProject}
                 errorMsg="Você ainda não incluiu diretrizes no seu projeto"
@@ -97,6 +126,22 @@ export default function EditProject({
               {errors.guidelines && (
                 <p className="form-error-msg">{errors.guidelines?.message}</p>
               )}
+            </div>
+            <div className="input-wrapper">
+              <label htmlFor="feedback">Feedback</label>
+              <textarea
+                {...register("feedback")}
+                className="textarea"
+                placeholder="O projeto precisava ser acessível para pessoas com deficiência visual, com as diretrizes selecionadas foi possível implementar acessibilidade para esse grupo..."
+                rows={11}
+                id="feedback"
+                name="feedback"
+              />
+            </div>
+            <div style={{ margin: "30px auto 0" }}>
+              <button type="submit" className="btn-default">
+                Atualizar projeto
+              </button>
             </div>
           </form>
         </SecondPage>

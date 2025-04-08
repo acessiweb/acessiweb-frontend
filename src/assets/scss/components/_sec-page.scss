@@ -3,16 +3,15 @@
 .sec-page {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 2;
   border-left: 1px solid var.$grayDefault;
   padding-left: var.$space-sm;
-  row-gap: var.$space-md;
 
   &__header {
     display: flex;
-    margin-bottom: auto;
     align-items: center;
     column-gap: var.$space-md;
+    margin-bottom: var.$space-lg;
 
     .heading-2 {
       text-align: center;

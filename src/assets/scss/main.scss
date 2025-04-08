@@ -91,6 +91,7 @@ body {
 @include meta.load-css("pages/projects");
 @include meta.load-css("pages/cart");
 @include meta.load-css("pages/edit-project");
+@include meta.load-css("pages/read-project");
 
 //animations
 @include meta.load-css("animation");
