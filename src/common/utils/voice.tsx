@@ -3,8 +3,7 @@ import { createRoot } from "react-dom/client";
 
 export function captureVoiceAndPrintText(inputId: string) {
   const SpeechRecognition =
-    (window as any).SpeechRecognition ||
-    (window as any).webkitSpeechRecognition;
+    window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SpeechRecognition();
 
   recognition.lang = "pt-BR";
@@ -52,7 +51,7 @@ export function captureVoiceAndPrintText(inputId: string) {
     recognition.stop();
   };
 
-  recognition.onerror = (e: any) => {
+  recognition.onerror = (e) => {
     recognition.abort();
     console.error("Erro no reconhecimento de voz:", e.error);
     elementDefault();
