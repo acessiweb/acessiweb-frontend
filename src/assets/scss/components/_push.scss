@@ -1,28 +1,28 @@
 @use "../var";
 
 .push-wrapper {
-  background-color: var.$lightPurpleDefaultLighter;
+  background-color: var.$lighterPurple;
   position: absolute;
   z-index: 1000;
   bottom: 0;
   right: 10px;
-  border-radius: var.$border-r-small;
+  border-radius: var.$border-radius-default;
   max-width: 30rem;
 
   &__push {
     display: flex;
     column-gap: 20px;
     align-items: center;
-    background-color: var.$lightPurpleDefault;
-    border-radius: var.$border-r-small;
+    background-color: var.$purple;
+    border-radius: var.$border-radius-default;
     padding: var.$space-sm var.$space-md;
     box-shadow: var.$shadow-small;
-    border: 1px solid var.$grayDefault;
+    border: 1px solid var.$gray;
     line-height: 1.4;
 
     button {
       &:hover {
-        background-color: var.$purpleDefault !important;
+        background-color: var.$purple !important;
       }
     }
   }

@@ -4,11 +4,11 @@
 }
 
 .heading-1 {
-  @include heading(2rem, 900);
+  @include heading(1.8rem, 900);
 }
 
 .heading-2 {
-  @include heading(1.6rem, 700);
+  @include heading(1.2rem, 700);
 }
 
 .heading-3 {

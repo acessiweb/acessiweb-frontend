@@ -1,15 +1,15 @@
 @use "../var";
 
 %button {
-  background-color: transparent;
-  border: 1px solid var.$grayDefault;
-  border-radius: var.$border-r-medium;
+  background-color: var.$lightPurple;
+  border: var.$border-1;
+  border-radius: var.$border-radius-default;
   padding: var.$space-sm;
   cursor: pointer;
   font-size: var.$fs-small;
 
   &:hover {
-    background-color: var.$lightPurpleDefault;
+    background-color: var.$lighterPurple;
   }
 }
 
@@ -21,8 +21,8 @@
   padding: var.$space-sm;
 
   &:hover {
-    border-radius: var.$border-r-small;
-    background-color: var.$lightPurpleDefault;
+    border-radius: var.$border-radius-default;
+    background-color: var.$lighterPurple;
   }
 }
 

@@ -1,5 +1,6 @@
 @use "sass:meta";
 @use "var";
+@use "fonts";
 
 html,
 body {
@@ -7,11 +8,16 @@ body {
   max-width: 100vw;
   width: 100vw;
   overflow-x: hidden;
+  overflow-y: auto;
   display: flex;
+
+  @media (max-width: var.$mobile) {
+    min-height: calc(100vh - var.$header-mobile-height);
+    height: calc(100vh - var.$header-mobile-height);
+  }
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -25,40 +31,43 @@ body {
 #app {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  margin: var.$space-xs;
   row-gap: var.$space-xs;
   position: relative;
   z-index: 100;
+  width: 100%;
+  background-color: var.$lighterPurple;
+  color: var.$gray;
 
   a {
     text-decoration: none;
-    color: var.$grayDefault;
+    color: var.$gray;
   }
 
   .default-link {
     display: flex;
     align-items: center;
     padding: var.$space-sm;
-    border-radius: var.$border-r-small;
+    border-radius: var.$border-radius-default;
 
     &:hover {
-      background-color: var.$lightPurpleDefault;
+      background-color: var.$lightPurple;
     }
 
     &--active {
-      text-decoration: underline;
-      text-decoration-thickness: 2px;
-      background-color: var.$lightPurpleDefault;
+      background-color: var.$lighterPurple;
     }
   }
 
   > main {
     display: flex;
     flex: 1;
-    padding: var.$space-md;
-    background-color: var.$pageColor;
-    border-radius: var.$border-r-small;
+    padding: var.$space-md var.$space-sm;
+    border-radius: var.$border-radius-default;
+    width: 100%;
+
+    @media (max-width: var.$mobile) {
+      padding: var.$space-md var.$space-lg;
+    }
 
     > div {
       display: flex;
@@ -70,6 +79,7 @@ body {
   svg {
     width: 1.8rem;
     height: 1.8rem;
+    fill: var.$gray;
   }
 }
 

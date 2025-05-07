@@ -1,11 +1,12 @@
 //colors
-$grayDefault: #1c1917;
-$lightPurpleDefault: #dedede;
-$pageColor: #f8f8f8;
 $red: #dc2626;
-$lightPurpleDefaultLighter: rgba(222, 222, 222, 0.7);
-$purpleDefault: #c4b4ff;
 $green: #16a34a;
+
+$gray: rgba(25, 25, 24, 1);
+$cream: rgba(250, 250, 250, 0.4);
+$lighterPurple: #f9f6ff;
+$lightPurple: #e5d9ff;
+$purple: #c1a6f9;
 
 //font weight
 $light: 300;
@@ -27,12 +28,20 @@ $space-md: 1.1rem;
 $space-lg: 1.9rem;
 $space-xl: 3rem;
 
+//borders
+$border-1: 1px solid $gray;
+$border-2: 1px solid $lightPurple;
+
 //border radius
-$border-r-small: 5px;
-$border-r-medium: 10px;
-$border-r-large: 20px;
+$border-radius-default: 25px;
 
 //effects
-$shadow-small: 1px 1px 3px $grayDefault;
-// $shadow-medium: 2px 1px 3px $grayDefault;
-// $shadow-large: 2px 1px 3px $grayDefault;
+$shadow-small: 1px 1px 1px 1px $gray;
+// $shadow-medium: 2px 1px 3px $gray;
+// $shadow-large: 2px 1px 3px $gray;
+
+//screen size
+$mobile: 499px;
+
+//rules
+$header-mobile-height: 70px;

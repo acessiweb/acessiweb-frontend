@@ -36,15 +36,17 @@ export default function Project({
   }, [projectId]);
 
   return (
-    <div className="read-project">
-      <Projects />
-      {isOpen && (
-        <SecondPage title={project.name}>
-          <p>{project.description}</p>
-          <CardList data={project.guidelines || []} />
-          <p>{project.feedback}</p>
-        </SecondPage>
-      )}
-    </div>
+    <>
+      <div className="read-project">
+        <Projects />
+        {isOpen && (
+          <SecondPage title={project.name}>
+            <p>{project.description}</p>
+            <CardList data={project.guidelines || []} />
+            <p>{project.feedback}</p>
+          </SecondPage>
+        )}
+      </div>
+    </>
   );
 }

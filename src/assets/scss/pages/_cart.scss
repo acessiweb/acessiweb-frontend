@@ -7,7 +7,7 @@
   flex: 1;
 
   form {
-    > input:nth-child(1) {
+    > input:first-of-type {
       margin: 0 auto;
     }
   }

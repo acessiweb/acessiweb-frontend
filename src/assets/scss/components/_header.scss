@@ -2,27 +2,49 @@
 
 .header {
   display: flex;
-  border: 1px solid var.$grayDefault;
-  padding: var.$space-sm var.$space-lg;
-  border-radius: var.$border-r-small;
+  padding: var.$space-sm 0;
+  margin: 0 var.$space-sm;
   align-items: center;
   justify-content: space-between;
+  border-bottom: var.$border-2;
+
+  &__search-input {
+    display: flex;
+    align-items: center;
+    padding: var.$space-xs var.$space-sm;
+    border-radius: var.$border-radius-default;
+    outline: none;
+    border: var.$border-1;
+    background-color: #fff;
+    column-gap: var.$space-xs;
+
+    input {
+      outline: none;
+      border: none;
+    }
+
+    button {
+      padding: calc(var.$space-xs - 0.2rem);
+    }
+  }
 
   &__cart-total {
-    background-color: #000;
+    background-color: var.$lightPurple;
     position: absolute;
-    right: -18px;
-    top: 0;
-    color: #fff;
-    padding: var.$space-xs var.$space-sm;
-    border-radius: var.$border-r-large;
+    right: -10px;
+    top: -5px;
+    color: var.$gray;
+    padding: calc(var.$space-xs - 0.2rem) calc(var.$space-xs + 0.1rem);
+    border-radius: 100px;
     width: auto;
     height: auto;
     font-weight: var.$bold;
+    font-size: var.$fs-x-small;
+    border: var.$border-1;
   }
 
   > span {
-    font-weight: var.$semibold;
+    font-weight: var.$bold;
     font-size: var.$fs-medium;
   }
 
@@ -30,12 +52,68 @@
     display: flex;
     list-style: none;
 
+    li {
+      display: flex;
+      align-items: center;
+    }
+
     &:first-of-type {
       column-gap: var.$space-lg;
     }
 
     &:nth-of-type(2) {
       column-gap: var.$space-sm;
+
+      .cart-icon,
+      .person-icon {
+        border-radius: var.$border-radius-default;
+        padding: calc(var.$space-xs + 0.2rem);
+
+        &:hover {
+          background-color: var.$lightPurple;
+        }
+      }
     }
+  }
+}
+
+.header-mobile {
+  position: fixed;
+  bottom: 0;
+  border-top: var.$border-2;
+  width: 100%;
+  column-gap: var.$space-md;
+  height: var.$header-mobile-height;
+  z-index: 400;
+  background-color: var.$lighterPurple;
+  padding-top: var.$space-xs;
+
+  > div {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 var.$space-md;
+    position: relative;
+
+    > div:nth-child(2) {
+      margin-right: var.$space-lg;
+    }
+
+    > div:nth-child(4) {
+      margin-left: var.$space-lg;
+    }
+
+    > div:nth-child(3) {
+      background-color: var.$purple;
+      position: absolute;
+      border-radius: var.$border-radius-default;
+      top: -30px;
+      border: var.$border-1;
+      padding: var.$space-xs;
+    }
+  }
+
+  svg {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
   }
 }

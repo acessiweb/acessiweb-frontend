@@ -36,7 +36,7 @@ export default function CardList({
     return (
       <div className="card-list">
         {data.map((dt, i) => (
-          <div key={i}>
+          <div id={`${dt.name.replace(" ", "")}-${dt.id}`} key={i}>
             <Card
               id={dt.id}
               mainText={dt.name}

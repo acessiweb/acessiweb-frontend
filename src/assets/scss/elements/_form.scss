@@ -1,9 +1,9 @@
 @use "../var";
 
 %input-default {
-  border: 1px solid var.$grayDefault;
-  border-radius: var.$border-r-medium;
-  padding: var.$space-md;
+  border: var.$border-1;
+  border-radius: var.$border-radius-default;
+  padding: var.$space-sm;
   outline: none;
 }
 
@@ -22,36 +22,58 @@
   }
 }
 
-.input-transparent {
-  background-color: transparent;
-  outline: none;
-  border: none;
-  padding: var.$space-sm;
-  width: min-content;
-  transition: width ease-in 10s;
-
-  &:hover {
-    border: 1px solid var.$grayDefault;
-    border-radius: var.$border-r-medium;
-  }
-
-  &:focus {
-    width: auto;
-  }
-}
-
 .input-wrapper {
   display: flex;
   flex-direction: column;
   row-gap: var.$space-sm;
 }
 
+.input-checkbox {
+  transform: scale(2);
+}
+
 .input-default {
   @extend %input-default;
 }
 
-.textarea {
+%input-text-wrapper {
   @extend %input-default;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  input,
+  textarea {
+    outline: none;
+    border: none;
+    flex: 1;
+  }
+
+  button {
+    padding: var.$space-xs;
+  }
+}
+
+.input-text-wrapper {
+  @extend %input-text-wrapper;
+}
+
+.input-text-wrapper-transparent {
+  @extend %input-default;
+  @extend %input-text-wrapper;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  transition: width ease-in 10s;
+
+  &:hover {
+    border: var.$border-1;
+    border-radius: var.$border-radius-default;
+  }
+
+  &:focus {
+    width: auto;
+  }
 }
 
 .form-error-msg {
@@ -61,5 +83,64 @@
   border: 2px solid var.$red;
   margin: 0 auto;
   padding: var.$space-sm;
-  border-radius: var.$border-r-small;
+  border-radius: var.$border-radius-default;
+}
+
+.filter-form {
+  display: flex;
+  column-gap: var.$space-md;
+  border-radius: var.$border-radius-default;
+  align-items: center;
+  width: 100%;
+
+  &__search-input-wrapper {
+    border: 1px solid var.$gray;
+    box-shadow: var.$shadow-small;
+    border-radius: var.$border-radius-default;
+    padding: var.$space-xs var.$space-sm;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    column-gap: var.$space-xs;
+
+    &:hover {
+      outline: var.$gray;
+    }
+
+    button {
+      padding: var.$space-xs;
+    }
+
+    input {
+      width: 100%;
+      border: none;
+      flex: 1;
+      padding: 0;
+      font-size: var.$fs-small;
+
+      &::placeholder {
+        font-size: var.$fs-small;
+      }
+    }
+  }
+
+  &__search-icon {
+    color: var.$gray;
+  }
+
+  &__calendar-icon {
+    flex: 2;
+  }
+}
+
+.two-pages .filter-form {
+  justify-content: space-between;
+
+  &__search-input-wrapper {
+    flex: 2;
+  }
+
+  &__calendar-icon {
+    flex: none;
+  }
 }

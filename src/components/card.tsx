@@ -38,72 +38,79 @@ export default function Card({
 
   const handleSecPage = () => {
     setIsOpen(true);
+    document.body.classList.add("two-pages");
   };
 
-  const Card = () => {
+  const CardLeft = () => {
     return (
-      <article className="card">
+      <div>
         <span>{mainText}</span>
         {secondaryText && <span>{secondaryText}</span>}
-        {hasAdd && (
-          <button
-            type="button"
+      </div>
+    );
+  };
+
+  return (
+    <article className="card">
+      {readRoute ? (
+        <Link
+          className="card-link"
+          href={`${readRoute?.replace("[id]", id)}`}
+          onClick={handleSecPage}
+        >
+          {CardLeft()}
+        </Link>
+      ) : (
+        CardLeft()
+      )}
+      {hasAdd && (
+        <button
+          type="button"
+          title="Adicionar"
+          className="btn-transparent"
+          onClick={() => onAdd && onAdd({ id, name: mainText })}
+        >
+          <AddShoppingCartIcon />
+        </button>
+      )}
+      {hasDelete && !hasUpdate && (
+        <button
+          type="button"
+          className="btn-transparent"
+          title="Deletar"
+          onClick={() => setShowDeletePush(true)}
+        >
+          <DeleteForeverIcon />
+        </button>
+      )}
+      {hasUpdate && hasDelete && (
+        <div style={{ display: "flex" }}>
+          <Link
             className="btn-transparent"
-            onClick={() => onAdd && onAdd({ id, name: mainText })}
+            href={`${updateRoute?.replace("[id]", id)}`}
+            onClick={handleSecPage}
+            title="Editar"
           >
-            <AddShoppingCartIcon />
-          </button>
-        )}
-        {hasDelete && !hasUpdate && (
+            <EditIcon />
+          </Link>
           <button
             type="button"
             className="btn-transparent"
+            title="Deletar"
             onClick={() => setShowDeletePush(true)}
           >
             <DeleteForeverIcon />
           </button>
-        )}
-        {hasUpdate && hasDelete && (
-          <div style={{ display: "flex" }}>
-            <Link
-              className="btn-transparent"
-              href={`${updateRoute?.replace("[id]", id)}`}
-              onClick={handleSecPage}
-            >
-              <EditIcon />
-            </Link>
-            <button
-              type="button"
-              className="btn-transparent"
-              onClick={() => setShowDeletePush(true)}
-            >
-              <DeleteForeverIcon />
-            </button>
-          </div>
-        )}
-        {showDeletePush && (
-          <PushDelete
-            pushMsg={`Tem certeza que deseja excluir "${mainText}"?`}
-            id={id}
-            handleDelete={onDelete}
-            handlePortal={setShowDeletePush}
-          />
-        )}
-      </article>
-    );
-  };
-
-  if (readRoute) {
-    return (
-      <Link
-        className="card-link"
-        href={`${readRoute?.replace("[id]", id)}`}
-        onClick={handleSecPage}
-      >
-        {Card()}
-      </Link>
-    );
-  } else {
-    return Card();
-  }
+        </div>
+      )}
+      {showDeletePush && (
+        <PushDelete
+          pushMsg={`Tem certeza que deseja excluir "${mainText}"?`}
+          id={id}
+          handleDelete={onDelete}
+          handlePortal={setShowDeletePush}
+        />
+      )}
+    </article>
+  );
 }

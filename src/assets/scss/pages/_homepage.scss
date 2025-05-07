@@ -5,4 +5,29 @@
   flex: 1;
   flex-direction: column;
   row-gap: var.$space-lg;
+  width: 100%;
+
+  form {
+    display: flex;
+    column-gap: var.$space-lg;
+  }
+
+  &__search-guideline {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    column-gap: var.$space-sm;
+  }
+
+  &__guideline-checkbox-group {
+    display: flex;
+    flex: 1;
+    column-gap: var.$space-md;
+
+    > div {
+      label {
+        margin-left: var.$space-xs;
+      }
+    }
+  }
 }

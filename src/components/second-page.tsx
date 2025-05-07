@@ -13,7 +13,13 @@ export default function SecondPage({ title, children }: SecondPageType) {
   return (
     <div className="sec-page">
       <div className="sec-page__header">
-        <button className="btn-default" onClick={() => setIsOpen(false)}>
+        <button
+          className="btn-default"
+          onClick={() => {
+            setIsOpen(false);
+            document.body.classList.remove("two-pages");
+          }}
+        >
           <KeyboardDoubleArrowLeft />
         </button>
         <h2 className="heading-2">{title}</h2>

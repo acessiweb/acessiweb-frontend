@@ -12,11 +12,12 @@
   align-items: center;
   column-gap: var.$space-sm;
   margin-bottom: auto;
-  background-color: var.$lightPurpleDefault;
+  background-color: var.$lightPurple;
   padding: var.$space-sm;
-  border-radius: var.$border-r-medium;
+  border-radius: var.$border-radius-default;
+  border: var.$border-1;
 
   &:hover {
-    background-color: var.$lightPurpleDefaultLighter;
+    background-color: var.$lightPurple;
   }
 }
