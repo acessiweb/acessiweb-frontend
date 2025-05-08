@@ -1,0 +1,17 @@
+@use "../var";
+
+.icon-modal {
+  position: absolute;
+  background-color: var.$lightPurple;
+  border-radius: var.$border-radius-default;
+  border: var.$border-1;
+  padding: var.$space-sm var.$space-md;
+  display: flex;
+  flex-direction: column;
+  row-gap: var.$space-sm;
+
+  svg {
+    width: 1.4rem !important;
+    height: 1.4rem !important;
+  }
+}
