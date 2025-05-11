@@ -95,6 +95,7 @@ body {
 @include meta.load-css("components/card-list");
 @include meta.load-css("components/push");
 @include meta.load-css("components/push-delete");
+@include meta.load-css("components/icon-modal");
 
 //pages
 @include meta.load-css("pages/homepage");
