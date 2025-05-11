@@ -1,19 +1,22 @@
-@use "../var";
+@use "./var";
 
-.add-account {
-  position: relative;
+@mixin icon-badge($mr, $ml, $fs, $p) {
+  position: relative !important;
+
   span {
     background-color: var.$purple;
     position: absolute;
-    right: 15px;
-    bottom: 8px;
+    display: flex;
+    align-items: center;
+    margin-left: $ml;
+    margin-right: $mr;
     color: var.$gray;
-    padding: 0px calc(var.$space-xs - 0.1rem);
+    padding: $p;
     border-radius: 100px;
     width: auto;
     height: auto;
     font-weight: var.$bold;
-    font-size: calc(var.$fs-x-small - 0.3rem);
+    font-size: $fs;
     border: var.$border-1;
   }
 }
