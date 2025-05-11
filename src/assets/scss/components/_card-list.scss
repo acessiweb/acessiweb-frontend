@@ -9,12 +9,6 @@
   > div {
     display: flex;
     flex: 1;
-
-    &:first-of-type {
-      .card {
-        background-color: var.$purple;
-      }
-    }
   }
 }
 

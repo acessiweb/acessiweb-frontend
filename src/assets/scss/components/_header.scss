@@ -1,4 +1,5 @@
 @use "../var";
+@use "../mixins" as mixins;
 
 .header {
   display: flex;
@@ -26,21 +27,6 @@
     button {
       padding: calc(var.$space-xs - 0.2rem);
     }
-  }
-
-  &__cart-total {
-    background-color: var.$lightPurple;
-    position: absolute;
-    right: -10px;
-    top: -5px;
-    color: var.$gray;
-    padding: calc(var.$space-xs - 0.2rem) calc(var.$space-xs + 0.1rem);
-    border-radius: 100px;
-    width: auto;
-    height: auto;
-    font-weight: var.$bold;
-    font-size: var.$fs-x-small;
-    border: var.$border-1;
   }
 
   > span {
@@ -80,7 +66,6 @@
 .header-mobile {
   position: fixed;
   bottom: 0;
-  border-top: var.$border-2;
   width: 100%;
   column-gap: var.$space-md;
   height: var.$header-mobile-height;
@@ -88,32 +73,100 @@
   background-color: var.$lighterPurple;
   padding-top: var.$space-xs;
 
-  > div {
-    display: flex;
-    justify-content: space-around;
-    padding: 0 var.$space-md;
-    position: relative;
+  .icon-modal {
+    bottom: 50px;
+  }
 
-    > div:nth-child(2) {
+  button {
+    all: unset;
+  }
+
+  > div:first-of-type {
+    margin: 0 calc(var.$space-lg + 0.4rem);
+    border-top: var.$border-2;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding-top: var.$space-xs;
+
+    > button:first-of-type,
+    > button:nth-child(2),
+    > button:nth-child(3),
+    > button:nth-child(4),
+    > button:nth-child(5) {
+      > svg {
+        width: 2.1rem !important;
+        height: 2.1rem !important;
+      }
+    }
+
+    > button:nth-child(2) {
       margin-right: var.$space-lg;
     }
 
-    > div:nth-child(4) {
+    > button:nth-child(4) {
       margin-left: var.$space-lg;
     }
 
-    > div:nth-child(3) {
+    > button:nth-child(3) {
       background-color: var.$purple;
       position: absolute;
       border-radius: var.$border-radius-default;
-      top: -30px;
+      top: -5px;
+      left: 50%;
+      right: 50%;
+      transform: translate(-50%, -50%);
       border: var.$border-1;
-      padding: var.$space-xs;
+      padding: var.$space-xs calc(var.$space-md + 0.5rem);
+
+      svg {
+        position: relative;
+        top: 20px;
+        right: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
     }
   }
+}
 
-  svg {
-    width: 2.5rem !important;
-    height: 2.5rem !important;
+.cart-count {
+  @include mixins.icon-badge(
+    0,
+    20px,
+    var.$fs-x-small,
+    calc(var.$space-xs - 0.2rem) calc(var.$space-xs + 0.1rem)
+  );
+
+  span {
+    top: -5px;
+  }
+}
+
+.add-account {
+  @include mixins.icon-badge(
+    0,
+    0,
+    calc(var.$fs-x-small - 0.3rem),
+    0px calc(var.$space-xs - 0.1rem)
+  );
+
+  span {
+    bottom: 8px;
+    right: 15px;
+  }
+}
+
+.add-guideline {
+  @include mixins.icon-badge(
+    0,
+    -15px,
+    calc(var.$fs-x-small - 0.2rem),
+    calc(var.$space-xs - 0.3rem) var.$space-xs
+  );
+
+  span {
+    bottom: 1px;
+    right: 0px;
   }
 }
