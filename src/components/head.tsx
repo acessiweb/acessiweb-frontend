@@ -5,7 +5,7 @@ type HeadParams = {
 export default function Head({ title }: HeadParams) {
   return (
     <>
-      <title>{`Acessibiweb - ${title}`}</title>
+      <title>{`Acessiweb - ${title}`}</title>
     </>
   );
 }
