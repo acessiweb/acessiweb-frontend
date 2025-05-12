@@ -1,197 +1,90 @@
-import { isAdmin, isCommonUser, isVisitor } from "@/common/utils/authorization";
+import { isAdmin, isCommonUser } from "@/common/utils/authorization";
+import Cart from "@/common/header/cart";
+import Home from "@/common/header/home";
+import Person from "@/common/header/person";
 import { useSession } from "@/context/auth";
-import { usePathname } from "next/navigation";
-import { IoPersonOutline, IoHelp } from "react-icons/io5";
-import {
-  SlHome,
-  SlBasket,
-  SlLogin,
-  SlSettings,
-  SlLogout,
-} from "react-icons/sl";
-import { PiPersonArmsSpreadLight } from "react-icons/pi";
 import { useCart } from "@/context/cart";
-import { Dispatch, SetStateAction, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ReactNode } from "react";
+import { PiPersonArmsSpreadLight } from "react-icons/pi";
+import Settings from "@/common/header/settings";
+import Logout from "@/common/header/logout";
+import Help from "@/common/header/help";
 
-function Home() {
+type BaseHeaderProps = {
+  secItem: ReactNode;
+  fourthItem: ReactNode;
+  fifthItem: ReactNode;
+};
+
+function AdminHeaderMobile() {
   return (
-    <Link href="/">
-      <SlHome />
-    </Link>
+    <BaseHeaderMobile
+      secItem={
+        <Link
+          href=""
+          className="add-guideline"
+          title="Cadastrar diretriz"
+          aria-label="Ir para tela de cadastro de diretriz"
+        >
+          <PiPersonArmsSpreadLight aria-hidden={true} focusable={false} />
+          <span>&#43;</span>
+        </Link>
+      }
+      fourthItem={<Settings link="" />}
+      fifthItem={<Logout />}
+    />
   );
 }
 
-function Cart() {
+function VisitorHeaderMobile() {
   const { guidelinesTotal } = useCart();
 
   return (
-    <Link href="/projetos/cadastrar" className="cart-count">
-      <SlBasket />
-      <span>{guidelinesTotal}</span>
-    </Link>
+    <BaseHeaderMobile
+      secItem={<Cart guidelinesTotal={guidelinesTotal} />}
+      fourthItem={<Person />}
+      fifthItem={<Settings link="" />}
+    />
   );
 }
 
-function Person({
-  setShowKeyboardKeysModal,
-  showKeyboardKeysModal,
-  setShowAccountModal,
-  showAccountModal,
-}: {
-  setShowAccountModal: Dispatch<SetStateAction<boolean>>;
-  showAccountModal: boolean;
-  setShowKeyboardKeysModal: Dispatch<SetStateAction<boolean>>;
-  showKeyboardKeysModal: boolean;
-}) {
-  const handleToggle = () => {
-    setShowAccountModal((prev) => !prev);
-
-    if (showKeyboardKeysModal) {
-      setShowKeyboardKeysModal(false);
-    }
-  };
+function CommonUserHeaderMobile() {
+  const { guidelinesTotal } = useCart();
 
   return (
-    <button style={{ position: "relative" }} onClick={handleToggle}>
-      <IoPersonOutline />
-      {showAccountModal && (
-        <div className="modal">
-          <Link href="">
-            <SlLogin />
-          </Link>
-          <Link href="" className="add-account">
-            <IoPersonOutline />
-            <span>&#43;</span>
-          </Link>
-        </div>
-      )}
-    </button>
+    <BaseHeaderMobile
+      secItem={<Cart guidelinesTotal={guidelinesTotal} />}
+      fourthItem={<Settings link="" />}
+      fifthItem={<Logout />}
+    />
   );
 }
 
-function Help({
-  setShowKeyboardKeysModal,
-  showKeyboardKeysModal,
-  setShowAccountModal,
-  showAccountModal,
-}: {
-  setShowKeyboardKeysModal: Dispatch<SetStateAction<boolean>>;
-  showKeyboardKeysModal: boolean;
-  setShowAccountModal: Dispatch<SetStateAction<boolean>>;
-  showAccountModal: boolean;
-}) {
-  const handleToggle = () => {
-    setShowKeyboardKeysModal((prev) => !prev);
-
-    if (showAccountModal) {
-      setShowAccountModal(false);
-    }
-  };
-
+function BaseHeaderMobile(props: BaseHeaderProps) {
   return (
-    <div className="header-mobile__help">
-      <button onClick={handleToggle}>
-        <IoHelp />
-      </button>
-      {showKeyboardKeysModal && (
-        <div className="modal">
-          <div>
-            Você está no Acessiweb, que irá te auxiliar com a acessibilidade em
-            seus projetos
-          </div>
-          <div>Habilitar Leitor de Tela</div>
-          <div>Comandos para utilizar com teclado</div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function Settings({ link }: { link: string }) {
-  return (
-    <Link href={link}>
-      <SlSettings />
-    </Link>
-  );
-}
-
-function Logout() {
-  return (
-    <button>
-      <SlLogout />
-    </button>
+    <header className="header-mobile">
+      <div>
+        <Home />
+        {props.secItem}
+        <Help />
+        {props.fourthItem}
+        {props.fifthItem}
+      </div>
+    </header>
   );
 }
 
 export default function HeaderMobile() {
   const pathname = usePathname();
   const { accessType } = useSession();
-  const [showKeyboardKeysModal, setShowKeyboardKeysModal] = useState(false);
-  const [showAccountModal, setShowAccountModal] = useState(false);
 
-  if (pathname.includes("admin") && isAdmin(accessType)) {
-    return (
-      <header className="header-mobile">
-        <div>
-          <Home />
-          <button className="add-guideline">
-            <PiPersonArmsSpreadLight />
-            <span>&#43;</span>
-          </button>
-          <Help
-            setShowKeyboardKeysModal={setShowKeyboardKeysModal}
-            showKeyboardKeysModal={showKeyboardKeysModal}
-            setShowAccountModal={setShowAccountModal}
-            showAccountModal={showAccountModal}
-          />
-          <Settings link="" />
-          <Logout />
-        </div>
-      </header>
-    );
-  }
+  if (pathname.includes("admin") && isAdmin(accessType))
+    return <AdminHeaderMobile />;
 
-  if (!pathname.includes("admin") && isCommonUser(accessType)) {
-    return (
-      <header className="header-mobile">
-        <div>
-          <Home />
-          <Cart />
-          <Help
-            setShowKeyboardKeysModal={setShowKeyboardKeysModal}
-            showKeyboardKeysModal={showKeyboardKeysModal}
-            setShowAccountModal={setShowAccountModal}
-            showAccountModal={showAccountModal}
-          />
-          <Settings link="" />
-          <Logout />
-        </div>
-      </header>
-    );
-  }
+  if (!pathname.includes("admin") && isCommonUser(accessType))
+    return <CommonUserHeaderMobile />;
 
-  if (!pathname.includes("admin") && isVisitor(accessType)) {
-    return (
-      <header className="header-mobile">
-        <div>
-          <Home />
-          <Cart />
-          <Help
-            setShowKeyboardKeysModal={setShowKeyboardKeysModal}
-            showKeyboardKeysModal={showKeyboardKeysModal}
-            setShowAccountModal={setShowAccountModal}
-            showAccountModal={showAccountModal}
-          />
-          <Person
-            setShowAccountModal={setShowAccountModal}
-            showAccountModal={showAccountModal}
-            setShowKeyboardKeysModal={setShowKeyboardKeysModal}
-            showKeyboardKeysModal={showKeyboardKeysModal}
-          />
-          <Settings link="" />
-        </div>
-      </header>
-    );
-  }
+  return <VisitorHeaderMobile />;
 }
