@@ -354,12 +354,37 @@ body {
   padding-top: 0.3rem;
 }
 
-.header-mobile .icon-modal {
-  bottom: 50px;
-}
-
 .header-mobile button {
   all: unset;
+}
+
+.header-mobile__help {
+  position: relative;
+}
+
+.header-mobile__help .modal {
+  width: 80vw;
+  bottom: calc(100% + 2rem);
+  height: 70vh;
+  overflow-y: auto;
+}
+
+.header-mobile__help > button {
+  position: absolute;
+  background-color: #c1a6f9;
+  border-radius: 20px;
+  border: 1px solid rgb(25, 25, 24);
+  padding: 1.4rem 1.6rem;
+  left: 15%;
+  transform: translate(-15%, -50%);
+  right: 50%;
+}
+
+.header-mobile__help > button > svg {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  right: 50%;
 }
 
 .header-mobile > div:first-of-type {
@@ -371,9 +396,11 @@ body {
   padding-top: 0.3rem;
 }
 
+.header-mobile > div:first-of-type > a:first-of-type > svg,
+.header-mobile > div:first-of-type > a:nth-child(2) > svg,
 .header-mobile > div:first-of-type > button:first-of-type > svg,
 .header-mobile > div:first-of-type > button:nth-child(2) > svg,
-.header-mobile > div:first-of-type > button:nth-child(3) > svg,
+.header-mobile > div:first-of-type > div:nth-child(3) > button > svg,
 .header-mobile > div:first-of-type > button:nth-child(4) > svg,
 .header-mobile > div:first-of-type > button:nth-child(5) > svg {
   width: 2.1rem !important;
@@ -388,24 +415,8 @@ body {
   margin-left: 1.9rem;
 }
 
-.header-mobile > div:first-of-type > button:nth-child(3) {
-  background-color: #c1a6f9;
-  position: absolute;
-  border-radius: 20px;
-  top: -5px;
-  left: 50%;
-  right: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid rgb(25, 25, 24);
-  padding: 0.3rem 1.6rem;
-}
-
-.header-mobile > div:first-of-type > button:nth-child(3) svg {
-  position: relative;
-  top: 20px;
-  right: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.header-mobile > div:first-of-type > button:nth-child(4) .modal {
+  bottom: calc(100% + 0.2rem);
 }
 
 .cart-count {
@@ -615,18 +626,21 @@ body {
   color: #fff;
 }
 
-.icon-modal {
+.modal {
   position: absolute;
-  background-color: #e5d9ff;
+  background-color: #d9d9d9;
   border-radius: 20px;
   border: 1px solid rgb(25, 25, 24);
   padding: 0.7rem 1.1rem;
   display: flex;
   flex-direction: column;
   row-gap: 0.7rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.icon-modal svg {
+.modal svg {
   width: 1.4rem !important;
   height: 1.4rem !important;
 }
