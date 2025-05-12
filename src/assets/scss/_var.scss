@@ -2,11 +2,12 @@
 $red: #dc2626;
 $green: #16a34a;
 
-$gray: rgba(25, 25, 24, 1);
+$text: rgba(25, 25, 24, 1);
 $cream: rgba(250, 250, 250, 0.4);
 $lighterPurple: #f9f6ff;
 $lightPurple: #e5d9ff;
 $purple: #c1a6f9;
+$gray: #d9d9d9;
 
 //font weight
 $light: 300;
@@ -29,16 +30,16 @@ $space-lg: 1.9rem;
 $space-xl: 3rem;
 
 //borders
-$border-1: 1px solid $gray;
+$border-1: 1px solid $text;
 $border-2: 1px solid $lightPurple;
 
 //border radius
 $border-radius-default: 20px;
 
 //effects
-$shadow-small: 1px 1px 1px 1px $gray;
-// $shadow-medium: 2px 1px 3px $gray;
-// $shadow-large: 2px 1px 3px $gray;
+$shadow-small: 1px 1px 1px 1px $text;
+// $shadow-medium: 2px 1px 3px $text;
+// $shadow-large: 2px 1px 3px $text;
 
 //screen size
 $mobile: 499px;

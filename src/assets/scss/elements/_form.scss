@@ -94,7 +94,7 @@
   width: 100%;
 
   &__search-input-wrapper {
-    border: 1px solid var.$gray;
+    border: 1px solid var.$text;
     box-shadow: var.$shadow-small;
     border-radius: var.$border-radius-default;
     padding: var.$space-xs var.$space-sm;
@@ -104,7 +104,7 @@
     column-gap: var.$space-xs;
 
     &:hover {
-      outline: var.$gray;
+      outline: var.$text;
     }
 
     button {
@@ -125,7 +125,7 @@
   }
 
   &__search-icon {
-    color: var.$gray;
+    color: var.$text;
   }
 
   &__calendar-icon {
