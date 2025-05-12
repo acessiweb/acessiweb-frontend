@@ -36,11 +36,11 @@ body {
   z-index: 100;
   width: 100%;
   background-color: var.$lighterPurple;
-  color: var.$gray;
+  color: var.$text;
 
   a {
     text-decoration: none;
-    color: var.$gray;
+    color: var.$text;
   }
 
   .default-link {
@@ -79,7 +79,7 @@ body {
   svg {
     width: 1.8rem;
     height: 1.8rem;
-    fill: var.$gray;
+    fill: var.$text;
   }
 }
 
@@ -95,7 +95,7 @@ body {
 @include meta.load-css("components/card-list");
 @include meta.load-css("components/push");
 @include meta.load-css("components/push-delete");
-@include meta.load-css("components/icon-modal");
+@include meta.load-css("components/modal");
 
 //pages
 @include meta.load-css("pages/homepage");
