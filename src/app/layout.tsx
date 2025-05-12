@@ -1,7 +1,6 @@
 import "@/assets/css/index.css";
 import App from "./App";
 import PushProvider from "@/context/push";
-import OverlayProvider from "@/context/overlay";
 
 export default function RootLayout({
   children,
@@ -11,11 +10,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <OverlayProvider>
-          <PushProvider>
-            <App>{children}</App>
-          </PushProvider>
-        </OverlayProvider>
+        <PushProvider>
+          <App>{children}</App>
+        </PushProvider>
       </body>
     </html>
   );
