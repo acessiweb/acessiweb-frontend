@@ -73,12 +73,37 @@
   background-color: var.$lighterPurple;
   padding-top: var.$space-xs;
 
-  .icon-modal {
-    bottom: 50px;
-  }
-
   button {
     all: unset;
+  }
+
+  &__help {
+    position: relative;
+
+    .modal {
+      width: 80vw;
+      bottom: calc(100% + 2rem);
+      height: 70vh;
+      overflow-y: auto;
+    }
+
+    > button {
+      position: absolute;
+      background-color: var.$purple;
+      border-radius: var.$border-radius-default;
+      border: var.$border-1;
+      padding: calc(var.$space-md + 0.3rem) calc(var.$space-md + 0.5rem);
+      left: 15%;
+      transform: translate(-15%, -50%);
+      right: 50%;
+
+      > svg {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        right: 50%;
+      }
+    }
   }
 
   > div:first-of-type {
@@ -89,9 +114,11 @@
     position: relative;
     padding-top: var.$space-xs;
 
+    > a:first-of-type,
+    > a:nth-child(2),
     > button:first-of-type,
     > button:nth-child(2),
-    > button:nth-child(3),
+    > div:nth-child(3) > button,
     > button:nth-child(4),
     > button:nth-child(5) {
       > svg {
@@ -106,25 +133,9 @@
 
     > button:nth-child(4) {
       margin-left: var.$space-lg;
-    }
 
-    > button:nth-child(3) {
-      background-color: var.$purple;
-      position: absolute;
-      border-radius: var.$border-radius-default;
-      top: -5px;
-      left: 50%;
-      right: 50%;
-      transform: translate(-50%, -50%);
-      border: var.$border-1;
-      padding: var.$space-xs calc(var.$space-md + 0.5rem);
-
-      svg {
-        position: relative;
-        top: 20px;
-        right: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+      .modal {
+        bottom: calc(100% + 0.2rem);
       }
     }
   }
