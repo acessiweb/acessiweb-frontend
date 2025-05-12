@@ -1,11 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useState } from "react";
 
-export default function useOutsideClick() {
+export default function useOutsideClick(
+  componentRef: RefObject<HTMLDialogElement | null>,
+  activeComponentClass: string
+) {
   const [outsideClicked, setOutsideClicked] = useState(false);
-  const ref = useRef<HTMLDialogElement>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (ref.current && !ref.current.contains(event.target as Node)) {
+    setOutsideClicked(false);
+    const target = event.target as HTMLElement;
+
+    if (
+      !componentRef.current ||
+      !componentRef.current.classList.contains(activeComponentClass)
+    ) {
+      return;
+    }
+
+    if (componentRef.current && !componentRef.current.contains(target)) {
       setOutsideClicked(true);
     } else {
       setOutsideClicked(false);
@@ -20,7 +32,6 @@ export default function useOutsideClick() {
   }, []);
 
   return {
-    componentRef: ref,
     outsideClicked,
   };
 }
