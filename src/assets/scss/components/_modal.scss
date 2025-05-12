@@ -12,6 +12,15 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  display: none;
+
+  &--active {
+    display: flex;
+  }
+
+  &--not-active {
+    display: none;
+  }
 
   svg {
     width: 1.4rem !important;
