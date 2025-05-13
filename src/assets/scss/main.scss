@@ -43,18 +43,14 @@ body {
     color: var.$text;
   }
 
-  .default-link {
+  ul {
     display: flex;
-    align-items: center;
-    padding: var.$space-sm;
-    border-radius: var.$border-radius-default;
+    list-style: none;
+    column-gap: var.$space-sm;
 
-    &:hover {
-      background-color: var.$lightPurple;
-    }
-
-    &--active {
-      background-color: var.$lighterPurple;
+    li {
+      display: flex;
+      align-items: center;
     }
   }
 
@@ -74,12 +70,6 @@ body {
       flex: 1;
       column-gap: var.$space-md;
     }
-  }
-
-  svg {
-    width: 1.8rem;
-    height: 1.8rem;
-    fill: var.$text;
   }
 }
 

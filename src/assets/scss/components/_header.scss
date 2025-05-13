@@ -1,80 +1,22 @@
 @use "../var";
 @use "../mixins" as mixins;
 
-.header {
-  display: flex;
-  padding: var.$space-sm 0;
-  margin: 0 var.$space-sm;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: var.$border-2;
-
-  &__search-input {
-    display: flex;
-    align-items: center;
-    padding: var.$space-xs var.$space-sm;
-    border-radius: var.$border-radius-default;
-    outline: none;
-    border: var.$border-1;
-    background-color: #fff;
-    column-gap: var.$space-xs;
-
-    input {
-      outline: none;
-      border: none;
-    }
-
-    button {
-      padding: calc(var.$space-xs - 0.2rem);
-    }
-  }
-
-  > span {
-    font-weight: var.$bold;
-    font-size: var.$fs-medium;
-  }
-
-  ul {
-    display: flex;
-    list-style: none;
-
-    li {
-      display: flex;
-      align-items: center;
-    }
-
-    &:first-of-type {
-      column-gap: var.$space-lg;
-    }
-
-    &:nth-of-type(2) {
-      column-gap: var.$space-sm;
-
-      .cart-icon,
-      .person-icon {
-        border-radius: var.$border-radius-default;
-        padding: calc(var.$space-xs + 0.2rem);
-
-        &:hover {
-          background-color: var.$lightPurple;
-        }
-      }
-    }
-  }
+button {
+  all: unset;
 }
 
-.header-mobile {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  column-gap: var.$space-md;
-  height: var.$header-mobile-height;
-  z-index: 400;
-  background-color: var.$lighterPurple;
-  padding-top: var.$space-xs;
+.header {
+  &__help,
+  &__settings,
+  &__profile,
+  &__cart {
+    cursor: pointer;
+  }
 
-  button {
-    all: unset;
+  &__help,
+  &__settings {
+    display: flex;
+    align-items: center;
   }
 
   &__help {
@@ -117,6 +59,209 @@
     }
   }
 
+  &__cart {
+    @include mixins.icon-badge(
+      0,
+      20px,
+      var.$fs-x-small,
+      calc(var.$space-xs - 0.2rem) calc(var.$space-xs + 0.1rem)
+    );
+
+    span {
+      top: -5px;
+    }
+  }
+
+  &__person {
+    .add-account {
+      @include mixins.icon-badge(
+        0,
+        0,
+        calc(var.$fs-x-small - 0.3rem),
+        0px calc(var.$space-xs - 0.1rem)
+      );
+
+      span {
+        bottom: 8px;
+        right: 15px;
+      }
+    }
+  }
+}
+
+.header-desktop {
+  display: flex;
+  margin: 0 var.$space-lg;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: var.$border-2;
+
+  .header__help {
+    > button,
+    > button > svg {
+      position: unset !important;
+      left: unset !important;
+      right: unset !important;
+      transform: unset !important;
+    }
+  }
+
+  .header__cart {
+    margin-right: var.$space-xs;
+
+    span {
+      font-size: calc(var.$fs-x-small - 0.3rem);
+    }
+  }
+
+  &__logo-wrapper {
+    margin-top: var.$space-lg;
+    margin-bottom: var.$space-md;
+    max-width: 180px;
+    height: auto;
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__nav-links {
+    justify-content: space-evenly;
+    flex: 3;
+
+    li {
+      font-weight: bold;
+      font-style: italic;
+
+      &:hover {
+        a {
+          color: var.$purple !important;
+        }
+      }
+    }
+
+    &--active {
+      a {
+        color: var.$purple !important;
+      }
+    }
+  }
+
+  &__helpers {
+    flex: 1;
+
+    .header__profile,
+    .header__settings,
+    .header__help > button {
+      padding: calc(var.$space-xs - 0.1rem) var.$space-xs !important;
+    }
+
+    .header__profile,
+    .header__settings {
+      background-color: var.$purple;
+      border: var.$border-1;
+      border-radius: var.$border-radius-default;
+    }
+
+    .header__help {
+      .modal {
+        width: 50vw;
+        top: calc(100% + 1rem);
+        left: calc(100% - 20rem);
+        bottom: unset;
+        z-index: 1000;
+      }
+    }
+
+    .header__profile {
+      .modal {
+        z-index: 1000;
+      }
+    }
+
+    svg {
+      height: var.$svg-small;
+      width: var.$svg-small;
+    }
+
+    .header__cart {
+      svg {
+        height: var.$svg-medium;
+        width: var.$svg-medium;
+      }
+    }
+
+    &__search {
+      display: flex;
+      align-items: center;
+      column-gap: var.$space-xs;
+
+      &__mic {
+        background-color: var.$purple;
+        border: none;
+        outline: none;
+        border: var.$border-1;
+        border-radius: var.$border-radius-default;
+        padding: var.$space-xs + 0.1rem !important;
+        cursor: pointer;
+
+        svg {
+          height: calc(var.$svg-small - 0.4rem);
+          width: calc(var.$svg-small - 0.4rem);
+        }
+      }
+
+      &__search-input {
+        display: flex;
+        align-items: center;
+        padding: calc(var.$space-xs + 0.1rem) var.$space-sm;
+        border-radius: var.$border-radius-default;
+        outline: none;
+        border: var.$border-1;
+        background-color: var.$purple;
+        column-gap: var.$space-xs;
+
+        svg {
+          height: calc(var.$svg-small - 0.2rem);
+          width: calc(var.$svg-small - 0.2rem);
+        }
+
+        input {
+          outline: none;
+          border: none;
+          background-color: transparent;
+          font-size: var.$fs-small;
+          color: var.$text;
+          width: 10vw;
+          font-style: italic;
+
+          &::placeholder {
+            font-size: var.$fs-small;
+            color: var.$text;
+          }
+        }
+
+        button {
+          padding: calc(var.$space-xs - 0.2rem);
+        }
+      }
+    }
+  }
+}
+
+.header-mobile {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  column-gap: var.$space-md;
+  height: var.$header-mobile-height;
+  z-index: 400;
+  background-color: var.$lighterPurple;
+  padding-top: var.$space-xs;
+
   > div:first-of-type {
     margin: 0 calc(var.$space-lg + 0.4rem);
     border-top: var.$border-2;
@@ -125,13 +270,11 @@
     position: relative;
     padding-top: var.$space-xs;
 
-    > a:first-of-type,
-    > a:nth-child(2),
-    > button:first-of-type,
-    > button:nth-child(2),
-    > div:nth-child(3) > button,
-    > button:nth-child(4),
-    > button:nth-child(5) {
+    .header__homepage,
+    .header__cart,
+    .header__help > button,
+    .header__person,
+    .header__settings {
       > svg {
         width: 2.1rem !important;
         height: 2.1rem !important;
@@ -150,45 +293,18 @@
       }
     }
   }
-}
 
-.cart-count {
-  @include mixins.icon-badge(
-    0,
-    20px,
-    var.$fs-x-small,
-    calc(var.$space-xs - 0.2rem) calc(var.$space-xs + 0.1rem)
-  );
+  .add-guideline {
+    @include mixins.icon-badge(
+      0,
+      -15px,
+      calc(var.$fs-x-small - 0.2rem),
+      calc(var.$space-xs - 0.3rem) var.$space-xs
+    );
 
-  span {
-    top: -5px;
-  }
-}
-
-.add-account {
-  @include mixins.icon-badge(
-    0,
-    0,
-    calc(var.$fs-x-small - 0.3rem),
-    0px calc(var.$space-xs - 0.1rem)
-  );
-
-  span {
-    bottom: 8px;
-    right: 15px;
-  }
-}
-
-.add-guideline {
-  @include mixins.icon-badge(
-    0,
-    -15px,
-    calc(var.$fs-x-small - 0.2rem),
-    calc(var.$space-xs - 0.3rem) var.$space-xs
-  );
-
-  span {
-    bottom: 1px;
-    right: 0px;
+    span {
+      bottom: 1px;
+      right: 0px;
+    }
   }
 }

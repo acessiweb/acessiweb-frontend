@@ -1,13 +1,11 @@
 //colors
-$red: #dc2626;
-$green: #16a34a;
-
 $text: rgba(25, 25, 24, 1);
-$cream: rgba(250, 250, 250, 0.4);
 $lighterPurple: #f9f6ff;
 $lightPurple: #e5d9ff;
 $purple: #c1a6f9;
 $gray: #d9d9d9;
+$red: #dc2626;
+$green: #16a34a;
 
 //font weight
 $light: 300;
@@ -34,15 +32,20 @@ $border-1: 1px solid $text;
 $border-2: 1px solid $lightPurple;
 
 //border radius
-$border-radius-default: 20px;
+$border-radius-default: 15px;
 
 //effects
 $shadow-small: 1px 1px 1px 1px $text;
 // $shadow-medium: 2px 1px 3px $text;
 // $shadow-large: 2px 1px 3px $text;
 
+//svg sizes
+$svg-small: 1.6rem;
+$svg-medium: 1.9rem;
+
 //screen size
 $mobile: 499px;
+$tablet: 890px;
 
 //rules
 $header-mobile-height: 70px;

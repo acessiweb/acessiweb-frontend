@@ -47,16 +47,33 @@ animation by Loop nerd
 $animation-duration: 1100ms;
 $size: 0.5rem;
 
-.bubbles-loading .bubble {
-  --item-size: calc($size / 2);
-  width: var(--item-size);
-  height: var(--item-size);
-  display: inline-block;
-  margin: 0 1px;
-  border-radius: 50%;
-  border: 3px solid var.$text;
-  animation: spinner-bubble $animation-duration ease-in-out infinite;
+.bubbles-loading {
+  display: flex;
+  padding: calc(var.$space-sm - 0.1rem) 0;
+
+  .bubble {
+    --item-size: calc($size / 2);
+    width: var(--item-size);
+    height: var(--item-size);
+    margin: 0 1px;
+    border-radius: 50%;
+    border: 3px solid var.$text;
+    animation: spinner-bubble $animation-duration ease-in-out infinite;
+
+    &:first-of-type {
+      animation-delay: calc($animation-duration / 6 * -1);
+    }
+
+    &:nth-child(2) {
+      animation-delay: calc($animation-duration / 6 * -2);
+    }
+
+    &:nth-child(3) {
+      animation-delay: calc($animation-duration / 6 * -3);
+    }
+  }
 }
+
 @keyframes spinner-bubble {
   0%,
   100% {
@@ -65,13 +82,4 @@ $size: 0.5rem;
   50% {
     transform: translateY(-40%);
   }
-}
-.bubbles-loading .bubble:nth-child(1) {
-  animation-delay: calc($animation-duration / 6 * -1);
-}
-.bubbles-loading .bubble:nth-child(2) {
-  animation-delay: calc($animation-duration / 6 * -2);
-}
-.bubbles-loading .bubble:nth-child(3) {
-  animation-delay: calc($animation-duration / 6 * -3);
 }
