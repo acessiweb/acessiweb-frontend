@@ -1,4 +1,4 @@
-import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
+import { SlMicrophone } from "react-icons/sl";
 import { createRoot } from "react-dom/client";
 
 export function captureVoiceAndPrintText(inputId: string) {
@@ -10,7 +10,9 @@ export function captureVoiceAndPrintText(inputId: string) {
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
 
-  const micBtn = document.querySelector(`#${inputId} + .btn-default`);
+  const micBtn = document
+    .querySelector(`#${inputId}`)
+    ?.closest("div")?.previousElementSibling;
 
   const elementRecording = () => {
     if (micBtn) {
@@ -34,7 +36,7 @@ export function captureVoiceAndPrintText(inputId: string) {
     if (micBtn) {
       const root = createRoot(micBtn);
       micBtn.replaceChildren();
-      root.render(<MicNoneOutlinedIcon />);
+      root.render(<SlMicrophone />);
     }
   };
 
