@@ -20,7 +20,7 @@ export default function AuthProvider({
   useEffect(() => {
     const cs = localStorage.getItem("acessibiweb-cs");
 
-    const obj = { accessType: "VISITOR", username: "Laura" };
+    const obj = { accessType: "USER", username: "Laura" };
 
     if (!cs) {
       localStorage.setItem("acessibiweb-cs", JSON.stringify(obj));
