@@ -3,7 +3,6 @@ import Cart from "@/common/header/cart";
 import Home from "@/common/header/home";
 import Person from "@/common/header/person";
 import { useSession } from "@/context/auth";
-import { useCart } from "@/context/cart";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
@@ -39,11 +38,9 @@ function AdminHeaderMobile() {
 }
 
 function VisitorHeaderMobile() {
-  const { guidelinesTotal } = useCart();
-
   return (
     <BaseHeaderMobile
-      secItem={<Cart guidelinesTotal={guidelinesTotal} />}
+      secItem={<Cart />}
       fourthItem={<Person />}
       fifthItem={<Settings link="" />}
     />
@@ -51,11 +48,9 @@ function VisitorHeaderMobile() {
 }
 
 function CommonUserHeaderMobile() {
-  const { guidelinesTotal } = useCart();
-
   return (
     <BaseHeaderMobile
-      secItem={<Cart guidelinesTotal={guidelinesTotal} />}
+      secItem={<Cart />}
       fourthItem={<Settings link="" />}
       fifthItem={<Logout />}
     />
