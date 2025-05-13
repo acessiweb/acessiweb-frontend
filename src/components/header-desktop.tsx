@@ -1,144 +1,158 @@
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import PersonOutlined from "@mui/icons-material/PersonOutlined";
 import { usePathname } from "next/navigation";
-import SettingsIcon from "@mui/icons-material/Settings";
-import { useCart } from "@/context/cart";
-import SearchIcon from "@mui/icons-material/Search";
-import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
-import { useState } from "react";
-import { isAdmin, isCommonUser, isVisitor } from "@/common/utils/authorization";
+import { SlMicrophone, SlMagnifier } from "react-icons/sl";
+import { ReactNode } from "react";
+import { isAdmin, isCommonUser } from "@/common/utils/authorization";
 import { useSession } from "@/context/auth";
-import { PiPersonArmsSpreadLight } from "react-icons/pi";
 import Link from "next/link";
+import Cart from "@/common/header/cart";
+import Help from "@/common/header/help";
+import Settings from "@/common/header/settings";
+import Profile from "@/common/header/profile";
+import { captureVoiceAndPrintText } from "@/common/utils/voice";
+
+type BaseHeaderProps = {
+  secNavLastItem: ReactNode;
+  showHomepageLink: boolean;
+  navLinks: {
+    href: string;
+    desc: string;
+    id: string;
+  }[];
+  showSecHelper: boolean;
+};
+
+function AdminHeaderDesktop() {
+  const navLinks = [
+    {
+      href: "",
+      desc: "Solicitações",
+      id: "requests-nav",
+    },
+  ];
+
+  return (
+    <BaseHeaderDesktop
+      navLinks={navLinks}
+      showHomepageLink={true}
+      secNavLastItem={<Settings link="" />}
+      showSecHelper={false}
+    />
+  );
+}
+
+function CommonUserHeaderDesktop() {
+  const navLinks = [
+    {
+      href: "",
+      desc: "Meus projetos",
+      id: "projects-nav",
+    },
+    {
+      href: "",
+      desc: "Minhas solicitações",
+      id: "requests-nav",
+    },
+  ];
+
+  return (
+    <BaseHeaderDesktop
+      secNavLastItem={<Profile />}
+      showHomepageLink={true}
+      navLinks={navLinks}
+      showSecHelper={true}
+    />
+  );
+}
+
+function VisitorHeaderDesktop() {
+  return (
+    <BaseHeaderDesktop
+      secNavLastItem={<Settings link="" />}
+      showHomepageLink={false}
+      navLinks={[]}
+      showSecHelper={true}
+    />
+  );
+}
+
+function BaseHeaderDesktop(props: BaseHeaderProps) {
+  const setLinkToActive = (e: React.MouseEvent<HTMLLIElement>) => {
+    const activeLink = document.querySelector(
+      ".header-desktop__nav-links--active"
+    );
+    activeLink?.classList.remove("header-desktop__nav-links--active");
+    e.currentTarget.classList.add("header-desktop__nav-links--active");
+  };
+
+  return (
+    <header className="header-desktop">
+      <div className="header-desktop__logo-wrapper">
+        <img alt="Logo do acessiweb" src="/img/logo-horizontal-purple.png" />
+      </div>
+      <ul className="header-desktop__nav-links">
+        {props.showHomepageLink && (
+          <li
+            className="header-desktop__nav-links--active"
+            id="homepage-nav"
+            onClick={setLinkToActive}
+          >
+            <Link href="/">Início</Link>
+          </li>
+        )}
+        {props.navLinks.map((item, i) => (
+          <li key={i} id={item.id} onClick={setLinkToActive}>
+            <Link href={item.href}>{item.desc}</Link>
+          </li>
+        ))}
+      </ul>
+      <ul className="header-desktop__helpers">
+        <li id="page-search">
+          <form
+            className="header-desktop__helpers__search"
+            onSubmit={(e) => e.preventDefault()}
+          >
+            <button
+              className="header-desktop__helpers__search__mic"
+              type="button"
+              aria-label="Pesquisar por comando de voz"
+              title="Comando por voz"
+              onClick={() => captureVoiceAndPrintText("input-search")}
+            >
+              <SlMicrophone />
+            </button>
+            <div className="header-desktop__helpers__search__search-input">
+              <input
+                type="text"
+                id="input-search"
+                name="input-search"
+                placeholder="Pesquisar..."
+              />
+              <SlMagnifier aria-hidden={true} focusable={false} />
+            </div>
+          </form>
+        </li>
+        {props.showSecHelper && (
+          <li id="second-helper">
+            <Cart />
+          </li>
+        )}
+        <li id="help">
+          <Help />
+        </li>
+        <li id="last-helper">{props.secNavLastItem}</li>
+      </ul>
+    </header>
+  );
+}
 
 export default function HeaderDesktop() {
   const pathname = usePathname();
   const { accessType } = useSession();
-  const { guidelinesTotal } = useCart();
-  const [showKeyboardKeysModal, setShowKeyboardKeysModal] = useState(false);
-  const [showAccountModal, setShowAccountModal] = useState(false);
 
-  const setLinkToActive = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const activeLink = document.querySelector(".default-link--active");
-    activeLink?.classList.remove("default-link--active");
-    e.currentTarget.classList.add("default-link--active");
-  };
+  if (isAdmin(accessType)) return <AdminHeaderDesktop />;
 
-  if (!pathname.includes("admin") && !isAdmin(accessType)) {
-    return (
-      <header className="header">
-        <span>Acessibiweb</span>
-        <ul>
-          <li>
-            <Link className="default-link" href="/" onClick={setLinkToActive}>
-              {isCommonUser(accessType) && "Tela inicial"}
-            </Link>
-          </li>
-          {isCommonUser(accessType) && (
-            <>
-              <li>
-                <Link
-                  className={`default-link ${
-                    pathname.includes("projetos") && "default-link--active"
-                  }`}
-                  href="/projetos"
-                  onClick={setLinkToActive}
-                >
-                  Meus projetos
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className={`default-link ${
-                    pathname.includes("solicitacoes") && "default-link--active"
-                  }`}
-                  href="/solicitacoes"
-                  onClick={setLinkToActive}
-                >
-                  Minhas solicitações
-                </Link>
-              </li>
-            </>
-          )}
-        </ul>
-        <ul>
-          <li>
-            <form>
-              <div className="header__search-input">
-                <button className="btn-default" type="button">
-                  <MicNoneOutlinedIcon />
-                </button>
-                <input type="text" placeholder="Pesquisar..." />
-                <SearchIcon />
-              </div>
-            </form>
-          </li>
-          <li className="cart-icon-wrapper">
-            <Link
-              className="cart-icon"
-              href="/projetos/cadastrar"
-              style={{ position: "relative" }}
-              title="Carrinho"
-            >
-              <ShoppingCartOutlinedIcon />
-              <span className="header__cart-total">{guidelinesTotal}</span>
-            </Link>
-          </li>
-          {isCommonUser(accessType) && (
-            <li className="person-icon-wrapper">
-              <Link
-                className="person-icon"
-                href="/config/perfil"
-                title="Conta de usuário"
-              >
-                <PersonOutlined />
-              </Link>
-            </li>
-          )}
-          <li style={{ columnGap: "10px" }}>
-            <button className="btn-default">Logar</button>
-            <button className="btn-default">Criar conta</button>
-          </li>
-          <li>
-            <button className="btn-default">Ajuda</button>
-          </li>
-          <li>
-            <button className="btn-default">Leitor de tela</button>
-          </li>
-        </ul>
-      </header>
-    );
-  }
+  if (!pathname.includes("admin") && isCommonUser(accessType))
+    return <CommonUserHeaderDesktop />;
 
-  return (
-    <header className="header">
-      <ul>
-        <li>
-          <Link
-            className="default-link"
-            href="/admin"
-            onClick={setLinkToActive}
-          >
-            Tela inicial
-          </Link>
-        </li>
-        <li>
-          <Link
-            className="default-link"
-            href="/admin/solicitacoes"
-            onClick={setLinkToActive}
-          >
-            Solicitações
-          </Link>
-        </li>
-      </ul>
-      <ul>
-        <li>
-          <Link className="default-link" href="/admin/config">
-            <SettingsIcon />
-          </Link>
-        </li>
-      </ul>
-    </header>
-  );
+  return <VisitorHeaderDesktop />;
 }
