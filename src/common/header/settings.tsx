@@ -7,6 +7,7 @@ export default function Settings({ link }: { link: string }) {
       href={link}
       title="Configurações"
       aria-label="Ir para a tela de configurações"
+      className="header__settings"
     >
       <SlSettings aria-hidden={true} focusable={false} />
     </Link>

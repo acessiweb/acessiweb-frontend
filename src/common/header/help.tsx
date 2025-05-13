@@ -14,7 +14,7 @@ export default function Help() {
 
   return (
     <>
-      <div className="header-mobile__help">
+      <div className="header__help">
         <button
           onClick={showModal}
           aria-label="Abrir atalhos por teclado"

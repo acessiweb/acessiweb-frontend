@@ -15,6 +15,7 @@ export default function Person() {
         aria-pressed={isModalOpen}
         style={{ position: "relative" }}
         onClick={showModal}
+        className="header__person"
       >
         <IoPersonOutline aria-hidden={true} focusable={false} />
         <dialog
