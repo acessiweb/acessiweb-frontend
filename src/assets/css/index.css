@@ -549,7 +549,9 @@ button {
 .header-mobile > div:first-of-type .header__cart > svg,
 .header-mobile > div:first-of-type .header__help > button > svg,
 .header-mobile > div:first-of-type .header__person > svg,
-.header-mobile > div:first-of-type .header__settings > svg {
+.header-mobile > div:first-of-type .header__settings > svg,
+.header-mobile > div:first-of-type .header__logout > svg,
+.header-mobile > div:first-of-type .header__profile > svg {
   width: 2.1rem !important;
   height: 2.1rem !important;
 }

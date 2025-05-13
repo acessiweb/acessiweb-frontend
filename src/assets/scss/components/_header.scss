@@ -274,7 +274,9 @@ button {
     .header__cart,
     .header__help > button,
     .header__person,
-    .header__settings {
+    .header__settings,
+    .header__logout,
+    .header__profile {
       > svg {
         width: 2.1rem !important;
         height: 2.1rem !important;
