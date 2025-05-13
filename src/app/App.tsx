@@ -29,7 +29,7 @@ export default function App({ children }: { children?: React.ReactNode }) {
         <CartProvider>
           <ProjectProvider>
             <SecPageProvider>
-              {screenSize.width <= 499 ? <HeaderMobile /> : <HeaderDesktop />}
+              {screenSize.width <= 890 ? <HeaderMobile /> : <HeaderDesktop />}
               <main>{children}</main>
               {showPush && <Push />}
             </SecPageProvider>
