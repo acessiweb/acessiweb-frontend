@@ -11,7 +11,9 @@ export default function Cart({ guidelinesTotal }: { guidelinesTotal: number }) {
     >
       <SlBasket aria-hidden={true} focusable={false} />
       <span role="status" aria-atomic={true}>
+        <span className="sr-only">Total de </span>
         {guidelinesTotal}
+        <span className="sr-only">items no carrinho</span>
       </span>
     </Link>
   );
