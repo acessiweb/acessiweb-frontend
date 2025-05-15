@@ -4,6 +4,11 @@
 
 Information Technologies have become essential nowadays. They assist in various tasks, enabling access to services, products, among many other things. It is important that these technologies are accessible so that a large portion of people can use them. There are currently several accessibility guidelines available for systems—especially web systems—designed to support and facilitate digital accessibility, particularly for people with disabilities. Despite this, many systems still lack accessibility features. This project continues the development of a page titled Acessibiweb, which, based on a systematic literature review, identified accessibility guidelines to be used for different types of disabilities, such as Auditory, Motor, Visual, and Cognitive and Neural impairments, including Autism Spectrum Disorder (ASD).
 
+## TDD
+
+For this project was created a Technical Design Document, that can be accessed in the following link:
+[Acessiweb TDD](https://kind-parent-217.notion.site/TDD-1b1fcc794298803a9903faa23e46a487?pvs=74)
+
 ## Tools
 
 ![Next.js Badge](https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white)
