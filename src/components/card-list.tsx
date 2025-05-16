@@ -1,3 +1,5 @@
+"use client";
+
 import imageKitLoader from "@/image/loader";
 import Card from "./card";
 import Image from "next/image";
@@ -59,14 +61,16 @@ export default function CardList({
     <div className="card-list-not-found">
       <span>{errorMsg}</span>
       {showErrorMsgImage && (
-        <Image
-          loader={() => imageKitLoader("acessibility-1")}
-          src="acessibility-1"
-          alt="Desenho de um homem em cadeira de rodas e uma mulher sentada em cima de livros"
-          width={1000}
-          height={100}
-          quality={90}
-        />
+        <div className="card-list-not-found__img-wrapper">
+          <Image
+            loader={() => imageKitLoader("acessibility-1")}
+            src="acessibility-1"
+            alt="Desenho de um homem em cadeira de rodas e uma mulher sentada em cima de livros"
+            width={1000}
+            height={100}
+            quality={90}
+          />
+        </div>
       )}
     </div>
   );

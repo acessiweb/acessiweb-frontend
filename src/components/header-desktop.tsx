@@ -1,14 +1,15 @@
+"use client";
+
 import { usePathname } from "next/navigation";
-import { SlMicrophone, SlMagnifier } from "react-icons/sl";
 import { ReactNode } from "react";
 import { isAdmin, isCommonUser } from "@/common/utils/authorization";
 import { useSession } from "@/context/auth";
 import Link from "next/link";
-import Cart from "@/common/header/cart";
-import Help from "@/common/header/help";
-import Settings from "@/common/header/settings";
-import Profile from "@/common/header/profile";
-import { captureVoiceAndPrintText } from "@/common/utils/voice";
+import Cart from "@/common/nav/cart";
+import Help from "@/common/nav/help";
+import Settings from "@/common/nav/settings";
+import Profile from "@/common/nav/profile";
+import { BtnSearch } from "./search";
 
 type BaseHeaderProps = {
   secNavLastItem: ReactNode;
@@ -43,12 +44,12 @@ function AdminHeaderDesktop() {
 function CommonUserHeaderDesktop() {
   const navLinks = [
     {
-      href: "",
+      href: "/projetos",
       desc: "Meus projetos",
       id: "projects-nav",
     },
     {
-      href: "",
+      href: "/solicitacoes",
       desc: "Minhas solicitações",
       id: "requests-nav",
     },
@@ -107,29 +108,7 @@ function BaseHeaderDesktop(props: BaseHeaderProps) {
       </ul>
       <ul className="header-desktop__helpers">
         <li id="page-search">
-          <form
-            className="header-desktop__helpers__search"
-            onSubmit={(e) => e.preventDefault()}
-          >
-            <button
-              className="header-desktop__helpers__search__mic"
-              type="button"
-              aria-label="Pesquisar por comando de voz"
-              title="Comando por voz"
-              onClick={() => captureVoiceAndPrintText("input-search")}
-            >
-              <SlMicrophone />
-            </button>
-            <div className="header-desktop__helpers__search__search-input">
-              <input
-                type="text"
-                id="input-search"
-                name="input-search"
-                placeholder="Pesquisar..."
-              />
-              <SlMagnifier aria-hidden={true} focusable={false} />
-            </div>
-          </form>
+          <BtnSearch classname="search-header" />
         </li>
         {props.showSecHelper && (
           <li id="second-helper">

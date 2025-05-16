@@ -1,12 +1,12 @@
 "use client";
 
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import PushDelete from "./push-delete";
 import { useState } from "react";
 import Link from "next/link";
 import { useSecPage } from "@/context/sec-page";
+import { BsCartPlus } from "react-icons/bs";
 
 type CardType = {
   id: string;
@@ -43,7 +43,7 @@ export default function Card({
 
   const CardLeft = () => {
     return (
-      <div>
+      <div className="card__desc">
         <span>{mainText}</span>
         {secondaryText && <span>{secondaryText}</span>}
       </div>
@@ -70,7 +70,7 @@ export default function Card({
           className="btn-transparent"
           onClick={() => onAdd && onAdd({ id, name: mainText })}
         >
-          <AddShoppingCartIcon />
+          <BsCartPlus />
         </button>
       )}
       {hasDelete && !hasUpdate && (
