@@ -1,0 +1,11 @@
+@use "../var";
+
+.breadcrumb {
+  display: flex;
+  column-gap: var.$space-xs;
+  font-size: var.$fs-x-small;
+
+  &__link-desc {
+    margin-right: var.$space-xs;
+  }
+}
