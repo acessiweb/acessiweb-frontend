@@ -1,5 +1,7 @@
 "use client";
 
+import { TABLET_SCREEN_SIZE } from "@/common/utils/var";
+import FooterMobile from "@/components/footer-mobile";
 import HeaderDesktop from "@/components/header-desktop";
 import HeaderMobile from "@/components/header-mobile";
 import Push from "@/components/push";
@@ -8,18 +10,14 @@ import CartProvider from "@/context/cart";
 import ProjectProvider from "@/context/projects";
 import { usePush } from "@/context/push";
 import SecPageProvider from "@/context/sec-page";
-import { useEffect, useState } from "react";
+import useScreenSize from "@/hooks/useScreenSize";
+import { useEffect } from "react";
 
 export default function App({ children }: { children?: React.ReactNode }) {
   const { showPush } = usePush();
-  const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
+  const { screenSize } = useScreenSize();
 
   useEffect(() => {
-    setScreenSize({
-      width: screen.width,
-      height: screen.height,
-    });
-
     document.body.classList.add("open-sans");
   }, []);
 
@@ -29,8 +27,15 @@ export default function App({ children }: { children?: React.ReactNode }) {
         <CartProvider>
           <ProjectProvider>
             <SecPageProvider>
-              {screenSize.width <= 890 ? <HeaderMobile /> : <HeaderDesktop />}
-              <main>{children}</main>
+              <div className="content">
+                {screenSize.width <= TABLET_SCREEN_SIZE ? (
+                  <HeaderMobile />
+                ) : (
+                  <HeaderDesktop />
+                )}
+                <main>{children}</main>
+              </div>
+              {screenSize.width <= TABLET_SCREEN_SIZE && <FooterMobile />}
               {showPush && <Push />}
             </SecPageProvider>
           </ProjectProvider>
