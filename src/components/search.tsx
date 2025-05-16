@@ -1,31 +1,68 @@
-import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
+"use client";
+
 import { captureVoiceAndPrintText } from "@/common/utils/voice";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import { useState } from "react";
+import { SlMagnifier, SlMicrophone } from "react-icons/sl";
 
 type SearchProps = {
-  searchText: string;
+  classname: string;
+  handleSearchClose?: () => void;
+  placeholderText: string;
 };
 
-export function Search({ searchText }: SearchProps) {
-  return (
-    <div className="filter-form__search-input-wrapper">
-      <div className="filter-form__search-icon">
-        <SearchOutlinedIcon />
-      </div>
-      <input
-        className="input-default"
-        type="text"
-        placeholder={searchText}
-        name="keyword"
-        id="keyword"
+export function BtnSearch({ classname }: { classname: string }) {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const toggleSearch = () => {
+    setIsSearchOpen((prev) => !prev);
+  };
+
+  if (isSearchOpen) {
+    return (
+      <Search
+        classname={classname}
+        handleSearchClose={toggleSearch}
+        placeholderText="Faça uma busca"
       />
+    );
+  }
+
+  return (
+    <button
+      className="btn-icon"
+      onClick={toggleSearch}
+      style={{ cursor: "pointer" }}
+    >
+      <SlMagnifier />
+    </button>
+  );
+}
+
+export default function Search({
+  classname,
+  handleSearchClose,
+  placeholderText,
+}: SearchProps) {
+  return (
+    <div className={classname}>
       <button
-        className="btn-default"
+        className="btn-icon"
         type="button"
         onClick={() => captureVoiceAndPrintText("keyword")}
       >
-        <MicNoneOutlinedIcon />
+        <SlMicrophone />
       </button>
+      <form className={`${classname}__search-form`}>
+        <input
+          type="text"
+          placeholder={placeholderText}
+          name="keyword"
+          id="keyword"
+        />
+        <button onClick={handleSearchClose}>
+          <SlMagnifier />
+        </button>
+      </form>
     </div>
   );
 }
