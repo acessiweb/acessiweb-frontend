@@ -2,40 +2,49 @@
 
 import CardList from "@/components/card-list";
 import { useProjects } from "@/context/projects";
-import Link from "next/link";
 import Head from "@/components/head";
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
-import { Search } from "@/components/search";
+import useScreenSize from "@/hooks/useScreenSize";
+import { MOBILE_SCREEN_SIZE, TABLET_SCREEN_SIZE } from "@/common/utils/var";
+import { Breadcrumb } from "@/components/breadcrumb";
+import ControlBarMobile from "@/components/control-bar-mobile";
+import ControlBarDesktop from "@/components/control-bar-desktop";
 
 export default function Projects() {
   const { projects, deleteProject } = useProjects();
+  const { screenSize } = useScreenSize();
+
+  const crumbs = [
+    {
+      desc: "PROJETOS",
+      link: `/projetos`,
+    },
+    {
+      desc: "PROJETOS",
+      link: `/projetos`,
+    },
+  ];
 
   return (
     <>
       <Head title="Meus projetos" />
       <div className="projects">
-        <div className="projects__header">
-          <h1 className="heading-1">Meus projetos</h1>
-          <Link className="btn-link-default" href="/projetos/cadastrar">
-            Cadastrar
-          </Link>
-        </div>
-        <form className="filter-form">
-          <Search searchText="Busque por uma palavra-chave" />
-          <div className="filter-form__calendar-icon">
-            <CalendarMonthOutlinedIcon />
-          </div>
-          {/* <div className="input-wrapper">
-              <label htmlFor="initialDate">
-                Data inicial de criação do projeto
-              </label>
-              <input className="input-default" name="initialDate" type="date" />
-            </div>
-            <div className="input-wrapper">
-              <label htmlFor="endDate">Data final de criação do projeto</label>
-              <input className="input-default" name="endDate" type="date" />
-            </div> */}
-        </form>
+        {screenSize.width <= TABLET_SCREEN_SIZE && (
+          <Breadcrumb crumbs={crumbs} />
+        )}
+        <h1 className="heading-1">Meus projetos</h1>
+        {screenSize.width <= MOBILE_SCREEN_SIZE ? (
+          <ControlBarMobile
+            createBtnLink="/projetos/cadastrar"
+            createBtnText="Criar projeto"
+          />
+        ) : (
+          <ControlBarDesktop
+            createBtnLink="/projetos/cadastrar"
+            createBtnText="Criar projeto"
+            searchPlaceholderText="Buscar por projeto..."
+          />
+        )}
+
         <CardList
           data={projects}
           errorMsg="Oops! Você ainda não possui projetos."
