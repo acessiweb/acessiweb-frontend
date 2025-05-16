@@ -1,0 +1,54 @@
+@use "../var";
+
+@mixin search($padding, $mainColor) {
+  display: flex;
+  align-items: center;
+  column-gap: var.$space-xs;
+
+  svg {
+    height: calc(var.$svg-small - 0.2rem);
+    width: calc(var.$svg-small - 0.2rem);
+  }
+
+  input {
+    all: unset;
+  }
+
+  .btn-icon {
+    background-color: $mainColor;
+    padding: $padding;
+  }
+
+  &__search-form {
+    border: var.$border-1;
+    border-radius: var.$border-radius-3;
+    background-color: $mainColor !important;
+    display: flex;
+    align-items: center;
+    padding: $padding;
+    outline: none;
+    column-gap: var.$space-xs;
+    flex: 1;
+
+    input {
+      flex: 1;
+      color: var.$text;
+
+      &::placeholder {
+        font-style: italic;
+      }
+    }
+  }
+}
+
+.search {
+  @include search(var.$space-sm, var.$lightPurple);
+}
+
+.search-header {
+  @include search(calc(var.$space-xs + 0.1rem) var.$space-sm, var.$purple);
+
+  input::placeholder {
+    color: var.$text;
+  }
+}
