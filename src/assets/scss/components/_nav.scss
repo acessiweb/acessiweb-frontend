@@ -1,0 +1,80 @@
+@use "../var";
+@use "../mixins" as mixins;
+
+button {
+  all: unset;
+}
+
+.nav {
+  &__help,
+  &__settings,
+  &__profile,
+  &__cart {
+    cursor: pointer;
+  }
+
+  &__help,
+  &__settings {
+    display: flex;
+    align-items: center;
+  }
+
+  &__help {
+    position: relative;
+
+    .modal {
+      width: 80vw;
+      bottom: calc(100% + 2rem);
+      height: 70vh;
+      overflow-y: auto;
+      flex-direction: row;
+      align-items: flex-start;
+      column-gap: var.$space-md;
+
+      > div:first-of-type {
+        > div:first-of-type {
+          padding-bottom: var.$space-md;
+          margin-bottom: var.$space-md;
+          border-bottom: var.$border-1;
+        }
+      }
+    }
+
+    > button,
+    > button > svg {
+      position: absolute;
+      left: 50%;
+      right: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &__cart {
+    @include mixins.icon-badge(
+      0,
+      20px,
+      var.$fs-x-small,
+      calc(var.$space-xs - 0.2rem) calc(var.$space-xs + 0.1rem)
+    );
+
+    span {
+      top: -5px;
+    }
+  }
+
+  &__person {
+    .add-account {
+      @include mixins.icon-badge(
+        0,
+        0,
+        calc(var.$fs-x-small - 0.3rem),
+        0px calc(var.$space-xs - 0.1rem)
+      );
+
+      span {
+        bottom: 8px;
+        right: 15px;
+      }
+    }
+  }
+}
