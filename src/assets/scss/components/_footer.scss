@@ -1,0 +1,59 @@
+@use "../var";
+@use "../mixins" as mixins;
+
+.footer-mobile {
+  width: 100%;
+  column-gap: var.$space-md;
+  height: var.$header-mobile-height;
+  padding-top: var.$space-xs;
+  background-color: transparent;
+  position: fixed;
+  bottom: 0;
+  z-index: 400;
+
+  > div:first-of-type {
+    margin: 0 calc(var.$space-lg + 0.4rem);
+    border-top: var.$border-2;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding-top: var.$space-sm;
+
+    .nav__homepage,
+    .nav__cart,
+    .nav__help > button,
+    .nav__person,
+    .nav__settings,
+    .nav__logout,
+    .nav__profile {
+      > svg {
+        width: var.$svg-medium !important;
+        height: var.$svg-medium !important;
+      }
+    }
+
+    .nav__help {
+      margin: 0 var.$space-lg !important;
+    }
+
+    .nav__person {
+      .modal {
+        bottom: calc(100% + 0.2rem);
+      }
+    }
+  }
+
+  .add-guideline {
+    @include mixins.icon-badge(
+      0,
+      -15px,
+      calc(var.$fs-x-small - 0.2rem),
+      calc(var.$space-xs - 0.3rem) var.$space-xs
+    );
+
+    span {
+      bottom: 1px;
+      right: 0px;
+    }
+  }
+}

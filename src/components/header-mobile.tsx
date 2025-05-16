@@ -1,58 +1,75 @@
+"use client";
+
 import { isAdmin, isCommonUser } from "@/common/utils/authorization";
-import Cart from "@/common/header/cart";
-import Home from "@/common/header/home";
-import Person from "@/common/header/person";
 import { useSession } from "@/context/auth";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ReactNode } from "react";
-import { PiPersonArmsSpreadLight } from "react-icons/pi";
-import Settings from "@/common/header/settings";
-import Logout from "@/common/header/logout";
-import Help from "@/common/header/help";
+import { SlArrowLeft } from "react-icons/sl";
+import Profile from "@/common/nav/profile";
 
 type BaseHeaderProps = {
-  secItem: ReactNode;
-  fourthItem: ReactNode;
-  fifthItem: ReactNode;
+  firstItem: ReactNode;
+  secItem?: ReactNode;
+  thirdItem: ReactNode;
 };
 
-function AdminHeaderMobile() {
+function NavigateBackward() {
+  const router = useRouter();
+
+  return (
+    <button
+      title="Voltar"
+      aria-label="Voltar para página anterior"
+      className="header-mobile__backward-nav btn-icon"
+      onClick={() => router.back()}
+    >
+      <SlArrowLeft />
+    </button>
+  );
+}
+
+function Logo() {
+  return (
+    <div className="header-mobile__logo-wrapper">
+      <img alt="Logo do acessiweb" src="/img/logo-horizontal-purple.png" />
+    </div>
+  );
+}
+
+function AdminHeaderMobile({ pathname }: { pathname: string }) {
   return (
     <BaseHeaderMobile
-      secItem={
-        <Link
-          href=""
-          className="add-guideline"
-          title="Cadastrar diretriz"
-          aria-label="Ir para tela de cadastro de diretriz"
-        >
-          <PiPersonArmsSpreadLight aria-hidden={true} focusable={false} />
-          <span>&#43;</span>
-        </Link>
-      }
-      fourthItem={<Settings link="" />}
-      fifthItem={<Logout />}
+      firstItem={pathname === "/" ? <Logo /> : <NavigateBackward />}
+      thirdItem={<Profile />}
     />
   );
 }
 
-function VisitorHeaderMobile() {
+function VisitorHeaderMobile({ pathname }: { pathname: string }) {
   return (
     <BaseHeaderMobile
-      secItem={<Cart />}
-      fourthItem={<Person />}
-      fifthItem={<Settings link="" />}
+      firstItem={pathname === "/" ? <Logo /> : <NavigateBackward />}
+      thirdItem={<Profile />}
     />
   );
 }
 
-function CommonUserHeaderMobile() {
+function CommonUserHeaderMobile({
+  pathname,
+  username,
+}: {
+  pathname: string;
+  username: string;
+}) {
+  function HelloUser() {
+    return <span className="header-mobile__hello-user">Olá, {username}!</span>;
+  }
+
   return (
     <BaseHeaderMobile
-      secItem={<Cart />}
-      fourthItem={<Settings link="" />}
-      fifthItem={<Logout />}
+      firstItem={pathname === "/" ? <HelloUser /> : <NavigateBackward />}
+      secItem={pathname !== "/" && <Logo />}
+      thirdItem={<Profile />}
     />
   );
 }
@@ -60,26 +77,22 @@ function CommonUserHeaderMobile() {
 function BaseHeaderMobile(props: BaseHeaderProps) {
   return (
     <header className="header-mobile">
-      <div>
-        <Home />
-        {props.secItem}
-        <Help />
-        {props.fourthItem}
-        {props.fifthItem}
-      </div>
+      {props.firstItem}
+      {props.secItem}
+      {props.thirdItem}
     </header>
   );
 }
 
 export default function HeaderMobile() {
   const pathname = usePathname();
-  const { accessType } = useSession();
+  const { accessType, username } = useSession();
 
   if (pathname.includes("admin") && isAdmin(accessType))
-    return <AdminHeaderMobile />;
+    return <AdminHeaderMobile pathname={pathname} />;
 
   if (!pathname.includes("admin") && isCommonUser(accessType))
-    return <CommonUserHeaderMobile />;
+    return <CommonUserHeaderMobile pathname={pathname} username={username} />;
 
-  return <VisitorHeaderMobile />;
+  return <VisitorHeaderMobile pathname={pathname} />;
 }

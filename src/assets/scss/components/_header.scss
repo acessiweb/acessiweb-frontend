@@ -1,94 +1,6 @@
 @use "../var";
 @use "../mixins" as mixins;
 
-button {
-  all: unset;
-}
-
-.header {
-  &__help,
-  &__settings,
-  &__profile,
-  &__cart {
-    cursor: pointer;
-  }
-
-  &__help,
-  &__settings {
-    display: flex;
-    align-items: center;
-  }
-
-  &__help {
-    position: relative;
-
-    .modal {
-      width: 80vw;
-      bottom: calc(100% + 2rem);
-      height: 70vh;
-      overflow-y: auto;
-      flex-direction: row;
-      align-items: flex-start;
-      column-gap: var.$space-md;
-
-      > div:first-of-type {
-        > div:first-of-type {
-          padding-bottom: var.$space-md;
-          margin-bottom: var.$space-md;
-          border-bottom: var.$border-1;
-        }
-      }
-    }
-
-    > button {
-      position: absolute;
-      background-color: var.$purple;
-      border-radius: var.$border-radius-default;
-      border: var.$border-1;
-      padding: calc(var.$space-md + 0.3rem) calc(var.$space-md + 0.5rem);
-      left: 15%;
-      transform: translate(-15%, -50%);
-      right: 50%;
-
-      > svg {
-        position: absolute;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        right: 50%;
-      }
-    }
-  }
-
-  &__cart {
-    @include mixins.icon-badge(
-      0,
-      20px,
-      var.$fs-x-small,
-      calc(var.$space-xs - 0.2rem) calc(var.$space-xs + 0.1rem)
-    );
-
-    span {
-      top: -5px;
-    }
-  }
-
-  &__person {
-    .add-account {
-      @include mixins.icon-badge(
-        0,
-        0,
-        calc(var.$fs-x-small - 0.3rem),
-        0px calc(var.$space-xs - 0.1rem)
-      );
-
-      span {
-        bottom: 8px;
-        right: 15px;
-      }
-    }
-  }
-}
-
 .header-desktop {
   display: flex;
   margin: 0 var.$space-lg;
@@ -96,7 +8,7 @@ button {
   justify-content: space-between;
   border-bottom: var.$border-2;
 
-  .header__help {
+  .nav__help {
     > button,
     > button > svg {
       position: unset !important;
@@ -106,7 +18,7 @@ button {
     }
   }
 
-  .header__cart {
+  .nav__cart {
     margin-right: var.$space-xs;
 
     span {
@@ -151,22 +63,7 @@ button {
   }
 
   &__helpers {
-    flex: 1;
-
-    .header__profile,
-    .header__settings,
-    .header__help > button {
-      padding: calc(var.$space-xs - 0.1rem) var.$space-xs !important;
-    }
-
-    .header__profile,
-    .header__settings {
-      background-color: var.$purple;
-      border: var.$border-1;
-      border-radius: var.$border-radius-default;
-    }
-
-    .header__help {
+    .nav__help {
       .modal {
         width: 50vw;
         top: calc(100% + 1rem);
@@ -176,7 +73,7 @@ button {
       }
     }
 
-    .header__profile {
+    .nav__profile {
       .modal {
         z-index: 1000;
       }
@@ -187,126 +84,44 @@ button {
       width: var.$svg-small;
     }
 
-    .header__cart {
+    .nav__cart {
       svg {
         height: var.$svg-medium;
         width: var.$svg-medium;
-      }
-    }
-
-    &__search {
-      display: flex;
-      align-items: center;
-      column-gap: var.$space-xs;
-
-      &__mic {
-        background-color: var.$purple;
-        border: none;
-        outline: none;
-        border: var.$border-1;
-        border-radius: var.$border-radius-default;
-        padding: var.$space-xs + 0.1rem !important;
-        cursor: pointer;
-
-        svg {
-          height: calc(var.$svg-small - 0.4rem);
-          width: calc(var.$svg-small - 0.4rem);
-        }
-      }
-
-      &__search-input {
-        display: flex;
-        align-items: center;
-        padding: calc(var.$space-xs + 0.1rem) var.$space-sm;
-        border-radius: var.$border-radius-default;
-        outline: none;
-        border: var.$border-1;
-        background-color: var.$purple;
-        column-gap: var.$space-xs;
-
-        svg {
-          height: calc(var.$svg-small - 0.2rem);
-          width: calc(var.$svg-small - 0.2rem);
-        }
-
-        input {
-          outline: none;
-          border: none;
-          background-color: transparent;
-          font-size: var.$fs-small;
-          color: var.$text;
-          width: 10vw;
-          font-style: italic;
-
-          &::placeholder {
-            font-size: var.$fs-small;
-            color: var.$text;
-          }
-        }
-
-        button {
-          padding: calc(var.$space-xs - 0.2rem);
-        }
       }
     }
   }
 }
 
 .header-mobile {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  column-gap: var.$space-md;
-  height: var.$header-mobile-height;
-  z-index: 400;
-  background-color: var.$lighterPurple;
-  padding-top: var.$space-xs;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: var.$border-2;
+  margin: 0 var.$space-lg;
+  padding: calc(var.$space-md + 0.2rem) 0 var.$space-sm;
+  align-items: center;
 
-  > div:first-of-type {
-    margin: 0 calc(var.$space-lg + 0.4rem);
-    border-top: var.$border-2;
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-    padding-top: var.$space-xs;
+  &__hello-user {
+    font-style: italic;
+    font-weight: var.$bold;
+    font-size: calc(var.$fs-small + 0.1rem);
+  }
 
-    .header__homepage,
-    .header__cart,
-    .header__help > button,
-    .header__person,
-    .header__settings,
-    .header__logout,
-    .header__profile {
-      > svg {
-        width: 2.1rem !important;
-        height: 2.1rem !important;
-      }
-    }
-
-    > button:nth-child(2) {
-      margin-right: var.$space-lg;
-    }
-
-    > button:nth-child(4) {
-      margin-left: var.$space-lg;
-
-      .modal {
-        bottom: calc(100% + 0.2rem);
-      }
+  .nav__profile {
+    > svg {
+      width: var.$svg-small !important;
+      height: var.$svg-small !important;
     }
   }
 
-  .add-guideline {
-    @include mixins.icon-badge(
-      0,
-      -15px,
-      calc(var.$fs-x-small - 0.2rem),
-      calc(var.$space-xs - 0.3rem) var.$space-xs
-    );
+  &__logo-wrapper {
+    max-width: 100px;
+    max-height: 28px;
+    margin-top: var.$space-xs;
 
-    span {
-      bottom: 1px;
-      right: 0px;
+    img {
+      width: 100%;
+      height: 100%;
     }
   }
 }
