@@ -29,10 +29,12 @@ $space-xl: 3rem;
 
 //borders
 $border-1: 1px solid $text;
-$border-2: 1px solid $lightPurple;
+$border-2: 2px solid $lightPurple;
 
 //border radius
-$border-radius-default: 15px;
+$border-radius-default: 12px;
+$border-radius-2: 25px;
+$border-radius-3: 15px;
 
 //effects
 $shadow-small: 1px 1px 1px 1px $text;
@@ -40,8 +42,11 @@ $shadow-small: 1px 1px 1px 1px $text;
 // $shadow-large: 2px 1px 3px $text;
 
 //svg sizes
+$svg-x-small: 1.2rem;
 $svg-small: 1.6rem;
 $svg-medium: 1.9rem;
+$svg-large: 2.1rem;
+$svg-x-large: 2.6rem;
 
 //screen size
 $mobile: 499px;

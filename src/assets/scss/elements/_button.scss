@@ -1,12 +1,16 @@
 @use "../var";
 
 %button {
-  background-color: var.$lightPurple;
+  background-color: var.$purple;
   border: var.$border-1;
-  border-radius: var.$border-radius-default;
-  padding: var.$space-sm;
+  border-radius: var.$border-radius-3;
+  padding: var.$space-xs calc(var.$space-sm + 0.2rem);
   cursor: pointer;
   font-size: var.$fs-small;
+  font-style: italic;
+  font-weight: var.$semibold;
+  display: flex;
+  align-items: center;
 
   &:hover {
     background-color: var.$lighterPurple;
@@ -32,4 +36,13 @@
 
 .btn-link-default {
   @extend %button;
+}
+
+.btn-icon {
+  display: flex;
+  align-items: center;
+  padding: var.$space-xs calc(var.$space-xs + 0.2rem);
+  background-color: var.$purple;
+  border: var.$border-1;
+  border-radius: var.$border-radius-default;
 }

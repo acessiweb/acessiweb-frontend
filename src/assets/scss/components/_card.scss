@@ -9,15 +9,25 @@
   display: flex;
   flex: 1;
   justify-content: space-between;
-  align-items: center;
   column-gap: var.$space-sm;
   margin-bottom: auto;
   background-color: var.$lightPurple;
-  padding: var.$space-sm;
-  border-radius: var.$border-radius-default;
+  padding: var.$space-xs var.$space-sm var.$space-xs
+    calc(var.$space-md + 0.4rem);
+  border-radius: var.$border-radius-2;
   border: var.$border-1;
+  font-weight: var.$medium;
+
+  &__desc {
+    margin-top: calc(var.$space-md + 0.1rem);
+  }
 
   &:hover {
     background-color: var.$lightPurple;
+  }
+
+  svg {
+    height: var.$svg-x-large !important;
+    width: var.$svg-x-large !important;
   }
 }

@@ -4,19 +4,17 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  row-gap: var.$space-lg;
-  width: 100%;
 
-  form {
+  .guidelines-filters {
     display: flex;
-    column-gap: var.$space-lg;
+    flex-direction: column;
+    row-gap: var.$space-md;
+    margin: 0 auto;
   }
 
-  &__search-guideline {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    column-gap: var.$space-sm;
+  h1 {
+    text-align: center;
+    margin-bottom: var.$space-md;
   }
 
   &__guideline-checkbox-group {
