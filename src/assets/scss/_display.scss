@@ -1,0 +1,24 @@
+@use "./var";
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var.$space-md;
+  flex: none;
+
+  &__item {
+    display: flex;
+    flex: 1;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  row-gap: var.$space-md;
+
+  &__item {
+    flex: 1;
+  }
+}
