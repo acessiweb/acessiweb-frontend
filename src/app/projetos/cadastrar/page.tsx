@@ -1,6 +1,6 @@
 "use client";
 
-import CardList from "@/components/card-list";
+// import CardList from "@/components/card-list";
 import Head from "@/components/head";
 import { useCart } from "@/context/cart";
 import { useProjects } from "@/context/projects";
@@ -11,6 +11,11 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
 import { captureVoiceAndPrintText } from "@/common/utils/voice";
+import Card from "@/components/card";
+import CardDelete from "@/common/card/delete";
+import useScreenSize from "@/hooks/useScreenSize";
+import { TABLET_SCREEN_SIZE } from "@/common/utils/var";
+import { useState } from "react";
 
 export default function AddProject() {
   const {
@@ -22,12 +27,15 @@ export default function AddProject() {
   } = useCart();
   const { setShowPush, setPushMsg } = usePush();
   const { addProject } = useProjects();
+  const { screenSize } = useScreenSize();
+  const [showGuidelines, setShowGuidelines] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     getValues,
+    setValue,
   } = useForm({
     resolver: yupResolver(createProjectSchema),
     values: {
@@ -59,74 +67,92 @@ export default function AddProject() {
     <>
       <Head title="Adicionar projeto" />
       <div className="cart">
-        <form className="form" onSubmit={handleSubmit(onSubmit)}>
-          <div className="cart__wrapper-left">
-            <div className="cart__wrapper-left__left">
-              <div className="input-text-wrapper-transparent">
-                <input
-                  {...register("name")}
-                  className="input-transparent"
-                  maxLength={150}
-                  placeholder="Acessibiweb"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    addNameToCart(e.target.value)
-                  }
-                  id="project-name"
-                  name="project-name"
-                />
-                <button
-                  className="btn-default"
-                  type="button"
-                  onClick={() => captureVoiceAndPrintText("project-name")}
-                >
-                  <MicNoneOutlinedIcon />
-                </button>
-              </div>
-              {errors.name && (
-                <p className="form-error-msg">{errors.name?.message}</p>
-              )}
-              <div className="input-text-wrapper">
-                <textarea
-                  {...register("description")}
-                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                    addDescriptionToCart(e.target.value)
-                  }
-                  rows={11}
-                  placeholder="Centralizar e organizar diretrizes de acessibilidade digital em uma plataforma acessível e intuitiva, facilitando o acesso a informações essenciais e incentivando a criação de experiências digitais mais inclusivas e alinhadas aos padrões de acessibilidade digital."
-                  id="project-description"
-                  name="project-description"
-                />
-                <button
-                  className="btn-default"
-                  type="button"
-                  onClick={() =>
-                    captureVoiceAndPrintText("project-description")
-                  }
-                >
-                  <MicNoneOutlinedIcon />
-                </button>
-              </div>
-            </div>
-            <div className="cart__wrapper-left__guidelines">
-              <div className="cart__wrapper-left__guidelines__header">
-                <h3 className="heading-3">Diretrizes selecionadas</h3>
-                <Link className="btn-link-default" href="/">
-                  +
-                </Link>
-              </div>
-              <CardList
-                data={cart.guidelines}
-                hasDelete={true}
-                onDelete={removeGuidelineOfCart}
-                errorMsg="Você ainda não incluiu diretrizes no seu projeto"
-                showErrorMsgImage={false}
-              />
-              {errors.guidelines && (
-                <p className="form-error-msg">{errors.guidelines?.message}</p>
-              )}
-            </div>
+        <form className="cart__form" onSubmit={handleSubmit(onSubmit)}>
+          <div className="cart__form__project-name">
+            <button
+              className="mic btn-icon"
+              type="button"
+              onClick={() =>
+                captureVoiceAndPrintText("project-name", "name", setValue)
+              }
+            >
+              <MicNoneOutlinedIcon />
+            </button>
+            <input
+              {...register("name")}
+              maxLength={150}
+              placeholder="Acessiweb"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                addNameToCart(e.target.value)
+              }
+              id="project-name"
+              name="project-name"
+            />
           </div>
-          <div style={{ margin: "30px auto 0" }}>
+          {errors.name && (
+            <p className="form-error-msg">{errors.name.message}</p>
+          )}
+          <div>
+            <button
+              onClick={() => setShowGuidelines((prev) => !prev)}
+              type="button"
+            >
+              Diretrizes selecionadas
+            </button>
+            <Link className="btn-icon" href="/diretrizes">
+              &#43;
+            </Link>
+          </div>
+          {errors.guidelines && (
+            <p className="form-error-msg">{errors.guidelines.message}</p>
+          )}
+          <div className="cart__form__project-desc">
+            <textarea
+              {...register("description")}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                addDescriptionToCart(e.target.value)
+              }
+              rows={screenSize.width <= TABLET_SCREEN_SIZE ? 8 : 4}
+              placeholder="Centralizar e organizar diretrizes de acessibilidade digital em uma plataforma acessível e intuitiva, facilitando o acesso a informações essenciais e incentivando a criação de experiências digitais mais inclusivas e alinhadas aos padrões de acessibilidade digital."
+              id="project-description"
+              name="project-description"
+            />
+            <button
+              className="btn-icon"
+              type="button"
+              onClick={() =>
+                captureVoiceAndPrintText(
+                  "project-description",
+                  "description",
+                  setValue
+                )
+              }
+            >
+              <MicNoneOutlinedIcon />
+            </button>
+          </div>
+          {showGuidelines && (
+            <div className="cart__form__project-guidelines">
+              {cart.guidelines.length > 0 ? (
+                <div className="grid">
+                  {cart.guidelines.map((guide, i) => (
+                    <div className="grid__item" key={i}>
+                      <Card mainText={guide.name} registerId={guide.id}>
+                        <CardDelete
+                          onDelete={removeGuidelineOfCart}
+                          registerId={guide.id}
+                          registerName={guide.name}
+                        />
+                      </Card>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p>Você ainda não incluiu diretrizes no seu projeto</p>
+              )}
+            </div>
+          )}
+          <div className="cart__form__btn">
             <button type="submit" className="btn-default">
               Criar
             </button>
