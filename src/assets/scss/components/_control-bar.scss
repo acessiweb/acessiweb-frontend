@@ -21,14 +21,9 @@
 .control-bar-desktop {
   column-gap: var.$space-lg;
 
-  &__controls {
-    display: flex;
-    flex: 1;
-
-    .search {
-      &__search-form input {
-        width: 20vw;
-      }
+  .search {
+    &__search-form input {
+      width: 20vw;
     }
   }
 

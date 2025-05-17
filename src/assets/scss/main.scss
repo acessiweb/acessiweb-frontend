@@ -85,13 +85,13 @@ body {
 @include meta.load-css("elements/heading");
 @include meta.load-css("elements/form");
 @include meta.load-css("elements/breadcrumb");
+@include meta.load-css("elements/not-found");
 
 //components
 @include meta.load-css("components/nav");
 @include meta.load-css("components/sec-page");
 @include meta.load-css("components/header");
 @include meta.load-css("components/card");
-@include meta.load-css("components/card-list");
 @include meta.load-css("components/push");
 @include meta.load-css("components/push-delete");
 @include meta.load-css("components/modal");
@@ -100,11 +100,12 @@ body {
 @include meta.load-css("components/search");
 
 //pages
-@include meta.load-css("pages/homepage");
+@include meta.load-css("pages/homepage-mobile");
 @include meta.load-css("pages/projects");
 @include meta.load-css("pages/cart");
 @include meta.load-css("pages/edit-project");
 @include meta.load-css("pages/read-project");
+@include meta.load-css("pages/guidelines");
 
 //animations
 @include meta.load-css("animation");
@@ -112,3 +113,4 @@ body {
 //others
 @include meta.load-css("overlay");
 @include meta.load-css("screen-reader");
+@include meta.load-css("display");
