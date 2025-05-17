@@ -6,8 +6,8 @@
   column-gap: var.$space-md;
   height: var.$header-mobile-height;
   padding-top: var.$space-xs;
-  background-color: transparent;
   position: fixed;
+  background-color: var.$lighterPurple;
   bottom: 0;
   z-index: 400;
 
@@ -26,6 +26,8 @@
     .nav__settings,
     .nav__logout,
     .nav__profile {
+      align-self: flex-start;
+
       > svg {
         width: var.$svg-medium !important;
         height: var.$svg-medium !important;
@@ -33,7 +35,11 @@
     }
 
     .nav__help {
-      margin: 0 var.$space-lg !important;
+      background-color: var.$purple;
+      border-radius: var.$border-radius-default;
+      border: var.$border-1;
+      top: -35px;
+      padding: calc(var.$space-md + 0.2rem) calc(var.$space-md + 0.5rem) !important;
     }
 
     .nav__person {

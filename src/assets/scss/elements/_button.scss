@@ -23,9 +23,11 @@
   border: none;
   cursor: pointer;
   padding: var.$space-sm;
+  display: flex;
+  align-items: center;
 
   &:hover {
-    border-radius: var.$border-radius-default;
+    border-radius: var.$border-radius-3;
     background-color: var.$lighterPurple;
   }
 }

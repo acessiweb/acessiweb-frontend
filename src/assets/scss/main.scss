@@ -2,13 +2,15 @@
 @use "var";
 @use "fonts";
 
+$height: var.$header-mobile-height + 10px;
+
 html,
 body {
   min-height: 100vh;
   max-width: 100vw;
   width: 100vw;
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
   display: flex;
 }
 
@@ -53,19 +55,21 @@ body {
     overflow-y: auto;
 
     @media (max-width: var.$mobile) {
-      min-height: calc(100vh - var.$header-mobile-height);
-      height: calc(100vh - var.$header-mobile-height);
+      min-height: calc(100vh - $height);
+      height: calc(100vh - $height);
     }
 
     > main {
       display: flex;
       flex: 1;
+      margin-top: var.$space-md;
       padding: var.$space-lg calc(var.$space-xl + 1rem);
       border-radius: var.$border-radius-default;
       width: 100%;
 
       @media (max-width: var.$mobile) {
         padding: var.$space-lg;
+        height: calc(100% - $height);
       }
 
       > div {
