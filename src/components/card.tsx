@@ -1,39 +1,24 @@
 "use client";
 
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
-import PushDelete from "./push-delete";
-import { useState } from "react";
-import Link from "next/link";
 import { useSecPage } from "@/context/sec-page";
-import { BsCartPlus } from "react-icons/bs";
+import Link from "next/link";
+import { ReactNode } from "react";
 
-type CardType = {
-  id: string;
+export type CardProps = {
+  registerId?: string;
   mainText: string;
   secondaryText?: string;
-  hasAdd?: boolean;
-  hasDelete?: boolean;
-  hasUpdate?: boolean;
-  updateRoute?: string;
-  onDelete?: (id: string) => void;
-  onAdd?: (obj: { id: string; name: string }) => void;
   readRoute?: string;
+  children: ReactNode;
 };
 
 export default function Card({
-  id,
+  registerId,
   mainText,
   secondaryText,
-  hasAdd,
-  hasDelete,
-  hasUpdate,
-  onAdd,
-  onDelete,
-  updateRoute,
   readRoute,
-}: CardType) {
-  const [showDeletePush, setShowDeletePush] = useState(false);
+  children,
+}: CardProps) {
   const { setIsOpen } = useSecPage();
 
   const handleSecPage = () => {
@@ -41,7 +26,7 @@ export default function Card({
     document.body.classList.add("two-pages");
   };
 
-  const CardLeft = () => {
+  const CardText = () => {
     return (
       <div className="card__desc">
         <span>{mainText}</span>
@@ -52,65 +37,17 @@ export default function Card({
 
   return (
     <article className="card">
-      {readRoute ? (
+      {readRoute && (
         <Link
           className="card-link"
-          href={`${readRoute?.replace("[id]", id)}`}
+          href={`${readRoute?.replace("[id]", registerId!)}`}
           onClick={handleSecPage}
         >
-          {CardLeft()}
+          <CardText />
         </Link>
-      ) : (
-        CardLeft()
       )}
-      {hasAdd && (
-        <button
-          type="button"
-          title="Adicionar"
-          className="btn-transparent"
-          onClick={() => onAdd && onAdd({ id, name: mainText })}
-        >
-          <BsCartPlus />
-        </button>
-      )}
-      {hasDelete && !hasUpdate && (
-        <button
-          type="button"
-          className="btn-transparent"
-          title="Deletar"
-          onClick={() => setShowDeletePush(true)}
-        >
-          <DeleteForeverIcon />
-        </button>
-      )}
-      {hasUpdate && hasDelete && (
-        <div style={{ display: "flex" }}>
-          <Link
-            className="btn-transparent"
-            href={`${updateRoute?.replace("[id]", id)}`}
-            onClick={handleSecPage}
-            title="Editar"
-          >
-            <EditIcon />
-          </Link>
-          <button
-            type="button"
-            className="btn-transparent"
-            title="Deletar"
-            onClick={() => setShowDeletePush(true)}
-          >
-            <DeleteForeverIcon />
-          </button>
-        </div>
-      )}
-      {showDeletePush && (
-        <PushDelete
-          pushMsg={`Tem certeza que deseja excluir "${mainText}"?`}
-          id={id}
-          handleDelete={onDelete}
-          handlePortal={setShowDeletePush}
-        />
-      )}
+      {!readRoute && <CardText />}
+      {children}
     </article>
   );
 }

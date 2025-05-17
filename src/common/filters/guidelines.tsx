@@ -5,7 +5,7 @@ export default function GuidelinesFilters() {
     <div className="guidelines-filters">
       <Search classname="search" placeholderText="Buscar por diretriz..." />
       <form>
-        <div className="homepage__guideline-checkbox-group">
+        <div className="guidelines-filters__guideline-checkbox-group">
           <div>
             <input
               className="input-checkbox"

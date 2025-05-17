@@ -1,22 +1,21 @@
 import Link from "next/link";
-import Search from "./search";
+import { ReactNode } from "react";
 
 type ControlBarProps = {
   createBtnText?: string;
   createBtnLink?: string;
   searchPlaceholderText: string;
+  controls: ReactNode;
 };
 
 export default function ControlBarDesktop({
   createBtnLink,
   createBtnText,
-  searchPlaceholderText,
+  controls,
 }: ControlBarProps) {
   return (
     <div className="control-bar control-bar-desktop">
-      <div className="control-bar-desktop__controls">
-        <Search classname="search" placeholderText={searchPlaceholderText} />
-      </div>
+      {controls}
       {createBtnLink && (
         <Link className="btn-link-default" href={createBtnLink}>
           {createBtnText}

@@ -1,6 +1,5 @@
 "use client";
 
-import { SlList } from "react-icons/sl";
 import { LuListFilter } from "react-icons/lu";
 // import { IoFilterOutline } from "react-icons/io5";
 // import { CiFilter } from "react-icons/ci";
@@ -24,9 +23,6 @@ export default function ControlBarMobile({
         </button>
         <button className="btn-icon">
           <TbArrowsSort />
-        </button>
-        <button className="btn-icon">
-          <SlList />
         </button>
       </div>
       {createBtnLink && (
