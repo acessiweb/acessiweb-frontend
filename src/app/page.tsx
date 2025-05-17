@@ -1,42 +1,62 @@
 "use client";
 
-import GuidelinesFilters from "@/common/filters/guidelines";
-import { MOBILE_SCREEN_SIZE } from "@/common/utils/var";
-import CardList from "@/components/card-list";
-import ControlBarMobile from "@/components/control-bar-mobile";
+import { TABLET_SCREEN_SIZE } from "@/common/utils/var";
 import Head from "@/components/head";
-import { useCart } from "@/context/cart";
-import { guidelinesStore } from "@/data/guidelines";
 import useScreenSize from "@/hooks/useScreenSize";
-import { useEffect, useState } from "react";
+import GuidelinesUser from "./diretrizes/page";
+import Card from "@/components/card";
+import { PiPersonArmsSpreadLight } from "react-icons/pi";
+import { SlEnvolope, SlFolder } from "react-icons/sl";
+import { ReactNode } from "react";
+import { useSession } from "@/context/auth";
+import { isCommonUser } from "@/common/utils/authorization";
 
-export default function Home() {
-  const [guidelines, setGuidelines] = useState(guidelinesStore);
-  const { addGuidelinesToCart } = useCart();
-  const { screenSize } = useScreenSize();
+function HomeUserMobile() {
+  return (
+    <HomeBase>
+      <Card mainText="Diretrizes de acessibilidade" readRoute="/diretrizes">
+        <PiPersonArmsSpreadLight aria-hidden={true} focusable={false} />
+      </Card>
+      <Card mainText="Meus projetos" readRoute="/projetos">
+        <SlFolder aria-hidden={true} focusable={false} />
+      </Card>
+      <Card mainText="Minhas solicitações" readRoute="/solicitacoes">
+        <SlEnvolope aria-hidden={true} focusable={false} />
+      </Card>
+    </HomeBase>
+  );
+}
 
-  useEffect(() => {
-    setGuidelines(guidelinesStore);
-  }, []);
+function HomeVisitorMobile() {
+  return (
+    <HomeBase>
+      <Card mainText="Diretrizes de acessibilidade" readRoute="/diretrizes">
+        <PiPersonArmsSpreadLight aria-hidden={true} focusable={false} />
+      </Card>
+    </HomeBase>
+  );
+}
 
+function HomeBase({ children }: { children: ReactNode }) {
   return (
     <>
-      <Head title="Página inicial - diretrizes de acessibilidade" />
-      <div className="homepage">
-        <h1 className="heading-1">Diretrizes de acessibilidade</h1>
-        {screenSize.width <= MOBILE_SCREEN_SIZE ? (
-          <ControlBarMobile />
-        ) : (
-          <GuidelinesFilters />
-        )}
-
-        <CardList
-          data={guidelines}
-          hasAdd={true}
-          onAdd={addGuidelinesToCart}
-          errorMsg="Ainda não existem diretrizes cadastradas"
-        />
-      </div>
+      <Head title="Página inicial" />
+      <div className="homepage-mobile">{children}</div>
     </>
   );
+}
+
+export default function Home() {
+  const { screenSize } = useScreenSize();
+  const { accessType } = useSession();
+
+  if (screenSize.width <= TABLET_SCREEN_SIZE) {
+    if (isCommonUser(accessType)) {
+      return <HomeUserMobile />;
+    }
+
+    return <HomeVisitorMobile />;
+  }
+
+  return <GuidelinesUser headTitle="Página Inicial" />;
 }
