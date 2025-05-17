@@ -1,0 +1,7 @@
+@use "../var";
+
+.homepage-mobile {
+  display: flex;
+  flex-direction: column;
+  row-gap: var.$space-md;
+}
