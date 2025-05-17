@@ -1,6 +1,5 @@
 "use client";
 
-import CardList from "@/components/card-list";
 import { useProjects } from "@/context/projects";
 import Head from "@/components/head";
 import useScreenSize from "@/hooks/useScreenSize";
@@ -8,6 +7,10 @@ import { MOBILE_SCREEN_SIZE, TABLET_SCREEN_SIZE } from "@/common/utils/var";
 import { Breadcrumb } from "@/components/breadcrumb";
 import ControlBarMobile from "@/components/control-bar-mobile";
 import ControlBarDesktop from "@/components/control-bar-desktop";
+import NoRegistersFound from "@/components/not-found";
+import CardUpdateAndDelete from "@/common/card/update-and-delete";
+import Card from "@/components/card";
+import Search from "@/components/search";
 
 export default function Projects() {
   const { projects, deleteProject } = useProjects();
@@ -39,21 +42,40 @@ export default function Projects() {
           />
         ) : (
           <ControlBarDesktop
+            controls={
+              <Search
+                classname="search"
+                placeholderText="Buscar por projeto..."
+              />
+            }
             createBtnLink="/projetos/cadastrar"
             createBtnText="Criar projeto"
             searchPlaceholderText="Buscar por projeto..."
           />
         )}
 
-        <CardList
-          data={projects}
-          errorMsg="Oops! Você ainda não possui projetos."
-          hasUpdate={true}
-          hasDelete={true}
-          onDelete={deleteProject}
-          updateRoute="/projetos/[id]/editar"
-          readRoute="/projetos/[id]"
-        />
+        {projects.length > 0 ? (
+          <div className="list">
+            {projects.map((project, i) => (
+              <div className="list__item" key={i}>
+                <Card
+                  readRoute="/projetos/[id]"
+                  mainText={project.name}
+                  registerId={project.id}
+                >
+                  <CardUpdateAndDelete
+                    onDelete={deleteProject}
+                    updateRoute="/projetos/[id]/editar"
+                    registerId={project.id}
+                    registerName={project.name}
+                  />
+                </Card>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <NoRegistersFound errorMsg="Oops! Você ainda não possui projetos." />
+        )}
       </div>
     </>
   );
