@@ -1,7 +1,11 @@
 import { SlMicrophone } from "react-icons/sl";
 import { createRoot } from "react-dom/client";
 
-export function captureVoiceAndPrintText(inputId: string) {
+export function captureVoiceAndPrintText(
+  inputId: string,
+  registerName?: string,
+  setValue?: any
+) {
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SpeechRecognition();
@@ -10,9 +14,7 @@ export function captureVoiceAndPrintText(inputId: string) {
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
 
-  const micBtn = document
-    .querySelector(`#${inputId}`)
-    ?.closest("div")?.previousElementSibling;
+  const micBtn = document.querySelector(`#${inputId}`)?.closest("button");
 
   const elementRecording = () => {
     if (micBtn) {
@@ -47,6 +49,7 @@ export function captureVoiceAndPrintText(inputId: string) {
   recognition.onresult = (event: SpeechRecognitionEvent) => {
     const text = event.results[0][0].transcript;
     const input = document.getElementById(inputId) as HTMLInputElement;
+    setValue(registerName, text);
     input.value = text;
 
     elementDefault();
