@@ -1,3 +1,5 @@
+"use client";
+
 import { guidelinesStore } from "@/data/guidelines";
 import { ReactNode, useEffect, useState } from "react";
 import Card from "./card";
@@ -24,9 +26,9 @@ export default function Guidelines({ controlBar, isAdmin }: GuidelinesProps) {
       <h1 className="heading-1">Diretrizes de acessibilidade</h1>
       {controlBar}
       {guidelines.length > 0 ? (
-        <div className="list">
+        <div className="grid">
           {guidelines.map((guideline, i) => (
-            <div className="list__item" key={i}>
+            <div className="grid__item" key={i}>
               <Card
                 // readRoute="/projetos/[id]"
                 mainText={guideline.name}

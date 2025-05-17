@@ -1,3 +1,5 @@
+"use client";
+
 import { BsCartPlus } from "react-icons/bs";
 
 type CardAddProps = {

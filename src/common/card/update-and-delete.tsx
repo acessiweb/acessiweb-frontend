@@ -1,3 +1,5 @@
+"use client";
+
 import CardDelete from "./delete";
 import Link from "next/link";
 import { useSecPage } from "@/context/sec-page";

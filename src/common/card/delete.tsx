@@ -1,3 +1,5 @@
+"use client";
+
 import PushDelete from "@/components/push-delete";
 import { useState } from "react";
 import { SlTrash } from "react-icons/sl";

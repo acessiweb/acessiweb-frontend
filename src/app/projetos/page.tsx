@@ -55,9 +55,9 @@ export default function Projects() {
         )}
 
         {projects.length > 0 ? (
-          <div className="list">
+          <div className="grid">
             {projects.map((project, i) => (
-              <div className="list__item" key={i}>
+              <div className="grid__item" key={i}>
                 <Card
                   readRoute="/projetos/[id]"
                   mainText={project.name}

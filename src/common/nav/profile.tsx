@@ -19,7 +19,7 @@ export default function Profile() {
         style={{ position: "relative" }}
         onClick={showModal}
         className={`nav__profile ${
-          screenSize.width <= TABLET_SCREEN_SIZE && "btn-icon"
+          screenSize.width >= TABLET_SCREEN_SIZE && "btn-icon"
         }`}
       >
         <ProfileIcon aria-hidden={true} focusable={false} />
