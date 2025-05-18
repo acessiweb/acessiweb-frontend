@@ -1,6 +1,6 @@
 "use client";
 
-import { captureVoiceAndPrintText } from "@/common/utils/voice";
+import { captureVoiceAndGetText } from "@/common/utils/voice";
 import { useState } from "react";
 import { SlMagnifier, SlMicrophone } from "react-icons/sl";
 
@@ -48,7 +48,7 @@ export default function Search({
       <button
         className="btn-icon"
         type="button"
-        onClick={() => captureVoiceAndPrintText("keyword")}
+        onClick={() => captureVoiceAndGetText("keyword")}
       >
         <SlMicrophone />
       </button>

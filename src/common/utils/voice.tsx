@@ -1,14 +1,11 @@
 import { SlMicrophone } from "react-icons/sl";
 import { createRoot } from "react-dom/client";
 
-export function captureVoiceAndPrintText(
-  inputId: string,
-  registerName?: string,
-  setValue?: any
-) {
+export function captureVoiceAndGetText(inputId: string) {
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SpeechRecognition();
+  let userText = "";
 
   recognition.lang = "pt-BR";
   recognition.interimResults = false;
@@ -49,8 +46,8 @@ export function captureVoiceAndPrintText(
   recognition.onresult = (event: SpeechRecognitionEvent) => {
     const text = event.results[0][0].transcript;
     const input = document.getElementById(inputId) as HTMLInputElement;
-    setValue(registerName, text);
     input.value = text;
+    userText = text;
 
     elementDefault();
     recognition.stop();
@@ -61,4 +58,6 @@ export function captureVoiceAndPrintText(
     console.error("Erro no reconhecimento de voz:", e.error);
     elementDefault();
   };
+
+  return userText;
 }
