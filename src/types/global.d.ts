@@ -5,7 +5,7 @@ declare global {
   }
 
   interface UrlParams {
-    params: Promise<{
+    params?: Promise<{
       id: string;
     }>;
   }
