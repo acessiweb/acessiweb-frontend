@@ -3,19 +3,20 @@
 .sec-page {
   display: flex;
   flex-direction: column;
-  flex: 2;
-  border-left: var.$border-1;
-  padding-left: var.$space-sm;
+  border: var.$border-3;
+  border-radius: var.$border-radius-2;
+  background-color: var.$lightPurple;
+  padding: var.$space-md;
 
   &__header {
     display: flex;
     align-items: center;
     column-gap: var.$space-md;
     margin-bottom: var.$space-lg;
+    justify-content: space-between;
 
     .heading-2 {
-      text-align: center;
-      flex: 1;
+      font-style: italic;
     }
   }
 }
