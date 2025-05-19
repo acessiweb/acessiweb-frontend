@@ -37,12 +37,19 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  background-color: #fff;
+  column-gap: var.$space-xs;
 
   input,
   textarea {
     outline: none;
     border: none;
     flex: 1;
+
+    &::placeholder {
+      font-size: calc(var.$fs-small + 0.1rem);
+      font-style: italic;
+    }
   }
 
   button {
