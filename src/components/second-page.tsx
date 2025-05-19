@@ -1,25 +1,22 @@
 "use client";
 
-import { useSecPage } from "@/context/sec-page";
 import { KeyboardDoubleArrowLeft } from "@mui/icons-material";
 
 type SecondPageType = {
   title: string;
   children: React.ReactNode;
+  onClick: () => void;
 };
 
-export default function SecondPage({ title, children }: SecondPageType) {
-  const { setIsOpen } = useSecPage();
+export default function SecondPage({
+  title,
+  children,
+  onClick,
+}: SecondPageType) {
   return (
     <div className="sec-page">
       <div className="sec-page__header">
-        <button
-          className="btn-default"
-          onClick={() => {
-            setIsOpen(false);
-            document.body.classList.remove("two-pages");
-          }}
-        >
+        <button className="btn-default" onClick={onClick}>
           <KeyboardDoubleArrowLeft />
         </button>
         <h2 className="heading-2">{title}</h2>
