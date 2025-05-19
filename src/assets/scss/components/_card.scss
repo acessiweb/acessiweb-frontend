@@ -1,10 +1,5 @@
 @use "../var";
 
-.card-link {
-  display: flex;
-  flex: 1;
-}
-
 .card {
   display: flex;
   flex: 1;
@@ -17,13 +12,19 @@
   border-radius: var.$border-radius-2;
   border: var.$border-1;
   font-weight: var.$medium;
+  cursor: pointer;
 
   &__desc {
     margin-top: calc(var.$space-sm + 0.1rem);
+    flex: 1;
   }
 
   &:hover {
     background-color: var.$purple;
+
+    svg {
+      fill: var.$lightPurple !important;
+    }
   }
 
   svg {

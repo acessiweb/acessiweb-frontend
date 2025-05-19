@@ -52,6 +52,8 @@ body {
   }
 
   .content {
+    width: 100%;
+    flex: 1;
     overflow-y: auto;
 
     @media (max-width: var.$mobile) {
@@ -61,23 +63,36 @@ body {
 
     > main {
       display: flex;
-      flex: 1;
       margin-top: var.$space-md;
-      padding: var.$space-lg calc(var.$space-xl + 1rem);
+      padding: 0 calc(var.$space-xl + 0.2rem) var.$space-md;
       border-radius: var.$border-radius-default;
       width: 100%;
+      flex: 1;
 
       @media (max-width: var.$mobile) {
         padding: var.$space-lg;
         height: calc(100% - $height);
       }
 
-      > div {
+      .one-page,
+      .two-pages {
         display: flex;
         flex: 1;
+        width: 100%;
 
         h1 {
           font-style: italic;
+        }
+
+        > div {
+          flex: 1;
+        }
+      }
+
+      .two-pages {
+        > div:first-of-type {
+          margin-top: var.$space-lg;
+          margin-right: calc(var.$space-xl + 0.7rem);
         }
       }
     }
