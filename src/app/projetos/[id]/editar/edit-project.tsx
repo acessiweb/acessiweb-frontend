@@ -6,14 +6,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import updateProjectSchema from "@/schemas/projects/update-project";
 import { usePush } from "@/context/push";
-import { useSecPage } from "@/context/sec-page";
-import SecondPage from "@/components/second-page";
 import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
-import Projects from "../../projects";
 import { captureVoiceAndGetText } from "@/common/utils/voice";
+import { isTablet } from "@/common/utils/size";
+import { Breadcrumb } from "@/components/breadcrumb";
 
 export default function EditProject({ params }: UrlParams) {
-  const { setIsOpen, isOpen } = useSecPage();
   const { projects, updateProject } = useProjects();
   const { setShowPush, setPushMsg } = usePush();
   const [project, setProject] = useState({} as ProjectType);
@@ -22,8 +20,8 @@ export default function EditProject({ params }: UrlParams) {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
     reset,
+    getValues,
   } = useForm({
     resolver: yupResolver(updateProjectSchema),
   });
@@ -32,7 +30,7 @@ export default function EditProject({ params }: UrlParams) {
     const getParams = async () => {
       const p = await params;
 
-      if (p.id) {
+      if (p && p.id) {
         const proj =
           projects.find((proj) => proj.id === p.id) || ({} as ProjectType);
 
@@ -71,7 +69,6 @@ export default function EditProject({ params }: UrlParams) {
     if (id) {
       setShowPush(true);
       setPushMsg("Projeto atualizado com sucesso 🥳");
-      setIsOpen(false);
     }
   };
 
@@ -79,96 +76,129 @@ export default function EditProject({ params }: UrlParams) {
   //   removeGuidelineFromProject(project.id, guidelineId);
   // };
 
+  const crumbs = [
+    {
+      desc: "PROJETOS",
+      link: `/projetos`,
+    },
+    {
+      desc: `Editar ${project.name}`,
+      link: `/projetos/${project.id}/editar`,
+    },
+  ];
+
   return (
     <div className="edit-project">
-      <Projects />
-      {isOpen && (
-        <SecondPage title={`Editar ${getValues()["name"] || project.name}`}>
-          <form className="form" onSubmit={handleSubmit(onSubmit)}>
-            <div className="input-wrapper">
-              <label htmlFor="name">Nome do projeto</label>
-              <div className="input-text-wrapper">
-                <input
-                  {...register("name")}
-                  type="text"
-                  maxLength={150}
-                  placeholder="Acessibiweb"
-                  id="name"
-                  name="name"
-                />
-                <button
-                  className="btn-default"
-                  type="button"
-                  onClick={() => captureVoiceAndGetText("name")}
-                >
-                  <MicNoneOutlinedIcon />
-                </button>
-              </div>
-              {errors.name && (
-                <p className="form-error-msg">{errors.name?.message}</p>
-              )}
+      {isTablet() && <Breadcrumb crumbs={crumbs} />}
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+        {/* <div className="input-wrapper">
+          <div className="input-text-wrapper">
+            <input
+              {...register("name")}
+              type="text"
+              maxLength={150}
+              placeholder="Acessibiweb"
+              id="name"
+              name="name"
+            />
+            <button
+              className="btn-default"
+              type="button"
+              onClick={() => captureVoiceAndGetText("name")}
+            >
+              <MicNoneOutlinedIcon />
+            </button>
+          </div>
+          {errors.name && (
+            <p className="form-error-msg">{errors.name?.message}</p>
+          )}
+        </div> */}
+        <div className="input-wrapper">
+          <div className="input-text-wrapper">
+            <textarea
+              {...register("description")}
+              placeholder="Descrição do projeto..."
+              rows={isTablet() ? 8 : 4}
+              id="description"
+              name="description"
+            />
+            <button
+              className="btn-default"
+              type="button"
+              onClick={() => captureVoiceAndGetText("description")}
+            >
+              <MicNoneOutlinedIcon />
+            </button>
+          </div>
+        </div>
+        <div className="edit-project__guidelines">
+          {/* {getValues()["guidelines"] && getValues()["guidelines"].length > 0 ? (
+            <div className="grid">
+              {guidelines.map((guideline, i) => (
+                <div className="grid__item" key={i}>
+                  <Card
+                    mainText={guideline.name}
+                    registerId={guideline.id}
+                    onClick={() => {}}
+                  >
+                    {isAdmin ? (
+                      <CardUpdateAndDelete
+                        registerId={guideline.id}
+                        registerName={guideline.name}
+                        onDelete={() => {}}
+                        onUpdateClick={() => {}}
+                      />
+                    ) : (
+                      <CardAdd
+                        onAdd={addGuidelinesToCart}
+                        registerId={guideline.id}
+                        registerName={guideline.name}
+                      />
+                    )}
+                  </Card>
+                </div>
+              ))}
             </div>
-            <div className="input-wrapper">
-              <label htmlFor="description">Descrição do projeto</label>
-              <div className="input-text-wrapper">
-                <textarea
-                  {...register("description")}
-                  className="textarea"
-                  placeholder="Crie uma descrição para o seu projeto..."
-                  rows={11}
-                  id="description"
-                  name="description"
-                />
-                <button
-                  className="btn-default"
-                  type="button"
-                  onClick={() => captureVoiceAndGetText("description")}
-                >
-                  <MicNoneOutlinedIcon />
-                </button>
-              </div>
-            </div>
-            <div className="edit-project__guidelines">
-              <p>Minhas diretrizes</p>
-              {/* <CardList
+          ) : (
+            <p>"Você ainda não incluiu diretrizes no seu projeto"</p>
+          )} */}
+          {/* <CardList
                   data={getValues()["guidelines"] || []}
                   hasDelete={true}
                   onDelete={deleteGuidelineFromProject}
                   errorMsg="Você ainda não incluiu diretrizes no seu projeto"
                   showErrorMsgImage={false}
                 /> */}
-              {errors.guidelines && (
-                <p className="form-error-msg">{errors.guidelines?.message}</p>
-              )}
-            </div>
-            <div className="input-wrapper">
-              <label htmlFor="feedback">Feedback</label>
-              <div className="input-text-wrapper">
-                <textarea
-                  {...register("feedback")}
-                  className="textarea"
-                  placeholder="O projeto precisava ser acessível para pessoas com deficiência visual, com as diretrizes selecionadas foi possível implementar acessibilidade para esse grupo..."
-                  rows={11}
-                  id="feedback"
-                  name="feedback"
-                />
-                <button
-                  className="btn-default"
-                  type="button"
-                  onClick={() => captureVoiceAndGetText("feedback")}
-                >
-                  <MicNoneOutlinedIcon />
-                </button>
-              </div>
-            </div>
-            <div style={{ margin: "30px auto 0" }}>
-              <button type="submit" className="btn-default">
-                Atualizar projeto
-              </button>
-            </div>
-          </form>
-        </SecondPage>
-      )}
+          {errors.guidelines && (
+            <p className="form-error-msg">{errors.guidelines?.message}</p>
+          )}
+        </div>
+        <div className="input-wrapper">
+          <label htmlFor="feedback">Feedback</label>
+          <div className="input-text-wrapper">
+            <textarea
+              {...register("feedback")}
+              className="textarea"
+              placeholder="O projeto precisava ser acessível para pessoas com deficiência visual, com as diretrizes selecionadas foi possível implementar acessibilidade para esse grupo..."
+              rows={11}
+              id="feedback"
+              name="feedback"
+            />
+            <button
+              className="btn-default"
+              type="button"
+              onClick={() => captureVoiceAndGetText("feedback")}
+            >
+              <MicNoneOutlinedIcon />
+            </button>
+          </div>
+        </div>
+        <div style={{ margin: "30px auto 0" }}>
+          <button type="submit" className="btn-default">
+            Atualizar projeto
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

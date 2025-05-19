@@ -1,45 +1,18 @@
-"use client";
+type ProjectProps = UrlParams & {
+  projectName?: string;
+  projectDescription?: string;
+  projectFeedback?: string;
+};
 
-import { useEffect, useState } from "react";
-import { ProjectType, useProjects } from "@/context/projects";
-import { useSecPage } from "@/context/sec-page";
-import SecondPage from "@/components/second-page";
-import Projects from "../projects";
-
-export default function Project({ params }: UrlParams) {
-  const { isOpen } = useSecPage();
-  const [projectId, setProjectId] = useState("");
-  const [project, setProject] = useState<ProjectType>({} as ProjectType);
-  const { projects } = useProjects();
-
-  useEffect(() => {
-    const getParams = async () => {
-      const p = await params;
-
-      if (p.id) {
-        setProjectId(p.id);
-      }
-    };
-
-    getParams();
-  }, []);
-
-  useEffect(() => {
-    const p: ProjectType =
-      projects.find((p) => p.id === projectId) || ({} as ProjectType);
-    setProject(p);
-  }, [projectId]);
-
+export default function Project({
+  projectDescription,
+  projectFeedback,
+}: ProjectProps) {
   return (
     <div className="read-project">
-      <Projects />
-      {isOpen && (
-        <SecondPage title={project.name}>
-          <p>{project.description}</p>
-          {/* <CardList data={project.guidelines || []} /> */}
-          <p>{project.feedback}</p>
-        </SecondPage>
-      )}
+      <p>{projectDescription}</p>
+      {/* <CardList data={project.guidelines || []} /> */}
+      <p>{projectFeedback}</p>
     </div>
   );
 }
