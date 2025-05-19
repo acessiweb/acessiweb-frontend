@@ -18,16 +18,18 @@ type BaseHeaderProps = {
     href: string;
     desc: string;
     id: string;
+    isActive: boolean;
   }[];
   showSecHelper: boolean;
 };
 
-function AdminHeaderDesktop() {
+function AdminHeaderDesktop({ pathname }: { pathname: string }) {
   const navLinks = [
     {
       href: "",
       desc: "Solicitações",
       id: "requests-nav",
+      isActive: pathname.includes("solicitacoes"),
     },
   ];
 
@@ -41,17 +43,19 @@ function AdminHeaderDesktop() {
   );
 }
 
-function CommonUserHeaderDesktop() {
+function CommonUserHeaderDesktop({ pathname }: { pathname: string }) {
   const navLinks = [
     {
       href: "/projetos",
       desc: "Meus projetos",
       id: "projects-nav",
+      isActive: pathname.includes("projetos"),
     },
     {
       href: "/solicitacoes",
       desc: "Minhas solicitações",
       id: "requests-nav",
+      isActive: pathname.includes("solicitacoes"),
     },
   ];
 
@@ -77,12 +81,14 @@ function VisitorHeaderDesktop() {
 }
 
 function BaseHeaderDesktop(props: BaseHeaderProps) {
+  const ACTIVE = "header-desktop__nav-links--active";
+
   const setLinkToActive = (e: React.MouseEvent<HTMLLIElement>) => {
     const activeLink = document.querySelector(
       ".header-desktop__nav-links--active"
     );
-    activeLink?.classList.remove("header-desktop__nav-links--active");
-    e.currentTarget.classList.add("header-desktop__nav-links--active");
+    activeLink?.classList.remove(ACTIVE);
+    e.currentTarget.classList.add(ACTIVE);
   };
 
   return (
@@ -92,16 +98,17 @@ function BaseHeaderDesktop(props: BaseHeaderProps) {
       </div>
       <ul className="header-desktop__nav-links">
         {props.showHomepageLink && (
-          <li
-            className="header-desktop__nav-links--active"
-            id="homepage-nav"
-            onClick={setLinkToActive}
-          >
+          <li id="homepage-nav" onClick={setLinkToActive}>
             <Link href="/">Início</Link>
           </li>
         )}
         {props.navLinks.map((item, i) => (
-          <li key={i} id={item.id} onClick={setLinkToActive}>
+          <li
+            className={`${item.isActive && ACTIVE}`}
+            key={i}
+            id={item.id}
+            onClick={setLinkToActive}
+          >
             <Link href={item.href}>{item.desc}</Link>
           </li>
         ))}
@@ -128,10 +135,10 @@ export default function HeaderDesktop() {
   const pathname = usePathname();
   const { accessType } = useSession();
 
-  if (isAdmin(accessType)) return <AdminHeaderDesktop />;
+  if (isAdmin(accessType)) return <AdminHeaderDesktop pathname={pathname} />;
 
   if (!pathname.includes("admin") && isCommonUser(accessType))
-    return <CommonUserHeaderDesktop />;
+    return <CommonUserHeaderDesktop pathname={pathname} />;
 
   return <VisitorHeaderDesktop />;
 }
