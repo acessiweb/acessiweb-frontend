@@ -1,27 +1,26 @@
 "use client";
 
-import { TABLET_SCREEN_SIZE } from "@/common/utils/var";
-import useScreenSize from "@/hooks/useScreenSize";
 import GuidelinesUser from "./diretrizes/page";
-import Card from "@/components/card";
 import { PiPersonArmsSpreadLight } from "react-icons/pi";
 import { SlEnvolope, SlFolder } from "react-icons/sl";
 import { ReactNode } from "react";
 import { useSession } from "@/context/auth";
 import { isCommonUser } from "@/common/utils/authorization";
+import { isTablet } from "@/common/utils/size";
+import { CardLink } from "@/components/card-link";
 
 function HomeUserMobile() {
   return (
     <HomeBase>
-      <Card mainText="Diretrizes de acessibilidade" readRoute="/diretrizes">
+      <CardLink mainText="Diretrizes de acessibilidade" readRoute="/diretrizes">
         <PiPersonArmsSpreadLight aria-hidden={true} focusable={false} />
-      </Card>
-      <Card mainText="Meus projetos" readRoute="/projetos">
+      </CardLink>
+      <CardLink mainText="Meus projetos" readRoute="/projetos">
         <SlFolder aria-hidden={true} focusable={false} />
-      </Card>
-      <Card mainText="Minhas solicitações" readRoute="/solicitacoes">
+      </CardLink>
+      <CardLink mainText="Minhas solicitações" readRoute="/solicitacoes">
         <SlEnvolope aria-hidden={true} focusable={false} />
-      </Card>
+      </CardLink>
     </HomeBase>
   );
 }
@@ -29,9 +28,9 @@ function HomeUserMobile() {
 function HomeVisitorMobile() {
   return (
     <HomeBase>
-      <Card mainText="Diretrizes de acessibilidade" readRoute="/diretrizes">
+      <CardLink mainText="Diretrizes de acessibilidade" readRoute="/diretrizes">
         <PiPersonArmsSpreadLight aria-hidden={true} focusable={false} />
-      </Card>
+      </CardLink>
     </HomeBase>
   );
 }
@@ -41,10 +40,9 @@ function HomeBase({ children }: { children: ReactNode }) {
 }
 
 export default function Home() {
-  const { screenSize } = useScreenSize();
   const { accessType } = useSession();
 
-  if (screenSize.width <= TABLET_SCREEN_SIZE) {
+  if (isTablet()) {
     if (isCommonUser(accessType)) {
       return <HomeUserMobile />;
     }
