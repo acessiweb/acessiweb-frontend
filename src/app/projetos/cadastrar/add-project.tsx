@@ -8,24 +8,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
-import Card from "@/components/card";
-import CardDelete from "@/common/card/delete";
-import useScreenSize from "@/hooks/useScreenSize";
-import { TABLET_SCREEN_SIZE } from "@/common/utils/var";
 import { useState } from "react";
 import { captureVoiceAndGetText } from "@/common/utils/voice";
+import { isTablet } from "@/common/utils/size";
 
 export default function AddProject() {
-  const {
-    cart,
-    removeGuidelineOfCart,
-    addDescriptionToCart,
-    addNameToCart,
-    cleanCart,
-  } = useCart();
+  const { cart, addDescriptionToCart, addNameToCart, cleanCart } = useCart();
   const { setShowPush, setPushMsg } = usePush();
   const { addProject } = useProjects();
-  const { screenSize } = useScreenSize();
   const [showGuidelines, setShowGuidelines] = useState(false);
 
   const {
@@ -107,7 +97,7 @@ export default function AddProject() {
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               addDescriptionToCart(e.target.value)
             }
-            rows={screenSize.width <= TABLET_SCREEN_SIZE ? 8 : 4}
+            rows={isTablet() ? 8 : 4}
             placeholder="Centralizar e organizar diretrizes de acessibilidade digital em uma plataforma acessível e intuitiva, facilitando o acesso a informações essenciais e incentivando a criação de experiências digitais mais inclusivas e alinhadas aos padrões de acessibilidade digital."
             id="project-description"
             name="project-description"
@@ -129,13 +119,17 @@ export default function AddProject() {
               <div className="grid">
                 {cart.guidelines.map((guide, i) => (
                   <div className="grid__item" key={i}>
-                    <Card mainText={guide.name} registerId={guide.id}>
+                    {/* <Card
+                      mainText={guide.name}
+                      registerId={guide.id}
+                      onClick={() => {}}
+                    >
                       <CardDelete
                         onDelete={removeGuidelineOfCart}
                         registerId={guide.id}
                         registerName={guide.name}
                       />
-                    </Card>
+                    </Card> */}
                   </div>
                 ))}
               </div>
