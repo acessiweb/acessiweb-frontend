@@ -2,11 +2,11 @@
 
 import { guidelinesStore } from "@/data/guidelines";
 import { ReactNode, useEffect, useState } from "react";
-import Card from "./card";
 import NoRegistersFound from "./not-found";
-import CardUpdateAndDelete from "@/common/card/update-and-delete";
 import { useCart } from "@/context/cart";
-import CardAdd from "@/common/card/add";
+import { isDesktop, isTablet } from "@/common/utils/size";
+import { CardBtnAdd, CardBtnUpdateAndDelete } from "./card-btn";
+import { CardLinkAdd, CardLinkUpdateAndDelete } from "./card-link";
 
 type GuidelinesProps = {
   controlBar: ReactNode;
@@ -29,26 +29,44 @@ export default function Guidelines({ controlBar, isAdmin }: GuidelinesProps) {
         <div className="grid">
           {guidelines.map((guideline, i) => (
             <div className="grid__item" key={i}>
-              <Card
-                // readRoute="/projetos/[id]"
-                mainText={guideline.name}
-                registerId={guideline.id}
-              >
-                {isAdmin ? (
-                  <CardUpdateAndDelete
-                    registerId={guideline.id}
-                    registerName={guideline.name}
-                    updateRoute=""
-                    onDelete={() => {}}
-                  />
-                ) : (
-                  <CardAdd
-                    onAdd={addGuidelinesToCart}
-                    registerId={guideline.id}
-                    registerName={guideline.name}
-                  />
-                )}
-              </Card>
+              {isAdmin && isDesktop() && (
+                <CardBtnUpdateAndDelete
+                  mainText={guideline.name}
+                  onClick={() => {}}
+                  onDelete={() => {}}
+                  onUpdateClick={() => {}}
+                  registerId={guideline.id}
+                  registerName={guideline.name}
+                />
+              )}
+              {isAdmin && isTablet() && (
+                <CardLinkUpdateAndDelete
+                  mainText={guideline.name}
+                  onDelete={() => {}}
+                  registerId={guideline.id}
+                  registerName={guideline.name}
+                  readRoute=""
+                  updateRoute=""
+                />
+              )}
+              {!isAdmin && isDesktop() && (
+                <CardBtnAdd
+                  onAdd={addGuidelinesToCart}
+                  mainText=""
+                  onClick={() => {}}
+                  registerId=""
+                  registerName=""
+                />
+              )}
+              {!isAdmin && isTablet() && (
+                <CardLinkAdd
+                  onAdd={addGuidelinesToCart}
+                  mainText=""
+                  registerId=""
+                  registerName=""
+                  readRoute=""
+                />
+              )}
             </div>
           ))}
         </div>
