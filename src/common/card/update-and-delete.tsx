@@ -1,40 +1,72 @@
 "use client";
 
-import CardDelete from "./delete";
 import Link from "next/link";
-import { useSecPage } from "@/context/sec-page";
+import CardDelete from "./delete";
 import { SlPencil } from "react-icons/sl";
+import {
+  CardBtnUpdateAndDeleteProps,
+  CardLinkUpdateAndDeleteProps,
+  CardUpdateAndDeleteProps,
+} from "@/types/card/types";
 
-type CardUpdateAndDeleteProps = {
-  registerId: string;
-  registerName: string;
-  onDelete: (id: string) => void;
-  updateRoute: string;
-};
-
-export default function CardUpdateAndDelete({
-  updateRoute,
+export function CardLinkUpdateAndDeleteEl({
   onDelete,
   registerId,
   registerName,
-}: CardUpdateAndDeleteProps) {
-  const { setIsOpen } = useSecPage();
-
-  const handleSecPage = () => {
-    setIsOpen(true);
-    document.body.classList.add("two-pages");
-  };
-
+  updateRoute,
+}: CardLinkUpdateAndDeleteProps) {
   return (
-    <div style={{ display: "flex" }}>
+    <CardUpdateAndDelete
+      onDelete={onDelete}
+      registerId={registerId}
+      registerName={registerName}
+    >
       <Link
+        href={updateRoute}
         className="btn-transparent"
-        href={`${updateRoute.replace("[id]", registerId)}`}
-        onClick={handleSecPage}
         title="Editar"
+        aria-label="Editar"
       >
         <SlPencil />
       </Link>
+    </CardUpdateAndDelete>
+  );
+}
+
+export function CardBtnUpdateAndDeleteEl({
+  onDelete,
+  onUpdateClick,
+  registerId,
+  registerName,
+}: CardBtnUpdateAndDeleteProps) {
+  return (
+    <CardUpdateAndDelete
+      onDelete={onDelete}
+      registerId={registerId}
+      registerName={registerName}
+    >
+      <button
+        type="button"
+        className="btn-transparent"
+        onClick={onUpdateClick}
+        title="Editar"
+        aria-label="Editar"
+      >
+        <SlPencil />
+      </button>
+    </CardUpdateAndDelete>
+  );
+}
+
+function CardUpdateAndDelete({
+  onDelete,
+  registerId,
+  registerName,
+  children,
+}: CardUpdateAndDeleteProps) {
+  return (
+    <div style={{ display: "flex" }}>
+      {children}
       <CardDelete
         onDelete={onDelete}
         registerId={registerId}

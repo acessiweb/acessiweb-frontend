@@ -1,12 +1,7 @@
 "use client";
 
+import { CardAddProps } from "@/types/card/types";
 import { BsCartPlus } from "react-icons/bs";
-
-type CardAddProps = {
-  registerId: string;
-  registerName: string;
-  onAdd: (obj: { id: string; name: string }) => void;
-};
 
 export default function CardAdd({
   onAdd,

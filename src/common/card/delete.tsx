@@ -1,14 +1,9 @@
 "use client";
 
 import PushDelete from "@/components/push-delete";
+import { CardDeleteProps } from "@/types/card/types";
 import { useState } from "react";
 import { SlTrash } from "react-icons/sl";
-
-type CardDeleteProps = {
-  registerId: string;
-  registerName: string;
-  onDelete: (id: string) => void;
-};
 
 export default function CardDelete({
   onDelete,
