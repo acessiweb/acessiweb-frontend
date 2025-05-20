@@ -1,6 +1,5 @@
 "use client";
 
-import GuidelinesUser from "./(app)/diretrizes/page";
 import { PiPersonArmsSpreadLight } from "react-icons/pi";
 import { SlEnvolope, SlFolder } from "react-icons/sl";
 import { ReactNode } from "react";
@@ -8,6 +7,7 @@ import { useSession } from "@/context/auth";
 import { isCommonUser } from "@/common/utils/authorization";
 import { CardLink } from "@/components/card-link";
 import { useScreenType } from "@/hooks/useScreenSize";
+import GuidelinesUser from "./diretrizes/page";
 
 function HomeUserMobile() {
   return (
