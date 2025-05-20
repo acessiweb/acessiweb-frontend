@@ -125,6 +125,7 @@ body {
 @include meta.load-css("pages/edit-project");
 @include meta.load-css("pages/read-project");
 @include meta.load-css("pages/guidelines");
+@include meta.load-css("pages/login");
 
 //animations
 @include meta.load-css("animation");
@@ -133,3 +134,4 @@ body {
 @include meta.load-css("overlay");
 @include meta.load-css("screen-reader");
 @include meta.load-css("display");
+@include meta.load-css("auth");

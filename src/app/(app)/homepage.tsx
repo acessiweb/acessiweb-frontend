@@ -1,6 +1,6 @@
 "use client";
 
-import GuidelinesUser from "./diretrizes/page";
+import GuidelinesUser from "./(app)/diretrizes/page";
 import { PiPersonArmsSpreadLight } from "react-icons/pi";
 import { SlEnvolope, SlFolder } from "react-icons/sl";
 import { ReactNode } from "react";
