@@ -1,7 +1,7 @@
 import useModal from "@/hooks/useModal";
+import { useScreenType } from "@/hooks/useScreenSize";
 import { IoHelp } from "react-icons/io5";
 import { SlClose } from "react-icons/sl";
-import { isDesktop } from "../utils/size";
 
 export default function Help() {
   const {
@@ -12,6 +12,7 @@ export default function Help() {
     Overlay,
     modalRef,
   } = useModal();
+  const { isDesktop } = useScreenType();
 
   return (
     <>
@@ -21,7 +22,7 @@ export default function Help() {
           aria-label="Abrir atalhos por teclado"
           title="Ajuda"
           aria-pressed={isModalOpen}
-          className={`${isDesktop() && "btn-icon"}`}
+          className={`${isDesktop && "btn-icon"}`}
         >
           <IoHelp aria-hidden={true} focusable={false} />
         </button>

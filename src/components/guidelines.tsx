@@ -4,9 +4,9 @@ import { guidelinesStore } from "@/data/guidelines";
 import { ReactNode, useEffect, useState } from "react";
 import NoRegistersFound from "./not-found";
 import { useCart } from "@/context/cart";
-import { isDesktop, isTablet } from "@/common/utils/size";
 import { CardBtnAdd, CardBtnUpdateAndDelete } from "./card-btn";
 import { CardLinkAdd, CardLinkUpdateAndDelete } from "./card-link";
+import { useScreenType } from "@/hooks/useScreenSize";
 
 type GuidelinesProps = {
   controlBar: ReactNode;
@@ -16,6 +16,7 @@ type GuidelinesProps = {
 export default function Guidelines({ controlBar, isAdmin }: GuidelinesProps) {
   const [guidelines, setGuidelines] = useState(guidelinesStore);
   const { addGuidelinesToCart } = useCart();
+  const { isTablet, isDesktop } = useScreenType();
 
   useEffect(() => {
     setGuidelines(guidelinesStore);
@@ -29,7 +30,7 @@ export default function Guidelines({ controlBar, isAdmin }: GuidelinesProps) {
         <div className="grid">
           {guidelines.map((guideline, i) => (
             <div className="grid__item" key={i}>
-              {isAdmin && isDesktop() && (
+              {isAdmin && isDesktop && (
                 <CardBtnUpdateAndDelete
                   mainText={guideline.name}
                   onClick={() => {}}
@@ -39,7 +40,7 @@ export default function Guidelines({ controlBar, isAdmin }: GuidelinesProps) {
                   registerName={guideline.name}
                 />
               )}
-              {isAdmin && isTablet() && (
+              {isAdmin && isTablet && (
                 <CardLinkUpdateAndDelete
                   mainText={guideline.name}
                   onDelete={() => {}}
@@ -49,7 +50,7 @@ export default function Guidelines({ controlBar, isAdmin }: GuidelinesProps) {
                   updateRoute=""
                 />
               )}
-              {!isAdmin && isDesktop() && (
+              {!isAdmin && isDesktop && (
                 <CardBtnAdd
                   onAdd={addGuidelinesToCart}
                   mainText=""
@@ -58,7 +59,7 @@ export default function Guidelines({ controlBar, isAdmin }: GuidelinesProps) {
                   registerName=""
                 />
               )}
-              {!isAdmin && isTablet() && (
+              {!isAdmin && isTablet && (
                 <CardLinkAdd
                   onAdd={addGuidelinesToCart}
                   mainText=""

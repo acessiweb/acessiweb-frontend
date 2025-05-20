@@ -10,9 +10,9 @@ import useSecPage from "@/hooks/useSecPage";
 import EditProject from "./[id]/editar/edit-project";
 import SecondPage from "@/components/second-page";
 import Project from "./[id]/project";
-import { isMobile, isTablet } from "@/common/utils/size";
 import { CardLinkUpdateAndDelete } from "@/components/card-link";
 import { CardBtnUpdateAndDelete } from "@/components/card-btn";
+import { useScreenType } from "@/hooks/useScreenSize";
 
 export default function Projects() {
   const { projects, deleteProject } = useProjects();
@@ -25,6 +25,7 @@ export default function Projects() {
     setTitle: setSecPageTitle,
     title: secPageTitle,
   } = useSecPage();
+  const { isMobile, isTablet } = useScreenType();
 
   const crumbs = [
     {
@@ -36,9 +37,9 @@ export default function Projects() {
   return (
     <div className={getSecPageClass()}>
       <div className="projects">
-        {isTablet() && <Breadcrumb crumbs={crumbs} />}
+        {isTablet && <Breadcrumb crumbs={crumbs} />}
         <h1 className="heading-1">Meus projetos</h1>
-        {isMobile() ? (
+        {isMobile ? (
           <ControlBarMobile
             createBtnLink="/projetos/cadastrar"
             createBtnText="Criar projeto"
@@ -61,7 +62,7 @@ export default function Projects() {
           <div className="grid">
             {projects.map((project, i) => (
               <div className="grid__item" key={i}>
-                {isTablet() ? (
+                {isTablet ? (
                   <CardLinkUpdateAndDelete
                     mainText={project.name}
                     onDelete={deleteProject}

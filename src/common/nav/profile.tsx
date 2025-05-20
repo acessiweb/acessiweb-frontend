@@ -2,11 +2,12 @@ import useModal from "@/hooks/useModal";
 import Link from "next/link";
 import { SlLogout, SlSettings } from "react-icons/sl";
 import ProfileIcon from "../icons/profile";
-import { isDesktop } from "../utils/size";
+import { useScreenType } from "@/hooks/useScreenSize";
 
 export default function Profile() {
   const { showModal, isModalOpen, isOverlayActive, modalRef, Overlay } =
     useModal();
+  const { isDesktop } = useScreenType();
 
   return (
     <>
@@ -16,7 +17,7 @@ export default function Profile() {
         aria-pressed={isModalOpen}
         style={{ position: "relative" }}
         onClick={showModal}
-        className={`nav__profile ${isDesktop() && "btn-icon"}`}
+        className={`nav__profile ${isDesktop && "btn-icon"}`}
       >
         <ProfileIcon aria-hidden={true} focusable={false} />
         <dialog

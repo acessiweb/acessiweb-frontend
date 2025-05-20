@@ -8,20 +8,20 @@ import updateProjectSchema from "@/schemas/projects/update-project";
 import { usePush } from "@/context/push";
 import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
 import { captureVoiceAndGetText } from "@/common/utils/voice";
-import { isTablet } from "@/common/utils/size";
 import { Breadcrumb } from "@/components/breadcrumb";
+import { useScreenType } from "@/hooks/useScreenSize";
 
 export default function EditProject({ params }: UrlParams) {
   const { projects, updateProject } = useProjects();
   const { setShowPush, setPushMsg } = usePush();
   const [project, setProject] = useState({} as ProjectType);
+  const { isTablet } = useScreenType();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    getValues,
   } = useForm({
     resolver: yupResolver(updateProjectSchema),
   });
@@ -89,7 +89,7 @@ export default function EditProject({ params }: UrlParams) {
 
   return (
     <div className="edit-project">
-      {isTablet() && <Breadcrumb crumbs={crumbs} />}
+      {isTablet && <Breadcrumb crumbs={crumbs} />}
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
         {/* <div className="input-wrapper">
           <div className="input-text-wrapper">
@@ -118,7 +118,7 @@ export default function EditProject({ params }: UrlParams) {
             <textarea
               {...register("description")}
               placeholder="Descrição do projeto..."
-              rows={isTablet() ? 8 : 4}
+              rows={isTablet ? 8 : 4}
               id="description"
               name="description"
             />

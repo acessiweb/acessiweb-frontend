@@ -3,8 +3,8 @@
 import { PiPersonArmsSpreadLight } from "react-icons/pi";
 import { SlEnvolope } from "react-icons/sl";
 import GuidelinesAdmin from "./diretrizes/page";
-import { isTablet } from "@/common/utils/size";
 import { CardLink } from "@/components/card-link";
+import { useScreenType } from "@/hooks/useScreenSize";
 
 function HomeMobile() {
   return (
@@ -23,7 +23,9 @@ function HomeMobile() {
 }
 
 export default function Home() {
-  if (isTablet()) {
+  const { isTablet } = useScreenType();
+
+  if (isTablet) {
     return <HomeMobile />;
   }
 

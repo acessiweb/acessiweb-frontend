@@ -6,8 +6,8 @@ import { SlEnvolope, SlFolder } from "react-icons/sl";
 import { ReactNode } from "react";
 import { useSession } from "@/context/auth";
 import { isCommonUser } from "@/common/utils/authorization";
-import { isTablet } from "@/common/utils/size";
 import { CardLink } from "@/components/card-link";
+import { useScreenType } from "@/hooks/useScreenSize";
 
 function HomeUserMobile() {
   return (
@@ -41,8 +41,9 @@ function HomeBase({ children }: { children: ReactNode }) {
 
 export default function Home() {
   const { accessType } = useSession();
+  const { isTablet } = useScreenType();
 
-  if (isTablet()) {
+  if (isTablet) {
     if (isCommonUser(accessType)) {
       return <HomeUserMobile />;
     }
