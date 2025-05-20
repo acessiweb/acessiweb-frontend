@@ -10,7 +10,7 @@ import { useScreenType } from "@/hooks/useScreenSize";
 import { useEffect } from "react";
 
 export default function App({ children }: { children?: React.ReactNode }) {
-  const { isTablet } = useScreenType();
+  const { isTablet, isMobile } = useScreenType();
 
   useEffect(() => {
     document.body.classList.add("open-sans");
@@ -22,10 +22,10 @@ export default function App({ children }: { children?: React.ReactNode }) {
         <CartProvider>
           <ProjectProvider>
             <div className="content">
-              {isTablet ? <HeaderMobile /> : <HeaderDesktop />}
+              {isTablet || isMobile ? <HeaderMobile /> : <HeaderDesktop />}
               <main>{children}</main>
             </div>
-            {isTablet && <FooterMobile />}
+            {(isTablet || isMobile) && <FooterMobile />}
           </ProjectProvider>
         </CartProvider>
       </AuthProvider>

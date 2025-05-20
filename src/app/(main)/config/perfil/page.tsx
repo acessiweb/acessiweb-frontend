@@ -1,5 +1,5 @@
-"use client";
+import Profile from "./profile";
 
-export default function Settings() {
-  return <div></div>;
+export default function Page() {
+  return <Profile />;
 }
