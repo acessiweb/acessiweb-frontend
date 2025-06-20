@@ -2,25 +2,34 @@
 
 import { capitalize } from "@/common/utils/string";
 import Link from "next/link";
+import { useState } from "react";
 
-interface BreadcrumbType {
+export type BreadcrumbProps = {
   crumbs: {
     desc: string;
     link: string;
   }[];
-}
+};
 
-export function Breadcrumb({ crumbs }: BreadcrumbType) {
+export function Breadcrumb({ crumbs }: BreadcrumbProps) {
   return (
-    <div className="breadcrumb">
-      {crumbs.map((crumb, i) => (
-        <div key={i}>
-          <span className="breadcrumb__link-desc">
-            <Link href={crumb.link}>{capitalize(crumb.desc)}</Link>
-          </span>
-          {crumbs.length - 1 !== i ? <span>&#47;</span> : ""}
-        </div>
-      ))}
-    </div>
+    <nav className="breadcrumb" aria-label="Breadcrumb">
+      <ol>
+        {crumbs.map((crumb, i) => (
+          <li
+            aria-current={crumbs.length - 1 === i ? "page" : undefined}
+            key={i}
+          >
+            <Link
+              href={crumb.link}
+              style={{ fontWeight: crumbs.length - 1 === i ? 700 : 400 }}
+            >
+              {capitalize(crumb.desc)}
+            </Link>
+            {crumbs.length - 1 !== i ? <span role="none">&#47;</span> : ""}
+          </li>
+        ))}
+      </ol>
+    </nav>
   );
 }
