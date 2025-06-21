@@ -1,0 +1,12 @@
+@use "../var";
+@use "../mixins" as mixins;
+
+.input-text-voice {
+  display: flex;
+  column-gap: var.$space-xs;
+
+  @include mixins.input-wrapper-white(
+    var.$space-sm var.$space-md,
+    var.$fs-small
+  );
+}
