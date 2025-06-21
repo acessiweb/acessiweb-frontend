@@ -1,0 +1,14 @@
+@use "../var";
+
+.error-msgs-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: var.$space-lg;
+  row-gap: var.$space-xs;
+
+  &__error-msg {
+    color: var.$red;
+    font-weight: var.$bold;
+    font-size: var.$fs-x-small;
+  }
+}
