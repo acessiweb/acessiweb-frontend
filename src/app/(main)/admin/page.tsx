@@ -4,7 +4,7 @@ import { PiPersonArmsSpreadLight } from "react-icons/pi";
 import { SlEnvolope } from "react-icons/sl";
 import GuidelinesAdmin from "./diretrizes/page";
 import { CardLink } from "@/components/card-link";
-import { useScreenType } from "@/hooks/useScreenSize";
+import { useScreenType } from "@/hooks/useScreenType";
 
 function HomeMobile() {
   return (

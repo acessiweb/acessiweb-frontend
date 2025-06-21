@@ -3,13 +3,13 @@
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { isAdmin, isCommonUser } from "@/common/utils/authorization";
-import { useSession } from "@/context/auth";
 import Link from "next/link";
 import Cart from "@/common/nav/cart";
 import Help from "@/common/nav/help";
 import Settings from "@/common/nav/settings";
 import Profile from "@/common/nav/profile";
 import { BtnSearch } from "./search";
+import { useSession } from "next-auth/react";
 
 type BaseHeaderProps = {
   secNavLastItem: ReactNode;
@@ -133,12 +133,15 @@ function BaseHeaderDesktop(props: BaseHeaderProps) {
 
 export default function HeaderDesktop() {
   const pathname = usePathname();
-  const { accessType } = useSession();
+  const { data } = useSession();
 
-  if (isAdmin(accessType)) return <AdminHeaderDesktop pathname={pathname} />;
+  if (data && data.user && data.user.role) {
+    if (isAdmin(data.user.role))
+      return <AdminHeaderDesktop pathname={pathname} />;
 
-  if (!pathname.includes("admin") && isCommonUser(accessType))
-    return <CommonUserHeaderDesktop pathname={pathname} />;
+    if (!pathname.includes("admin") && isCommonUser(data.user.role))
+      return <CommonUserHeaderDesktop pathname={pathname} />;
+  }
 
   return <VisitorHeaderDesktop />;
 }

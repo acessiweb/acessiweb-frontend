@@ -1,0 +1,158 @@
+ebd72a2 HEAD@{0}: reset: moving to HEAD~1
+0bec910 HEAD@{1}: checkout: moving from dev to dev
+0bec910 HEAD@{2}: checkout: moving from recuperacao-temp6 to dev
+0bec910 HEAD@{3}: checkout: moving from recuperacao-temp5 to recuperacao-temp6
+ebd72a2 HEAD@{4}: checkout: moving from recuperacao-temp4 to recuperacao-temp5
+d792d30 HEAD@{5}: checkout: moving from recuperacao-temp3 to recuperacao-temp4
+9fd53fd HEAD@{6}: commit: .
+0bec910 HEAD@{7}: checkout: moving from recuperacao-temp2 to recuperacao-temp3
+ebd72a2 HEAD@{8}: checkout: moving from recuperacao-temp3 to recuperacao-temp2
+0bec910 HEAD@{9}: checkout: moving from recuperacao-temp2 to recuperacao-temp3
+ebd72a2 HEAD@{10}: checkout: moving from recuperacao-temp to recuperacao-temp2
+c6929c8 HEAD@{11}: checkout: moving from dev to recuperacao-temp
+0bec910 HEAD@{12}: checkout: moving from main to dev
+646bfbc HEAD@{13}: checkout: moving from dev to main
+0bec910 HEAD@{14}: reset: moving to HEAD~1
+c6929c8 HEAD@{15}: commit: Add hook for handling speech recognition
+0bec910 HEAD@{16}: commit: Add component for input with voice command
+ebd72a2 HEAD@{17}: checkout: moving from main to dev
+646bfbc HEAD@{18}: checkout: moving from dev to main
+ebd72a2 HEAD@{19}: commit: Delete files
+d792d30 HEAD@{20}: commit: Update breadcrumb structure and style
+646bfbc HEAD@{21}: checkout: moving from main to dev
+646bfbc HEAD@{22}: checkout: moving from dev to main
+646bfbc HEAD@{23}: checkout: moving from main to dev
+646bfbc HEAD@{24}: commit: Delete files
+385c64d HEAD@{25}: commit: Add settings layout and pages
+d70b941 HEAD@{26}: commit: Change folder name
+2594b40 HEAD@{27}: commit: Add auth screens
+e88c21a HEAD@{28}: commit: Fix screen size with hook
+7c27d02 HEAD@{29}: commit: Add screen size function checker
+4fda07b HEAD@{30}: commit: Add cards
+730b63e HEAD@{31}: commit: Fix second page
+98a853a HEAD@{32}: commit: Update cards
+ad16ddb HEAD@{33}: commit: Update cards
+7dc1f35 HEAD@{34}: commit: Remove second page provider and add screen size functions checkers
+e40e6bd HEAD@{35}: commit: Fix styles
+700fa12 HEAD@{36}: commit: Update second page
+b753abf HEAD@{37}: commit: Update input text wrapper
+8e3d199 HEAD@{38}: commit: Fix card
+291d719 HEAD@{39}: commit: Add new border
+12ddb0b HEAD@{40}: commit: Update second page
+939862f HEAD@{41}: commit: Add screen size function checker
+c0ac6a9 HEAD@{42}: commit: Update card elements for new card types
+6d2627d HEAD@{43}: commit: Fix active link
+2559d32 HEAD@{44}: commit: Add global type for params
+df01127 HEAD@{45}: commit: Add hook for sec page component
+ec2ee01 HEAD@{46}: commit: Add types for cards
+923fd9e HEAD@{47}: commit: Add components for card with link
+f84cfc8 HEAD@{48}: commit: Add components for card without link
+26b68b8 HEAD@{49}: commit: Add functions to check screen size
+ae924f2 HEAD@{50}: commit: Delete file
+cf4b9f4 HEAD@{51}: commit: Delete files
+ecbbd12 HEAD@{52}: commit: Fix build issues and fix metadata issues
+f81726f HEAD@{53}: commit: Refactor cart
+1f27838 HEAD@{54}: commit: Add adjustments
+963652d HEAD@{55}: commit: Refactor cart layout
+c5d8e13 HEAD@{56}: commit: Fix value sync update
+550950f HEAD@{57}: commit: Add adjustments
+d118f31 HEAD@{58}: commit: Update styles
+9d73aa3 HEAD@{59}: commit: Add adjustments
+982869e HEAD@{60}: commit: Add styles for no registers found component
+16b9b01 HEAD@{61}: commit: Add styles for guidelines
+d1a1f51 HEAD@{62}: commit: Add styles for homepage mobile
+0f83f82 HEAD@{63}: commit: Add classes for list and grid views
+c9b8357 HEAD@{64}: commit: Add homepage mobile
+809286c HEAD@{65}: commit: Refactor card list and add controls to control bar desktop
+16cef62 HEAD@{66}: commit: Add component for guidelines
+b0cbd86 HEAD@{67}: commit: Add component for not found registers
+98d4e40 HEAD@{68}: commit: Add folder for card actions
+63352e8 HEAD@{69}: commit: Add guidelines route
+2e02a95 HEAD@{70}: commit: Add admin guidelines route
+451d01e HEAD@{71}: commit: Delete files
+5728d84 HEAD@{72}: commit: Update styles
+121ae84 HEAD@{73}: commit: Add screen size hook and footer mobile
+cf4d615 HEAD@{74}: commit: Add control bar and filter
+2bc2be5 HEAD@{75}: commit: Add breadcrumb and control bars
+49e112d HEAD@{76}: commit: Add constants for screen sizes
+457513d HEAD@{77}: commit: Add adjustments
+033fdcc HEAD@{78}: commit: Add search component
+df0f44e HEAD@{79}: commit: Switch header to nav
+0d6d662 HEAD@{80}: commit: Add styles for search component
+cf141c1 HEAD@{81}: commit: Add folder for filters
+07bfc9a HEAD@{82}: commit: Add function to capitalize string
+8df3186 HEAD@{83}: commit: Add control bars
+ba00471 HEAD@{84}: commit: Add breadcrumb
+43ee867 HEAD@{85}: commit: Switch header to footer and create new header for mobile
+e411eff HEAD@{86}: commit: Move screen size to hook
+76c6d89 HEAD@{87}: commit: Change header to nav
+0eb6677 HEAD@{88}: commit: Delete folder header
+a2f94aa HEAD@{89}: commit: Update README
+9964dd6 HEAD@{90}: commit: Update README
+2048046 HEAD@{91}: commit: Add License
+344e3cc HEAD@{92}: commit: Fix icon size
+ae2b26d HEAD@{93}: commit: Refactor header desktop
+ed31712 HEAD@{94}: commit: Update access type
+2cc8c5b HEAD@{95}: commit: Update screen size for headers
+385b551 HEAD@{96}: commit: Remove cart counting
+15a748f HEAD@{97}: commit: Update and fix
+4d66cf8 HEAD@{98}: commit: Update and fix CSS
+6d6e8d5 HEAD@{99}: commit: Update main class name
+761b5d1 HEAD@{100}: commit: Add profile button
+cceb3e0 HEAD@{101}: commit: Add public folder
+f163b34 HEAD@{102}: commit: Add svg icons folder
+4e2da58 HEAD@{103}: commit: Add sass file for screen reader classes
+9bcaee5 HEAD@{104}: commit: Delete file
+8c6d623 HEAD@{105}: commit: Add additional text for screen reader
+a8e2c16 HEAD@{106}: commit: Import screen reader
+99bded2 HEAD@{107}: commit: Add class for sr only elements
+ea4f16c HEAD@{108}: commit: Refactor header mobile
+354d9ac HEAD@{109}: commit: Update CSS
+baeb197 HEAD@{110}: commit: Remove overlay context
+e35ab82 HEAD@{111}: commit: Remove overlay context
+515b389 HEAD@{112}: commit: Update system name
+5d4fd4b HEAD@{113}: commit: Fix outside click
+6f3f1cd HEAD@{114}: commit: Add variables file
+d4d93b4 HEAD@{115}: commit: Update component name
+da6fa16 HEAD@{116}: commit: Add hook for modal
+2eff1d2 HEAD@{117}: commit: Add hook for overlay
+a704a87 HEAD@{118}: commit: Delete files
+26d3a6d HEAD@{119}: commit: Separate header elements
+f866eea HEAD@{120}: commit: Add overlay
+71506b3 HEAD@{121}: commit: Add overlay import
+d571c15 HEAD@{122}: commit: Add overlay styles
+9e9b472 HEAD@{123}: commit: Add context for overlay
+6fb1bfa HEAD@{124}: commit: Add hooks folder
+1fb36eb HEAD@{125}: commit: Separate header mobile components and update btns to link
+6090f2b HEAD@{126}: commit: Update header mobile styles
+1c81923 HEAD@{127}: commit: Add modal import
+1a43581 HEAD@{128}: commit: Update CSS
+dfd5895 HEAD@{129}: commit: Update gray to text
+4520b8b HEAD@{130}: commit: Add modal styles
+a377323 HEAD@{131}: commit: Adjust CSS
+a22910f HEAD@{132}: commit: Add icon modal
+81f99b6 HEAD@{133}: commit: Update header for visitor, common user and admin
+66dcd12 HEAD@{134}: commit: Add mixin for icon badge
+38d4b83 HEAD@{135}: commit: Add style for cart count icon
+bbe77ae HEAD@{136}: commit: Add style for add acount icon
+d289efd HEAD@{137}: commit: Add style for modal opened with icon
+eb6e315 HEAD@{138}: commit: Remove any type
+17899a3 HEAD@{139}: commit: Add responsive header, add new icons, update design and add voice writing in inputs
+64513f3 HEAD@{140}: commit: Fix edit page issues and add project details page
+fdd8f1c HEAD@{141}: commit: Fix delete push closing && start building project edit page
+0b3558f HEAD@{142}: commit: Fix build issues
+b5b8f80 HEAD@{143}: commit: Add project edit route, add delete confirmation, add cart and projects context, add project card update and delete and update card list layout
+a3ff17a HEAD@{144}: commit: Add cart count, add push and add cart guidelines validation
+6d13189 HEAD@{145}: commit: Update cart layout
+b1a34c9 HEAD@{146}: commit: Add error existence check
+2191fe4 HEAD@{147}: commit: Add form validation with yup and add react hook form to handle form submission
+91c1c40 HEAD@{148}: commit: Update icon aligment and size, fix non-duplicity cart guidelines
+9eb647f HEAD@{149}: commit: Add image kit
+121a994 HEAD@{150}: commit: Add new style to admin homepage and add next image tag
+c2caba7 HEAD@{151}: commit: Migrate to sass
+1adc7ff HEAD@{152}: commit: Migrate to sass
+d0b00db HEAD@{153}: commit: Add admin routes, add list component to handle with guidelines and projets lists, add card and add cart page
+6276372 HEAD@{154}: commit: Fix build warnings
+3745135 HEAD@{155}: commit: Add styled components, header, user pages and two pages layout
+11753af HEAD@{156}: checkout: moving from master to main
+11753af HEAD@{157}: commit (initial): Initial commit from Create Next App

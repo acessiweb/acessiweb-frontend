@@ -1,7 +1,7 @@
 "use client";
 
 import { isAdmin, isCommonUser } from "@/common/utils/authorization";
-import { useSession } from "@/context/auth";
+import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode } from "react";
 import { SlArrowLeft } from "react-icons/sl";

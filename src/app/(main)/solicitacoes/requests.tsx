@@ -4,7 +4,7 @@
 // import { CardLinkUpdateAndDelete } from "@/components/card-link";
 // import useControlBarOptions from "@/hooks/useControlBarOptions";
 // import useGuidelinesFilters from "@/hooks/useGuidelinesFilters";
-// import { useScreenType } from "@/hooks/useScreenSize";
+// import { useScreenType } from "@/hooks/useScreenType";
 // import { useQuery } from "@tanstack/react-query";
 
 export default function GuidelineRequests() {

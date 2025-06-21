@@ -9,7 +9,7 @@ import { usePush } from "@/context/push";
 import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
 import { captureVoiceAndGetText } from "@/common/utils/voice";
 import { Breadcrumb } from "@/components/breadcrumb";
-import { useScreenType } from "@/hooks/useScreenSize";
+import { useScreenType } from "@/hooks/useScreenType";
 
 export default function EditProject({ params }: UrlParams) {
   const { projects, updateProject } = useProjects();

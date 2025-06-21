@@ -9,7 +9,7 @@
 // import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
 // import { captureVoiceAndGetText } from "@/common/utils/voice";
 // import { Breadcrumb } from "@/components/breadcrumb";
-// import { useScreenType } from "@/hooks/useScreenSize";
+// import { useScreenType } from "@/hooks/useScreenType";
 import { Guideline as GuidelineType } from "@/types/guideline";
 
 export default function EditGuideline({

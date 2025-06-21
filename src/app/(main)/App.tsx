@@ -3,10 +3,10 @@
 import FooterMobile from "@/components/footer-mobile";
 import HeaderDesktop from "@/components/header-desktop";
 import HeaderMobile from "@/components/header-mobile";
-import AuthProvider from "@/context/auth";
 import CartProvider from "@/context/cart";
 import ProjectProvider from "@/context/projects";
-import { useScreenType } from "@/hooks/useScreenSize";
+import { useScreenType } from "@/hooks/useScreenType";
+import { SessionProvider } from "next-auth/react";
 import { useEffect } from "react";
 
 export default function App({ children }: { children?: React.ReactNode }) {
@@ -18,7 +18,7 @@ export default function App({ children }: { children?: React.ReactNode }) {
 
   return (
     <div id="app">
-      <AuthProvider>
+      <SessionProvider>
         <CartProvider>
           <ProjectProvider>
             <div className="content">
@@ -28,7 +28,7 @@ export default function App({ children }: { children?: React.ReactNode }) {
             {(isTablet || isMobile) && <FooterMobile />}
           </ProjectProvider>
         </CartProvider>
-      </AuthProvider>
+      </SessionProvider>
     </div>
   );
 }

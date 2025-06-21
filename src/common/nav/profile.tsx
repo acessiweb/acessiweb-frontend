@@ -2,7 +2,7 @@ import useModal from "@/hooks/useModal";
 import Link from "next/link";
 import { SlLogout, SlSettings } from "react-icons/sl";
 import ProfileIcon from "../icons/profile";
-import { useScreenType } from "@/hooks/useScreenSize";
+import { useScreenType } from "@/hooks/useScreenType";
 
 export default function Profile() {
   const { showModal, isModalOpen, isOverlayActive, modalRef, Overlay } =

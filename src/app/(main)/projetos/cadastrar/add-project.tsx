@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
 import { useState } from "react";
 import { captureVoiceAndGetText } from "@/common/utils/voice";
-import { useScreenType } from "@/hooks/useScreenSize";
+import { useScreenType } from "@/hooks/useScreenType";
 
 export default function AddProject() {
   const { cart, addDescriptionToCart, addNameToCart, cleanCart } = useCart();

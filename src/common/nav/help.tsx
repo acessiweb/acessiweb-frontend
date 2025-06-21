@@ -1,5 +1,5 @@
 import useModal from "@/hooks/useModal";
-import { useScreenType } from "@/hooks/useScreenSize";
+import { useScreenType } from "@/hooks/useScreenType";
 import { IoHelp } from "react-icons/io5";
 import { SlClose } from "react-icons/sl";
 

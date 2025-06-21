@@ -4,7 +4,7 @@ import { isAdmin, isCommonUser } from "@/common/utils/authorization";
 import Cart from "@/common/nav/cart";
 import Home from "@/common/nav/home";
 import Person from "@/common/nav/person";
-import { useSession } from "@/context/auth";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";

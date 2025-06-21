@@ -12,7 +12,7 @@ import SecondPage from "@/components/second-page";
 import Project from "./[id]/project";
 import { CardLinkUpdateAndDelete } from "@/components/card-link";
 import { CardBtnUpdateAndDelete } from "@/components/card-btn";
-import { useScreenType } from "@/hooks/useScreenSize";
+import { useScreenType } from "@/hooks/useScreenType";
 
 export default function Projects() {
   const { projects, deleteProject } = useProjects();
