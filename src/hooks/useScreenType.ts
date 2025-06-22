@@ -1,7 +1,9 @@
 "use client";
 
-import { MOBILE_SCREEN_SIZE, TABLET_SCREEN_SIZE } from "@/common/utils/var";
 import { useState, useEffect } from "react";
+
+const MOBILE_SCREEN_SIZE = 499;
+const TABLET_SCREEN_SIZE = 890;
 
 export function useScreenType() {
   const getScreenType = () => {

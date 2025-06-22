@@ -9,9 +9,9 @@ body {
   min-height: 100vh;
   max-width: 100vw;
   width: 100vw;
-  overflow-x: hidden;
-  overflow-y: auto;
   display: flex;
+  height: 100vh;
+  overflow: hidden;
 }
 
 body {
@@ -52,10 +52,6 @@ body {
   }
 
   .content {
-    width: 100%;
-    flex: 1;
-    overflow-y: auto;
-
     @media (max-width: var.$mobile) {
       min-height: calc(100vh - $height);
       height: calc(100vh - $height);
@@ -66,8 +62,6 @@ body {
       margin-top: var.$space-md;
       padding: 0 calc(var.$space-xl + 0.2rem) var.$space-md;
       border-radius: var.$border-radius-default;
-      width: 100%;
-      flex: 1;
 
       @media (max-width: var.$mobile) {
         padding: var.$space-lg;
@@ -105,6 +99,7 @@ body {
 @include meta.load-css("elements/form");
 @include meta.load-css("elements/breadcrumb");
 @include meta.load-css("elements/not-found");
+@include meta.load-css("elements/error-msgs");
 
 //components
 @include meta.load-css("components/nav");
@@ -115,7 +110,6 @@ body {
 @include meta.load-css("components/push-delete");
 @include meta.load-css("components/modal");
 @include meta.load-css("components/footer");
-@include meta.load-css("components/control-bar");
 @include meta.load-css("components/search");
 
 //pages
@@ -124,8 +118,13 @@ body {
 @include meta.load-css("pages/cart");
 @include meta.load-css("pages/edit-project");
 @include meta.load-css("pages/read-project");
-@include meta.load-css("pages/guidelines");
+@include meta.load-css("pages/guideline/add-guideline");
+@include meta.load-css("pages/guideline/guidelines");
+@include meta.load-css("pages/guideline/read-guideline");
 @include meta.load-css("pages/login");
+
+//layouts
+@include meta.load-css("layouts/auth");
 
 //animations
 @include meta.load-css("animation");
@@ -134,4 +133,3 @@ body {
 @include meta.load-css("overlay");
 @include meta.load-css("screen-reader");
 @include meta.load-css("display");
-@include meta.load-css("auth");

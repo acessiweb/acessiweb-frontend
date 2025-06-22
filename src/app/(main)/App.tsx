@@ -4,7 +4,6 @@ import FooterMobile from "@/components/footer-mobile";
 import HeaderDesktop from "@/components/header-desktop";
 import HeaderMobile from "@/components/header-mobile";
 import CartProvider from "@/context/cart";
-import ProjectProvider from "@/context/projects";
 import { useScreenType } from "@/hooks/useScreenType";
 import { SessionProvider } from "next-auth/react";
 import { useEffect } from "react";
@@ -20,13 +19,11 @@ export default function App({ children }: { children?: React.ReactNode }) {
     <div id="app">
       <SessionProvider>
         <CartProvider>
-          <ProjectProvider>
-            <div className="content">
-              {isTablet || isMobile ? <HeaderMobile /> : <HeaderDesktop />}
-              <main>{children}</main>
-            </div>
-            {(isTablet || isMobile) && <FooterMobile />}
-          </ProjectProvider>
+          <div className="content">
+            {isTablet || isMobile ? <HeaderMobile /> : <HeaderDesktop />}
+            <main>{children}</main>
+          </div>
+          {(isTablet || isMobile) && <FooterMobile />}
         </CartProvider>
       </SessionProvider>
     </div>

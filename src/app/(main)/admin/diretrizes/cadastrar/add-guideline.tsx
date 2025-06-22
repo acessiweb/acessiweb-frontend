@@ -15,7 +15,7 @@ import useFilters from "@/hooks/useFilters";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { useSession } from "next-auth/react";
 import { useCommands } from "@/context/commands";
-import useErrorMsgs from "@/hooks/useErrorMsgs";
+import useErrorMsgs from "@/hooks/useErrors";
 import { createGuideline } from "@/routes/guidelines";
 import { usePush } from "@/context/push";
 import { useRouter } from "next/navigation";
@@ -89,9 +89,6 @@ export default function AddGuideline({
   const { setPushMsg } = usePush();
   const router = useRouter();
   const [code, setCode] = useState("");
-  useHotkeys(keycuts.n[0], () => document.getElementById("guideName")?.focus());
-  useHotkeys(keycuts.d[0], () => document.getElementById("desc")?.focus());
-  useHotkeys(keycuts.g[0], () => document.getElementById("imageDesc")?.focus());
 
   useEffect(() => {
     setKeycuts(keycuts);

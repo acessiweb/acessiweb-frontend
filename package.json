@@ -19,6 +19,7 @@
     "@hookform/resolvers": "^5.0.1",
     "@mui/icons-material": "^7.0.1",
     "@mui/material": "^7.0.1",
+    "@tanstack/react-query": "^5.81.0",
     "@uiw/codemirror-theme-atomone": "^4.23.13",
     "@uiw/codemirror-theme-basic": "^4.23.13",
     "@uiw/codemirror-theme-copilot": "^4.23.13",
@@ -36,9 +37,9 @@
     "react-hook-form": "^7.55.0",
     "react-hotkeys-hook": "^5.1.0",
     "react-icons": "^5.5.0",
+    "react-simple-keyboard": "^3.8.87",
     "sass": "^1.86.1",
     "sass-migrator": "^2.3.1",
-    "yup": "^1.6.1",
     "zod": "^3.25.67"
   },
   "devDependencies": {

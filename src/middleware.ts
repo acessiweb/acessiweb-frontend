@@ -1,22 +1,13 @@
-// middleware.ts
+"use server";
+
+import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { isAdmin, isCommonUser } from "./common/utils/authorization";
-// import { verify } from "jsonwebtoken";
+import { isAdmin } from "./common/utils/authorization";
 
-const PUBLIC_PATHS = ["/login", "/sobre", "/_next"];
+const PUBLIC_PATHS = ["/auth/logar", "/auth/criar-conta"];
 
-// function getUser(req: NextRequest) {
-//   const token = req.cookies.get("token")?.value;
-//   if (!token) return null;
-//   try {
-//     return verify(token, process.env.JWT_SECRET);
-//   } catch {
-//     return null;
-//   }
-// }
-
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // ignora rotas públicas
@@ -24,23 +15,21 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  const userRole = "ADMIN";
+  const token = await getToken({
+    req,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
 
-  if (!userRole) {
-    const loginUrl = new URL("/login", req.url);
-    return NextResponse.redirect(loginUrl);
+  if (token && token.role) {
+    if (pathname.startsWith("/admin") && !isAdmin(token.role)) {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
+
+    return NextResponse.next();
   }
 
-  if (pathname.startsWith("/admin") && !isAdmin(userRole)) {
-    return new NextResponse("Forbidden", { status: 403 });
-  }
-
-  if (pathname.startsWith("/solicitacoes") && !isCommonUser(userRole)) {
-    const homePage = new URL("/", req.url);
-    return NextResponse.redirect(homePage);
-  }
-
-  return NextResponse.next();
+  const loginUrl = new URL("/auth/logar", req.url);
+  return NextResponse.redirect(loginUrl);
 }
 
 export const config = {

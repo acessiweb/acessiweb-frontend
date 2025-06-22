@@ -1,19 +1,19 @@
-"use client";
+// "use client";
 
-import GuidelinesFilters from "@/common/filters/guidelines";
-import ControlBarDesktop from "@/components/control-bar-desktop";
-import Guidelines from "@/components/guidelines";
+// import GuidelinesFilters from "@/common/filters/guidelines";
+// import ControlBarDesktop from "@/components/control-bar-desktop";
+// import Guidelines from "@/components/guidelines";
 
-export default function GuidelinesAdmin() {
-  return (
-    <Guidelines
-      controlBar={
-        <ControlBarDesktop
-          searchPlaceholderText="Buscar por diretriz..."
-          controls={<GuidelinesFilters />}
-        />
-      }
-      isAdmin={true}
-    />
-  );
-}
+// export default function GuidelinesAdmin() {
+//   return (
+//     <Guidelines
+//       controlBar={
+//         <ControlBarDesktop
+//           searchPlaceholderText="Buscar por diretriz..."
+//           controls={<GuidelinesFilters />}
+//         />
+//       }
+//       isAdmin={true}
+//     />
+//   );
+// }

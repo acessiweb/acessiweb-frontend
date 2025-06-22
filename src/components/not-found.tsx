@@ -1,4 +1,4 @@
-import imageKitLoader from "@/image/loader";
+import imageKitLoader from "@/common/image/loader";
 import Image from "next/image";
 
 type NoRegistersFoundProps = {

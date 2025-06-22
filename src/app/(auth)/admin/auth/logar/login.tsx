@@ -3,7 +3,7 @@
 import InputTextVoice from "@/components/input-text-voice";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useErrorMsgs from "@/hooks/useErrorMsgs";
+import useErrorMsgs from "@/hooks/useErrors";
 import { signIn } from "next-auth/react";
 import Help from "@/common/nav/help";
 import { CTRL, SHIFT } from "@/common/utils/commands";

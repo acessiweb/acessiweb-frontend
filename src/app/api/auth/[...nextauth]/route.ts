@@ -43,7 +43,7 @@ const authOptions: NextAuthOptions = {
           return null;
         }
 
-        throw new Error(fetched.errors[0].message);
+        throw new Error(JSON.stringify(fetched.errors));
       },
     }),
     GoogleProvider({

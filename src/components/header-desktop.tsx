@@ -10,6 +10,8 @@ import Settings from "@/common/nav/settings";
 import Profile from "@/common/nav/profile";
 import { BtnSearch } from "./search";
 import { useSession } from "next-auth/react";
+import Logo from "../assets/images/logo-horizontal-purple.png";
+import Image from "next/image";
 
 type BaseHeaderProps = {
   secNavLastItem: ReactNode;
@@ -94,7 +96,7 @@ function BaseHeaderDesktop(props: BaseHeaderProps) {
   return (
     <header className="header-desktop">
       <div className="header-desktop__logo-wrapper">
-        <img alt="Logo do acessiweb" src="/img/logo-horizontal-purple.png" />
+        <Image alt="Logo do acessiweb" src={Logo} />
       </div>
       <ul className="header-desktop__nav-links">
         {props.showHomepageLink && (

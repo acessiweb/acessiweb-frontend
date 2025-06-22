@@ -81,12 +81,9 @@
 
 .form-error-msg {
   color: var.$red;
-  font-size: var.$fs-x-small;
+  font-size: calc(var.$fs-x-small - 0.2rem);
   text-align: center;
-  border: 2px solid var.$red;
-  margin: 0 auto;
-  padding: var.$space-sm;
-  border-radius: var.$border-radius-default;
+  font-weight: var.$bold;
 }
 
 .input-checkbox {

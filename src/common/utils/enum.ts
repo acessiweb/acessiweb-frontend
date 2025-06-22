@@ -3,6 +3,5 @@ export enum KeyboardDisplay {
   "{tab}" = "tab",
   "{shift}" = "shift",
   "{enter}" = "enter",
-  "{lock}" = "trancar",
   "{space}" = "espaço",
 }

@@ -1,7 +1,9 @@
-import { ACTIVE_MODAL_CLASS, NOT_ACTIVE_MODAL_CLASS } from "@/common/utils/var";
 import { useEffect, useRef, useState } from "react";
 import useOverlay from "./useOverlay";
 import useOutsideClick from "./useOutsideClick";
+
+const ACTIVE_MODAL_CLASS = "modal--active";
+const NOT_ACTIVE_MODAL_CLASS = "modal--not-active";
 
 export default function useModal() {
   const dialogRef = useRef<HTMLDialogElement>(null);

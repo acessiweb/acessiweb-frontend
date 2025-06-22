@@ -7,16 +7,21 @@ import {
 } from "./constants";
 
 const email = z
-  .string()
-  .trim()
-  .max(512, "Email deve possuir no máximo 512 caracteres")
-  .email("Email inválido")
+  .union([
+    z
+      .string()
+      .trim()
+      .max(512, "Email deve possuir no máximo 512 caracteres")
+      .email("E-mail inválido"),
+    z.literal(""),
+  ])
   .optional();
 
 const mobilePhone = z
-  .string()
-  .trim()
-  .regex(MOBILE_PHONE_MASK, "Número de celular inválido")
+  .union([
+    z.string().trim().regex(MOBILE_PHONE_MASK, "Número de celular inválido"),
+    z.literal(""),
+  ])
   .optional();
 
 const password = z

@@ -1,39 +1,17 @@
-"use client";
-
 import { useState } from "react";
 
-const EMAIL = "E-mail";
-const MOBILEPHONE = "Celular";
-
 export default function useEmailOrMobilePhone() {
-  const [inputType, setInputType] = useState<"E-mail" | "Celular">(EMAIL);
-  const [btnText, setBtnText] = useState(MOBILEPHONE);
+  const [inputType, setInputType] = useState<"E-mail" | "Celular">("E-mail");
 
-  const toggleType = () => {
+  const handleType = () => {
     setInputType((prev) => {
-      if (prev === EMAIL) {
-        return MOBILEPHONE;
+      if (prev === "E-mail") {
+        return "Celular";
       }
 
-      return EMAIL;
-    });
-
-    setBtnText((prev) => {
-      if (prev === EMAIL) {
-        return MOBILEPHONE;
-      }
-
-      return EMAIL;
+      return "E-mail";
     });
   };
 
-  return {
-    inputType,
-    btnText,
-    toggleType,
-    EMAIL,
-    MOBILEPHONE,
-    setInputType,
-    setBtnText,
-  };
+  return { inputType, handleType };
 }
