@@ -2,8 +2,16 @@
 
 import { CreateCommonUserSchema } from "@/schemas/user.schema";
 import fetchData from "./fetch/fetch";
+import { ApiError } from "@/types/response-api";
 
-export async function createAccount(body: Partial<CreateCommonUserSchema>) {
+export async function createAccount(
+  body: Partial<CreateCommonUserSchema>
+): Promise<
+  | {
+      id: string;
+    }
+  | ApiError
+> {
   return await fetchData({
     endpoint: "common-users",
     config: {

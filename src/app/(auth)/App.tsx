@@ -6,6 +6,7 @@ import Image from "next/image";
 import useKeyboard from "@/hooks/useKeyboard";
 import { CiKeyboard } from "react-icons/ci";
 import "react-simple-keyboard/build/css/index.css";
+import Help from "@/common/nav/help";
 
 export default function App({ children }: { children: ReactNode }) {
   const { keyboard: Keyboard, setShowKeyboard } = useKeyboard();
@@ -16,6 +17,7 @@ export default function App({ children }: { children: ReactNode }) {
 
   return (
     <main className="auth">
+      <Help />
       <div className="auth__card">
         <button
           className="auth__keyboard-icon"

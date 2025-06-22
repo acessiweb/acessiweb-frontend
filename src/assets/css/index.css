@@ -1217,6 +1217,12 @@ button {
   flex-direction: column;
 }
 
+.auth .heading-3 {
+  font-style: italic;
+  text-align: center;
+  margin-bottom: 1.9rem;
+}
+
 .auth__card {
   background-color: #e5d9ff;
   border: 1px solid rgb(25, 25, 24);
@@ -1289,12 +1295,19 @@ button {
   font-size: 0.7rem;
 }
 
-.auth form button {
+.auth form button,
+.auth form button + a {
   background-color: #c1a6f9;
   margin: 0 auto;
   padding: 0.7rem;
   border: 1px solid rgb(25, 25, 24);
   border-radius: 12px;
+}
+
+.auth form button + a {
+  text-decoration: none;
+  color: rgb(25, 25, 24);
+  margin-left: 0.7rem;
 }
 
 .auth .email-or-mobile-phone {
