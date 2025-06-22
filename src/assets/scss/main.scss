@@ -25,6 +25,10 @@ body {
   margin: 0;
 }
 
+#auth {
+  position: relative;
+}
+
 #app {
   display: flex;
   flex-direction: column;
@@ -111,6 +115,7 @@ body {
 @include meta.load-css("components/modal");
 @include meta.load-css("components/footer");
 @include meta.load-css("components/search");
+@include meta.load-css("components/input-text-voice");
 
 //pages
 @include meta.load-css("pages/homepage-mobile");

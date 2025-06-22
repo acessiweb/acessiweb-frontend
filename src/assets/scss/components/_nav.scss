@@ -20,12 +20,7 @@ button {
   }
 
   &__help {
-    position: relative;
-
     .modal {
-      width: 80vw;
-      bottom: calc(100% + 2rem);
-      height: 70vh;
       overflow-y: auto;
       flex-direction: row;
       align-items: flex-start;

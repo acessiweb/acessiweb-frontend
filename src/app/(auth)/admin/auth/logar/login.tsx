@@ -74,6 +74,7 @@ export default function Login({ searchParams }: LoginProps) {
             name="email"
             aria-invalid={errors.email ? true : false}
             aria-errormessage={errors.email ? "invalid-email" : undefined}
+            maxLength={512}
           />
         </InputTextVoice>
         {errors.email && (

@@ -77,6 +77,7 @@ export default function CreateAccount() {
             placeholder="Nome de usuário"
             aria-invalid={errors.username ? true : false}
             aria-errormessage={errors.username ? "invalid-username" : undefined}
+            maxLength={30}
           />
         </InputTextVoice>
         {errors.username && (
@@ -99,6 +100,7 @@ export default function CreateAccount() {
                 name="email"
                 aria-invalid={errors.email ? true : false}
                 aria-errormessage={errors.email ? "invalid-email" : undefined}
+                maxLength={512}
               />
             </InputTextVoice>
           )}

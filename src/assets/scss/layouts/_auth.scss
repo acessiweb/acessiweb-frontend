@@ -40,6 +40,32 @@
     }
   }
 
+  .nav__help {
+    .modal {
+      top: var.$space-sm;
+    }
+
+    > button {
+      margin-right: var.$space-xs;
+      margin-top: var.$space-xs;
+    }
+
+    > button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: unset;
+      transform: unset;
+    }
+
+    svg {
+      position: relative;
+      height: var.$svg-small;
+      width: var.$svg-small;
+      top: 10px;
+    }
+  }
+
   &__keyboard-icon {
     position: absolute;
     top: 0;
@@ -68,20 +94,6 @@
     display: flex;
     flex-direction: column;
     row-gap: var.$space-md;
-    flex: 1;
-    width: 100%;
-
-    input {
-      border: var.$border-1;
-      outline: none;
-      padding: calc(var.$space-md - 0.2rem) var.$space-md;
-      border-radius: var.$border-radius-default;
-
-      &::placeholder {
-        font-style: italic;
-        font-size: calc(var.$fs-x-small - 0.2rem);
-      }
-    }
 
     button,
     button + a {
@@ -103,7 +115,7 @@
     display: flex;
     flex-direction: column;
 
-    button {
+    > button:nth-child(2) {
       all: unset;
       margin-left: auto;
       cursor: pointer;
@@ -114,6 +126,10 @@
   .password {
     display: flex;
     column-gap: var.$space-xs;
+
+    > button:nth-child(2) {
+      margin: auto;
+    }
 
     input {
       flex: 1;

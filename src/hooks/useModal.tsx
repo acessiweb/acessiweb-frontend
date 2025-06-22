@@ -1,17 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import useOverlay from "./useOverlay";
 import useOutsideClick from "./useOutsideClick";
+import { createPortal } from "react-dom";
 
 const ACTIVE_MODAL_CLASS = "modal--active";
 const NOT_ACTIVE_MODAL_CLASS = "modal--not-active";
 
-export default function useModal() {
+export default function useModal({ appId }: { appId: string }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const {
-    isActive: isOverlayActive,
-    Overlay,
-    setIsActive: setIsOverlayActive,
-  } = useOverlay();
+  const [isOverlayActive, setIsOverlayActive] = useState(false);
   const { outsideClicked } = useOutsideClick(dialogRef, ACTIVE_MODAL_CLASS);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -63,7 +59,8 @@ export default function useModal() {
     hideModal,
     isModalOpen,
     isOverlayActive,
-    Overlay,
     modalRef: dialogRef,
+    Overlay: () =>
+      createPortal(<div id="overlay"></div>, document.getElementById(appId)!),
   };
 }

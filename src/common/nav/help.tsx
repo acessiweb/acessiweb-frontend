@@ -1,17 +1,22 @@
 import useModal from "@/hooks/useModal";
 import { useScreenType } from "@/hooks/useScreenType";
+import { createPortal } from "react-dom";
 import { IoHelp } from "react-icons/io5";
 import { SlClose } from "react-icons/sl";
 
-export default function Help() {
+type HelpProps = {
+  appId: string;
+};
+
+export default function Help({ appId }: HelpProps) {
   const {
     showModal,
     hideModal,
     isModalOpen,
     isOverlayActive,
-    Overlay,
     modalRef,
-  } = useModal();
+    Overlay,
+  } = useModal({ appId });
   const { isDesktop } = useScreenType();
 
   return (

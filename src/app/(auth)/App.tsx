@@ -16,8 +16,8 @@ export default function App({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <main className="auth">
-      <Help />
+    <main className="auth" id="auth">
+      <Help appId="auth" />
       <div className="auth__card">
         <button
           className="auth__keyboard-icon"
