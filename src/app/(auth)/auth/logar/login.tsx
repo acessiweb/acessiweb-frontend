@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import useErrors from "@/hooks/useErrors";
 import Errors from "@/components/errors";
 import { useHotkeys } from "react-hotkeys-hook";
+import InputTextVoice from "@/components/input-text-voice";
 
 type LoginProps = Params;
 
@@ -33,6 +34,7 @@ export default function Login({ searchParams }: LoginProps) {
     formState: { errors },
     register,
     reset,
+    setValue,
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     mode: "onBlur",
@@ -70,6 +72,12 @@ export default function Login({ searchParams }: LoginProps) {
     }
   };
 
+  const handleSetValue = (name: string, value: string) => {
+    if (name === "email" || name === "mobilePhone" || name === "password") {
+      setValue(name, value);
+    }
+  };
+
   useHotkeys("G", loginWithGoogle);
   useHotkeys("X", loginWithX);
 
@@ -78,26 +86,39 @@ export default function Login({ searchParams }: LoginProps) {
       <form method="POST" onSubmit={handleSubmit(onSubmit)}>
         <EmailorMobilePhone handleType={handleType} type={inputType}>
           {inputType === "E-mail" && (
-            <input
-              {...register("email")}
-              placeholder="email: meuemail@exemplo.com"
-              id="email"
-              name="email"
-              aria-invalid={errors.email ? true : false}
-              aria-errormessage={errors.email ? "invalid-email" : undefined}
-            />
+            <InputTextVoice
+              useWatchName={"email"}
+              handleSetValue={handleSetValue}
+              keycut="alt+shift+e"
+              context="email"
+            >
+              <input
+                {...register("email")}
+                placeholder="email: meuemail@exemplo.com"
+                id="email"
+                name="email"
+                aria-invalid={errors.email ? true : false}
+                aria-errormessage={errors.email ? "invalid-email" : undefined}
+              />
+            </InputTextVoice>
           )}
           {inputType === "Celular" && (
-            <input
-              {...register("mobilePhone")}
-              placeholder="celular: 49999998888"
-              id="mobilePhone"
-              name="mobilePhone"
-              aria-invalid={errors.mobilePhone ? true : false}
-              aria-errormessage={
-                errors.mobilePhone ? "invalid-mobile-phone" : undefined
-              }
-            />
+            <InputTextVoice
+              useWatchName={"mobilePhone"}
+              handleSetValue={handleSetValue}
+              keycut="alt+shift+c"
+            >
+              <input
+                {...register("mobilePhone")}
+                placeholder="celular: 49999998888"
+                id="mobilePhone"
+                name="mobilePhone"
+                aria-invalid={errors.mobilePhone ? true : false}
+                aria-errormessage={
+                  errors.mobilePhone ? "invalid-mobile-phone" : undefined
+                }
+              />
+            </InputTextVoice>
           )}
         </EmailorMobilePhone>
         {errors.email && (
@@ -115,15 +136,23 @@ export default function Login({ searchParams }: LoginProps) {
           </small>
         )}
         <Password hide={hide} handlePassword={handlePassword}>
-          <input
-            {...register("password")}
-            type={hide ? "password" : "text"}
-            placeholder="senha"
-            id="password"
-            name="password"
-            aria-invalid={errors.password ? true : false}
-            aria-errormessage={errors.password ? "invalid-password" : undefined}
-          />
+          <InputTextVoice
+            useWatchName={"password"}
+            handleSetValue={handleSetValue}
+            keycut="alt+shift+s"
+          >
+            <input
+              {...register("password")}
+              type={hide ? "password" : "text"}
+              placeholder="senha"
+              id="password"
+              name="password"
+              aria-invalid={errors.password ? true : false}
+              aria-errormessage={
+                errors.password ? "invalid-password" : undefined
+              }
+            />
+          </InputTextVoice>
         </Password>
         {errors.password && (
           <small role="status" id="invalid-password" className="form-error-msg">

@@ -5,43 +5,19 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useErrorMsgs from "@/hooks/useErrors";
 import { signIn } from "next-auth/react";
-import Help from "@/common/nav/help";
-import { CTRL, SHIFT } from "@/common/utils/commands";
-import { useHotkeys } from "react-hotkeys-hook";
 import { Params } from "@/types/params";
-import usePassword from "@/app/(auth)/_hooks/usePassword";
 import { adminLoginSchema, AdminLoginSchema } from "@/schemas/user.schema";
 import { useRouter } from "next/navigation";
-
-const keycuts = [
-  {
-    keys: [SHIFT, "E"],
-    description: "Inserir email",
-  },
-  {
-    keys: [CTRL, SHIFT, "E"],
-    description: "Inserir email por voz",
-  },
-  {
-    keys: [SHIFT, "S"],
-    description: "Inserir senha",
-  },
-  {
-    keys: [CTRL, SHIFT, "S"],
-    description: "Inserir senha por voz",
-  },
-  {
-    keys: ["S"],
-    description: "Alternar mostrar senha",
-  },
-];
+import Password from "@/app/(auth)/_components/Password";
+import usePassword from "@/app/(auth)/_hooks/usePassword";
+import Errors from "@/components/errors";
 
 type LoginProps = Params;
 
 export default function Login({ searchParams }: LoginProps) {
   const router = useRouter();
-  const { Eye: EyePass, hide: passHide, handlePassword } = usePassword();
-  const { ErrorsMsgs, handleErrorMsg } = useErrorMsgs({
+  const { hide, handlePassword } = usePassword();
+  const { errorMsgs, handleErrorMsgs, isAlert } = useErrorMsgs({
     alertMsg:
       searchParams.error && searchParams.error === "AccessDenied"
         ? "Ocorreu um erro: Não foi possível realizar autenticação"
@@ -53,14 +29,11 @@ export default function Login({ searchParams }: LoginProps) {
     formState: { errors },
     getValues,
     setValue,
+    reset,
   } = useForm<AdminLoginSchema>({
     resolver: zodResolver(adminLoginSchema),
     mode: "onBlur",
   });
-
-  useHotkeys("S", handlePassword);
-  useHotkeys("shift+e", () => document.getElementById("email")?.focus());
-  useHotkeys("shift+s", () => document.getElementById("password")?.focus());
 
   const onSubmit = async () => {
     const values = getValues();
@@ -70,9 +43,10 @@ export default function Login({ searchParams }: LoginProps) {
       redirect: false,
     });
 
-    if (result?.error) {
-      handleErrorMsg(result.error);
+    if (result && result.error) {
+      handleErrorMsgs(JSON.parse(result.error));
     } else {
+      reset();
       router.push("/admin");
     }
   };
@@ -85,60 +59,54 @@ export default function Login({ searchParams }: LoginProps) {
 
   return (
     <div className="login">
-      <Help keycuts={keycuts} />
       <h3 className="heading-3">Acesso admin</h3>
       <form onSubmit={handleSubmit(onSubmit)} method="POST">
         <InputTextVoice
           useWatchName={"email"}
           handleSetValue={handleSetValue}
           context="email"
-          keycut="E"
+          keycut="alt+shift+e"
         >
           <input
             {...register("email")}
             placeholder="Email: exemplo@gmail.com"
             id="email"
             name="email"
-            aria-describedby={errors.email ? "invalid-email" : undefined}
+            aria-invalid={errors.email ? true : false}
+            aria-errormessage={errors.email ? "invalid-email" : undefined}
           />
         </InputTextVoice>
         {errors.email && (
-          <small role="status" className="auth__error-msg" id="invalid-email">
+          <small role="status" className="form-error-msg" id="invalid-email">
             {errors.email.message}
           </small>
         )}
-        <InputTextVoice
-          useWatchName="password"
-          handleSetValue={handleSetValue}
-          keycut="S"
-        >
-          <>
+        <Password hide={hide} handlePassword={handlePassword}>
+          <InputTextVoice
+            useWatchName={"password"}
+            handleSetValue={handleSetValue}
+            keycut="alt+shift+s"
+          >
             <input
               {...register("password")}
-              type={passHide ? "password" : "text"}
-              placeholder="Senha"
+              type={hide ? "password" : "text"}
+              placeholder="senha"
               id="password"
               name="password"
-              aria-describedby={
+              aria-invalid={errors.password ? true : false}
+              aria-errormessage={
                 errors.password ? "invalid-password" : undefined
               }
             />
-            <EyePass />
-          </>
-        </InputTextVoice>
+          </InputTextVoice>
+        </Password>
         {errors.password && (
-          <small
-            role="status"
-            className="auth__error-msg"
-            id="invalid-password"
-          >
+          <small role="status" className="form-error-msg" id="invalid-password">
             {errors.password.message}
           </small>
         )}
-        <ErrorsMsgs />
-        <button className="auth__btn" type="submit">
-          Logar
-        </button>
+        {errorMsgs.length > 0 && <Errors isAlert={isAlert} msgs={errorMsgs} />}
+        <button type="submit">Logar</button>
       </form>
     </div>
   );

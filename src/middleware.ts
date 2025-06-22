@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { isAdmin } from "./common/utils/authorization";
 
-const PUBLIC_PATHS = ["/auth/logar", "/auth/criar-conta"];
+const PUBLIC_PATHS = ["/auth/logar", "/auth/criar-conta", "/admin/auth/logar"];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;

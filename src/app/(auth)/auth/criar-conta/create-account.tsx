@@ -15,6 +15,7 @@ import useErrors from "@/hooks/useErrors";
 import Errors from "@/components/errors";
 import { createAccount } from "@/routes/common-users";
 import { useRouter } from "next/navigation";
+import InputTextVoice from "@/components/input-text-voice";
 
 export default function CreateAccount() {
   const router = useRouter();
@@ -28,6 +29,7 @@ export default function CreateAccount() {
     formState: { errors },
     register,
     reset,
+    setValue,
   } = useForm<CreateCommonUserSchema>({
     resolver: zodResolver(createCommonUserSchema),
     mode: "onBlur",
@@ -48,18 +50,35 @@ export default function CreateAccount() {
     }
   };
 
+  const handleSetValue = (name: string, value: string) => {
+    if (
+      name === "username" ||
+      name === "email" ||
+      name === "mobilePhone" ||
+      name === "password"
+    ) {
+      setValue(name, value);
+    }
+  };
+
   return (
     <div className="create-account">
       <h3 className="heading-3">Criar minha conta</h3>
       <form method="POST" onSubmit={handleSubmit(onSubmit)}>
-        <input
-          {...register("username")}
-          id="username"
-          name="username"
-          placeholder="Nome de usuário"
-          aria-invalid={errors.username ? true : false}
-          aria-errormessage={errors.username ? "invalid-username" : undefined}
-        />
+        <InputTextVoice
+          useWatchName={"username"}
+          handleSetValue={handleSetValue}
+          keycut="alt+shift+u"
+        >
+          <input
+            {...register("username")}
+            id="username"
+            name="username"
+            placeholder="Nome de usuário"
+            aria-invalid={errors.username ? true : false}
+            aria-errormessage={errors.username ? "invalid-username" : undefined}
+          />
+        </InputTextVoice>
         {errors.username && (
           <small role="status" id="invalid-username" className="form-error-msg">
             {errors.username.message}
@@ -67,26 +86,39 @@ export default function CreateAccount() {
         )}
         <EmailorMobilePhone handleType={handleType} type={inputType}>
           {inputType === "E-mail" && (
-            <input
-              {...register("email")}
-              placeholder="email: meuemail@exemplo.com"
-              id="email"
-              name="email"
-              aria-invalid={errors.email ? true : false}
-              aria-errormessage={errors.email ? "invalid-email" : undefined}
-            />
+            <InputTextVoice
+              useWatchName={"email"}
+              handleSetValue={handleSetValue}
+              keycut="alt+shift+e"
+              context="email"
+            >
+              <input
+                {...register("email")}
+                placeholder="email: meuemail@exemplo.com"
+                id="email"
+                name="email"
+                aria-invalid={errors.email ? true : false}
+                aria-errormessage={errors.email ? "invalid-email" : undefined}
+              />
+            </InputTextVoice>
           )}
           {inputType === "Celular" && (
-            <input
-              {...register("mobilePhone")}
-              placeholder="celular: 49999998888"
-              id="mobilePhone"
-              name="mobilePhone"
-              aria-invalid={errors.mobilePhone ? true : false}
-              aria-errormessage={
-                errors.mobilePhone ? "invalid-mobile-phone" : undefined
-              }
-            />
+            <InputTextVoice
+              useWatchName={"mobilePhone"}
+              handleSetValue={handleSetValue}
+              keycut="alt+shift+c"
+            >
+              <input
+                {...register("mobilePhone")}
+                placeholder="celular: 49999998888"
+                id="mobilePhone"
+                name="mobilePhone"
+                aria-invalid={errors.mobilePhone ? true : false}
+                aria-errormessage={
+                  errors.mobilePhone ? "invalid-mobile-phone" : undefined
+                }
+              />
+            </InputTextVoice>
           )}
         </EmailorMobilePhone>
         {errors.email && (
@@ -104,15 +136,23 @@ export default function CreateAccount() {
           </small>
         )}
         <Password hide={hide} handlePassword={handlePassword}>
-          <input
-            {...register("password")}
-            type={hide ? "password" : "text"}
-            placeholder="senha"
-            id="password"
-            name="password"
-            aria-invalid={errors.password ? true : false}
-            aria-errormessage={errors.password ? "invalid-password" : undefined}
-          />
+          <InputTextVoice
+            useWatchName={"password"}
+            handleSetValue={handleSetValue}
+            keycut="alt+shift+s"
+          >
+            <input
+              {...register("password")}
+              type={hide ? "password" : "text"}
+              placeholder="senha"
+              id="password"
+              name="password"
+              aria-invalid={errors.password ? true : false}
+              aria-errormessage={
+                errors.password ? "invalid-password" : undefined
+              }
+            />
+          </InputTextVoice>
         </Password>
         {errors.password && (
           <small role="status" id="invalid-password" className="form-error-msg">
@@ -123,17 +163,23 @@ export default function CreateAccount() {
           hide={hideConfirmPassword}
           handlePassword={handleConfirmPassword}
         >
-          <input
-            {...register("confirmPassword")}
-            type={hide ? "password" : "text"}
-            placeholder="confirmar senha"
-            id="confirmPassword"
-            name="confirmPassword"
-            aria-invalid={errors.confirmPassword ? true : false}
-            aria-errormessage={
-              errors.confirmPassword ? "invalid-confirm-password" : undefined
-            }
-          />
+          <InputTextVoice
+            useWatchName={"confirmPassword"}
+            handleSetValue={handleSetValue}
+            keycut="alt+shift+v"
+          >
+            <input
+              {...register("confirmPassword")}
+              type={hide ? "password" : "text"}
+              placeholder="confirmar senha"
+              id="confirmPassword"
+              name="confirmPassword"
+              aria-invalid={errors.confirmPassword ? true : false}
+              aria-errormessage={
+                errors.confirmPassword ? "invalid-confirm-password" : undefined
+              }
+            />
+          </InputTextVoice>
         </Password>
         {errors.confirmPassword && (
           <small
