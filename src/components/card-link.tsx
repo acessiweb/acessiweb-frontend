@@ -8,7 +8,7 @@ import {
   CardDeleteProps,
   CardLinkProps,
   CardLinkUpdateAndDeleteProps,
-} from "@/types/card/types";
+} from "@/types/card";
 import Link from "next/link";
 
 export function CardLink({ readRoute, mainText, children }: CardLinkProps) {

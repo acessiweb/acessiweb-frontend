@@ -7,7 +7,6 @@ import NoRegistersFound from "@/components/not-found";
 import Search from "@/components/search";
 import SecondPage from "@/components/second-page";
 import { useCart } from "@/context/cart";
-import useControlBarOptions from "@/hooks/useControlBarOptions";
 import { useScreenType } from "@/hooks/useScreenType";
 import useSecPage from "@/hooks/useSecPage";
 import { getGuideline, getGuidelines } from "@/routes/guidelines";
@@ -19,6 +18,8 @@ import Pagination from "@/components/pagination";
 import usePagination from "@/hooks/usePagination";
 import ControlBar from "@/components/control-bar";
 import useDeficiencyFilters from "@/hooks/useDeficiencyFilters";
+import useControlBar from "@/hooks/useControlBar";
+import FiltersApplied from "@/components/filters-applied";
 
 const filterOptions = [
   {
@@ -30,8 +31,15 @@ const filterOptions = [
 export default function GuidelinesUser() {
   const { addGuidelineToCart } = useCart();
   const { isTablet, isDesktop, isMobile } = useScreenType();
-  const { handleView, view } = useControlBarOptions();
   const [search, setSearch] = useState<string>("");
+  const {
+    handleView,
+    filtersChosen,
+    handleFiltersChosen,
+    view,
+    cleanFilters,
+    deleteFilter,
+  } = useControlBar();
   const {
     handleHearing,
     handleMotor,
@@ -123,6 +131,7 @@ export default function GuidelinesUser() {
           handleView={handleView}
           view={view}
           filtersOptions={filterOptions}
+          handleFilters={handleFiltersChosen}
         />
         <h1 className="heading-1">Diretrizes de acessibilidade</h1>
         <div className="guidelines-filters">
@@ -140,6 +149,13 @@ export default function GuidelinesUser() {
             onVisualChange={handleVisual}
           />
         </div>
+        {filtersChosen.length > 0 && (
+          <FiltersApplied
+            cleanFilters={cleanFilters}
+            deleteFilter={deleteFilter}
+            filtersChosen={filtersChosen}
+          />
+        )}
         {guidesStored.length > 0 ? (
           <div className={`${view}`}>
             {guidesStored.map((guideline, i) => (

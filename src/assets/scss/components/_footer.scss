@@ -9,7 +9,7 @@
   position: fixed;
   background-color: var.$lighterPurple;
   bottom: 0;
-  z-index: 400;
+  z-index: 1000;
 
   > div:first-of-type {
     margin: 0 calc(var.$space-lg + 0.4rem);
@@ -35,11 +35,36 @@
     }
 
     .nav__help {
-      background-color: var.$purple;
-      border-radius: var.$border-radius-default;
-      border: var.$border-1;
-      top: -35px;
-      padding: calc(var.$space-md + 0.2rem) calc(var.$space-md + 0.5rem) !important;
+      margin: 0 calc(var.$space-md + 0.2rem);
+
+      > button {
+        background-color: var.$purple;
+        border-radius: var.$border-radius-default;
+        border: var.$border-1;
+        padding: calc(var.$space-md + 0.2rem) calc(var.$space-md + 0.5rem) !important;
+      }
+
+      > button,
+      > button > svg {
+        top: 0;
+        left: 50%;
+        right: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+      }
+
+      > button > svg {
+        top: 20px;
+      }
+
+      .modal {
+        max-width: 99vw;
+        top: unset;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transform: unset;
+      }
     }
 
     .nav__person {

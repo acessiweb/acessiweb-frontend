@@ -6,6 +6,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { ReactNode } from "react";
 import { SlArrowLeft } from "react-icons/sl";
 import Profile from "@/common/nav/profile";
+import LogoImage from "@/assets/images/logo-horizontal-purple.png";
+import Image from "next/image";
 
 type BaseHeaderProps = {
   firstItem: ReactNode;
@@ -31,7 +33,7 @@ function NavigateBackward() {
 function Logo() {
   return (
     <div className="header-mobile__logo-wrapper">
-      <img alt="Logo do acessiweb" src="/img/logo-horizontal-purple.png" />
+      <Image alt="Logo do acessiweb" src={LogoImage} />
     </div>
   );
 }

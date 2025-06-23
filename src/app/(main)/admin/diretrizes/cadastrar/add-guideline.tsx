@@ -11,7 +11,7 @@ import Code from "@/components/code";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import FileInput from "@/components/file-input";
 import GuidelinesDeficiencesFilter from "@/components/deficiences-checkbox";
-import useFilters from "@/hooks/useFilters";
+import useFilters from "@/hooks/useControlBar";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { useSession } from "next-auth/react";
 import { useCommands } from "@/context/commands";

@@ -5,7 +5,9 @@ import { createPortal } from "react-dom";
 const ACTIVE_MODAL_CLASS = "modal--active";
 const NOT_ACTIVE_MODAL_CLASS = "modal--not-active";
 
-export default function useModal({ appId }: { appId: string }) {
+export default function useModal(
+  { appId }: { appId: string } = { appId: "app" }
+) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [isOverlayActive, setIsOverlayActive] = useState(false);
   const { outsideClicked } = useOutsideClick(dialogRef, ACTIVE_MODAL_CLASS);

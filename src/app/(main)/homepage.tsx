@@ -13,13 +13,19 @@ function HomeUserMobile() {
   return (
     <HomeBase>
       <CardLink mainText="Diretrizes de acessibilidade" readRoute="/diretrizes">
-        <PiPersonArmsSpreadLight aria-hidden={true} focusable={false} />
+        <div>
+          <PiPersonArmsSpreadLight aria-hidden={true} focusable={false} />
+        </div>
       </CardLink>
       <CardLink mainText="Meus projetos" readRoute="/projetos">
-        <SlFolder aria-hidden={true} focusable={false} />
+        <div>
+          <SlFolder aria-hidden={true} focusable={false} />
+        </div>
       </CardLink>
       <CardLink mainText="Minhas solicitações" readRoute="/solicitacoes">
-        <SlEnvolope aria-hidden={true} focusable={false} />
+        <div>
+          <SlEnvolope aria-hidden={true} focusable={false} />
+        </div>
       </CardLink>
     </HomeBase>
   );
@@ -29,7 +35,9 @@ function HomeVisitorMobile() {
   return (
     <HomeBase>
       <CardLink mainText="Diretrizes de acessibilidade" readRoute="/diretrizes">
-        <PiPersonArmsSpreadLight aria-hidden={true} focusable={false} />
+        <div>
+          <PiPersonArmsSpreadLight aria-hidden={true} focusable={false} />
+        </div>
       </CardLink>
     </HomeBase>
   );

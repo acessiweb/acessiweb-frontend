@@ -8,7 +8,7 @@ import {
   CardBtnProps,
   CardBtnUpdateAndDeleteProps,
   CardDeleteProps,
-} from "@/types/card/types";
+} from "@/types/card";
 
 export function CardBtnDelete({
   mainText,

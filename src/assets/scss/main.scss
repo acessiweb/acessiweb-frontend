@@ -34,11 +34,10 @@ body {
   flex-direction: column;
   row-gap: var.$space-xs;
   position: relative;
-  z-index: 100;
   width: 100%;
+  height: 100%;
   background-color: var.$lighterPurple;
   color: var.$text;
-  overflow-y: auto;
 
   a {
     text-decoration: none;
@@ -57,41 +56,47 @@ body {
   }
 
   .content {
-    @media (max-width: var.$mobile) {
-      min-height: calc(100vh - $height);
-      height: calc(100vh - $height);
+    width: 100%;
+    height: 100%;
+    padding-bottom: var.$space-md;
+
+    @media (max-width: var.$tablet) {
+      padding-bottom: calc(var.$header-mobile-height + 50px);
     }
 
     > main {
       display: flex;
-      margin-top: var.$space-md;
-      padding: 0 calc(var.$space-xl + 0.2rem) var.$space-md;
       border-radius: var.$border-radius-default;
+      width: 100%;
+      padding: var.$space-md var.$space-sm 0;
+      height: calc(100% - var.$header-mobile-height);
+      overflow-y: auto;
+      overflow-x: hidden;
 
-      @media (max-width: var.$mobile) {
-        padding: var.$space-lg;
-        height: calc(100% - $height);
+      > div:first-of-type,
+      > div:first-of-type > div:first-of-type {
+        flex: 1;
+        padding: 0 var.$space-sm var.$space-md;
       }
 
-      .one-page,
+      @media (max-width: var.$tablet) {
+        justify-content: center;
+        padding: var.$space-sm var.$space-md calc(var.$space-xl + 3rem);
+        height: 100%;
+      }
+
       .two-pages {
         display: flex;
         flex: 1;
-        width: 100%;
-
-        h1 {
-          font-style: italic;
-        }
+        column-gap: var.$space-md;
 
         > div {
           flex: 1;
+          overflow-y: auto;
         }
-      }
 
-      .two-pages {
-        > div:first-of-type {
-          margin-top: var.$space-lg;
-          margin-right: calc(var.$space-xl + 0.7rem);
+        h1 {
+          font-style: italic;
         }
       }
     }
@@ -118,6 +123,7 @@ body {
 @include meta.load-css("components/search");
 @include meta.load-css("components/input-text-voice");
 @include meta.load-css("components/control-bar");
+@include meta.load-css("components/filters-applied");
 
 //pages
 @include meta.load-css("pages/homepage-mobile");

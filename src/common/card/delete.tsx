@@ -1,7 +1,7 @@
 "use client";
 
 import PushDelete from "@/components/push-delete";
-import { CardDeleteProps } from "@/types/card/types";
+import { CardDeleteProps } from "@/types/card";
 import { useState } from "react";
 import { SlTrash } from "react-icons/sl";
 

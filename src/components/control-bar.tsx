@@ -12,6 +12,7 @@ type ControlBarProps = Partial<BreadcrumbProps> & {
     id: string;
     desc: string;
   }[];
+  handleFilters: (_filter: string) => void;
 };
 
 export default function ControlBar({
@@ -19,15 +20,14 @@ export default function ControlBar({
   view,
   crumbs,
   filtersOptions,
+  handleFilters,
 }: ControlBarProps) {
   const { isDesktop } = useScreenType();
   const {
     showModal: showFilterModal,
     isModalOpen: isFilterModalOpen,
     modalRef: filterModalRef,
-  } = useModal({
-    appId: "app",
-  });
+  } = useModal();
 
   return (
     <div className="control-bar">
@@ -51,7 +51,11 @@ export default function ControlBar({
             >
               <ul>
                 {filtersOptions.map((val, i) => (
-                  <li key={i} id={val.id}>
+                  <li
+                    key={i}
+                    id={val.id}
+                    onClick={(e) => handleFilters(e.currentTarget.id)}
+                  >
                     {val.desc}
                   </li>
                 ))}

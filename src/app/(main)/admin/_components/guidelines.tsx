@@ -6,7 +6,7 @@ import NoRegistersFound from "@/components/not-found";
 import Search from "@/components/search";
 import SecondPage from "@/components/second-page";
 import useControlBarOptions from "@/hooks/useControlBarOptions";
-import useFilters from "@/hooks/useFilters";
+import useFilters from "@/hooks/useControlBar";
 import { useScreenType } from "@/hooks/useScreenType";
 import useSecPage from "@/hooks/useSecPage";
 import { getGuideline, getGuidelines } from "@/routes/guidelines";

@@ -1,6 +1,6 @@
 "use client";
 
-import { CardAddProps } from "@/types/card/types";
+import { CardAddProps } from "@/types/card";
 import { BsCartPlus } from "react-icons/bs";
 
 export default function CardAdd({

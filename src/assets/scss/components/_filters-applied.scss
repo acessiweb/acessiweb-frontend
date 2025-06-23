@@ -1,0 +1,41 @@
+@use "../var";
+
+.filters-applied {
+  display: flex;
+  column-gap: var.$space-sm;
+  margin: var.$space-md 0 0;
+
+  &__box {
+    background-color: var.$lightPurple;
+    padding: var.$space-sm;
+    border: var.$border-2;
+    border-radius: var.$border-radius-default;
+
+    > form {
+      display: flex;
+      column-gap: var.$space-sm;
+
+      input {
+        border: none;
+        background-color: transparent;
+        padding: var.$space-xs;
+        border: var.$border-1;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  &__delete {
+    &--one {
+      display: flex;
+      align-items: center;
+      background-color: var.$purple;
+      border-radius: 2px;
+
+      svg {
+        height: var.$svg-x-small;
+        width: var.$svg-x-small;
+      }
+    }
+  }
+}

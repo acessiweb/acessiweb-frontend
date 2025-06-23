@@ -7,7 +7,7 @@ import {
   CardBtnUpdateAndDeleteProps,
   CardLinkUpdateAndDeleteProps,
   CardUpdateAndDeleteProps,
-} from "@/types/card/types";
+} from "@/types/card";
 
 export function CardLinkUpdateAndDeleteEl({
   onDelete,

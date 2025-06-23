@@ -4,6 +4,7 @@ import useSpeechRecognition from "@/hooks/useSpeechRecognition";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { SlMagnifier, SlMicrophone } from "react-icons/sl";
 import { IoCloseOutline } from "react-icons/io5";
+import { useHotkeys } from "react-hotkeys-hook";
 
 type SearchProps = {
   classname: string;
@@ -50,6 +51,7 @@ export default function Search({
   handleSearch,
   searchValue,
 }: SearchProps) {
+  useHotkeys("x", () => handleSearch(""));
   const btnRef = useRef<HTMLButtonElement>(null);
   const { startListening } = useSpeechRecognition({
     onResult: (text: string) => {
@@ -79,7 +81,7 @@ export default function Search({
           onChange={(e) => handleSearch(e.target.value)}
         />
         {searchValue ? (
-          <button onClick={() => handleSearch("")}>
+          <button onClick={() => handleSearch("")} title="X">
             <IoCloseOutline />
           </button>
         ) : (

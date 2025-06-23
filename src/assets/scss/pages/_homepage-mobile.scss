@@ -8,19 +8,40 @@
   width: 100%;
 
   .card {
-    flex: none !important;
-    margin-bottom: 0 !important;
-    height: 90px;
+    display: flex;
+    flex: none;
+    align-items: center;
+    margin-bottom: 0;
     padding-right: var.$space-md;
+    height: 90px;
+
+    &:hover {
+      .card__desc {
+        > span:first-of-type {
+          font-weight: var.$bold;
+        }
+      }
+    }
 
     &__desc {
-      margin-top: var.$space-md;
+      margin-top: 0;
+      flex: 1;
+      font-size: calc(var.$fs-small + 0.2rem);
+
+      > span:first-of-type {
+        font-weight: var.$medium;
+      }
+    }
+
+    > div:nth-child(2) {
+      flex: 3;
+      display: flex;
+      justify-content: flex-end;
     }
 
     svg {
-      height: var.$svg-x-large !important;
-      width: var.$svg-x-large !important;
-      align-self: center;
+      height: calc(var.$svg-x-large + 0.5rem) !important;
+      width: calc(var.$svg-x-large + 0.5rem) !important;
       fill: var.$purple;
       stroke-width: 2px;
     }

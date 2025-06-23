@@ -13,7 +13,7 @@ type CartType = {
 type CartContextType = {
   cart: CartType;
   guidelinesTotal: number;
-  addGuidelineToCart: (_guides: Guideline) => void;
+  addGuidelineToCart: (_guide: { id: string; name: string }) => void;
   removeGuidelineOfCart: (_guideId: string) => void;
   addNameToCart: (_name: string) => void;
   addDescriptionToCart: (_desc: string) => void;
@@ -47,7 +47,7 @@ export default function CartProvider({
     }
   }, []);
 
-  const addGuidelineToCart = (guideline: Guideline) => {
+  const addGuidelineToCart = (guideline: { id: string; name: string }) => {
     const cartGuides = [...cart.guidelines];
 
     const alreadyExists = cartGuides.find((guide) => guide.id === guideline.id);
@@ -59,7 +59,7 @@ export default function CartProvider({
         const guides = [...prevCart.guidelines];
 
         if (!alreadyExists) {
-          guides.push(guideline);
+          guides.push(alreadyExists!);
         }
 
         const newCart = { ...prevCart, guidelines: guides };
