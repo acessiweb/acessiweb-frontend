@@ -10,7 +10,7 @@ import {
 import Code from "@/components/code";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import FileInput from "@/components/file-input";
-import GuidelinesDeficiencesFilter from "@/components/guide-deficiences-filter";
+import GuidelinesDeficiencesFilter from "@/components/deficiences-checkbox";
 import useFilters from "@/hooks/useFilters";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { useSession } from "next-auth/react";

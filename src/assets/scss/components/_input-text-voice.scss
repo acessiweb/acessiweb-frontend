@@ -3,7 +3,7 @@
 .input-text-voice {
   display: flex;
   column-gap: var.$space-xs;
-  padding: calc(var.$space-sm - 0.1rem) calc(var.$space-sm + 0.2rem);
+  padding: calc(var.$space-sm - 0.2rem) var.$space-sm;
   border-radius: var.$border-radius-default;
   background-color: var.$lighterPurple;
   border: var.$border-1;

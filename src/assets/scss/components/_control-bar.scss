@@ -1,0 +1,54 @@
+@use "../var";
+
+.control-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: var.$space-md;
+
+  &__options {
+    display: flex;
+    column-gap: var.$space-sm;
+    margin-left: auto;
+
+    @media (min-width: var.$desktop) {
+      margin-top: var.$space-sm;
+    }
+
+    .modal {
+      padding: 0;
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        row-gap: var.$space-sm;
+
+        li {
+          cursor: pointer;
+          padding: var.$space-sm;
+          border-top: var.$border-1;
+
+          &:first-of-type {
+            border-top: none;
+          }
+
+          &:hover {
+            background-color: var.$purple;
+          }
+        }
+      }
+    }
+  }
+
+  .btn-icon {
+    svg {
+      height: 1.3rem;
+      width: 1.3rem;
+    }
+
+    .modal {
+      top: 10%;
+      left: -300%;
+      bottom: 0;
+    }
+  }
+}

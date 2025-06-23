@@ -7,9 +7,13 @@ import useKeyboard from "@/hooks/useKeyboard";
 import { CiKeyboard } from "react-icons/ci";
 import "react-simple-keyboard/build/css/index.css";
 import Help from "@/common/nav/help";
+import { useHotkeys } from "react-hotkeys-hook";
+import { useRouter } from "next/navigation";
 
 export default function App({ children }: { children: ReactNode }) {
+  const router = useRouter();
   const { keyboard: Keyboard, setShowKeyboard } = useKeyboard();
+  useHotkeys("shift+h", () => router.push("/"));
 
   useEffect(() => {
     document.body.classList.add("open-sans");

@@ -1,7 +1,7 @@
 "use client";
 
-import ControlBarOptions from "@/components/control-bar-options";
-import GuidelinesDeficiencesFilter from "@/components/guide-deficiences-filter";
+import ControlBarOptions from "@/components/control-bar";
+import GuidelinesDeficiencesFilter from "@/components/deficiences-checkbox";
 import NoRegistersFound from "@/components/not-found";
 import Search from "@/components/search";
 import SecondPage from "@/components/second-page";

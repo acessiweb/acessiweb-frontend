@@ -86,13 +86,20 @@ function BaseHeaderMobile(props: BaseHeaderProps) {
 
 export default function HeaderMobile() {
   const pathname = usePathname();
-  const { accessType, username } = useSession();
+  const { data } = useSession();
 
-  if (pathname.includes("admin") && isAdmin(accessType))
-    return <AdminHeaderMobile pathname={pathname} />;
+  if (data && data.user && data.user.role) {
+    if (pathname.includes("admin") && isAdmin(data.user.role))
+      return <AdminHeaderMobile pathname={pathname} />;
 
-  if (!pathname.includes("admin") && isCommonUser(accessType))
-    return <CommonUserHeaderMobile pathname={pathname} username={username} />;
+    if (!pathname.includes("admin") && isCommonUser(data.user.role))
+      return (
+        <CommonUserHeaderMobile
+          pathname={pathname}
+          username={data.user.name!}
+        />
+      );
+  }
 
   return <VisitorHeaderMobile pathname={pathname} />;
 }

@@ -41,6 +41,8 @@
   }
 
   .nav__help {
+    margin-left: var.$space-sm;
+
     .modal {
       top: var.$space-sm;
     }
@@ -62,7 +64,7 @@
       position: relative;
       height: var.$svg-small;
       width: var.$svg-small;
-      top: 10px;
+      top: 12px;
     }
   }
 

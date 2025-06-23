@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
-type GuidelinesDeficiencesFilterProps = {
+type DeficiencesCheckboxProps = {
   onVisualChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onHearingChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onMotorChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -9,13 +9,13 @@ type GuidelinesDeficiencesFilterProps = {
   onTeaChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function GuidelinesDeficiencesFilter({
+export default function DeficiencesCheckbox({
   onHearingChange,
   onMotorChange,
   onNeuralChange,
   onTeaChange,
   onVisualChange,
-}: GuidelinesDeficiencesFilterProps) {
+}: DeficiencesCheckboxProps) {
   useHotkeys("v", () => document.getElementById("visual")?.focus());
 
   return (
@@ -44,7 +44,6 @@ export default function GuidelinesDeficiencesFilter({
           />
           <label htmlFor="neural"> Neural</label>
         </div>
-
         <div>
           <input
             className="input-checkbox"

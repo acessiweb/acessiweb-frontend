@@ -1,6 +1,7 @@
 import { SlMicrophone } from "react-icons/sl";
 import { createRoot } from "react-dom/client";
 import { RefObject, useRef, useState } from "react";
+import { symbolMap } from "@/common/utils/voice-commands";
 
 type UseSpeechRecognitionOptions = {
   inputId: string;
@@ -14,42 +15,6 @@ type UseSpeechRecognitionReturn = {
   transcript: string;
   startListening: () => void;
   error: string | null;
-};
-
-export const symbolMap: Record<string, string> = {
-  arroba: "@",
-  hashtag: "#",
-  cifrão: "$",
-  "por cento": "%",
-  porcento: "%",
-  porcentagem: "%",
-  "e comercial": "&",
-  asterisco: "*",
-  hífen: "-",
-  traço: "-",
-  igual: "=",
-  underline: "_",
-  sublinhado: "_",
-  barra: "/",
-  pipe: "|",
-  "dois pontos": ":",
-  "ponto e vírgula": ";",
-  aspas: '"',
-  "aspas simples": "'",
-  apóstrofe: "'",
-  vírgula: ",",
-  ponto: ".",
-  interrogação: "?",
-  exclamação: "!",
-  til: "~",
-  crase: "`",
-  "abre parênteses": "(",
-  "fecha parênteses": ")",
-  "abre colchetes": "[",
-  "fecha colchetes": "]",
-  "abre chaves": "{",
-  "fecha chaves": "}",
-  "sem espaço": "",
 };
 
 function processVoiceInput(

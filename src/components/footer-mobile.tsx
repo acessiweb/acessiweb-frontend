@@ -65,7 +65,7 @@ function BaseFooterMobile(props: BaseHeaderProps) {
       <div>
         <Home />
         {props.secItem}
-        <Help />
+        <Help appId="app" />
         {props.fourthItem}
         {props.fifthItem}
       </div>
@@ -75,13 +75,15 @@ function BaseFooterMobile(props: BaseHeaderProps) {
 
 export default function FooterMobile() {
   const pathname = usePathname();
-  const { accessType } = useSession();
+  const { data } = useSession();
 
-  if (pathname.includes("admin") && isAdmin(accessType))
-    return <AdminFooterMobile />;
+  if (data && data.user && data.user.role) {
+    if (pathname.includes("admin") && isAdmin(data.user.role))
+      return <AdminFooterMobile />;
 
-  if (!pathname.includes("admin") && isCommonUser(accessType))
-    return <CommonUserFooterMobile />;
+    if (!pathname.includes("admin") && isCommonUser(data.user.role))
+      return <CommonUserFooterMobile />;
+  }
 
   return <VisitorFooterMobile />;
 }

@@ -125,7 +125,7 @@ function BaseHeaderDesktop(props: BaseHeaderProps) {
           </li>
         )}
         <li id="help">
-          <Help />
+          <Help appId="app" />
         </li>
         <li id="last-helper">{props.secNavLastItem}</li>
       </ul>

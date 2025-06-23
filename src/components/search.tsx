@@ -1,13 +1,16 @@
 "use client";
 
-import { captureVoiceAndGetText } from "@/common/utils/voice";
-import { useState } from "react";
+import useSpeechRecognition from "@/hooks/useSpeechRecognition";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { SlMagnifier, SlMicrophone } from "react-icons/sl";
+import { IoCloseOutline } from "react-icons/io5";
 
 type SearchProps = {
   classname: string;
   handleSearchClose?: () => void;
   placeholderText: string;
+  handleSearch: Dispatch<SetStateAction<string>>;
+  searchValue: string;
 };
 
 export function BtnSearch({ classname }: { classname: string }) {
@@ -23,6 +26,8 @@ export function BtnSearch({ classname }: { classname: string }) {
         classname={classname}
         handleSearchClose={toggleSearch}
         placeholderText="Faça uma busca"
+        handleSearch={() => {}}
+        searchValue=""
       />
     );
   }
@@ -42,13 +47,25 @@ export default function Search({
   classname,
   handleSearchClose,
   placeholderText,
+  handleSearch,
+  searchValue,
 }: SearchProps) {
+  const btnRef = useRef<HTMLButtonElement>(null);
+  const { startListening } = useSpeechRecognition({
+    onResult: (text: string) => {
+      handleSearch(text);
+    },
+    inputId: "keyword",
+    btnRef,
+  });
+
   return (
     <div className={classname}>
       <button
+        ref={btnRef}
         className="btn-icon"
         type="button"
-        onClick={() => captureVoiceAndGetText("keyword")}
+        onClick={startListening}
       >
         <SlMicrophone />
       </button>
@@ -58,10 +75,16 @@ export default function Search({
           placeholder={placeholderText}
           name="keyword"
           id="keyword"
+          value={searchValue}
+          onChange={(e) => handleSearch(e.target.value)}
         />
-        <button onClick={handleSearchClose}>
+        {searchValue ? (
+          <button onClick={() => handleSearch("")}>
+            <IoCloseOutline />
+          </button>
+        ) : (
           <SlMagnifier />
-        </button>
+        )}
       </form>
     </div>
   );

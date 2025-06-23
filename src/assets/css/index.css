@@ -41,6 +41,7 @@ body {
   width: 100%;
   background-color: #f9f6ff;
   color: rgb(25, 25, 24);
+  overflow-y: auto;
 }
 #app a {
   text-decoration: none;
@@ -315,7 +316,7 @@ button {
   all: unset;
 }
 
-.nav__help, .nav__settings, .nav__profile, .nav__cart {
+.nav__settings, .nav__profile, .nav__cart {
   cursor: pointer;
 }
 
@@ -324,21 +325,42 @@ button {
   align-items: center;
 }
 
-.nav__help .modal {
-  overflow-y: auto;
-  flex-direction: row;
-  align-items: flex-start;
-  column-gap: 1.1rem;
+.nav__help__modal__content {
+  margin-top: 0.3rem;
+  padding-bottom: 1.1rem;
 }
 
-.nav__help .modal > div:first-of-type > div:first-of-type {
+.nav__help__modal__content__header {
+  align-items: center;
   padding-bottom: 1.1rem;
-  margin-bottom: 1.1rem;
   border-bottom: 1px solid rgb(25, 25, 24);
+}
+
+.nav__help__modal__content__section {
+  margin-top: 1.9rem;
+}
+
+.nav__help__modal__content__section__commands {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.7rem;
+}
+
+.nav__help__modal__content__section__commands > div {
+  display: flex;
+  align-items: center;
+  column-gap: 0.7rem;
+}
+
+.nav__help__modal__content__section__commands > div > div:first-of-type {
+  border: 1px solid rgb(25, 25, 24);
+  border-radius: 12px;
+  padding: 0.3rem 0.7rem;
 }
 
 .nav__help > button,
 .nav__help > button > svg {
+  cursor: pointer;
   position: absolute;
   left: 50%;
   right: 50%;
@@ -642,7 +664,6 @@ button {
   border: 1px solid rgb(25, 25, 24);
   padding: 0.7rem 1.1rem;
   display: flex;
-  flex-direction: column;
   row-gap: 0.7rem;
   display: none;
   z-index: 1000;
@@ -650,6 +671,11 @@ button {
   max-width: 80vw;
   height: max-content;
   max-height: 95vh;
+  margin-left: auto;
+  right: 1.1rem;
+  align-items: flex-start;
+  overflow-y: auto;
+  column-gap: 1.1rem;
 }
 
 .modal--active {
@@ -833,7 +859,7 @@ button {
 .input-text-voice {
   display: flex;
   column-gap: 0.3rem;
-  padding: 0.6rem 0.9rem;
+  padding: 0.5rem 0.7rem;
   border-radius: 12px;
   background-color: #f9f6ff;
   border: 1px solid rgb(25, 25, 24);
@@ -848,6 +874,58 @@ button {
 .input-text-voice input::placeholder {
   font-style: italic;
   font-size: 0.7rem;
+}
+
+.control-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.1rem;
+}
+
+.control-bar__options {
+  display: flex;
+  column-gap: 0.7rem;
+  margin-left: auto;
+}
+
+@media (min-width: 891px) {
+  .control-bar__options {
+    margin-top: 0.7rem;
+  }
+}
+.control-bar__options .modal {
+  padding: 0;
+}
+
+.control-bar__options .modal ul {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.7rem;
+}
+
+.control-bar__options .modal ul li {
+  cursor: pointer;
+  padding: 0.7rem;
+  border-top: 1px solid rgb(25, 25, 24);
+}
+
+.control-bar__options .modal ul li:first-of-type {
+  border-top: none;
+}
+
+.control-bar__options .modal ul li:hover {
+  background-color: #c1a6f9;
+}
+
+.control-bar .btn-icon svg {
+  height: 1.3rem;
+  width: 1.3rem;
+}
+
+.control-bar .btn-icon .modal {
+  top: 10%;
+  left: -300%;
+  bottom: 0;
 }
 
 .homepage-mobile {
@@ -1270,6 +1348,10 @@ button {
     max-width: 95%;
   }
 }
+.auth .nav__help {
+  margin-left: 0.7rem;
+}
+
 .auth .nav__help .modal {
   top: 0.7rem;
 }
@@ -1291,7 +1373,7 @@ button {
   position: relative;
   height: 1.6rem;
   width: 1.6rem;
-  top: 10px;
+  top: 12px;
 }
 
 .auth__keyboard-icon {
@@ -1449,8 +1531,7 @@ animation by Loop nerd
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 2;
-  cursor: pointer;
+  z-index: 500;
 }
 
 .sr-only {

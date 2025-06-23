@@ -40,11 +40,11 @@ function HomeBase({ children }: { children: ReactNode }) {
 }
 
 export default function Home() {
-  const { accessType } = useSession();
-  const { isTablet } = useScreenType();
+  const { data } = useSession();
+  const { isTablet, isMobile } = useScreenType();
 
-  if (isTablet) {
-    if (isCommonUser(accessType)) {
+  if (isMobile || isTablet) {
+    if (data && data.user && data.user.role && isCommonUser(data.user.role)) {
       return <HomeUserMobile />;
     }
 

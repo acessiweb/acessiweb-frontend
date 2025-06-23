@@ -6,7 +6,6 @@ button {
 }
 
 .nav {
-  &__help,
   &__settings,
   &__profile,
   &__cart {
@@ -20,23 +19,44 @@ button {
   }
 
   &__help {
-    .modal {
-      overflow-y: auto;
-      flex-direction: row;
-      align-items: flex-start;
-      column-gap: var.$space-md;
+    &__modal {
+      &__content {
+        margin-top: var.$space-xs;
+        padding-bottom: var.$space-md;
 
-      > div:first-of-type {
-        > div:first-of-type {
+        &__header {
+          align-items: center;
           padding-bottom: var.$space-md;
-          margin-bottom: var.$space-md;
           border-bottom: var.$border-1;
+        }
+
+        &__section {
+          margin-top: var.$space-lg;
+
+          &__commands {
+            display: flex;
+            flex-direction: column;
+            row-gap: var.$space-sm;
+
+            > div {
+              display: flex;
+              align-items: center;
+              column-gap: var.$space-sm;
+
+              > div:first-of-type {
+                border: var.$border-1;
+                border-radius: var.$border-radius-default;
+                padding: var.$space-xs var.$space-sm;
+              }
+            }
+          }
         }
       }
     }
 
     > button,
     > button > svg {
+      cursor: pointer;
       position: absolute;
       left: 50%;
       right: 50%;
