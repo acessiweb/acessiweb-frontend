@@ -10,8 +10,6 @@
   height: 90px;
 
   .nav__help {
-    margin-left: var.$space-sm;
-
     .modal {
       top: var.$space-sm;
 
@@ -108,9 +106,16 @@
   }
 
   .nav__profile {
-    > svg {
+    button > svg {
       width: var.$svg-small !important;
       height: var.$svg-small !important;
+    }
+
+    ul {
+      svg {
+        width: calc(var.$svg-x-small + 0.2rem) !important;
+        height: calc(var.$svg-x-small + 0.2rem) !important;
+      }
     }
   }
 

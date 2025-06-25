@@ -1,19 +1,20 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import Logo from "@/assets/images/logo-horizontal-purple.png";
 import Image from "next/image";
-import useKeyboard from "@/hooks/useKeyboard";
 import { CiKeyboard } from "react-icons/ci";
 import "react-simple-keyboard/build/css/index.css";
-import Help from "@/common/nav/help";
+import Help from "@/components/nav/help";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useRouter } from "next/navigation";
+import Keyboard from "@/components/keyboard";
 
 export default function App({ children }: { children: ReactNode }) {
   const router = useRouter();
-  const { keyboard: Keyboard, setShowKeyboard } = useKeyboard();
+  const [showKeyboard, setShowKeyboard] = useState(false);
   useHotkeys("shift+h", () => router.push("/"));
+  useHotkeys("T", () => setShowKeyboard((prev) => !prev));
 
   useEffect(() => {
     document.body.classList.add("open-sans");
@@ -37,7 +38,7 @@ export default function App({ children }: { children: ReactNode }) {
         </div>
         {children}
       </div>
-      <Keyboard />
+      {showKeyboard && <Keyboard showKeyboard={showKeyboard} />}
     </main>
   );
 }

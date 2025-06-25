@@ -16,11 +16,11 @@
   &__deficiences-container {
     margin-top: var.$space-md;
 
-    .guidelines-deficiences-filter {
+    .deficiences-checkbox {
       margin-top: var.$space-md;
       margin-left: var.$space-sm;
 
-      &__guideline-checkbox-group {
+      &__group {
         display: flex;
         flex-wrap: wrap;
         gap: var.$space-md;

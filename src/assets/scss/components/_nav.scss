@@ -8,7 +8,8 @@ button {
 .nav {
   &__settings,
   &__profile,
-  &__cart {
+  &__cart,
+  &__logout {
     cursor: pointer;
   }
 
@@ -33,21 +34,16 @@ button {
         &__section {
           margin-top: var.$space-lg;
 
-          &__commands {
-            display: flex;
-            flex-direction: column;
-            row-gap: var.$space-sm;
+          dl {
+            display: grid;
+            grid-template-columns: 0.4fr 1fr;
+            gap: 0.5rem 1rem;
+            align-items: center;
 
-            > div {
-              display: flex;
-              align-items: center;
-              column-gap: var.$space-sm;
-
-              > div:first-of-type {
-                border: var.$border-1;
-                border-radius: var.$border-radius-default;
-                padding: var.$space-xs var.$space-sm;
-              }
+            > dt {
+              border: var.$border-1;
+              border-radius: var.$border-radius-default;
+              padding: var.$space-xs var.$space-sm;
             }
           }
         }
@@ -90,6 +86,45 @@ button {
         bottom: 8px;
         right: 15px;
       }
+    }
+  }
+
+  &__profile,
+  &__person {
+    &--menu-shown {
+      display: flex;
+      flex-direction: column;
+      margin-left: var.$space-lg;
+
+      button {
+        z-index: 1001;
+      }
+    }
+
+    ul {
+      display: flex;
+      position: absolute;
+      flex-direction: column;
+      background-color: var.$gray;
+      border-radius: calc(var.$border-radius-default + 5px);
+      border: var.$border-1;
+      padding: var.$space-md var.$space-md;
+      row-gap: var.$space-sm;
+      z-index: 1000;
+    }
+  }
+
+  &__person {
+    ul {
+      bottom: 40px;
+      right: 50px;
+    }
+  }
+
+  &__profile {
+    ul {
+      top: 50px;
+      right: 50px;
     }
   }
 }

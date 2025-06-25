@@ -1,8 +1,7 @@
 "use client";
 
-import { capitalize } from "@/common/utils/string";
+import { capitalize } from "@/utils/string";
 import Link from "next/link";
-import { useState } from "react";
 
 export type BreadcrumbProps = {
   crumbs: {
@@ -19,6 +18,7 @@ export function Breadcrumb({ crumbs }: BreadcrumbProps) {
           <li
             aria-current={crumbs.length - 1 === i ? "page" : undefined}
             key={i}
+            id={`breadcrumb-${i}`}
           >
             <Link
               href={crumb.link}

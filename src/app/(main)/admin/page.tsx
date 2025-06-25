@@ -2,9 +2,9 @@
 
 import { PiPersonArmsSpreadLight } from "react-icons/pi";
 import { SlEnvolope } from "react-icons/sl";
-import GuidelinesAdmin from "./diretrizes/page";
 import { CardLink } from "@/components/card-link";
 import { useScreenType } from "@/hooks/useScreenType";
+import Guidelines from "./diretrizes/guidelines";
 
 function HomeMobile() {
   return (
@@ -29,5 +29,5 @@ export default function Home() {
     return <HomeMobile />;
   }
 
-  return <GuidelinesAdmin />;
+  return <Guidelines />;
 }

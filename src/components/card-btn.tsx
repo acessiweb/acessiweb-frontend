@@ -1,13 +1,15 @@
 "use client";
 
-import CardAdd from "@/common/card/add";
-import CardDelete from "@/common/card/delete";
-import { CardBtnUpdateAndDeleteEl } from "@/common/card/update-and-delete";
+import CardAdd from "@/components/card/add";
+import CardDelete from "@/components/card/delete";
+import CardStatus from "@/components/card/status";
+import { CardBtnUpdateAndDeleteEl } from "@/components/card/update-and-delete";
 import {
   CardAddProps,
   CardBtnProps,
   CardBtnUpdateAndDeleteProps,
   CardDeleteProps,
+  CardStatusProps,
 } from "@/types/card";
 
 export function CardBtnDelete({
@@ -81,6 +83,25 @@ export function CardBtnUpdateAndDelete({
   );
 }
 
+export function CardBtnStatus({
+  mainText,
+  onClick,
+  registerId,
+  secondaryText,
+  status,
+}: CardBtnProps & CardStatusProps) {
+  return (
+    <CardBase
+      mainText={mainText}
+      onClick={onClick}
+      registerId={registerId}
+      secondaryText={secondaryText}
+    >
+      <CardStatus status={status} />
+    </CardBase>
+  );
+}
+
 function CardBase({
   mainText,
   secondaryText,
@@ -89,9 +110,16 @@ function CardBase({
 }: CardBtnProps) {
   return (
     <article className="card">
-      <div className="card__desc" onClick={onClick}>
-        <span>{mainText}</span>
-        {secondaryText && <span>{secondaryText}</span>}
+      <div
+        className="card__desc"
+        onClick={onClick}
+        onKeyDown={(e) => e.key === "Enter" && onClick(e)}
+        tabIndex={0}
+        role="button"
+        aria-label={`Clique para acessar ${mainText}`}
+      >
+        <h3 className="heading-3">{mainText}</h3>
+        {secondaryText && <p>{secondaryText}</p>}
       </div>
       {children}
     </article>

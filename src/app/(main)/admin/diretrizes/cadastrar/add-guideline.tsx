@@ -14,12 +14,11 @@ import GuidelinesDeficiencesFilter from "@/components/deficiences-checkbox";
 import useFilters from "@/hooks/useControlBar";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { useSession } from "next-auth/react";
-import { useCommands } from "@/context/commands";
 import useErrorMsgs from "@/hooks/useErrors";
 import { createGuideline } from "@/routes/guidelines";
 import { usePush } from "@/context/push";
 import { useRouter } from "next/navigation";
-import { useHotkeys } from "react-hotkeys-hook";
+import useDeficiencyFilters from "@/hooks/useDeficiencyFilters";
 
 const keycuts = {
   "alt+shift+n": ["alt+shift+n", "Escrever nome por comando de voz"],
@@ -68,10 +67,10 @@ export default function AddGuideline({
     hearing,
     motor,
     neural,
-    search,
     tea,
     visual,
-  } = useFilters();
+  } = useDeficiencyFilters();
+  const [search, setSearch] = useState("");
   const { data: sessionData } = useSession();
   const {
     register,
@@ -83,16 +82,10 @@ export default function AddGuideline({
   } = useForm<CreateGuidelineSchema>({
     resolver: zodResolver(createGuidelineSchema),
   });
-  const { setKeycuts } = useCommands();
   const [filename, setFilename] = useState("");
-  const { ErrorsMsgs, handleErrorMsg, handleErrorMsgs } = useErrorMsgs();
   const { setPushMsg } = usePush();
   const router = useRouter();
   const [code, setCode] = useState("");
-
-  useEffect(() => {
-    setKeycuts(keycuts);
-  }, []);
 
   useEffect(() => {
     setValue("deficiences", [hearing, visual, motor, neural, tea]);
@@ -121,11 +114,10 @@ export default function AddGuideline({
 
   const onSubmit = async (data: CreateGuidelineSchema) => {
     if (data.deficiences.toString().replaceAll(",", "").length == 0) {
-      handleErrorMsg(
-        "A diretriz precisa ter ao menos uma deficiência relacionada"
-      );
+      // handleErrorMsg(
+      //   "A diretriz precisa ter ao menos uma deficiência relacionada"
+      // );
     } else {
-      handleErrorMsg("");
       const formData = new FormData();
 
       formData.append("name", data.guideName);
@@ -139,7 +131,7 @@ export default function AddGuideline({
         const res = await createGuideline(sessionData.user.id, formData);
 
         if ("errors" in res) {
-          handleErrorMsgs(res);
+          // handleErrorMsgs(res);
           setPushMsg("");
         } else if ("id" in res) {
           setPushMsg("Diretriz cadastrada com sucesso 🎉");
@@ -278,7 +270,6 @@ export default function AddGuideline({
             onVisualChange={handleVisual}
           />
         </div>
-        <ErrorsMsgs />
         <div className="cart__form__btn">
           <button type="submit" className="btn-default">
             Criar

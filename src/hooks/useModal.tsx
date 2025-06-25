@@ -50,6 +50,14 @@ export default function useModal(
     setIsOverlayActive(false);
   };
 
+  const toggleModal = () => {
+    if (isModalOpen) {
+      hideModal();
+    } else {
+      showModal();
+    }
+  };
+
   useEffect(() => {
     if (outsideClicked) {
       hideModal();
@@ -62,6 +70,7 @@ export default function useModal(
     isModalOpen,
     isOverlayActive,
     modalRef: dialogRef,
+    toggleModal,
     Overlay: () =>
       createPortal(<div id="overlay"></div>, document.getElementById(appId)!),
   };

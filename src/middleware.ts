@@ -3,20 +3,18 @@
 import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { isAdmin } from "./common/utils/authorization";
+import { isAdmin } from "./utils/authorization";
 
-const PUBLIC_PATHS = [
-  "/",
-  "/auth/logar",
-  "/auth/criar-conta",
-  "/admin/auth/logar",
-];
+const PUBLIC_PATHS = ["/auth/logar", "/auth/criar-conta", "/admin/auth/logar"];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // ignora rotas públicas
-  if (PUBLIC_PATHS.some((path) => pathname.startsWith(path))) {
+  if (
+    PUBLIC_PATHS.some((path) => pathname.startsWith(path)) ||
+    pathname === "/"
+  ) {
     return NextResponse.next();
   }
 

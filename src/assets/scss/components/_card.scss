@@ -20,12 +20,11 @@
     display: flex;
     flex-direction: column;
 
-    > span:first-of-type {
-      font-weight: var.$bold;
+    > h3 {
       flex: 1;
     }
 
-    > span:nth-child(2) {
+    > p {
       font-size: var.$fs-x-small;
       flex: 1;
     }

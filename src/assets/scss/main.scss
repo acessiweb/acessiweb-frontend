@@ -25,6 +25,16 @@ body {
   margin: 0;
 }
 
+li[tabindex]:focus-visible {
+  box-shadow: inset 0 0 0 2px var.$text;
+}
+
+*:focus-visible,
+input[type="checkbox"]:focus-visible {
+  outline: 2px solid var.$text;
+  outline-offset: 2px;
+}
+
 #auth {
   position: relative;
 }
@@ -38,6 +48,7 @@ body {
   height: 100%;
   background-color: var.$lighterPurple;
   color: var.$text;
+  z-index: 100;
 
   a {
     text-decoration: none;
@@ -73,16 +84,20 @@ body {
       overflow-y: auto;
       overflow-x: hidden;
 
-      > div:first-of-type,
-      > div:first-of-type > div:first-of-type {
-        flex: 1;
-        padding: 0 var.$space-sm var.$space-md;
-      }
-
       @media (max-width: var.$tablet) {
         justify-content: center;
         padding: var.$space-sm var.$space-md calc(var.$space-xl + 3rem);
         height: 100%;
+      }
+
+      h1 {
+        font-style: italic;
+      }
+
+      > div:first-of-type,
+      > div:first-of-type > div:first-of-type {
+        flex: 1;
+        padding: 0 var.$space-sm var.$space-md;
       }
 
       .two-pages {
@@ -93,10 +108,6 @@ body {
         > div {
           flex: 1;
           overflow-y: auto;
-        }
-
-        h1 {
-          font-style: italic;
         }
       }
     }
@@ -117,13 +128,13 @@ body {
 @include meta.load-css("components/header");
 @include meta.load-css("components/card");
 @include meta.load-css("components/push");
-@include meta.load-css("components/push-delete");
 @include meta.load-css("components/modal");
 @include meta.load-css("components/footer");
 @include meta.load-css("components/search");
 @include meta.load-css("components/input-text-voice");
 @include meta.load-css("components/control-bar");
 @include meta.load-css("components/filters-applied");
+@include meta.load-css("components/pagination");
 
 //pages
 @include meta.load-css("pages/homepage-mobile");

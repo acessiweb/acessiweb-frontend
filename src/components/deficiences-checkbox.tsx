@@ -1,5 +1,4 @@
 import { ChangeEvent } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
 
 type DeficiencesCheckboxProps = {
   onVisualChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -16,12 +15,14 @@ export default function DeficiencesCheckbox({
   onTeaChange,
   onVisualChange,
 }: DeficiencesCheckboxProps) {
-  useHotkeys("v", () => document.getElementById("visual")?.focus());
-
   return (
-    <div role="form" className="guidelines-deficiences-filter">
+    <div className="deficiences-checkbox">
       <div></div>
-      <div className="guidelines-deficiences-filter__guideline-checkbox-group">
+      <div
+        role="group"
+        aria-label="Filtrar por tipo de deficiência"
+        className="deficiences-checkbox__group"
+      >
         <div>
           <input
             className="input-checkbox"

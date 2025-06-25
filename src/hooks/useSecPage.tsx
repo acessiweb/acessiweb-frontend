@@ -6,6 +6,7 @@ export default function useSecPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [node, setNode] = useState<ReactNode>(<div></div>);
   const [title, setTitle] = useState("");
+  const [fullScreenLink, setFullScreenLink] = useState("");
 
   const getSecPageClass = () => {
     if (isOpen) {
@@ -23,5 +24,7 @@ export default function useSecPage() {
     node,
     title,
     setTitle,
+    fullScreenLink,
+    setFullScreenLink,
   };
 }

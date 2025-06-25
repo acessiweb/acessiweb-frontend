@@ -51,9 +51,8 @@ export default function Search({
   handleSearch,
   searchValue,
 }: SearchProps) {
-  useHotkeys("x", () => handleSearch(""));
   const btnRef = useRef<HTMLButtonElement>(null);
-  const { startListening } = useSpeechRecognition({
+  const { startListening, isListening } = useSpeechRecognition({
     onResult: (text: string) => {
       handleSearch(text);
     },
@@ -61,17 +60,28 @@ export default function Search({
     btnRef,
   });
 
+  useHotkeys("x", () => handleSearch(""));
+  useHotkeys("shift+alt+s", startListening);
+
   return (
-    <div className={classname}>
+    <div className={classname} role="search">
       <button
         ref={btnRef}
         className="btn-icon"
         type="button"
         onClick={startListening}
+        aria-label="Pesquisar por comando de voz"
+        title="shift+alt+s shift+option+s"
       >
-        <SlMicrophone />
+        <SlMicrophone aria-hidden={true} focusable={false} />
+        <span role="status" className="sr-only">
+          {isListening && "Gravando voz..."}
+        </span>
       </button>
-      <form className={`${classname}__search-form`}>
+      <form
+        className={`${classname}__search-form`}
+        onSubmit={(e) => e.preventDefault()}
+      >
         <input
           type="text"
           placeholder={placeholderText}
@@ -79,13 +89,19 @@ export default function Search({
           id="keyword"
           value={searchValue}
           onChange={(e) => handleSearch(e.target.value)}
+          aria-label="Campo de pesquisa"
         />
         {searchValue ? (
-          <button onClick={() => handleSearch("")} title="X">
-            <IoCloseOutline />
+          <button
+            type="button"
+            aria-label="Apagar pesquisa"
+            onClick={() => handleSearch("")}
+            title="Pressione a tecla X"
+          >
+            <IoCloseOutline aria-hidden={true} focusable={false} />
           </button>
         ) : (
-          <SlMagnifier />
+          <SlMagnifier aria-hidden={true} focusable={false} />
         )}
       </form>
     </div>

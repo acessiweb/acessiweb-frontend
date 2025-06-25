@@ -24,10 +24,9 @@ export function CardLinkUpdateAndDeleteEl({
       <Link
         href={updateRoute}
         className="btn-transparent"
-        title="Editar"
-        aria-label="Editar"
+        aria-label="Ir para a tela de edição"
       >
-        <SlPencil />
+        <SlPencil aria-hidden={true} focusable={false} />
       </Link>
     </CardUpdateAndDelete>
   );
@@ -49,10 +48,9 @@ export function CardBtnUpdateAndDeleteEl({
         type="button"
         className="btn-transparent"
         onClick={onUpdateClick}
-        title="Editar"
-        aria-label="Editar"
+        aria-label="Abrir tela de edição"
       >
-        <SlPencil />
+        <SlPencil aria-hidden={true} focusable={false} />
       </button>
     </CardUpdateAndDelete>
   );

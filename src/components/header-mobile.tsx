@@ -1,18 +1,16 @@
 "use client";
 
-import { isAdmin, isCommonUser } from "@/common/utils/authorization";
+import { isAdmin, isCommonUser } from "@/utils/authorization";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 import { ReactNode } from "react";
 import { SlArrowLeft } from "react-icons/sl";
-import Profile from "@/common/nav/profile";
+import Profile from "@/components/nav/profile";
 import LogoImage from "@/assets/images/logo-horizontal-purple.png";
 import Image from "next/image";
 
 type BaseHeaderProps = {
-  firstItem: ReactNode;
-  secItem?: ReactNode;
-  thirdItem: ReactNode;
+  children: ReactNode;
 };
 
 function NavigateBackward() {
@@ -20,12 +18,11 @@ function NavigateBackward() {
 
   return (
     <button
-      title="Voltar"
       aria-label="Voltar para página anterior"
       className="header-mobile__backward-nav btn-icon"
       onClick={() => router.back()}
     >
-      <SlArrowLeft />
+      <SlArrowLeft aria-hidden={true} focusable={false} />
     </button>
   );
 }
@@ -40,19 +37,19 @@ function Logo() {
 
 function AdminHeaderMobile({ pathname }: { pathname: string }) {
   return (
-    <BaseHeaderMobile
-      firstItem={pathname === "/" ? <Logo /> : <NavigateBackward />}
-      thirdItem={<Profile />}
-    />
+    <BaseHeaderMobile>
+      {pathname === "/" ? <Logo /> : <NavigateBackward />}
+      <Profile />
+    </BaseHeaderMobile>
   );
 }
 
 function VisitorHeaderMobile({ pathname }: { pathname: string }) {
   return (
-    <BaseHeaderMobile
-      firstItem={pathname === "/" ? <Logo /> : <NavigateBackward />}
-      thirdItem={<Profile />}
-    />
+    <BaseHeaderMobile>
+      {pathname === "/" ? <Logo /> : <NavigateBackward />}
+      <Profile />
+    </BaseHeaderMobile>
   );
 }
 
@@ -63,27 +60,21 @@ function CommonUserHeaderMobile({
   pathname: string;
   username: string;
 }) {
-  function HelloUser() {
-    return <span className="header-mobile__hello-user">Olá, {username}!</span>;
-  }
-
   return (
-    <BaseHeaderMobile
-      firstItem={pathname === "/" ? <HelloUser /> : <NavigateBackward />}
-      secItem={pathname !== "/" && <Logo />}
-      thirdItem={<Profile />}
-    />
+    <BaseHeaderMobile>
+      {pathname === "/" ? (
+        <span className="header-mobile__hello-user">Olá, {username}!</span>
+      ) : (
+        <NavigateBackward />
+      )}
+      {pathname !== "/" && <Logo />}
+      <Profile />
+    </BaseHeaderMobile>
   );
 }
 
-function BaseHeaderMobile(props: BaseHeaderProps) {
-  return (
-    <header className="header-mobile">
-      {props.firstItem}
-      {props.secItem}
-      {props.thirdItem}
-    </header>
-  );
+function BaseHeaderMobile({ children }: BaseHeaderProps) {
+  return <header className="header-mobile">{children}</header>;
 }
 
 export default function HeaderMobile() {

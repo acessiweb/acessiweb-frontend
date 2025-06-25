@@ -15,5 +15,23 @@ export default async function Page({ params }: PageProps) {
   const { id } = await params;
   const guideline = await getGuideline(id);
 
-  return <Guideline guideline={guideline} />;
+  if (guideline && "id" in guideline) {
+    return (
+      <Guideline
+        guideline={guideline}
+        crumbs={[
+          {
+            desc: "DIRETRIZES",
+            link: "/diretrizes",
+          },
+          {
+            desc: guideline.name,
+            link: `/diretrizes/${guideline.id}`,
+          },
+        ]}
+      />
+    );
+  }
+
+  return;
 }

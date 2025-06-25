@@ -8,7 +8,6 @@ export default function Cart() {
   return (
     <Link
       href="/projetos/cadastrar"
-      title="Carrinho"
       aria-label="Ir para tela de cadastro de projeto"
       className="nav__cart"
     >

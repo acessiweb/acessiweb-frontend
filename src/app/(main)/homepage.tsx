@@ -4,7 +4,7 @@ import { PiPersonArmsSpreadLight } from "react-icons/pi";
 import { SlEnvolope, SlFolder } from "react-icons/sl";
 import { ReactNode } from "react";
 import { useSession } from "next-auth/react";
-import { isCommonUser } from "@/common/utils/authorization";
+import { isCommonUser } from "@/utils/authorization";
 import { CardLink } from "@/components/card-link";
 import { useScreenType } from "@/hooks/useScreenType";
 import GuidelinesUser from "./diretrizes/page";

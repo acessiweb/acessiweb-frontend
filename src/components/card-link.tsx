@@ -1,13 +1,15 @@
 "use client";
 
-import CardAdd from "@/common/card/add";
-import CardDelete from "@/common/card/delete";
-import { CardLinkUpdateAndDeleteEl } from "@/common/card/update-and-delete";
+import CardAdd from "@/components/card/add";
+import CardDelete from "@/components/card/delete";
+import CardStatus from "@/components/card/status";
+import { CardLinkUpdateAndDeleteEl } from "@/components/card/update-and-delete";
 import {
   CardAddProps,
   CardDeleteProps,
   CardLinkProps,
   CardLinkUpdateAndDeleteProps,
+  CardStatusProps,
 } from "@/types/card";
 import Link from "next/link";
 
@@ -90,6 +92,25 @@ export function CardLinkUpdateAndDelete({
   );
 }
 
+export function CardBtnStatus({
+  mainText,
+  registerId,
+  secondaryText,
+  status,
+  readRoute,
+}: CardLinkProps & CardStatusProps) {
+  return (
+    <CardBase
+      mainText={mainText}
+      registerId={registerId}
+      secondaryText={secondaryText}
+      readRoute={readRoute}
+    >
+      <CardStatus status={status} />
+    </CardBase>
+  );
+}
+
 function CardBase({
   mainText,
   secondaryText,
@@ -99,8 +120,8 @@ function CardBase({
   return (
     <article className="card">
       <Link className="card__desc" href={readRoute}>
-        <span>{mainText}</span>
-        {secondaryText && <span>{secondaryText}</span>}
+        <h3 className="heading-3">{mainText}</h3>
+        {secondaryText && <p>{secondaryText}</p>}
       </Link>
       {children}
     </article>

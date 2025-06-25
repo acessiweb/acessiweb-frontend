@@ -1,17 +1,17 @@
 "use client";
 
-import { isAdmin, isCommonUser } from "@/common/utils/authorization";
-import Cart from "@/common/nav/cart";
-import Home from "@/common/nav/home";
-import Person from "@/common/nav/person";
+import { isAdmin, isCommonUser } from "@/utils/authorization";
+import Cart from "@/components/nav/cart";
+import Home from "@/components/nav/home";
+import Person from "@/components/nav/person";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { PiPersonArmsSpreadLight } from "react-icons/pi";
-import Settings from "@/common/nav/settings";
-import Logout from "@/common/nav/logout";
-import Help from "@/common/nav/help";
+import Settings from "@/components/nav/settings";
+import Logout from "@/components/nav/logout";
+import Help from "@/components/nav/help";
 
 type BaseHeaderProps = {
   secItem: ReactNode;
@@ -24,7 +24,7 @@ function AdminFooterMobile() {
     <BaseFooterMobile
       secItem={
         <Link
-          href=""
+          href="/admin/diretrizes/cadastrar"
           className="add-guideline"
           title="Cadastrar diretriz"
           aria-label="Ir para tela de cadastro de diretriz"
@@ -33,7 +33,7 @@ function AdminFooterMobile() {
           <span>&#43;</span>
         </Link>
       }
-      fourthItem={<Settings link="" />}
+      fourthItem={<Settings link="/admin/config" />}
       fifthItem={<Logout />}
     />
   );
@@ -44,7 +44,7 @@ function VisitorFooterMobile() {
     <BaseFooterMobile
       secItem={<Cart />}
       fourthItem={<Person />}
-      fifthItem={<Settings link="" />}
+      fifthItem={<Settings link="/config" />}
     />
   );
 }
@@ -53,7 +53,7 @@ function CommonUserFooterMobile() {
   return (
     <BaseFooterMobile
       secItem={<Cart />}
-      fourthItem={<Settings link="" />}
+      fourthItem={<Settings link="/config" />}
       fifthItem={<Logout />}
     />
   );

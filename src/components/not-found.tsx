@@ -1,4 +1,4 @@
-import imageKitLoader from "@/common/image/loader";
+import imageKitLoader from "@/utils/imageKitLoader";
 import Image from "next/image";
 
 type NoRegistersFoundProps = {
@@ -11,8 +11,8 @@ export default function NoRegistersFound({
   showErrorMsgImage = true,
 }: NoRegistersFoundProps) {
   return (
-    <div className="no-registers-found">
-      <span>{errorMsg}</span>
+    <figure className="no-registers-found">
+      <figcaption>{errorMsg}</figcaption>
       {showErrorMsgImage && (
         <div className="no-registers-found__img-wrapper">
           <Image
@@ -25,6 +25,6 @@ export default function NoRegistersFound({
           />
         </div>
       )}
-    </div>
+    </figure>
   );
 }

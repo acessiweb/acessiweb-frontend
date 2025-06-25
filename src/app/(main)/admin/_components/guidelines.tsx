@@ -1,12 +1,9 @@
 "use client";
 
-import ControlBarOptions from "@/components/control-bar";
 import GuidelinesDeficiencesFilter from "@/components/deficiences-checkbox";
 import NoRegistersFound from "@/components/not-found";
 import Search from "@/components/search";
 import SecondPage from "@/components/second-page";
-import useControlBarOptions from "@/hooks/useControlBarOptions";
-import useFilters from "@/hooks/useControlBar";
 import { useScreenType } from "@/hooks/useScreenType";
 import useSecPage from "@/hooks/useSecPage";
 import { getGuideline, getGuidelines } from "@/routes/guidelines";
@@ -23,6 +20,16 @@ import Link from "next/link";
 import { usePush } from "@/context/push";
 import AddGuideline from "../diretrizes/cadastrar/add-guideline";
 import EditGuideline from "../diretrizes/[id]/editar/edit-guideline";
+import useDeficiencyFilters from "@/hooks/useDeficiencyFilters";
+import ControlBar from "@/components/control-bar";
+import useControlBar from "@/hooks/useControlBar";
+
+const filterOptions = [
+  {
+    id: "creation-date",
+    desc: "Por data de criação",
+  },
+];
 
 type GuidelinesAdminProps = {
   isRequest?: boolean;
@@ -32,10 +39,8 @@ export default function GuidelinesAdmin({
   isRequest = false,
 }: GuidelinesAdminProps) {
   const { isTablet, isDesktop, isMobile } = useScreenType();
-  const { handleView, view } = useControlBarOptions();
+  const [search, setSearch] = useState("");
   const {
-    handleSearch,
-    search,
     handleHearing,
     handleMotor,
     handleNeural,
@@ -46,7 +51,7 @@ export default function GuidelinesAdmin({
     neural,
     tea,
     visual,
-  } = useFilters();
+  } = useDeficiencyFilters();
   const {
     isOpen: isSecPageOpen,
     setIsOpen: setIsSecPageOpen,
@@ -55,9 +60,17 @@ export default function GuidelinesAdmin({
     node: secPageContent,
     title: secPageTitle,
     setTitle: setSecPageTitle,
-    setLinkFullScreen,
-    linkFullScreen,
+    fullScreenLink,
+    setFullScreenLink,
   } = useSecPage();
+  const {
+    handleView,
+    filtersChosen,
+    handleFiltersChosen,
+    view,
+    cleanFilters,
+    deleteFilter,
+  } = useControlBar();
   const [guidesStored, setGuidesStored] = useState<GuidelineType[]>([]);
   const { isFromSearch, loadMore, onLoadLess, onLoadMore, offset } =
     usePagination({
@@ -133,7 +146,7 @@ export default function GuidelinesAdmin({
     setSecPageContent(
       <AddGuideline isSecPage={true} handleSecPageTitle={setSecPageTitle} />
     );
-    setLinkFullScreen("/admin/diretrizes/cadastrar");
+    setFullScreenLink("/admin/diretrizes/cadastrar");
   };
 
   const handleReadSecPage = async (id: string) => {
@@ -146,19 +159,15 @@ export default function GuidelinesAdmin({
     }
   };
 
-  const crumbs = [
-    {
-      desc: "DIRETRIZES",
-      link: `/diretrizes`,
-    },
-  ];
-
   return (
     <div className={getSecPageClass()}>
       <div className="guidelines">
-        <ControlBarOptions handleView={handleView} view={view} crumbs={crumbs}>
-          <div></div>
-        </ControlBarOptions>
+        <ControlBar
+          handleView={handleView}
+          view={view}
+          filtersOptions={filterOptions}
+          handleFilters={handleFiltersChosen}
+        />
         <h1 className="heading-1">
           {isRequest
             ? "Solicitações de inclusão de diretriz"
@@ -169,8 +178,8 @@ export default function GuidelinesAdmin({
             <Search
               classname="search"
               placeholderText="Buscar por diretriz..."
-              onChange={handleSearch}
-              value={search}
+              handleSearch={setSearch}
+              searchValue={search}
             />
             {isMobile || isTablet
               ? !isRequest && (
@@ -253,7 +262,7 @@ export default function GuidelinesAdmin({
         <SecondPage
           title={secPageTitle}
           onClick={() => setIsSecPageOpen(false)}
-          linkFullScreen={linkFullScreen}
+          fullScreenLink={fullScreenLink}
         >
           {secPageContent}
         </SecondPage>

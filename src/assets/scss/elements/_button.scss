@@ -48,3 +48,29 @@
   border: var.$border-1;
   border-radius: var.$border-radius-default;
 }
+
+.btn-delete + .modal {
+  top: 50%;
+  right: unset;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+
+  .buttons {
+    display: flex;
+    column-gap: var.$space-sm;
+  }
+
+  .delete,
+  .not-delete {
+    border-radius: var.$border-radius-default;
+  }
+
+  .delete {
+    background-color: var.$red;
+  }
+
+  .not-delete {
+    background-color: var.$green;
+  }
+}

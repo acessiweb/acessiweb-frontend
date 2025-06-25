@@ -11,11 +11,11 @@ export default function CardAdd({
   return (
     <button
       type="button"
-      title="Adicionar"
       className="btn-transparent"
       onClick={() => onAdd({ id: registerId, name: registerName })}
+      aria-label="Ação de incluir"
     >
-      <BsCartPlus />
+      <BsCartPlus aria-hidden={true} focusable={false} />
     </button>
   );
 }

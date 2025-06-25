@@ -12,7 +12,7 @@ export type CardLinkProps = CardProps & {
 };
 
 export type CardBtnProps = CardProps & {
-  onClick: () => void;
+  onClick: (_e) => void;
 };
 
 export type CardAddProps = {

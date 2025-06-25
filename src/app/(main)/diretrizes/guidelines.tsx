@@ -2,7 +2,7 @@
 
 import { CardBtnAdd } from "@/components/card-btn";
 import { CardLinkAdd } from "@/components/card-link";
-import GuidelinesDeficiencesFilter from "@/components/deficiences-checkbox";
+import DeficiencesCheckbox from "@/components/deficiences-checkbox";
 import NoRegistersFound from "@/components/not-found";
 import Search from "@/components/search";
 import SecondPage from "@/components/second-page";
@@ -60,6 +60,8 @@ export default function GuidelinesUser() {
     node: secPageContent,
     title: secPageTitle,
     setTitle: setSecPageTitle,
+    fullScreenLink,
+    setFullScreenLink,
   } = useSecPage();
   const [guidesStored, setGuidesStored] = useState<GuidelineType[]>([]);
   const { isFromSearch, loadMore, onLoadLess, onLoadMore, offset } =
@@ -119,8 +121,9 @@ export default function GuidelinesUser() {
 
     if ("id" in guideline) {
       setIsSecPageOpen(true);
-      setSecPageContent(<Guideline guideline={guideline} />);
+      setSecPageContent(<Guideline guideline={guideline} isSecPage={true} />);
       setSecPageTitle(guideline.name);
+      setFullScreenLink(`/diretrizes/${id}`);
     }
   };
 
@@ -133,7 +136,9 @@ export default function GuidelinesUser() {
           filtersOptions={filterOptions}
           handleFilters={handleFiltersChosen}
         />
-        <h1 className="heading-1">Diretrizes de acessibilidade</h1>
+        <h1 className="heading-1" id="page-heading">
+          Diretrizes de acessibilidade
+        </h1>
         <div className="guidelines-filters">
           <Search
             classname="search"
@@ -141,7 +146,7 @@ export default function GuidelinesUser() {
             handleSearch={setSearch}
             searchValue={search}
           />
-          <GuidelinesDeficiencesFilter
+          <DeficiencesCheckbox
             onHearingChange={handleHearing}
             onMotorChange={handleMotor}
             onNeuralChange={handleNeural}
@@ -157,7 +162,7 @@ export default function GuidelinesUser() {
           />
         )}
         {guidesStored.length > 0 ? (
-          <div className={`${view}`}>
+          <div className={`${view}`} aria-labelledby="page-heading">
             {guidesStored.map((guideline, i) => (
               <div className={`${view}__item`} key={i}>
                 {isDesktop && (
@@ -198,6 +203,7 @@ export default function GuidelinesUser() {
         <SecondPage
           title={secPageTitle}
           onClick={() => setIsSecPageOpen(false)}
+          fullScreenLink={fullScreenLink}
         >
           {secPageContent}
         </SecondPage>

@@ -3,7 +3,8 @@ import { useScreenType } from "@/hooks/useScreenType";
 import { IoHelp } from "react-icons/io5";
 import { SlClose } from "react-icons/sl";
 import { useHotkeys } from "react-hotkeys-hook";
-import { symbolMap } from "../utils/voice-commands";
+import { symbolMap } from "../../utils/voice-commands";
+import React from "react";
 
 type HelpProps = {
   appId: string;
@@ -17,17 +18,9 @@ export default function Help({ appId }: HelpProps) {
     isOverlayActive,
     modalRef,
     Overlay,
+    toggleModal,
   } = useModal({ appId });
   const { isDesktop } = useScreenType();
-
-  const toggleModal = () => {
-    if (isModalOpen) {
-      hideModal();
-    } else {
-      showModal();
-    }
-  };
-
   useHotkeys("h", toggleModal);
 
   return (
@@ -60,45 +53,71 @@ export default function Help({ appId }: HelpProps) {
               <h3 id="commands-section-title" className="heading-3">
                 Comandos para utilizar com teclado
               </h3>
-              <div
-                className="nav__help__modal__content__section__commands"
-                aria-labelledby="commands-section-title"
-              >
-                <div>
-                  <div>H</div>
-                  <div>Acessar painel de ajuda</div>
-                </div>
-                <div>
-                  <div>T</div>
-                  <div>Acessar teclado virtual</div>
-                </div>
-                <div>
-                  <div>SHIFT + H</div>
-                  <div>Acessar homepage</div>
-                </div>
-              </div>
+              <dl aria-labelledby="commands-section-title">
+                <dt>H</dt>
+                <dd>Acessar painel de ajuda</dd>
+
+                <dt>T</dt>
+                <dd>Acessar teclado virtual</dd>
+
+                <dt>SHIFT + H</dt>
+                <dd>Acessar homepage</dd>
+
+                <dt>TAB</dt>
+                <dd>Navegar pelos elementos da página</dd>
+
+                <dt>BARRA DE ESPAÇO (SPACE)</dt>
+                <dd>Ativar/desativar estado</dd>
+
+                <dt>ENTER</dt>
+                <dd>Executar ação ou navegar</dd>
+
+                <dt>SHIFT+ALT+S</dt>
+                <dd style={{ display: "flex", flexDirection: "column" }}>
+                  Pesquisa por voz{" "}
+                  <small>
+                    Se o campo de pesquisa da header estiver aberto ela será
+                    priorizada.
+                  </small>
+                </dd>
+
+                <dt>E</dt>
+                <dd style={{ display: "flex", flexDirection: "column" }}>
+                  Expandir segunda tela{" "}
+                  <small>Função disponível no desktop</small>
+                </dd>
+
+                <dt>SHIFT+F</dt>
+                <dd style={{ display: "flex", flexDirection: "column" }}>
+                  Fechar segunda tela{" "}
+                  <small>Função disponível no desktop</small>
+                </dd>
+
+                <dt>F</dt>
+                <dd>Abrir menu de filtros disponíveis</dd>
+
+                <dt>V</dt>
+                <dd>Alternar visualização dos cards</dd>
+              </dl>
             </div>
             <div className="nav__help__modal__content__section">
               <h3 id="commands-voice-section-title" className="heading-3">
                 Comandos para utilizar com voz
               </h3>
-              <div
-                className="nav__help__modal__content__section__commands"
-                aria-labelledby="commands-voice-section-title"
-              >
+              <dl aria-labelledby="commands-voice-section-title">
                 {Object.entries(symbolMap).map(([key, value], i) => (
-                  <div key={i}>
-                    <div>{key}</div>
-                    <div>{value}</div>
-                  </div>
+                  <React.Fragment key={`symbol-${i}`}>
+                    <dt>{key}</dt>
+                    <dd>{value}</dd>
+                  </React.Fragment>
                 ))}
-              </div>
+              </dl>
             </div>
           </div>
           <button
             onClick={hideModal}
             aria-label="Fechar painel de atalhos do sistema"
-            title="Fechar H"
+            title="Pressione a tecla H"
             autoFocus={true}
             style={{ cursor: "pointer" }}
           >

@@ -4,6 +4,7 @@ import { SlGrid } from "react-icons/sl";
 import useModal from "@/hooks/useModal";
 import { useScreenType } from "@/hooks/useScreenType";
 import { Breadcrumb, BreadcrumbProps } from "./breadcrumb";
+import { useHotkeys } from "react-hotkeys-hook";
 
 type ControlBarProps = Partial<BreadcrumbProps> & {
   handleView: () => void;
@@ -27,7 +28,9 @@ export default function ControlBar({
     showModal: showFilterModal,
     isModalOpen: isFilterModalOpen,
     modalRef: filterModalRef,
+    toggleModal,
   } = useModal();
+  useHotkeys("F", toggleModal);
 
   return (
     <div className="control-bar">
@@ -37,12 +40,13 @@ export default function ControlBar({
           <button
             className="btn-icon"
             aria-label="Abrir opções de filtro"
-            title="Filtros"
-            aria-pressed={isFilterModalOpen}
+            title="Pressione a tecla F"
+            aria-expanded={isFilterModalOpen}
             style={{ position: "relative" }}
             onClick={showFilterModal}
+            aria-haspopup="dialog"
           >
-            <LuListFilter />
+            <LuListFilter aria-hidden={true} focusable={false} />
             <dialog
               className="modal"
               ref={filterModalRef}
@@ -52,9 +56,13 @@ export default function ControlBar({
               <ul>
                 {filtersOptions.map((val, i) => (
                   <li
-                    key={i}
+                    key={val.id}
                     id={val.id}
                     onClick={(e) => handleFilters(e.currentTarget.id)}
+                    onKeyDown={(e) =>
+                      e.key === "Enter" && handleFilters(e.currentTarget.id)
+                    }
+                    tabIndex={0}
                   >
                     {val.desc}
                   </li>
@@ -64,8 +72,19 @@ export default function ControlBar({
           </button>
         )}
         {isDesktop && (
-          <button className="btn-icon" onClick={handleView}>
-            {view === "grid" && <SlList />} {view === "list" && <SlGrid />}
+          <button
+            className="btn-icon"
+            onClick={handleView}
+            aria-label="Alternar layout dos cards"
+            aria-pressed={view === "grid" ? false : true}
+          >
+            {view === "grid" && <SlList aria-hidden={true} focusable={false} />}
+            {view === "list" && <SlGrid aria-hidden={true} focusable={false} />}
+            <span role="status" className="sr-only">
+              {view === "grid"
+                ? "Layout grid ativado"
+                : "Layout de lista ativado"}
+            </span>
           </button>
         )}
       </div>

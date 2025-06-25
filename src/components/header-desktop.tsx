@@ -2,132 +2,161 @@
 
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
-import { isAdmin, isCommonUser } from "@/common/utils/authorization";
+import { isAdmin, isCommonUser } from "@/utils/authorization";
 import Link from "next/link";
-import Cart from "@/common/nav/cart";
-import Help from "@/common/nav/help";
-import Settings from "@/common/nav/settings";
-import Profile from "@/common/nav/profile";
+import Cart from "@/components/nav/cart";
+import Help from "@/components/nav/help";
+import Settings from "@/components/nav/settings";
+import Profile from "@/components/nav/profile";
 import { BtnSearch } from "./search";
 import { useSession } from "next-auth/react";
 import Logo from "../assets/images/logo-horizontal-purple.png";
 import Image from "next/image";
+import { HOMEPAGE_LINKS } from "@/utils/homepage-links";
+import Logout from "./nav/logout";
 
 type BaseHeaderProps = {
-  secNavLastItem: ReactNode;
   showHomepageLink: boolean;
-  navLinks: {
+  navLinks?: {
     href: string;
     desc: string;
     id: string;
-    isActive: boolean;
   }[];
-  showSecHelper: boolean;
+  logoLink: string;
+  children: ReactNode;
+  pathname: string;
 };
 
 function AdminHeaderDesktop({ pathname }: { pathname: string }) {
-  const navLinks = [
-    {
-      href: "",
-      desc: "Solicitações",
-      id: "requests-nav",
-      isActive: pathname.includes("solicitacoes"),
-    },
-  ];
-
   return (
     <BaseHeaderDesktop
-      navLinks={navLinks}
+      navLinks={[
+        {
+          href: "/admin/solicitacoes",
+          desc: "Solicitações",
+          id: "requests",
+        },
+      ]}
       showHomepageLink={true}
-      secNavLastItem={<Settings link="" />}
-      showSecHelper={false}
-    />
+      logoLink={"/admin"}
+      pathname={pathname}
+    >
+      <li id="settings" tabIndex={0}>
+        <Settings link="/admin/config" />
+      </li>
+      <li id="logout" tabIndex={0}>
+        <Logout />
+      </li>
+    </BaseHeaderDesktop>
   );
 }
 
 function CommonUserHeaderDesktop({ pathname }: { pathname: string }) {
-  const navLinks = [
-    {
-      href: "/projetos",
-      desc: "Meus projetos",
-      id: "projects-nav",
-      isActive: pathname.includes("projetos"),
-    },
-    {
-      href: "/solicitacoes",
-      desc: "Minhas solicitações",
-      id: "requests-nav",
-      isActive: pathname.includes("solicitacoes"),
-    },
-  ];
-
   return (
     <BaseHeaderDesktop
-      secNavLastItem={<Profile />}
       showHomepageLink={true}
-      navLinks={navLinks}
-      showSecHelper={true}
-    />
+      navLinks={[
+        {
+          href: "/projetos",
+          desc: "Meus projetos",
+          id: "projects",
+        },
+        {
+          href: "/solicitacoes",
+          desc: "Minhas solicitações",
+          id: "requests",
+        },
+      ]}
+      logoLink={"/"}
+      pathname={pathname}
+    >
+      <li id="cart" tabIndex={0}>
+        <Cart />
+      </li>
+      <li id="profile" tabIndex={0}>
+        <Profile />
+      </li>
+    </BaseHeaderDesktop>
   );
 }
 
-function VisitorHeaderDesktop() {
+function VisitorHeaderDesktop({ pathname }: { pathname: string }) {
   return (
     <BaseHeaderDesktop
-      secNavLastItem={<Settings link="" />}
       showHomepageLink={false}
-      navLinks={[]}
-      showSecHelper={true}
-    />
+      logoLink={"/"}
+      pathname={pathname}
+    >
+      <li id="cart" tabIndex={0}>
+        <Cart />
+      </li>
+      <li id="settings" tabIndex={0}>
+        <Settings link="/config" />
+      </li>
+      <li>
+        <Link href="/auth/logar" className="btn-link-default">
+          Logar
+        </Link>
+      </li>
+      <li>
+        <Link href="/auth/criar-conta" className="btn-link-default">
+          Criar conta
+        </Link>
+      </li>
+    </BaseHeaderDesktop>
   );
 }
 
-function BaseHeaderDesktop(props: BaseHeaderProps) {
-  const ACTIVE = "header-desktop__nav-links--active";
-
-  const setLinkToActive = (e: React.MouseEvent<HTMLLIElement>) => {
-    const activeLink = document.querySelector(
-      ".header-desktop__nav-links--active"
-    );
-    activeLink?.classList.remove(ACTIVE);
-    e.currentTarget.classList.add(ACTIVE);
-  };
-
+function BaseHeaderDesktop({
+  children,
+  logoLink,
+  showHomepageLink,
+  navLinks,
+  pathname,
+}: BaseHeaderProps) {
   return (
     <header className="header-desktop">
-      <div className="header-desktop__logo-wrapper">
-        <Image alt="Logo do acessiweb" src={Logo} />
-      </div>
+      <Link href={logoLink}>
+        <div className="header-desktop__logo-wrapper">
+          <Image alt="Logo do acessiweb" src={Logo} />
+        </div>
+      </Link>
       <ul className="header-desktop__nav-links">
-        {props.showHomepageLink && (
-          <li id="homepage-nav" onClick={setLinkToActive}>
-            <Link href="/">Início</Link>
+        {showHomepageLink && (
+          <li
+            id="homepage"
+            className={
+              pathname === logoLink || HOMEPAGE_LINKS.includes(pathname)
+                ? "header-desktop__nav-links--active"
+                : undefined
+            }
+          >
+            <Link href={logoLink}>Início</Link>
           </li>
         )}
-        {props.navLinks.map((item, i) => (
-          <li
-            className={`${item.isActive && ACTIVE}`}
-            key={i}
-            id={item.id}
-            onClick={setLinkToActive}
-          >
-            <Link href={item.href}>{item.desc}</Link>
-          </li>
-        ))}
+        {navLinks &&
+          navLinks.map((item) => (
+            <li
+              key={item.id}
+              id={`${item.id}-nav-link`}
+              className={
+                pathname === item.href
+                  ? "header-desktop__nav-links--active"
+                  : undefined
+              }
+            >
+              <Link href={item.href}>{item.desc}</Link>
+            </li>
+          ))}
       </ul>
       <ul className="header-desktop__helpers">
-        <li id="page-search">
+        <li id="page-search" tabIndex={0}>
           <BtnSearch classname="search-header" />
         </li>
-        {props.showSecHelper && (
-          <li id="second-helper">
-            <Cart />
-          </li>
-        )}
-        <li id="help">
+        <li id="help" tabIndex={0}>
           <Help appId="app" />
         </li>
-        <li id="last-helper">{props.secNavLastItem}</li>
+        {children}
       </ul>
     </header>
   );
@@ -145,5 +174,5 @@ export default function HeaderDesktop() {
       return <CommonUserHeaderDesktop pathname={pathname} />;
   }
 
-  return <VisitorHeaderDesktop />;
+  return <VisitorHeaderDesktop pathname={pathname} />;
 }

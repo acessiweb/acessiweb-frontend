@@ -1,7 +1,7 @@
 import { SlMicrophone } from "react-icons/sl";
 import { createRoot } from "react-dom/client";
 import { RefObject, useRef, useState } from "react";
-import { symbolMap } from "@/common/utils/voice-commands";
+import { symbolMap } from "@/utils/voice-commands";
 
 type UseSpeechRecognitionOptions = {
   inputId: string;
@@ -72,10 +72,10 @@ export default function useSpeechRecognition({
       setError(null);
 
       root.render(
-        <div className="bubbles-loading">
-          <span className="bubble"></span>
-          <span className="bubble"></span>
-          <span className="bubble"></span>
+        <div className="bubbles-loading" aria-label="Escutando...">
+          <span aria-hidden={true} className="bubble"></span>
+          <span aria-hidden={true} className="bubble"></span>
+          <span aria-hidden={true} className="bubble"></span>
         </div>
       );
     };
@@ -104,7 +104,7 @@ export default function useSpeechRecognition({
     recognition.onend = () => {
       setIsListening(false);
       recognitionRef?.current?.stop();
-      root.render(<SlMicrophone />);
+      root.render(<SlMicrophone aria-hidden={true} focusable={false} />);
     };
 
     recognitionRef.current = recognition;

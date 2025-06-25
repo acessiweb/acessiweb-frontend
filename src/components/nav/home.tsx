@@ -6,7 +6,6 @@ export default function Home() {
     <Link
       className="nav__homepage"
       href="/"
-      title="Página inicial"
       aria-label="Ir para a página inicial"
     >
       <SlHome aria-hidden={true} focusable={false} />
