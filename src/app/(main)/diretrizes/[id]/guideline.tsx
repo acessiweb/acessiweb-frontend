@@ -1,9 +1,10 @@
 "use client";
 
-import { Breadcrumb } from "@/components/breadcrumb";
-import Code from "@/components/code";
+import { Breadcrumb } from "@/components/Breadcrumb";
+import Code from "@/components/Code";
 import Image from "next/image";
 import { Guideline as GuidelineType } from "@/types/guideline";
+import imageKitLoader from "@/utils/imageKitLoader";
 
 type GuidelineProps = {
   guideline: GuidelineType;
@@ -31,8 +32,14 @@ export default function Guideline({
           handleCode={() => {}}
         />
       )}
-      {guideline?.image && guideline?.imageDesc && (
-        <Image src={guideline.image} alt={guideline.imageDesc} />
+      {guideline && guideline.image && guideline.imageDesc && (
+        <Image
+          loader={() => imageKitLoader(guideline.image!)}
+          src={guideline.image}
+          alt={guideline.imageDesc}
+          width={600}
+          height={1000}
+        />
       )}
       <div className="read-guideline__deficiences">
         {guideline?.deficiences?.map((def, i) => (

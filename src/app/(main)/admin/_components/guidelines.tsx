@@ -1,27 +1,27 @@
 "use client";
 
-import GuidelinesDeficiencesFilter from "@/components/deficiences-checkbox";
-import NoRegistersFound from "@/components/not-found";
-import Search from "@/components/search";
-import SecondPage from "@/components/second-page";
+import GuidelinesDeficiencesFilter from "@/components/DeficiencesCheckbox";
+import NoRegistersFound from "@/components/NotFound";
+import Search from "@/components/Search";
+import SecondPage from "@/components/SecondPage";
 import { useScreenType } from "@/hooks/useScreenType";
 import useSecPage from "@/hooks/useSecPage";
 import { getGuideline, getGuidelines } from "@/routes/guidelines";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Guideline as GuidelineType } from "@/types/guideline";
-import Pagination from "@/components/pagination";
+import Pagination from "@/components/Pagination";
 import usePagination from "@/hooks/usePagination";
 import Guideline from "../../diretrizes/[id]/guideline";
-import { CardBtnStatus, CardBtnUpdateAndDelete } from "@/components/card-btn";
-import { CardLinkUpdateAndDelete } from "@/components/card-link";
+import { CardBtnStatus, CardBtnUpdateAndDelete } from "@/components/CardBtn";
+import { CardLinkUpdateAndDelete } from "@/components/CardLink";
 import { GoPlus } from "react-icons/go";
 import Link from "next/link";
 import { usePush } from "@/context/push";
 import AddGuideline from "../diretrizes/cadastrar/add-guideline";
 import EditGuideline from "../diretrizes/[id]/editar/edit-guideline";
 import useDeficiencyFilters from "@/hooks/useDeficiencyFilters";
-import ControlBar from "@/components/control-bar";
+import ControlBar from "@/components/ControlBar";
 import useControlBar from "@/hooks/useControlBar";
 
 const filterOptions = [
@@ -63,14 +63,7 @@ export default function GuidelinesAdmin({
     fullScreenLink,
     setFullScreenLink,
   } = useSecPage();
-  const {
-    handleView,
-    filtersChosen,
-    handleFiltersChosen,
-    view,
-    cleanFilters,
-    deleteFilter,
-  } = useControlBar();
+  const { handleView, handleFiltersChosen, view } = useControlBar();
   const [guidesStored, setGuidesStored] = useState<GuidelineType[]>([]);
   const { isFromSearch, loadMore, onLoadLess, onLoadMore, offset } =
     usePagination({
@@ -136,8 +129,15 @@ export default function GuidelinesAdmin({
 
     if ("id" in guideline) {
       setIsSecPageOpen(true);
-      setSecPageContent(<EditGuideline guideline={guideline} />);
       setSecPageTitle(guideline.name);
+      setSecPageContent(
+        <EditGuideline
+          guideline={guideline}
+          isSecPage={true}
+          handleSecPageTitle={setSecPageTitle}
+        />
+      );
+      setFullScreenLink(`/admin/diretrizes/${id}/editar`);
     }
   };
 
@@ -156,6 +156,7 @@ export default function GuidelinesAdmin({
       setIsSecPageOpen(true);
       setSecPageContent(<Guideline guideline={guideline} />);
       setSecPageTitle(guideline.name);
+      setFullScreenLink(`/admin/diretrizes/${id}`);
     }
   };
 
@@ -205,12 +206,17 @@ export default function GuidelinesAdmin({
             onNeuralChange={handleNeural}
             onTeaChange={handleTea}
             onVisualChange={handleVisual}
+            hearing={hearing}
+            motor={motor}
+            neural={neural}
+            tea={tea}
+            visual={visual}
           />
         </div>
         {guidesStored.length > 0 ? (
           <div className={`${view}`}>
             {guidesStored.map((guideline, i) => (
-              <div className={`${view}__item`} key={i}>
+              <div className={`${view}__item`} key={guideline.id}>
                 {isRequest && isDesktop && (
                   <CardBtnStatus
                     status={guideline.statusCode!}

@@ -12,10 +12,10 @@ import {
 import Password from "../../_components/Password";
 import usePassword from "../../_hooks/usePassword";
 import useErrors from "@/hooks/useErrors";
-import Errors from "@/components/errors";
+import Errors from "@/components/Errors";
 import { createAccount } from "@/routes/common-users";
 import { useRouter } from "next/navigation";
-import InputTextVoice from "@/components/input-text-voice";
+import InputTextVoice from "@/components/InputTextVoice";
 
 export default function CreateAccount() {
   const router = useRouter();
@@ -64,7 +64,7 @@ export default function CreateAccount() {
   return (
     <div className="create-account">
       <h3 className="heading-3">Criar minha conta</h3>
-      <form method="POST" onSubmit={handleSubmit(onSubmit)}>
+      <form className="form" method="POST" onSubmit={handleSubmit(onSubmit)}>
         <InputTextVoice
           useWatchName={"username"}
           handleSetValue={handleSetValue}

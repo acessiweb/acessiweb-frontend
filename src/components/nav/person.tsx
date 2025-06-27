@@ -1,4 +1,3 @@
-import useModal from "@/hooks/useModal";
 import Link from "next/link";
 import { useState } from "react";
 import { IoPersonOutline } from "react-icons/io5";

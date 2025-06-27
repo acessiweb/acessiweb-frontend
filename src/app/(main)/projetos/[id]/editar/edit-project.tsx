@@ -8,7 +8,7 @@ import updateProjectSchema from "@/schemas/projects/update-project";
 import { usePush } from "@/context/push";
 import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
 import { captureVoiceAndGetText } from "@/common/utils/voice";
-import { Breadcrumb } from "@/components/breadcrumb";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { useScreenType } from "@/hooks/useScreenType";
 
 export default function EditProject({ params }: UrlParams) {

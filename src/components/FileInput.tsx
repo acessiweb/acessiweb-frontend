@@ -7,7 +7,7 @@ export default function FileInput({
   text,
 }: {
   children: ReactNode;
-  filename: string;
+  filename: string | undefined;
   id: string;
   text: string;
 }) {

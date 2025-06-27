@@ -2,6 +2,7 @@
 
 import useModal from "@/hooks/useModal";
 import { CardDeleteProps } from "@/types/card";
+import { createPortal } from "react-dom";
 import { SlTrash } from "react-icons/sl";
 
 export default function CardDelete({
@@ -9,21 +10,14 @@ export default function CardDelete({
   registerId,
   registerName,
 }: CardDeleteProps) {
-  const {
-    Overlay,
-    hideModal,
-    isModalOpen,
-    isOverlayActive,
-    modalRef,
-    showModal,
-  } = useModal();
+  const { Overlay, hideModal, isModalOpen, modalRef, showModal } = useModal();
 
-  // const handleConfirmation = () => {
-  //   if (onDelete) {
-  //     onDelete(registerId);
-  //   }
-  //   hideModal();
-  // };
+  const handleConfirmation = () => {
+    if (onDelete) {
+      onDelete(registerId);
+      hideModal();
+    }
+  };
 
   return (
     <>
@@ -38,27 +32,34 @@ export default function CardDelete({
       >
         <SlTrash aria-hidden={true} focusable={false} />
       </button>
-      <dialog
-        className="modal"
-        ref={modalRef}
-        aria-label="Confirmar ação de deletar"
-        aria-modal={true}
-        id="delete-modal"
-      >
-        {/* <p>Tem certeza que deseja excluir "{registerName}"?</p> */}
-        <div className="buttons">
-          {/* <button
-            className="btn-transparent delete"
-            // onClick={handleConfirmation}
+      {isModalOpen &&
+        createPortal(
+          <dialog
+            className="modal"
+            ref={modalRef}
+            aria-label="Confirmar ação de deletar"
+            aria-modal={true}
+            id="delete-modal"
           >
-            Sim
-          </button>
-          <button className="btn-transparent not-delete" onClick={hideModal}>
-            Cancelar
-          </button> */}
-        </div>
-      </dialog>
-      {isOverlayActive && <Overlay />}
+            <p>Tem certeza que deseja excluir "{registerName}"?</p>
+            <div className="buttons">
+              <button
+                className="btn-transparent delete"
+                onClick={handleConfirmation}
+              >
+                Sim
+              </button>
+              <button
+                className="btn-transparent not-delete"
+                onClick={hideModal}
+              >
+                Cancelar
+              </button>
+            </div>
+          </dialog>,
+          document.getElementById("app")!
+        )}
+      {isModalOpen && <Overlay />}
     </>
   );
 }

@@ -1,5 +1,5 @@
-import imageKitLoader from "@/utils/imageKitLoader";
 import Image from "next/image";
+import NotFoundImage from "../assets/images/acessibility-1.png";
 
 type NoRegistersFoundProps = {
   errorMsg: string;
@@ -16,8 +16,7 @@ export default function NoRegistersFound({
       {showErrorMsgImage && (
         <div className="no-registers-found__img-wrapper">
           <Image
-            loader={() => imageKitLoader("acessibility-1")}
-            src="acessibility-1"
+            src={NotFoundImage}
             alt="Desenho de um homem em cadeira de rodas e uma mulher sentada em cima de livros"
             width={1000}
             height={100}

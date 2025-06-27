@@ -1,11 +1,43 @@
 import { ChangeEvent, useState } from "react";
 
-export default function useDeficiencyFilters() {
-  const [visual, setVisual] = useState("");
-  const [motor, setMotor] = useState("");
-  const [hearing, setHearing] = useState("");
-  const [neural, setNeural] = useState("");
-  const [tea, setTea] = useState("");
+function findDeficiency(
+  deficiency: string,
+  defaultValues?: { id: string; name: string }[]
+): string {
+  console.log(defaultValues);
+  if (defaultValues && defaultValues.length > 0) {
+    const found = defaultValues.find(
+      (val) => val.name.toLowerCase() === deficiency.toLowerCase()
+    );
+
+    if (found) return found.name;
+
+    return "";
+  }
+
+  return "";
+}
+
+export default function useDeficiencyFilters({
+  defaultValues,
+}: {
+  defaultValues?: { id: string; name: string }[] | undefined;
+} = {}) {
+  const [visual, setVisual] = useState(() => {
+    return findDeficiency("visual", defaultValues);
+  });
+  const [motor, setMotor] = useState(() => {
+    return findDeficiency("motora", defaultValues);
+  });
+  const [hearing, setHearing] = useState(() => {
+    return findDeficiency("auditiva", defaultValues);
+  });
+  const [neural, setNeural] = useState(() => {
+    return findDeficiency("cognitiva e neural", defaultValues);
+  });
+  const [tea, setTea] = useState(() => {
+    return findDeficiency("tea", defaultValues);
+  });
 
   const createHandlerCheckbox =
     (setter: (value: string) => void) => (e: ChangeEvent<HTMLInputElement>) => {

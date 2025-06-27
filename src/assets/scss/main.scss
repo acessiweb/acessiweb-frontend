@@ -66,13 +66,45 @@ input[type="checkbox"]:focus-visible {
     }
   }
 
+  #delete-modal {
+    top: 50%;
+    right: unset;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+
+    .buttons {
+      display: flex;
+      column-gap: var.$space-sm;
+    }
+
+    .delete,
+    .not-delete {
+      border-radius: var.$border-radius-default;
+      box-shadow: var.$shadow-small;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    .delete {
+      background-color: var.$red;
+    }
+
+    .not-delete {
+      background-color: var.$green;
+    }
+  }
+
   .content {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
-    padding-bottom: var.$space-md;
 
     @media (max-width: var.$tablet) {
-      padding-bottom: calc(var.$header-mobile-height + 50px);
+      padding-bottom: var.$header-mobile-height;
     }
 
     > main {
@@ -83,6 +115,10 @@ input[type="checkbox"]:focus-visible {
       height: calc(100% - var.$header-mobile-height);
       overflow-y: auto;
       overflow-x: hidden;
+
+      &:has(+ .react-simple-keyboard) {
+        flex: 1;
+      }
 
       @media (max-width: var.$tablet) {
         justify-content: center;
@@ -120,7 +156,6 @@ input[type="checkbox"]:focus-visible {
 @include meta.load-css("elements/form");
 @include meta.load-css("elements/breadcrumb");
 @include meta.load-css("elements/not-found");
-@include meta.load-css("elements/error-msgs");
 
 //components
 @include meta.load-css("components/nav");
@@ -131,10 +166,10 @@ input[type="checkbox"]:focus-visible {
 @include meta.load-css("components/modal");
 @include meta.load-css("components/footer");
 @include meta.load-css("components/search");
-@include meta.load-css("components/input-text-voice");
 @include meta.load-css("components/control-bar");
 @include meta.load-css("components/filters-applied");
 @include meta.load-css("components/pagination");
+@include meta.load-css("components/code");
 
 //pages
 @include meta.load-css("pages/homepage-mobile");

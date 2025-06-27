@@ -1,30 +1,39 @@
 "use client";
 
-import CardAdd from "@/components/card/add";
-import CardDelete from "@/components/card/delete";
-import CardStatus from "@/components/card/status";
-import { CardBtnUpdateAndDeleteEl } from "@/components/card/update-and-delete";
+import CardAdd from "@/components/card/Add";
+import CardDelete from "@/components/card/Delete";
+import CardStatus from "@/components/card/Status";
+import { CardLinkUpdateAndDeleteEl } from "@/components/card/UpdateAndDelete";
 import {
   CardAddProps,
-  CardBtnProps,
-  CardBtnUpdateAndDeleteProps,
   CardDeleteProps,
+  CardLinkProps,
+  CardLinkUpdateAndDeleteProps,
   CardStatusProps,
 } from "@/types/card";
+import Link from "next/link";
 
-export function CardBtnDelete({
+export function CardLink({ readRoute, mainText, children }: CardLinkProps) {
+  return (
+    <CardBase mainText={mainText} readRoute={readRoute}>
+      {children}
+    </CardBase>
+  );
+}
+
+export function CardLinkDelete({
   mainText,
   onDelete,
   secondaryText,
   registerId,
   registerName,
-  onClick,
-}: CardBtnProps & CardDeleteProps) {
+  readRoute,
+}: CardLinkProps & CardDeleteProps) {
   return (
     <CardBase
       mainText={mainText}
       secondaryText={secondaryText}
-      onClick={onClick}
+      readRoute={readRoute}
     >
       <CardDelete
         onDelete={onDelete}
@@ -35,19 +44,19 @@ export function CardBtnDelete({
   );
 }
 
-export function CardBtnAdd({
+export function CardLinkAdd({
   mainText,
   secondaryText,
   registerId,
   registerName,
-  onClick,
   onAdd,
-}: CardBtnProps & CardAddProps) {
+  readRoute,
+}: CardLinkProps & CardAddProps) {
   return (
     <CardBase
       mainText={mainText}
       secondaryText={secondaryText}
-      onClick={onClick}
+      readRoute={readRoute}
     >
       <CardAdd
         onAdd={onAdd}
@@ -58,26 +67,26 @@ export function CardBtnAdd({
   );
 }
 
-export function CardBtnUpdateAndDelete({
+export function CardLinkUpdateAndDelete({
   mainText,
-  onClick,
   registerId,
   registerName,
-  onUpdateClick,
   onDelete,
   secondaryText,
-}: CardBtnProps & CardBtnUpdateAndDeleteProps) {
+  updateRoute,
+  readRoute,
+}: CardLinkProps & CardLinkUpdateAndDeleteProps) {
   return (
     <CardBase
       mainText={mainText}
       secondaryText={secondaryText}
-      onClick={onClick}
+      readRoute={readRoute}
     >
-      <CardBtnUpdateAndDeleteEl
+      <CardLinkUpdateAndDeleteEl
         onDelete={onDelete}
         registerId={registerId}
         registerName={registerName}
-        onUpdateClick={onUpdateClick}
+        updateRoute={updateRoute}
       />
     </CardBase>
   );
@@ -85,17 +94,17 @@ export function CardBtnUpdateAndDelete({
 
 export function CardBtnStatus({
   mainText,
-  onClick,
   registerId,
   secondaryText,
   status,
-}: CardBtnProps & CardStatusProps) {
+  readRoute,
+}: CardLinkProps & CardStatusProps) {
   return (
     <CardBase
       mainText={mainText}
-      onClick={onClick}
       registerId={registerId}
       secondaryText={secondaryText}
+      readRoute={readRoute}
     >
       <CardStatus status={status} />
     </CardBase>
@@ -106,22 +115,15 @@ function CardBase({
   mainText,
   secondaryText,
   children,
-  onClick,
-}: CardBtnProps) {
+  readRoute,
+}: CardLinkProps) {
   return (
     <article className="card">
-      <div
-        className="card__desc"
-        onClick={onClick}
-        onKeyDown={(e) => e.key === "Enter" && onClick(e)}
-        tabIndex={0}
-        role="button"
-        aria-label={`Clique para acessar ${mainText}`}
-      >
+      <Link className="card__header" href={readRoute}>
         <h3 className="heading-3">{mainText}</h3>
-        {secondaryText && <p>{secondaryText}</p>}
-      </div>
-      {children}
+        {children}
+      </Link>
+      {secondaryText && <p>{secondaryText}</p>}
     </article>
   );
 }

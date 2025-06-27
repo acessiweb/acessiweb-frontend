@@ -6,6 +6,11 @@ type DeficiencesCheckboxProps = {
   onMotorChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onNeuralChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onTeaChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  visual: string;
+  hearing: string;
+  motor: string;
+  neural: string;
+  tea: string;
 };
 
 export default function DeficiencesCheckbox({
@@ -14,6 +19,11 @@ export default function DeficiencesCheckbox({
   onNeuralChange,
   onTeaChange,
   onVisualChange,
+  hearing,
+  motor,
+  neural,
+  tea,
+  visual,
 }: DeficiencesCheckboxProps) {
   return (
     <div className="deficiences-checkbox">
@@ -30,6 +40,7 @@ export default function DeficiencesCheckbox({
             id="visual"
             name="visual"
             value="Visual"
+            checked={!!visual}
             onChange={onVisualChange}
           />
           <label htmlFor="visual"> Visual</label>
@@ -38,20 +49,10 @@ export default function DeficiencesCheckbox({
           <input
             className="input-checkbox"
             type="checkbox"
-            id="neural"
-            name="neural"
-            value="Neural"
-            onChange={onNeuralChange}
-          />
-          <label htmlFor="neural"> Neural</label>
-        </div>
-        <div>
-          <input
-            className="input-checkbox"
-            type="checkbox"
             id="tea"
             name="tea"
             value="TEA"
+            checked={!!tea}
             onChange={onTeaChange}
           />
           <label htmlFor="tea"> TEA</label>
@@ -63,6 +64,7 @@ export default function DeficiencesCheckbox({
             id="motor"
             name="motor"
             value="Motora"
+            checked={!!motor}
             onChange={onMotorChange}
           />
           <label htmlFor="motor"> Motora</label>
@@ -74,9 +76,22 @@ export default function DeficiencesCheckbox({
             id="hearing"
             name="hearing"
             value="Auditiva"
+            checked={!!hearing}
             onChange={onHearingChange}
           />
           <label htmlFor="hearing"> Auditiva</label>
+        </div>
+        <div>
+          <input
+            className="input-checkbox"
+            type="checkbox"
+            id="neural"
+            name="neural"
+            checked={!!neural}
+            value="Cognitiva e neural"
+            onChange={onNeuralChange}
+          />
+          <label htmlFor="neural"> Cognitiva e neural</label>
         </div>
       </div>
     </div>

@@ -3,10 +3,10 @@ import { default as ReactSimpleKeyboard } from "react-simple-keyboard";
 import { KeyboardDisplay } from "@/utils/enum";
 
 type KeyboardProps = {
-  showKeyboard: boolean;
+  isKeyboardOpened: boolean;
 };
 
-export default function Keyboard({ showKeyboard }: KeyboardProps) {
+export default function Keyboard({ isKeyboardOpened }: KeyboardProps) {
   const { handleKeyboardKeyPress } = useInputFocus();
 
   return (
@@ -16,7 +16,9 @@ export default function Keyboard({ showKeyboard }: KeyboardProps) {
         display={KeyboardDisplay}
       />
       <span role="status" className="sr-only">
-        {showKeyboard ? "Teclado virtual aberto" : "Teclado virtual fechado"}
+        {isKeyboardOpened
+          ? "Teclado virtual aberto"
+          : "Teclado virtual fechado"}
       </span>
     </>
   );

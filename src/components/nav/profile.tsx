@@ -1,7 +1,7 @@
-import ProfileIcon from "../icons/profile";
+import ProfileIcon from "../icons/Profile";
 import { useState } from "react";
-import Logout from "./logout";
-import Settings from "./settings";
+import Logout from "./Logout";
+import Settings from "./Settings";
 
 export default function Profile() {
   const [showMenu, setShowMenu] = useState(false);
@@ -18,7 +18,7 @@ export default function Profile() {
         aria-controls={showMenu ? "logout-and-settings" : undefined}
         aria-expanded={showMenu}
       >
-        <ProfileIcon aria-hidden={true} focusable={false} />
+        <ProfileIcon aria-hidden={true} />
       </button>
       {showMenu && (
         <ul

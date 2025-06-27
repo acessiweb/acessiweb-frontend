@@ -1,9 +1,8 @@
 "use server";
 
 import { ApiError, PaginationResponse } from "@/types/response-api";
-import fetchData from "./fetch/fetch";
+import fetchData from "../utils/fetch";
 import { Guideline } from "@/types/guideline";
-import { getAuthSession } from "./auth-session/auth-server-session";
 
 type Guidelines = PaginationResponse & {
   data: Guideline[];
@@ -28,23 +27,5 @@ export async function getGuidelines(query?: {
 export async function getGuideline(id: string): Promise<Guideline | ApiError> {
   return await fetchData({
     endpoint: `guidelines/${id}`,
-  });
-}
-
-export async function createGuideline(
-  userId: string,
-  formData: FormData
-): Promise<ApiError | { id: string }> {
-  const token = await getAuthSession();
-
-  return fetchData({
-    endpoint: `users/${userId}/guidelines`,
-    config: {
-      method: "POST",
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
   });
 }

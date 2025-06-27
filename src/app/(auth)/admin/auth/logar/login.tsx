@@ -1,6 +1,6 @@
 "use client";
 
-import InputTextVoice from "@/components/input-text-voice";
+import InputTextVoice from "@/components/InputTextVoice";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useErrorMsgs from "@/hooks/useErrors";
@@ -10,7 +10,7 @@ import { adminLoginSchema, AdminLoginSchema } from "@/schemas/user.schema";
 import { useRouter } from "next/navigation";
 import Password from "@/app/(auth)/_components/Password";
 import usePassword from "@/app/(auth)/_hooks/usePassword";
-import Errors from "@/components/errors";
+import Errors from "@/components/Errors";
 
 type LoginProps = Params;
 
@@ -60,7 +60,7 @@ export default function Login({ searchParams }: LoginProps) {
   return (
     <div className="login">
       <h3 className="heading-3">Acesso admin</h3>
-      <form onSubmit={handleSubmit(onSubmit)} method="POST">
+      <form className="form" onSubmit={handleSubmit(onSubmit)} method="POST">
         <InputTextVoice
           useWatchName={"email"}
           handleSetValue={handleSetValue}

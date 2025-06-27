@@ -3,7 +3,7 @@ import { SlList } from "react-icons/sl";
 import { SlGrid } from "react-icons/sl";
 import useModal from "@/hooks/useModal";
 import { useScreenType } from "@/hooks/useScreenType";
-import { Breadcrumb, BreadcrumbProps } from "./breadcrumb";
+import { Breadcrumb, BreadcrumbProps } from "./Breadcrumb";
 import { useHotkeys } from "react-hotkeys-hook";
 
 type ControlBarProps = Partial<BreadcrumbProps> & {
@@ -24,12 +24,7 @@ export default function ControlBar({
   handleFilters,
 }: ControlBarProps) {
   const { isDesktop } = useScreenType();
-  const {
-    showModal: showFilterModal,
-    isModalOpen: isFilterModalOpen,
-    modalRef: filterModalRef,
-    toggleModal,
-  } = useModal();
+  const { showModal, isModalOpen, modalRef, toggleModal } = useModal();
   useHotkeys("F", toggleModal);
 
   return (
@@ -41,34 +36,37 @@ export default function ControlBar({
             className="btn-icon"
             aria-label="Abrir opções de filtro"
             title="Pressione a tecla F"
-            aria-expanded={isFilterModalOpen}
+            aria-expanded={isModalOpen}
             style={{ position: "relative" }}
-            onClick={showFilterModal}
+            onClick={showModal}
             aria-haspopup="dialog"
+            aria-keyshortcuts="F"
           >
             <LuListFilter aria-hidden={true} focusable={false} />
-            <dialog
-              className="modal"
-              ref={filterModalRef}
-              aria-modal={true}
-              aria-label="Opções de filtro"
-            >
-              <ul>
-                {filtersOptions.map((val, i) => (
-                  <li
-                    key={val.id}
-                    id={val.id}
-                    onClick={(e) => handleFilters(e.currentTarget.id)}
-                    onKeyDown={(e) =>
-                      e.key === "Enter" && handleFilters(e.currentTarget.id)
-                    }
-                    tabIndex={0}
-                  >
-                    {val.desc}
-                  </li>
-                ))}
-              </ul>
-            </dialog>
+            {isModalOpen && (
+              <dialog
+                className="modal"
+                ref={modalRef}
+                aria-modal={true}
+                aria-label="Opções de filtro"
+              >
+                <ul>
+                  {filtersOptions.map((val, i) => (
+                    <li
+                      key={val.id}
+                      id={val.id}
+                      onClick={(e) => handleFilters(e.currentTarget.id)}
+                      onKeyDown={(e) =>
+                        e.key === "Enter" && handleFilters(e.currentTarget.id)
+                      }
+                      tabIndex={0}
+                    >
+                      {val.desc}
+                    </li>
+                  ))}
+                </ul>
+              </dialog>
+            )}
           </button>
         )}
         {isDesktop && (

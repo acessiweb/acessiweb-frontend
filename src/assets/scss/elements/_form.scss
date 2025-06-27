@@ -1,5 +1,24 @@
 @use "../var";
 
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: var.$space-md;
+  padding-bottom: var.$space-lg;
+
+  input:not([type="checkbox"]),
+  textarea {
+    all: unset;
+    flex: 1;
+    padding: var.$space-sm;
+
+    &::placeholder {
+      font-style: italic;
+      font-size: var.$fs-x-small;
+    }
+  }
+}
+
 .form-error-msg {
   color: var.$red;
   font-size: calc(var.$fs-x-small - 0.2rem);
@@ -27,5 +46,63 @@
       background-color: var.$purple;
       border-radius: 1px;
     }
+  }
+}
+
+.file-input {
+  display: flex;
+  flex-direction: column;
+  row-gap: var.$space-xs;
+  flex: 1;
+
+  label {
+    border-radius: var.$border-radius-default;
+    padding: var.$space-sm;
+    background-color: var.$lightPurple;
+    cursor: pointer;
+    flex: 1;
+    border: 1px solid transparent;
+
+    &:hover {
+      border: var.$border-1;
+      background-color: var.$purple;
+    }
+  }
+
+  span {
+    flex: 1;
+  }
+}
+
+.sec-page {
+  .file-input label {
+    background-color: var.$lighterPurple;
+  }
+}
+
+.input-text-voice {
+  display: flex;
+  column-gap: var.$space-xs;
+  padding: calc(var.$space-sm - 0.2rem) var.$space-sm;
+  border-radius: var.$border-radius-default;
+  background-color: #fff;
+  border: var.$border-1;
+  flex: 1;
+
+  button {
+    align-self: flex-start;
+  }
+}
+
+.error-msgs-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: var.$space-lg;
+  row-gap: var.$space-xs;
+
+  &__error-msg {
+    color: var.$red;
+    font-weight: var.$bold;
+    font-size: var.$fs-x-small;
   }
 }

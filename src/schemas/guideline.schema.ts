@@ -38,7 +38,7 @@ const deficiences = z.array(z.string().trim()).refine((val) => val.length > 0, {
   message: "A diretriz precisa ter ao menos uma deficiência relacionada",
 });
 
-export const createGuidelineSchema = z
+export const createEditGuidelineSchema = z
   .object({
     guideName,
     desc,
@@ -57,4 +57,6 @@ export const createGuidelineSchema = z
     }
   });
 
-export type CreateGuidelineSchema = z.infer<typeof createGuidelineSchema>;
+export type CreateEditGuidelineSchema = z.infer<
+  typeof createEditGuidelineSchema
+>;

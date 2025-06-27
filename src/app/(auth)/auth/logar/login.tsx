@@ -13,9 +13,9 @@ import useEmailOrMobilePhone from "../../_hooks/useEmailOrMobilePhone";
 import Password from "../../_components/Password";
 import { useRouter } from "next/navigation";
 import useErrors from "@/hooks/useErrors";
-import Errors from "@/components/errors";
+import Errors from "@/components/Errors";
 import { useHotkeys } from "react-hotkeys-hook";
-import InputTextVoice from "@/components/input-text-voice";
+import InputTextVoice from "@/components/InputTextVoice";
 
 type LoginProps = Params;
 
@@ -83,7 +83,7 @@ export default function Login({ searchParams }: LoginProps) {
 
   return (
     <div className="login">
-      <form method="POST" onSubmit={handleSubmit(onSubmit)}>
+      <form className="form" method="POST" onSubmit={handleSubmit(onSubmit)}>
         <EmailorMobilePhone handleType={handleType} type={inputType}>
           {inputType === "E-mail" && (
             <InputTextVoice

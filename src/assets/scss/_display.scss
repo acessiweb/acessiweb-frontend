@@ -2,19 +2,14 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: var.$space-md;
   margin-top: var.$space-xl;
-  flex: 1;
 
   &__item {
     display: flex;
-    flex: 1;
-    transition: transform 0.2s ease;
-
-    &:hover {
-      transform: translateY(-5px);
-    }
+    grid-row: span 1;
+    grid-template-rows: subgrid;
   }
 }
 

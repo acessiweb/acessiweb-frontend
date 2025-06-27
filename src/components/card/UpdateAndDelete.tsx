@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import CardDelete from "./delete";
+import CardDelete from "./Delete";
 import { SlPencil } from "react-icons/sl";
 import {
   CardBtnUpdateAndDeleteProps,

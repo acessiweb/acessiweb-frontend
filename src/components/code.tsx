@@ -17,7 +17,7 @@ type CodeProps = {
   editable: boolean;
   label?: string;
   handleCode: Dispatch<SetStateAction<string>>;
-  code: string;
+  code: string | undefined;
 };
 
 enum THEME_OPTIONS {

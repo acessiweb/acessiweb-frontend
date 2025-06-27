@@ -1,6 +1,6 @@
 "use server";
 
-import fetchData from "./fetch/fetch";
+import fetchData from "../utils/fetch";
 
 export async function lookupUser({
   email,

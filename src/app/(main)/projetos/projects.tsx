@@ -1,17 +1,17 @@
 "use client";
 
 import { useProjects } from "@/context/projects";
-import { Breadcrumb } from "@/components/breadcrumb";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import ControlBarMobile from "@/components/control-bar-mobile";
 import ControlBarDesktop from "@/components/control-bar-desktop";
-import NoRegistersFound from "@/components/not-found";
-import Search from "@/components/search";
+import NoRegistersFound from "@/components/NotFound";
+import Search from "@/components/Search";
 import useSecPage from "@/hooks/useSecPage";
 import EditProject from "./[id]/editar/edit-project";
-import SecondPage from "@/components/second-page";
+import SecondPage from "@/components/SecondPage";
 import Project from "./[id]/project";
-import { CardLinkUpdateAndDelete } from "@/components/card-link";
-import { CardBtnUpdateAndDelete } from "@/components/card-btn";
+import { CardLinkUpdateAndDelete } from "@/components/CardLink";
+import { CardBtnUpdateAndDelete } from "@/components/CardBtn";
 import { useScreenType } from "@/hooks/useScreenType";
 
 export default function Projects() {

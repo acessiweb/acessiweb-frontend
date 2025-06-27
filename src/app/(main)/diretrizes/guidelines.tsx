@@ -1,11 +1,11 @@
 "use client";
 
-import { CardBtnAdd } from "@/components/card-btn";
-import { CardLinkAdd } from "@/components/card-link";
-import DeficiencesCheckbox from "@/components/deficiences-checkbox";
-import NoRegistersFound from "@/components/not-found";
-import Search from "@/components/search";
-import SecondPage from "@/components/second-page";
+import { CardBtnAdd } from "@/components/CardBtn";
+import { CardLinkAdd } from "@/components/CardLink";
+import DeficiencesCheckbox from "@/components/DeficiencesCheckbox";
+import NoRegistersFound from "@/components/NotFound";
+import Search from "@/components/Search";
+import SecondPage from "@/components/SecondPage";
 import { useCart } from "@/context/cart";
 import { useScreenType } from "@/hooks/useScreenType";
 import useSecPage from "@/hooks/useSecPage";
@@ -14,12 +14,12 @@ import { useQuery } from "@tanstack/react-query";
 import Guideline from "./[id]/guideline";
 import { useState } from "react";
 import { Guideline as GuidelineType } from "@/types/guideline";
-import Pagination from "@/components/pagination";
+import Pagination from "@/components/Pagination";
 import usePagination from "@/hooks/usePagination";
-import ControlBar from "@/components/control-bar";
+import ControlBar from "@/components/ControlBar";
 import useDeficiencyFilters from "@/hooks/useDeficiencyFilters";
 import useControlBar from "@/hooks/useControlBar";
-import FiltersApplied from "@/components/filters-applied";
+import FiltersApplied from "@/components/FiltersApplied";
 
 const filterOptions = [
   {
@@ -152,6 +152,11 @@ export default function GuidelinesUser() {
             onNeuralChange={handleNeural}
             onTeaChange={handleTea}
             onVisualChange={handleVisual}
+            hearing={hearing}
+            motor={motor}
+            neural={neural}
+            tea={tea}
+            visual={visual}
           />
         </div>
         {filtersChosen.length > 0 && (

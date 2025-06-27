@@ -1,7 +1,7 @@
 "use server";
 
 import { CreateCommonUserSchema } from "@/schemas/user.schema";
-import fetchData from "./fetch/fetch";
+import fetchData from "../utils/fetch";
 import { ApiError } from "@/types/response-api";
 
 export async function createAccount(

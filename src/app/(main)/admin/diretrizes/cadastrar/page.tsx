@@ -6,5 +6,18 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <AddGuideline />;
+  return (
+    <AddGuideline
+      crumbs={[
+        {
+          desc: "DIRETRIZES",
+          link: "/admin/diretrizes",
+        },
+        {
+          desc: "CADASTRAR DIRETRIZ",
+          link: `/diretrizes/cadastrar`,
+        },
+      ]}
+    />
+  );
 }

@@ -1,17 +1,17 @@
 "use client";
 
 import { isAdmin, isCommonUser } from "@/utils/authorization";
-import Cart from "@/components/nav/cart";
-import Home from "@/components/nav/home";
-import Person from "@/components/nav/person";
+import Cart from "@/components/nav/Cart";
+import Person from "@/components/nav/Person";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { PiPersonArmsSpreadLight } from "react-icons/pi";
-import Settings from "@/components/nav/settings";
-import Logout from "@/components/nav/logout";
-import Help from "@/components/nav/help";
+import Settings from "@/components/nav/Settings";
+import Logout from "@/components/nav/Logout";
+import Help from "@/components/nav/Help";
+import { SlHome } from "react-icons/sl";
 
 type BaseHeaderProps = {
   secItem: ReactNode;
@@ -63,7 +63,13 @@ function BaseFooterMobile(props: BaseHeaderProps) {
   return (
     <header className="footer-mobile">
       <div>
-        <Home />
+        <Link
+          className="nav__homepage"
+          href="/"
+          aria-label="Ir para a página inicial"
+        >
+          <SlHome aria-hidden={true} focusable={false} />
+        </Link>
         {props.secItem}
         <Help appId="app" />
         {props.fourthItem}

@@ -8,6 +8,11 @@
     display: flex;
     flex-direction: column;
     row-gap: var.$space-md;
+    flex: 1;
+
+    .search {
+      flex: 1;
+    }
 
     @media (min-width: calc(var.$mobile + 1px)) {
       margin: 0 auto;

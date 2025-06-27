@@ -5,18 +5,16 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { isAdmin } from "./utils/authorization";
 
-const PUBLIC_PATHS = ["/auth/logar", "/auth/criar-conta", "/admin/auth/logar"];
+const PUBLIC_PATHS = [
+  "/auth/logar",
+  "/auth/criar-conta",
+  "/admin/auth/logar",
+  "/",
+  "/diretrizes",
+];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-
-  // ignora rotas públicas
-  if (
-    PUBLIC_PATHS.some((path) => pathname.startsWith(path)) ||
-    pathname === "/"
-  ) {
-    return NextResponse.next();
-  }
 
   const token = await getToken({
     req,
@@ -28,6 +26,22 @@ export async function middleware(req: NextRequest) {
       return new NextResponse("Forbidden", { status: 403 });
     }
 
+    if (
+      (pathname === "/" || pathname === "/diretrizes") &&
+      isAdmin(token.role)
+    ) {
+      const adminUrl = new URL("/admin", req.url);
+      return NextResponse.redirect(adminUrl);
+    }
+
+    return NextResponse.next();
+  }
+
+  // ignora rotas públicas
+  if (
+    PUBLIC_PATHS.some((path) => pathname.startsWith(path)) ||
+    pathname === "/"
+  ) {
     return NextResponse.next();
   }
 
