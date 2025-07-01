@@ -1,18 +1,20 @@
-type ProjectProps = UrlParams & {
-  projectName?: string;
-  projectDescription?: string;
-  projectFeedback?: string;
+import { Project as ProjectType } from "@/types/project";
+
+type ProjectProps = {
+  project: ProjectType;
+  isSecPage?: boolean;
+  crumbs?: {
+    desc: string;
+    link: string;
+  }[];
 };
 
-export default function Project({
-  projectDescription,
-  projectFeedback,
-}: ProjectProps) {
+export default function Project({ project }: ProjectProps) {
   return (
     <div className="read-project">
-      <p>{projectDescription}</p>
+      <p>{project.description}</p>
       {/* <CardList data={project.guidelines || []} /> */}
-      <p>{projectFeedback}</p>
+      <p>{project.feedback}</p>
     </div>
   );
 }

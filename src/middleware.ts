@@ -1,46 +1,51 @@
-// middleware.ts
+"use server";
+
+import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { isAdmin, isCommonUser } from "./common/utils/authorization";
-// import { verify } from "jsonwebtoken";
+import { isAdmin } from "./utils/authorization";
 
-const PUBLIC_PATHS = ["/login", "/sobre", "/_next"];
+const PUBLIC_PATHS = [
+  "/auth/logar",
+  "/auth/criar-conta",
+  "/admin/auth/logar",
+  "/diretrizes",
+];
 
-// function getUser(req: NextRequest) {
-//   const token = req.cookies.get("token")?.value;
-//   if (!token) return null;
-//   try {
-//     return verify(token, process.env.JWT_SECRET);
-//   } catch {
-//     return null;
-//   }
-// }
-
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // ignora rotas públicas
-  if (PUBLIC_PATHS.some((path) => pathname.startsWith(path))) {
+  const token = await getToken({
+    req,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
+
+  if (token) {
+    if (pathname.startsWith("/admin") && !isAdmin(token.data.user.role)) {
+      return new NextResponse("Forbidden", { status: 403 });
+    }
+
+    if (
+      (pathname === "/" || pathname === "/diretrizes") &&
+      isAdmin(token.data.user.role)
+    ) {
+      const adminUrl = new URL("/admin", req.url);
+      return NextResponse.redirect(adminUrl);
+    }
+
     return NextResponse.next();
   }
 
-  const userRole = "ADMIN";
-
-  if (!userRole) {
-    const loginUrl = new URL("/login", req.url);
-    return NextResponse.redirect(loginUrl);
+  // ignora rotas públicas
+  if (
+    PUBLIC_PATHS.some((path) => pathname.startsWith(path)) ||
+    pathname === "/"
+  ) {
+    return NextResponse.next();
   }
 
-  if (pathname.startsWith("/admin") && !isAdmin(userRole)) {
-    return new NextResponse("Forbidden", { status: 403 });
-  }
-
-  if (pathname.startsWith("/solicitacoes") && !isCommonUser(userRole)) {
-    const homePage = new URL("/", req.url);
-    return NextResponse.redirect(homePage);
-  }
-
-  return NextResponse.next();
+  const loginUrl = new URL("/auth/logar", req.url);
+  return NextResponse.redirect(loginUrl);
 }
 
 export const config = {

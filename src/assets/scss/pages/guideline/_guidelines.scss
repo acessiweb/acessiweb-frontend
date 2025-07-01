@@ -1,0 +1,86 @@
+@use "../../var";
+
+.guidelines {
+  display: flex;
+  flex-direction: column;
+
+  .guidelines-filters {
+    display: flex;
+    flex-direction: column;
+    row-gap: var.$space-md;
+    flex: 1;
+
+    .search {
+      flex: 1;
+    }
+
+    @media (min-width: calc(var.$mobile + 1px)) {
+      margin: 0 auto;
+    }
+
+    .deficiences-checkbox {
+      flex: 1;
+      display: flex;
+
+      > div:first-of-type {
+        flex: 1;
+
+        @media (min-width: calc(var.$mobile + 1px)) {
+          display: none;
+        }
+      }
+
+      &__group {
+        flex: 4;
+        gap: var.$space-md;
+
+        @media (max-width: var.$mobile) {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+
+          > div:nth-child(5) {
+            grid-column: span 2;
+          }
+        }
+
+        @media (min-width: calc(var.$mobile + 1px)) {
+          display: flex;
+        }
+
+        > div {
+          label {
+            margin-left: var.$space-xs;
+          }
+        }
+      }
+    }
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: var.$space-md;
+  }
+}
+
+.two-pages {
+  .guidelines {
+    .heading-1 {
+      text-align: start;
+    }
+
+    .guidelines-filters {
+      &__form {
+        &__guideline-checkbox-group {
+          margin-left: 10px;
+        }
+      }
+    }
+
+    .guidelines-filters,
+    .guidelines-filters > div:first-of-type,
+    .guidelines-filters > div:first-of-type .search {
+      margin: 0;
+      flex: 1;
+    }
+  }
+}

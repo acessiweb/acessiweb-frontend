@@ -2,32 +2,54 @@
 
 .control-bar {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   margin-bottom: var.$space-md;
-}
 
-.control-bar-mobile {
-  &__controls {
+  &__options {
     display: flex;
-    column-gap: var.$space-xs;
+    column-gap: var.$space-sm;
+    margin-left: auto;
 
+    @media (min-width: var.$desktop) {
+      margin-top: var.$space-sm;
+    }
+
+    .modal {
+      padding: 0;
+      background-color: var.$lighterPurple;
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        row-gap: var.$space-sm;
+
+        li {
+          cursor: pointer;
+          padding: var.$space-sm;
+          border-top: var.$border-1;
+
+          &:first-of-type {
+            border-top: none;
+          }
+
+          &:hover {
+            background-color: var.$purple;
+          }
+        }
+      }
+    }
+  }
+
+  .btn-icon {
     svg {
-      width: var.$svg-x-small;
-      height: var.$svg-x-small;
+      height: 1.3rem;
+      width: 1.3rem;
     }
-  }
-}
 
-.control-bar-desktop {
-  column-gap: var.$space-lg;
-
-  .search {
-    &__search-form input {
-      width: 20vw;
+    .modal {
+      top: 10%;
+      left: -300%;
+      bottom: 0;
     }
-  }
-
-  .btn-link-default {
-    flex: none;
   }
 }

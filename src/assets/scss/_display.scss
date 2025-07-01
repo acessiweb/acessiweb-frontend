@@ -2,9 +2,15 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: var.$space-md;
-  margin-top: var.$space-md;
+  margin-top: var.$space-xl;
+
+  &__item {
+    display: flex;
+    grid-row: span 1;
+    grid-template-rows: subgrid;
+  }
 }
 
 .list {
@@ -12,7 +18,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   row-gap: var.$space-md;
-  margin-top: var.$space-md;
+  margin-top: var.$space-xl;
 
   &__item {
     flex: 1;
