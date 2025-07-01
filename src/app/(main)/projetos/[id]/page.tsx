@@ -1,21 +1,10 @@
 import { Metadata } from "next/types";
-import Project from "./Project";
-import { ParamsPromise } from "@/types/params";
-import { getProject } from "@/routes/projects";
+import Project from "./project";
 
 export const metadata: Metadata = {
   title: "Meus projetos",
 };
 
-type PageProps = ParamsPromise;
-
-export default async function Page({ params }: PageProps) {
-  const { id } = await params;
-  const project = await getProject(id);
-
-  if (project && "id" in project) {
-    return <Project project={project} />;
-  }
-
-  return;
+export default function Page({ params }: UrlParams) {
+  return <Project params={params} />;
 }

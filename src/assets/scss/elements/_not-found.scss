@@ -4,10 +4,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: var.$space-xl auto 0;
+  margin: 0 auto;
   row-gap: var.$space-sm;
 
-  > figcaption {
+  > span {
     font-weight: var.$semibold;
   }
 

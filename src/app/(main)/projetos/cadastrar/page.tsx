@@ -1,5 +1,5 @@
 import { Metadata } from "next/types";
-import AddProject from "./AddProject";
+import AddProject from "./add-project";
 
 export const metadata: Metadata = {
   title: "Meus projetos - criar projeto",

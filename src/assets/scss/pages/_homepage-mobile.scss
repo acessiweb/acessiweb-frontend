@@ -8,39 +8,19 @@
   width: 100%;
 
   .card {
-    display: flex;
-    flex: none;
-    margin-bottom: 0;
-    padding-right: var.$space-md;
+    flex: none !important;
+    margin-bottom: 0 !important;
     height: 90px;
-
-    &:hover {
-      .card__desc {
-        > span:first-of-type {
-          font-weight: var.$bold;
-        }
-      }
-    }
+    padding-right: var.$space-md;
 
     &__desc {
-      margin-top: 0;
-      flex: 1;
-      font-size: calc(var.$fs-small + 0.2rem);
-
-      > span:first-of-type {
-        font-weight: var.$medium;
-      }
-    }
-
-    > div:nth-child(2) {
-      flex: 3;
-      display: flex;
-      justify-content: flex-end;
+      margin-top: var.$space-md;
     }
 
     svg {
-      height: calc(var.$svg-x-large + 0.5rem) !important;
-      width: calc(var.$svg-x-large + 0.5rem) !important;
+      height: var.$svg-x-large !important;
+      width: var.$svg-x-large !important;
+      align-self: center;
       fill: var.$purple;
       stroke-width: 2px;
     }

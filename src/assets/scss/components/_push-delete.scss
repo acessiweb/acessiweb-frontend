@@ -1,0 +1,49 @@
+@use "../var";
+
+@mixin deleteBtn($bgColor, $borderColor) {
+  font-size: var.$fs-medium;
+  border: 1px solid $borderColor;
+  border-radius: var.$border-radius-default;
+
+  &:hover {
+    background-color: $bgColor;
+    color: #fff;
+  }
+}
+
+.push-delete-wrapper {
+  background-color: var.$lighterPurple;
+  position: absolute;
+  z-index: 1000;
+  top: 50%;
+  left: 30%;
+  border-radius: var.$border-radius-default;
+  flex: none;
+  width: max-content;
+  margin: 0 auto;
+
+  &__push {
+    display: flex;
+    column-gap: 20px;
+    align-items: center;
+    background-color: var.$lightPurple;
+    border-radius: var.$border-radius-default;
+    padding: var.$space-sm var.$space-md;
+    box-shadow: var.$shadow-small;
+    border: 1px solid var.$text;
+    line-height: 1.4;
+
+    &__btn-wrapper {
+      display: flex;
+      column-gap: var.$space-sm;
+    }
+
+    .delete {
+      @include deleteBtn(var.$red, var.$red);
+    }
+
+    .not-delete {
+      @include deleteBtn(var.$green, var.$green);
+    }
+  }
+}

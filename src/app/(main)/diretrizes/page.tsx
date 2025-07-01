@@ -1,7 +1,19 @@
 "use client";
 
-import GuidelinesUser from "./Guidelines";
+import GuidelinesFilters from "@/common/filters/guidelines";
+import ControlBarDesktop from "@/components/control-bar-desktop";
+import Guidelines from "@/components/guidelines";
 
-export default function Page() {
-  return <GuidelinesUser />;
+export default function GuidelinesUser() {
+  return (
+    <Guidelines
+      controlBar={
+        <ControlBarDesktop
+          searchPlaceholderText="Buscar por diretriz..."
+          controls={<GuidelinesFilters />}
+        />
+      }
+      isAdmin={false}
+    />
+  );
 }

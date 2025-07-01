@@ -1,0 +1,74 @@
+@use "./var";
+
+.auth {
+  background-color: var.$purple;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+
+  a {
+    color: var.$purple;
+  }
+
+  > div {
+    background-color: var.$lightPurple;
+    border: var.$border-1;
+    width: max-content;
+    height: max-content;
+    padding: calc(var.$space-lg + 0.5rem) var.$space-lg;
+    border-radius: var.$border-radius-default;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__logo-wrapper {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: var.$space-lg;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    row-gap: var.$space-md;
+
+    input {
+      border: var.$border-1;
+      outline: none;
+      padding: calc(var.$space-md - 0.2rem) var.$space-md;
+      border-radius: var.$border-radius-default;
+
+      &::placeholder {
+        font-style: italic;
+        font-size: calc(var.$fs-x-small - 0.2rem);
+      }
+    }
+
+    button {
+      background-color: var.$purple;
+      margin: 0 auto;
+      padding: var.$space-sm;
+      border: var.$border-1;
+      border-radius: var.$border-radius-default;
+    }
+  }
+
+  .email-or-password-input {
+    display: flex;
+    flex-direction: column;
+
+    button {
+      all: unset;
+      margin-left: auto;
+      cursor: pointer;
+    }
+  }
+}

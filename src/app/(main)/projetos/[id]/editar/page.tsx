@@ -1,21 +1,10 @@
 import { Metadata } from "next/types";
-import EditProject from "./EditProject";
-import { ParamsPromise } from "@/types/params";
-import { getProject } from "@/routes/projects";
+import EditProject from "./edit-project";
 
 export const metadata: Metadata = {
   title: "Meus projetos",
 };
 
-type PageProps = ParamsPromise;
-
-export default async function Page({ params }: PageProps) {
-  const { id } = await params;
-  const project = await getProject(id);
-
-  if (project && "id" in project) {
-    return <EditProject project={project} />;
-  }
-
-  return;
+export default function Page({ params }: UrlParams) {
+  return <EditProject params={params} />;
 }

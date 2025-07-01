@@ -6,12 +6,10 @@ button {
 }
 
 .nav {
+  &__help,
   &__settings,
   &__profile,
-  &__cart,
-  &__logout,
-  &__keyboard,
-  &__person {
+  &__cart {
     cursor: pointer;
   }
 
@@ -22,39 +20,28 @@ button {
   }
 
   &__help {
-    &__modal {
-      &__content {
-        margin-top: var.$space-xs;
-        padding-bottom: var.$space-md;
+    position: relative;
 
-        &__header {
-          align-items: center;
+    .modal {
+      width: 80vw;
+      bottom: calc(100% + 2rem);
+      height: 70vh;
+      overflow-y: auto;
+      flex-direction: row;
+      align-items: flex-start;
+      column-gap: var.$space-md;
+
+      > div:first-of-type {
+        > div:first-of-type {
           padding-bottom: var.$space-md;
+          margin-bottom: var.$space-md;
           border-bottom: var.$border-1;
-        }
-
-        &__section {
-          margin-top: var.$space-lg;
-
-          dl {
-            display: grid;
-            grid-template-columns: 0.4fr 1fr;
-            gap: 0.5rem 1rem;
-            align-items: center;
-
-            > dt {
-              border: var.$border-1;
-              border-radius: var.$border-radius-default;
-              padding: var.$space-xs var.$space-sm;
-            }
-          }
         }
       }
     }
 
     > button,
     > button > svg {
-      cursor: pointer;
       position: absolute;
       left: 50%;
       right: 50%;
@@ -88,47 +75,6 @@ button {
         bottom: 8px;
         right: 15px;
       }
-    }
-  }
-
-  &__profile,
-  &__person {
-    &--menu-shown {
-      display: flex;
-      flex-direction: column;
-      margin-left: var.$space-xs;
-
-      button {
-        z-index: 1001;
-      }
-    }
-
-    ul {
-      display: flex;
-      position: absolute;
-      flex-direction: column;
-      background-color: var.$gray;
-      border-radius: calc(var.$border-radius-default + 5px);
-      border: var.$border-1;
-      padding: var.$space-md var.$space-md;
-      row-gap: var.$space-sm;
-      z-index: 1000;
-    }
-  }
-
-  &__person {
-    position: relative;
-
-    ul {
-      bottom: 40px;
-      right: 0;
-    }
-  }
-
-  &__profile {
-    ul {
-      top: 50px;
-      right: 50px;
     }
   }
 }

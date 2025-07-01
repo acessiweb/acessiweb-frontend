@@ -1,29 +1,92 @@
 @use "../var";
 
+%input-default {
+  border: var.$border-1;
+  border-radius: var.$border-radius-default;
+  padding: var.$space-sm;
+  outline: none;
+}
+
 .form {
   display: flex;
   flex-direction: column;
-  row-gap: var.$space-md;
-  padding-bottom: var.$space-lg;
+  flex: 1;
+  row-gap: var.$space-sm;
 
-  input:not([type="checkbox"]),
-  textarea {
-    all: unset;
-    flex: 1;
-    padding: var.$space-sm;
+  * {
+    font-size: var.$fs-medium;
 
     &::placeholder {
-      font-style: italic;
-      font-size: var.$fs-x-small;
+      font-size: var.$fs-medium;
     }
+  }
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: var.$space-sm;
+}
+
+.input-default {
+  @extend %input-default;
+}
+
+%input-text-wrapper {
+  @extend %input-default;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background-color: #fff;
+  column-gap: var.$space-xs;
+
+  input,
+  textarea {
+    outline: none;
+    border: none;
+    flex: 1;
+
+    &::placeholder {
+      font-size: calc(var.$fs-small + 0.1rem);
+      font-style: italic;
+    }
+  }
+
+  button {
+    padding: var.$space-xs;
+  }
+}
+
+.input-text-wrapper {
+  @extend %input-text-wrapper;
+}
+
+.input-text-wrapper-transparent {
+  @extend %input-default;
+  @extend %input-text-wrapper;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  transition: width ease-in 10s;
+
+  &:hover {
+    border: var.$border-1;
+    border-radius: var.$border-radius-default;
+  }
+
+  &:focus {
+    width: auto;
   }
 }
 
 .form-error-msg {
   color: var.$red;
-  font-size: calc(var.$fs-x-small - 0.2rem);
+  font-size: var.$fs-x-small;
   text-align: center;
-  font-weight: var.$bold;
+  border: 2px solid var.$red;
+  margin: 0 auto;
+  padding: var.$space-sm;
+  border-radius: var.$border-radius-default;
 }
 
 .input-checkbox {
@@ -46,63 +109,5 @@
       background-color: var.$purple;
       border-radius: 1px;
     }
-  }
-}
-
-.file-input {
-  display: flex;
-  flex-direction: column;
-  row-gap: var.$space-xs;
-  flex: 1;
-
-  label {
-    border-radius: var.$border-radius-default;
-    padding: var.$space-sm;
-    background-color: var.$lightPurple;
-    cursor: pointer;
-    flex: 1;
-    border: 1px solid transparent;
-
-    &:hover {
-      border: var.$border-1;
-      background-color: var.$purple;
-    }
-  }
-
-  span {
-    flex: 1;
-  }
-}
-
-.sec-page {
-  .file-input label {
-    background-color: var.$lighterPurple;
-  }
-}
-
-.input-text-voice {
-  display: flex;
-  column-gap: var.$space-xs;
-  padding: calc(var.$space-sm - 0.2rem) var.$space-sm;
-  border-radius: var.$border-radius-default;
-  background-color: #fff;
-  border: var.$border-1;
-  flex: 1;
-
-  button {
-    align-self: flex-start;
-  }
-}
-
-.error-msgs-container {
-  display: flex;
-  flex-direction: column;
-  margin-top: var.$space-lg;
-  row-gap: var.$space-xs;
-
-  &__error-msg {
-    color: var.$red;
-    font-weight: var.$bold;
-    font-size: var.$fs-x-small;
   }
 }

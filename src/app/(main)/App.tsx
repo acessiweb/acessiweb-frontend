@@ -1,25 +1,16 @@
 "use client";
 
-import "react-simple-keyboard/build/css/index.css";
-import FooterMobile from "@/components/FooterMobile";
-import HeaderDesktop from "@/components/HeaderDesktop";
-import HeaderMobile from "@/components/HeaderMobile";
-import Keyboard from "@/components/Keyboard";
+import FooterMobile from "@/components/footer-mobile";
+import HeaderDesktop from "@/components/header-desktop";
+import HeaderMobile from "@/components/header-mobile";
+import AuthProvider from "@/context/auth";
 import CartProvider from "@/context/cart";
-import { useKeyboard } from "@/hooks/useKeyboard";
-import { useScreenType } from "@/hooks/useScreenType";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SessionProvider } from "next-auth/react";
+import ProjectProvider from "@/context/projects";
+import { useScreenType } from "@/hooks/useScreenSize";
 import { useEffect } from "react";
-import { usePush } from "@/context/push";
-import Push from "@/components/Push";
-
-const queryClient = new QueryClient();
 
 export default function App({ children }: { children?: React.ReactNode }) {
   const { isTablet, isMobile } = useScreenType();
-  const { toggleKeyboard, showKeyboard } = useKeyboard();
-  const { showPush } = usePush();
 
   useEffect(() => {
     document.body.classList.add("open-sans");
@@ -27,23 +18,17 @@ export default function App({ children }: { children?: React.ReactNode }) {
 
   return (
     <div id="app">
-      <QueryClientProvider client={queryClient}>
-        <SessionProvider>
-          <CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <ProjectProvider>
             <div className="content">
-              {isTablet || isMobile ? (
-                <HeaderMobile />
-              ) : (
-                <HeaderDesktop onToggleKeyboard={toggleKeyboard} />
-              )}
+              {isTablet || isMobile ? <HeaderMobile /> : <HeaderDesktop />}
               <main>{children}</main>
-              {showKeyboard && <Keyboard isKeyboardOpened={showKeyboard} />}
             </div>
             {(isTablet || isMobile) && <FooterMobile />}
-            {showPush && <Push />}
-          </CartProvider>
-        </SessionProvider>
-      </QueryClientProvider>
+          </ProjectProvider>
+        </CartProvider>
+      </AuthProvider>
     </div>
   );
 }

@@ -1,17 +1,13 @@
 "use client";
 
-import useSpeechRecognition from "@/hooks/useSpeechRecognition";
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { captureVoiceAndGetText } from "@/common/utils/voice";
+import { useState } from "react";
 import { SlMagnifier, SlMicrophone } from "react-icons/sl";
-import { IoCloseOutline } from "react-icons/io5";
-import { useHotkeys } from "react-hotkeys-hook";
 
 type SearchProps = {
   classname: string;
   handleSearchClose?: () => void;
   placeholderText: string;
-  handleSearch: Dispatch<SetStateAction<string>>;
-  searchValue: string;
 };
 
 export function BtnSearch({ classname }: { classname: string }) {
@@ -27,8 +23,6 @@ export function BtnSearch({ classname }: { classname: string }) {
         classname={classname}
         handleSearchClose={toggleSearch}
         placeholderText="Faça uma busca"
-        handleSearch={() => {}}
-        searchValue=""
       />
     );
   }
@@ -46,62 +40,28 @@ export function BtnSearch({ classname }: { classname: string }) {
 
 export default function Search({
   classname,
+  handleSearchClose,
   placeholderText,
-  handleSearch,
-  searchValue,
 }: SearchProps) {
-  const btnRef = useRef<HTMLButtonElement>(null);
-  const { startListening, isListening } = useSpeechRecognition({
-    onResult: (text: string) => {
-      handleSearch(text);
-    },
-    inputId: "keyword",
-    btnRef,
-  });
-
-  useHotkeys("x", () => handleSearch(""));
-  useHotkeys("shift+alt+s", startListening);
-
   return (
-    <div className={classname} role="search">
+    <div className={classname}>
       <button
-        ref={btnRef}
         className="btn-icon"
         type="button"
-        onClick={startListening}
-        aria-label="Pesquisar por comando de voz"
-        title="shift+alt+s shift+option+s"
+        onClick={() => captureVoiceAndGetText("keyword")}
       >
-        <SlMicrophone aria-hidden={true} focusable={false} />
-        <span role="status" className="sr-only">
-          {isListening && "Gravando voz..."}
-        </span>
+        <SlMicrophone />
       </button>
-      <form
-        className={`${classname}__search-form`}
-        onSubmit={(e) => e.preventDefault()}
-      >
+      <form className={`${classname}__search-form`}>
         <input
           type="text"
           placeholder={placeholderText}
           name="keyword"
           id="keyword"
-          value={searchValue}
-          onChange={(e) => handleSearch(e.target.value)}
-          aria-label="Campo de pesquisa"
         />
-        {searchValue ? (
-          <button
-            type="button"
-            aria-label="Apagar pesquisa"
-            onClick={() => handleSearch("")}
-            title="Pressione a tecla X"
-          >
-            <IoCloseOutline aria-hidden={true} focusable={false} />
-          </button>
-        ) : (
-          <SlMagnifier aria-hidden={true} focusable={false} />
-        )}
+        <button onClick={handleSearchClose}>
+          <SlMagnifier />
+        </button>
       </form>
     </div>
   );

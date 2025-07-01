@@ -6,18 +6,21 @@
   border-radius: var.$border-radius-default;
   border: var.$border-1;
   padding: var.$space-sm var.$space-md;
-  row-gap: var.$space-sm;
   display: flex;
-  z-index: 1000;
-  width: max-content;
-  max-width: 80vw;
-  height: max-content;
-  max-height: 95vh;
-  margin-left: auto;
-  right: var.$space-md;
-  align-items: flex-start;
-  overflow-y: auto;
-  column-gap: var.$space-md;
+  flex-direction: column;
+  row-gap: var.$space-sm;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+
+  &--active {
+    display: flex;
+  }
+
+  &--not-active {
+    display: none;
+  }
 
   svg {
     width: 1.4rem !important;

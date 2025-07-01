@@ -1,7 +1,5 @@
-import { ParamsPromise } from "@/types/params";
-import Login from "./Login";
+import Login from "./login";
 
-export default async function Page({ searchParams }: ParamsPromise) {
-  const queryParams = await searchParams;
-  return <Login searchParams={queryParams} />;
+export default function Page() {
+  return <Login />;
 }

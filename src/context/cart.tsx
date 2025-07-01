@@ -2,18 +2,17 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { usePush } from "./push";
-import { Guideline } from "@/types/guideline";
 
 type CartType = {
   name: string;
   description: string;
-  guidelines: Guideline[];
+  guidelines: GuidelineType[];
 };
 
 type CartContextType = {
   cart: CartType;
   guidelinesTotal: number;
-  addGuidelineToCart: (_guide: { id: string; name: string }) => void;
+  addGuidelinesToCart: (_guides: GuidelineType) => void;
   removeGuidelineOfCart: (_guideId: string) => void;
   addNameToCart: (_name: string) => void;
   addDescriptionToCart: (_desc: string) => void;
@@ -47,7 +46,7 @@ export default function CartProvider({
     }
   }, []);
 
-  const addGuidelineToCart = (guideline: { id: string; name: string }) => {
+  const addGuidelinesToCart = (guideline: GuidelineType) => {
     const cartGuides = [...cart.guidelines];
 
     const alreadyExists = cartGuides.find((guide) => guide.id === guideline.id);
@@ -59,7 +58,7 @@ export default function CartProvider({
         const guides = [...prevCart.guidelines];
 
         if (!alreadyExists) {
-          guides.push(alreadyExists!);
+          guides.push(guideline);
         }
 
         const newCart = { ...prevCart, guidelines: guides };
@@ -82,7 +81,7 @@ export default function CartProvider({
       const guides = [...prevCart.guidelines];
 
       const newGuides = guides.filter(
-        (guideline: Guideline) => guideline.id !== guidelineId
+        (guideline: GuidelineType) => guideline.id !== guidelineId
       );
 
       const newCart = { ...prevCart, guidelines: newGuides };
@@ -140,7 +139,7 @@ export default function CartProvider({
       value={{
         cart,
         guidelinesTotal,
-        addGuidelineToCart,
+        addGuidelinesToCart,
         removeGuidelineOfCart,
         addDescriptionToCart,
         addNameToCart,

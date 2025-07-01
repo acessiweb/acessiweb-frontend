@@ -1,34 +1,4 @@
-@use "../var";
-
 .login {
-  &__links-container,
-  &__social-media-container {
-    text-align: center;
-  }
-
-  &__links-container {
-    font-size: var.$fs-x-small;
-    margin: var.$space-lg 0;
-
-    a {
-      color: var.$darkPurple;
-    }
-  }
-
-  &__social-media-container {
-    display: flex;
-    flex-direction: column;
-    row-gap: var.$space-sm;
-
-    > div {
-      display: flex;
-      justify-content: center;
-      column-gap: var.$space-sm;
-
-      svg {
-        height: var.$svg-medium;
-        width: var.$svg-medium;
-      }
-    }
+  &__links {
   }
 }

@@ -2,9 +2,9 @@
 
 import { PiPersonArmsSpreadLight } from "react-icons/pi";
 import { SlEnvolope } from "react-icons/sl";
-import { CardLink } from "@/components/CardLink";
-import { useScreenType } from "@/hooks/useScreenType";
-import Guidelines from "./diretrizes/Guidelines";
+import GuidelinesAdmin from "./diretrizes/page";
+import { CardLink } from "@/components/card-link";
+import { useScreenType } from "@/hooks/useScreenSize";
 
 function HomeMobile() {
   return (
@@ -23,11 +23,11 @@ function HomeMobile() {
 }
 
 export default function Home() {
-  const { isMobile, isTablet } = useScreenType();
+  const { isTablet } = useScreenType();
 
-  if (isMobile || isTablet) {
+  if (isTablet) {
     return <HomeMobile />;
   }
 
-  return <Guidelines />;
+  return <GuidelinesAdmin />;
 }

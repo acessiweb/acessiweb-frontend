@@ -2,54 +2,28 @@
 
 .card {
   display: flex;
-  flex-direction: column;
   flex: 1;
+  justify-content: space-between;
   column-gap: var.$space-sm;
+  margin-bottom: auto;
   background-color: var.$lightPurple;
-  padding: var.$space-md;
+  padding: var.$space-sm var.$space-sm var.$space-sm
+    calc(var.$space-md + 0.4rem);
   border-radius: var.$border-radius-2;
   border: var.$border-1;
   font-weight: var.$medium;
   cursor: pointer;
-  transition: transform 0.2s ease;
-  row-gap: var.$space-sm;
 
-  &:hover {
-    transform: translateY(-5px);
-  }
-
-  &__header {
-    display: flex;
-    row-gap: var.$space-md;
-    align-items: flex-start;
-    justify-content: space-between;
-
-    h3 {
-      font-size: var.$fs-medium;
-      align-self: center;
-    }
-  }
-
-  > p {
-    display: -webkit-box;
-    -webkit-line-clamp: 7;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: var.$fs-x-small;
+  &__desc {
+    margin-top: calc(var.$space-sm + 0.1rem);
     flex: 1;
-    line-height: 1.5em;
   }
 
   &:hover {
     background-color: var.$purple;
 
-    > button {
-      &:hover {
-        svg {
-          fill: var.$text;
-        }
-      }
+    svg {
+      fill: var.$lightPurple !important;
     }
   }
 

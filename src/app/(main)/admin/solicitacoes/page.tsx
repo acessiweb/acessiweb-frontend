@@ -1,7 +1,5 @@
-"use server";
+"use client";
 
-import Requests from "./Requests";
-
-export default async function Page() {
-  return <Requests />;
+export default function GuidelinesRequests() {
+  return <div></div>;
 }
