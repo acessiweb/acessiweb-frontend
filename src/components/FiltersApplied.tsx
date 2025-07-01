@@ -15,10 +15,10 @@ export default function FiltersApplied({
 }: FiltersAppliedProps) {
   return (
     <div className="filters-applied">
-      {filtersChosen.map((f, i) => {
+      {filtersChosen.map((f) => {
         if (f === "creation-date") {
           return (
-            <div className="filters-applied__box">
+            <div className="filters-applied__box" key={f}>
               <form>
                 <input type="date" />
                 <input type="date" />
@@ -34,7 +34,7 @@ export default function FiltersApplied({
           );
         }
 
-        return <div></div>;
+        return;
       })}
       <button onClick={cleanFilters}>Limpar todos</button>
     </div>

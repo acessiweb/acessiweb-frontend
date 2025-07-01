@@ -108,7 +108,7 @@ export default function GuidelinesAdmin({
             });
           } else {
             setGuidesStored((guides) => {
-              let prevGuides = [...guides];
+              const prevGuides = [...guides];
               prevGuides.splice(
                 guidesStored.length - (guidesStored.length - g.limit)
               );
@@ -215,7 +215,7 @@ export default function GuidelinesAdmin({
         </div>
         {guidesStored.length > 0 ? (
           <div className={`${view}`}>
-            {guidesStored.map((guideline, i) => (
+            {guidesStored.map((guideline) => (
               <div className={`${view}__item`} key={guideline.id}>
                 {isRequest && isDesktop && (
                   <CardBtnStatus

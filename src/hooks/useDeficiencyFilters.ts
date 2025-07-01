@@ -4,7 +4,6 @@ function findDeficiency(
   deficiency: string,
   defaultValues?: { id: string; name: string }[]
 ): string {
-  console.log(defaultValues);
   if (defaultValues && defaultValues.length > 0) {
     const found = defaultValues.find(
       (val) => val.name.toLowerCase() === deficiency.toLowerCase()

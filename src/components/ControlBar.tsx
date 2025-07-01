@@ -51,7 +51,7 @@ export default function ControlBar({
                 aria-label="Opções de filtro"
               >
                 <ul>
-                  {filtersOptions.map((val, i) => (
+                  {filtersOptions.map((val) => (
                     <li
                       key={val.id}
                       id={val.id}

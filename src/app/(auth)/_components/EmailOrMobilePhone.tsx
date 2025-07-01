@@ -1,9 +1,5 @@
 import React, { ReactNode } from "react";
-import { useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-
-const EMAIL = "E-mail";
-const MOBILEPHONE = "Celular";
 
 type EmailorMobilePhoneProps = {
   handleType: () => void;

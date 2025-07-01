@@ -1,12 +1,11 @@
 import { lookupUser } from "@/routes/auth";
-import NextAuth, { DefaultSession, NextAuthOptions, User } from "next-auth";
+import NextAuth, { NextAuthOptions, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import TwitterProvider from "next-auth/providers/twitter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { createAccount } from "@/routes/common-users";
 import * as jose from "jose";
 import { JWT } from "next-auth/jwt";
-import { userAgent } from "next/server";
 
 // async function refreshAccessToken(nextAuthJWT: JWT): Promise<JWT> {
 //   try {

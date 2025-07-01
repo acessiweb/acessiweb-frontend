@@ -20,7 +20,7 @@ export default function useErrors({ alertMsg }: ErrorsProps = {}) {
       setErrorMsgs(err);
     } else {
       const errs = [];
-      for (let e of err.errors) {
+      for (const e of err.errors) {
         errs.push(e.message);
       }
       setErrorMsgs(errs);

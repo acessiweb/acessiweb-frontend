@@ -14,6 +14,7 @@ import { useState } from "react";
 import usePagination from "@/hooks/usePagination";
 import Project from "./[id]/Project";
 import { useSession } from "next-auth/react";
+import Search from "@/components/Search";
 
 export default function Projects() {
   const {
@@ -27,16 +28,15 @@ export default function Projects() {
     fullScreenLink,
     setFullScreenLink,
   } = useSecPage();
-  const { isMobile, isTablet } = useScreenType();
+  const { isTablet } = useScreenType();
   const [search, setSearch] = useState("");
   const [projsStored, setProjsStored] = useState<ProjectType[]>([]);
-  const { isFromSearch, loadMore, onLoadLess, onLoadMore, offset } =
-    usePagination({
-      watchFromSearch: [search],
-    });
+  const { isFromSearch, loadMore, offset } = usePagination({
+    watchFromSearch: [search],
+  });
   const { data } = useSession();
 
-  const { data: projects, fetchStatus } = useQuery({
+  const { fetchStatus } = useQuery({
     queryKey: ["projects", search, offset, data],
     queryFn: async () => {
       const p = await getProjects({
@@ -57,7 +57,7 @@ export default function Projects() {
             });
           } else {
             setProjsStored((projs) => {
-              let prevProjs = [...projs];
+              const prevProjs = [...projs];
               prevProjs.splice(
                 projsStored.length - (projsStored.length - p.limit)
               );
@@ -117,6 +117,12 @@ export default function Projects() {
     <div className={getSecPageClass()}>
       <div className="projects">
         <h1 className="heading-1">Meus projetos</h1>
+        <Search
+          classname="search"
+          placeholderText="Buscar por projeto..."
+          handleSearch={setSearch}
+          searchValue={search}
+        />
         {projsStored.length > 0 ? (
           <div className="grid">
             {projsStored.map((project, i) => (

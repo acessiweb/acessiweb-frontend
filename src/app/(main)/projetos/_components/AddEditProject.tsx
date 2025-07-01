@@ -3,16 +3,8 @@
 import { useForm } from "react-hook-form";
 import InputTextVoice from "@/components/InputTextVoice";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Code from "@/components/Code";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import FileInput from "@/components/FileInput";
-import GuidelinesDeficiencesFilter from "@/components/DeficiencesCheckbox";
+import { Dispatch, SetStateAction } from "react";
 import { Breadcrumb } from "@/components/Breadcrumb";
-import { useSession } from "next-auth/react";
-import { usePush } from "@/context/push";
-import { useRouter } from "next/navigation";
-import { CreateEditGuidelineSchema } from "@/schemas/guideline.schema";
-import { updateGuideline, createGuideline } from "@/routes/user-guidelines";
 import useErrors from "@/hooks/useErrors";
 import Errors from "@/components/Errors";
 import { Project } from "@/types/project";
@@ -34,19 +26,15 @@ type AddEditProjectProps = {
 
 export default function AddEditGuideline({
   isSecPage = false,
-  handleSecPageTitle,
   toEdit = false,
   crumbs,
   project,
 }: AddEditProjectProps) {
-  const { data: sessionData } = useSession();
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-    watch,
-    reset,
   } = useForm<CreateEditProjectSchema>({
     resolver: zodResolver(createEditProjectSchema),
     defaultValues: {
@@ -54,11 +42,7 @@ export default function AddEditGuideline({
       desc: project?.description,
     },
   });
-  const [filename, setFilename] = useState("");
-  const { setPushMsg } = usePush();
-  const router = useRouter();
-  const [code, setCode] = useState("");
-  const { handleErrorMsgs, errorMsgs, isAlert } = useErrors();
+  const { errorMsgs, isAlert } = useErrors();
 
   const handleSetValue = (name: string, value: string) => {
     if (name === "projName" || name === "desc") {
@@ -66,7 +50,7 @@ export default function AddEditGuideline({
     }
   };
 
-  const onSubmit = async (data: CreateEditProjectSchema) => {
+  const onSubmit = async () => {
     // if (data.deficiences.toString().replaceAll(",", "").length == 0) {
     //   handleErrorMsgs(
     //     "A diretriz precisa ter ao menos uma deficiência relacionada"

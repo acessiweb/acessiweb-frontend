@@ -100,7 +100,7 @@ export default function GuidelinesUser() {
             });
           } else {
             setGuidesStored((guides) => {
-              let prevGuides = [...guides];
+              const prevGuides = [...guides];
               prevGuides.splice(
                 guidesStored.length - (guidesStored.length - g.limit)
               );

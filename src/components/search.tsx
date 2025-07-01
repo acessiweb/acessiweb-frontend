@@ -46,7 +46,6 @@ export function BtnSearch({ classname }: { classname: string }) {
 
 export default function Search({
   classname,
-  handleSearchClose,
   placeholderText,
   handleSearch,
   searchValue,

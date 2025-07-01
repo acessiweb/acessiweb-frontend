@@ -41,7 +41,7 @@ export default function CardDelete({
             aria-modal={true}
             id="delete-modal"
           >
-            <p>Tem certeza que deseja excluir "{registerName}"?</p>
+            <p>Tem certeza que deseja excluir &quot;{registerName}&quot;?</p>
             <div className="buttons">
               <button
                 className="btn-transparent delete"
