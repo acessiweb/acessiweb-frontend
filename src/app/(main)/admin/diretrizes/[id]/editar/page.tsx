@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import EditGuideline from "./edit-guideline";
+import EditGuideline from "./EditGuideline";
 import { ParamsPromise } from "@/types/params";
 import { getGuideline } from "@/routes/guidelines";
 

@@ -47,8 +47,8 @@ function AdminHeaderMobile({ pathname }: { pathname: string }) {
 function VisitorHeaderMobile({ pathname }: { pathname: string }) {
   return (
     <BaseHeaderMobile>
-      {pathname === "/" ? <Logo /> : <NavigateBackward />}
-      <Profile />
+      {pathname !== "/" && <NavigateBackward />}
+      <Logo />
     </BaseHeaderMobile>
   );
 }
@@ -82,16 +82,18 @@ export default function HeaderMobile() {
   const { data } = useSession();
 
   if (data && data.user && data.user.role) {
-    if (pathname.includes("admin") && isAdmin(data.user.role))
+    if (pathname.includes("admin") && isAdmin(data.user.role)) {
       return <AdminHeaderMobile pathname={pathname} />;
+    }
 
-    if (!pathname.includes("admin") && isCommonUser(data.user.role))
+    if (!pathname.includes("admin") && isCommonUser(data.user.role)) {
       return (
         <CommonUserHeaderMobile
           pathname={pathname}
           username={data.user.name!}
         />
       );
+    }
   }
 
   return <VisitorHeaderMobile pathname={pathname} />;

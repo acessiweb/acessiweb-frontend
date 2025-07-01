@@ -25,7 +25,7 @@ function AdminFooterMobile() {
       secItem={
         <Link
           href="/admin/diretrizes/cadastrar"
-          className="add-guideline"
+          className="footer-mobile__add-guideline"
           title="Cadastrar diretriz"
           aria-label="Ir para tela de cadastro de diretriz"
         >
@@ -81,13 +81,13 @@ function BaseFooterMobile(props: BaseHeaderProps) {
 
 export default function FooterMobile() {
   const pathname = usePathname();
-  const { data } = useSession();
+  const { data: session } = useSession();
 
-  if (data && data.user && data.user.role) {
-    if (pathname.includes("admin") && isAdmin(data.user.role))
+  if (session && session.user && session.user.role) {
+    if (pathname.includes("admin") && isAdmin(session.user.role))
       return <AdminFooterMobile />;
 
-    if (!pathname.includes("admin") && isCommonUser(data.user.role))
+    if (!pathname.includes("admin") && isCommonUser(session.user.role))
       return <CommonUserFooterMobile />;
   }
 

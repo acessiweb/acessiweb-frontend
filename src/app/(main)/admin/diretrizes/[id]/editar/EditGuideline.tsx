@@ -1,5 +1,5 @@
 import { Guideline } from "@/types/guideline";
-import AddEditGuideline from "../../../_components/add-edit-guideline";
+import AddEditGuideline from "../../../_components/AddEditGuideline";
 import { Dispatch, SetStateAction } from "react";
 
 type EditGuidelineProps = {

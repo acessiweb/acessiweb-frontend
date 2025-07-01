@@ -10,7 +10,8 @@ button {
   &__profile,
   &__cart,
   &__logout,
-  &__keyboard {
+  &__keyboard,
+  &__person {
     cursor: pointer;
   }
 
@@ -95,7 +96,7 @@ button {
     &--menu-shown {
       display: flex;
       flex-direction: column;
-      margin-left: var.$space-lg;
+      margin-left: var.$space-xs;
 
       button {
         z-index: 1001;
@@ -116,9 +117,11 @@ button {
   }
 
   &__person {
+    position: relative;
+
     ul {
       bottom: 40px;
-      right: 50px;
+      right: 0;
     }
   }
 

@@ -1,12 +1,40 @@
 import { lookupUser } from "@/routes/auth";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { DefaultSession, NextAuthOptions, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import TwitterProvider from "next-auth/providers/twitter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { createAccount } from "@/routes/common-users";
 import * as jose from "jose";
+import { JWT } from "next-auth/jwt";
+import { userAgent } from "next/server";
+
+// async function refreshAccessToken(nextAuthJWT: JWT): Promise<JWT> {
+//   try {
+//     // Get a new access token from backend using the refresh token
+//     const res = await refresh(nextAuthJWT.data.tokens.refresh);
+//     const accessToken: BackendAccessJWT = await res.json();
+
+//     if (!res.ok) throw accessToken;
+//     const { exp }: DecodedJWT = jwtDecode(accessToken.access);
+
+//     // Update the token and validity in the next-auth object
+//     nextAuthJWT.data.validity.valid_until = exp;
+//     nextAuthJWT.data.tokens.access = accessToken.access;
+//     // Ensure the returned jwt has a new object reference ID
+//     // (jwt will not be updated otherwise)
+//     return { ...nextAuthJWT };
+//   } catch (error) {
+//     console.debug(error);
+//     return {
+//       ...nextAuthJWT,
+//       error: "RefreshAccessTokenError"
+//     };
+//   }
+// }
 
 const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
+  session: { strategy: "jwt" },
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -28,22 +56,41 @@ const authOptions: NextAuthOptions = {
           headers: { "Content-Type": "application/json" },
         });
 
-        const fetched = await response.json();
+        const tokens = await response.json();
 
         if (response.ok) {
-          if (fetched.accessToken) {
-            const user = jose.decodeJwt(fetched.accessToken);
+          if (tokens.accessToken) {
+            const accessToken = jose.decodeJwt(tokens.accessToken) as {
+              sub: string;
+              email: string;
+              role: string;
+              iat: number;
+              exp: number;
+              aud: string;
+              iss: string;
+            };
+            const refreshToken = jose.decodeJwt(tokens.accessToken);
 
             return {
-              ...user,
-              ...fetched,
-              id: user.sub,
-            };
+              user: {
+                id: accessToken.sub,
+                email: accessToken.email,
+                role: accessToken.role,
+              },
+              tokens: {
+                access: tokens.accessToken,
+                refresh: tokens.refreshToken,
+              },
+              validity: {
+                valid_until: accessToken.exp,
+                refresh_until: refreshToken.exp,
+              },
+            } as User;
           }
           return null;
         }
 
-        throw new Error(JSON.stringify(fetched.errors));
+        throw new Error(JSON.stringify(tokens.errors));
       },
     }),
     GoogleProvider({
@@ -77,45 +124,33 @@ const authOptions: NextAuthOptions = {
       }
     },
     async jwt({ token, account, user }) {
-      if (account && account.provider !== "credentials") {
-        token.provider = account.provider;
-        try {
-          const backendUser = await lookupUser({ email: user.email! });
-          if (backendUser.id) {
-            token.id = backendUser.id;
-            token.role = backendUser.role;
-          }
-        } catch (error) {
-          console.error("Failed to fetch backend user:", error);
-        }
+      if (user && account) {
+        // if (account.provider !== "credentials") {
+        //   try {
+        //     const backendUser = await lookupUser({ email: user.email! });
+        //     if (backendUser.id) {
+        //       token.sub = backendUser.id;
+        //       token.role = backendUser.role;
+        //     }
+
+        //     token.provider = account.provider;
+        //     return token;
+        //   } catch (error) {
+        //     return Promise.reject(undefined);
+        //   }
+        // }
+
+        return { ...token, data: user };
       }
 
-      if (user && user.role) {
-        token.accessToken = user.accessToken;
-        token.refreshToken = user.refreshToken;
-        token.role = user.role;
-        token.email = user.email;
-        token.sub = user.id;
-      }
-
-      return token;
+      return { ...token, error: "RefreshTokenExpired" } as JWT;
     },
     async session({ session, token }) {
-      if (!session?.user || !token) {
-        return session;
-      }
-
-      if (token) {
-        session.user.id = token.sub;
-        session.user.role = token.role;
-      }
-
+      session.user = token.data.user;
+      session.validity = token.data.validity;
+      session.error = token.error;
       return session;
     },
-  },
-  secret: process.env.NEXTAUTH_SECRET,
-  session: {
-    strategy: "jwt",
   },
 };
 

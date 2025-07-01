@@ -1,6 +1,6 @@
 "use client";
 
-import GuidelinesUser from "./guidelines";
+import GuidelinesUser from "./Guidelines";
 
 export default function Page() {
   return <GuidelinesUser />;

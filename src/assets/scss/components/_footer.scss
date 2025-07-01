@@ -26,20 +26,6 @@
       }
     }
 
-    .nav__homepage,
-    .nav__cart,
-    .nav__person > button,
-    .nav__settings,
-    .nav__logout,
-    .nav__profile {
-      align-self: flex-start;
-
-      > svg {
-        width: var.$svg-medium !important;
-        height: var.$svg-medium !important;
-      }
-    }
-
     .nav__person {
       ul {
         svg {
@@ -83,7 +69,7 @@
     }
   }
 
-  .add-guideline {
+  &__add-guideline {
     @include mixins.icon-badge(
       0,
       -15px,
@@ -91,9 +77,38 @@
       calc(var.$space-xs - 0.3rem) var.$space-xs
     );
 
+    > svg {
+      width: calc(var.$svg-large + 0.2rem) !important;
+      height: calc(var.$svg-large + 0.2rem) !important;
+    }
+
     span {
       bottom: 1px;
       right: 0px;
+    }
+  }
+}
+
+.footer-mobile {
+  .nav__homepage,
+  .nav__cart,
+  .nav__person > button,
+  .nav__settings,
+  .nav__logout,
+  .nav__profile,
+  &__add-guideline {
+    align-self: flex-start;
+  }
+
+  .nav__homepage,
+  .nav__cart,
+  .nav__person > button,
+  .nav__settings,
+  .nav__logout,
+  .nav__profile {
+    > svg {
+      width: var.$svg-medium !important;
+      height: var.$svg-medium !important;
     }
   }
 }

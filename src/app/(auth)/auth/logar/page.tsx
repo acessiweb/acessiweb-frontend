@@ -1,5 +1,5 @@
 import { ParamsPromise } from "@/types/params";
-import Login from "./login";
+import Login from "./Login";
 
 export default async function Page({ searchParams }: ParamsPromise) {
   const queryParams = await searchParams;

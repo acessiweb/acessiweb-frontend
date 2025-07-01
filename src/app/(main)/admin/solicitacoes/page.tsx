@@ -1,6 +1,6 @@
 "use server";
 
-import Requests from "./requests";
+import Requests from "./Requests";
 
 export default async function Page() {
   return <Requests />;

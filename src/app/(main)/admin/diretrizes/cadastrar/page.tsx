@@ -1,5 +1,5 @@
 import { Metadata } from "next/types";
-import AddGuideline from "./add-guideline";
+import AddGuideline from "./AddGuideline";
 
 export const metadata: Metadata = {
   title: "Cadastrar diretriz",

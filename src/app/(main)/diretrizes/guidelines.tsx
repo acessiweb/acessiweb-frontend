@@ -11,7 +11,7 @@ import { useScreenType } from "@/hooks/useScreenType";
 import useSecPage from "@/hooks/useSecPage";
 import { getGuideline, getGuidelines } from "@/routes/guidelines";
 import { useQuery } from "@tanstack/react-query";
-import Guideline from "./[id]/guideline";
+import Guideline from "./[id]/Guideline";
 import { useState } from "react";
 import { Guideline as GuidelineType } from "@/types/guideline";
 import Pagination from "@/components/Pagination";

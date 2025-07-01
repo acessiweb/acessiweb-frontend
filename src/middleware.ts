@@ -9,7 +9,6 @@ const PUBLIC_PATHS = [
   "/auth/logar",
   "/auth/criar-conta",
   "/admin/auth/logar",
-  "/",
   "/diretrizes",
 ];
 
@@ -21,14 +20,14 @@ export async function middleware(req: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  if (token && token.role) {
-    if (pathname.startsWith("/admin") && !isAdmin(token.role)) {
+  if (token) {
+    if (pathname.startsWith("/admin") && !isAdmin(token.data.user.role)) {
       return new NextResponse("Forbidden", { status: 403 });
     }
 
     if (
       (pathname === "/" || pathname === "/diretrizes") &&
-      isAdmin(token.role)
+      isAdmin(token.data.user.role)
     ) {
       const adminUrl = new URL("/admin", req.url);
       return NextResponse.redirect(adminUrl);

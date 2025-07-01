@@ -18,5 +18,5 @@ export async function getAuthSession() {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  return token?.accessToken;
+  return token?.data.tokens.access;
 }

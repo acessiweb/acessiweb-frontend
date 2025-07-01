@@ -1,37 +1,26 @@
-import * as yup from "yup";
+import { z } from "zod";
 
-const guidelinesSchema = yup.object().shape({
-  id: yup.string().required(), //mudar para uuid
-  name: yup.string().trim().max(150).required(),
+const guidelinesSchema = z.object({
+  id: z.string().uuid(),
+  name: z.string().trim().max(150),
 });
 
-const createProjectSchema = yup.object().shape({
-  name: yup.string().trim().max(150).required("Nome é obrigatório"),
-  description: yup.string().trim().optional(),
-  guidelines: yup
-    .array()
-    .of(guidelinesSchema)
-    .min(1, "Você ainda não incluiu diretrizes no seu projeto"),
-  userId: yup.string().trim().required(),
+const projName = z
+  .string()
+  .trim()
+  .max(150)
+  .refine((val) => val.length > 0, {
+    message: "É necessário informar um nome",
+  });
+
+const desc = z.string().trim();
+
+const guidelines = z.array(guidelinesSchema);
+
+export const createEditProjectSchema = z.object({
+  projName,
+  desc,
+  guidelines,
 });
 
-export default createProjectSchema;
-
-import * as yup from "yup";
-
-const guidelinesSchema = yup.object().shape({
-  id: yup.string().required(), //mudar para uuid
-  name: yup.string().trim().max(150).required(),
-});
-
-const updateProjectSchema = yup.object().shape({
-  name: yup.string().trim().max(150).required("Nome é obrigatório"),
-  description: yup.string().trim().optional(),
-  guidelines: yup
-    .array()
-    .of(guidelinesSchema)
-    .min(1, "Você ainda não incluiu diretrizes no seu projeto"),
-  feedback: yup.string().trim().optional(),
-});
-
-export default updateProjectSchema;
+export type CreateEditProjectSchema = z.infer<typeof createEditProjectSchema>;

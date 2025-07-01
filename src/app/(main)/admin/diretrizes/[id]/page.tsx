@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { ParamsPromise } from "@/types/params";
 import { getGuideline } from "@/routes/guidelines";
-import Guideline from "@/app/(main)/diretrizes/[id]/guideline";
+import Guideline from "@/app/(main)/diretrizes/[id]/Guideline";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

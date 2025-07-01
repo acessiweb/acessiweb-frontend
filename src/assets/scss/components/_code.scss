@@ -3,6 +3,10 @@
 .code {
   margin: var.$space-sm 0;
 
+  .cm-theme {
+    overflow-x: auto;
+  }
+
   > div:first-of-type {
     display: flex;
     justify-content: space-between;

@@ -2,7 +2,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { html } from "@codemirror/lang-html";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
-import { ChangeEvent, Dispatch, Ref, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { atomone } from "@uiw/codemirror-theme-atomone";
 import { basicDark } from "@uiw/codemirror-theme-basic";
 import { copilot } from "@uiw/codemirror-theme-copilot";

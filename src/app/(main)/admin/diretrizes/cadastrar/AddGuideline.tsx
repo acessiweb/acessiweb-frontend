@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import AddEditGuideline from "../../_components/add-edit-guideline";
+import AddEditGuideline from "../../_components/AddEditGuideline";
 
 type AddGuidelineProps = {
   isSecPage?: boolean;
