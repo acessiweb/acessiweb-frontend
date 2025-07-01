@@ -1,4 +1,4 @@
-import RecoverAccount from "./recover-account";
+import RecoverAccount from "./RecoverAccount";
 
 export default function Page() {
   return <RecoverAccount />;

@@ -7,22 +7,32 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: var.$border-2;
+  height: var.$header-desktop-height;
 
   .nav__help {
-    > button,
-    > button > svg {
-      position: unset !important;
-      left: unset !important;
-      right: unset !important;
-      transform: unset !important;
+    .modal {
+      top: var.$space-sm;
+
+      .heading-3 {
+        font-style: italic;
+        text-align: center;
+        margin-bottom: var.$space-lg;
+      }
     }
-  }
 
-  .nav__cart {
-    margin-right: var.$space-xs;
+    > button {
+      position: static;
+      top: unset;
+      right: unset;
+      left: unset;
+      transform: unset;
+    }
 
-    span {
-      font-size: calc(var.$fs-x-small - 0.3rem);
+    svg {
+      position: relative;
+      height: var.$svg-small;
+      width: var.$svg-small;
+      top: 12px;
     }
   }
 
@@ -62,33 +72,21 @@
     }
   }
 
-  &__helpers {
-    .nav__help {
-      .modal {
-        width: 50vw;
-        top: calc(100% + 1rem);
-        left: calc(100% - 20rem);
-        bottom: unset;
-        z-index: 1000;
-      }
-    }
+  svg {
+    height: var.$svg-small;
+    width: var.$svg-small;
+  }
 
-    .nav__profile {
-      .modal {
-        z-index: 1000;
-      }
-    }
+  .nav__cart {
+    margin-right: var.$space-xs;
 
     svg {
-      height: var.$svg-small;
-      width: var.$svg-small;
+      height: var.$svg-medium;
+      width: var.$svg-medium;
     }
 
-    .nav__cart {
-      svg {
-        height: var.$svg-medium;
-        width: var.$svg-medium;
-      }
+    span {
+      font-size: calc(var.$fs-x-small - 0.3rem);
     }
   }
 }
@@ -108,9 +106,16 @@
   }
 
   .nav__profile {
-    > svg {
+    button > svg {
       width: var.$svg-small !important;
       height: var.$svg-small !important;
+    }
+
+    ul {
+      svg {
+        width: calc(var.$svg-x-small + 0.2rem) !important;
+        height: calc(var.$svg-x-small + 0.2rem) !important;
+      }
     }
   }
 

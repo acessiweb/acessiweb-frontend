@@ -1,7 +1,7 @@
 "use client";
 
-import { isCommonUser } from "@/common/utils/authorization";
-import { useSession } from "@/context/auth";
+import { isCommonUser } from "@/utils/authorization";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -34,11 +34,16 @@ function BaseAside({ children }: { children?: ReactNode }) {
 }
 
 export default function ConfigLayout({ children }: { children: ReactNode }) {
-  const { accessType } = useSession();
+  const { data: session } = useSession();
+
   return (
     <div>
       <aside>
-        {isCommonUser(accessType) ? <UserAside /> : <DefaultAside />}
+        {session && isCommonUser(session.user.role) ? (
+          <UserAside />
+        ) : (
+          <DefaultAside />
+        )}
       </aside>
       {children}
     </div>

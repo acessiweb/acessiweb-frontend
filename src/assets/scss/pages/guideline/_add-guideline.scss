@@ -1,0 +1,37 @@
+@use "../../var";
+
+.add-guideline {
+  margin: var.$space-md 0;
+
+  h1 {
+    margin-top: var.$space-lg;
+  }
+
+  &__deficiences-container > span:first-of-type,
+  .code > div:first-of-type > span {
+    font-size: var.$fs-x-small;
+    font-weight: var.$bold;
+  }
+
+  &__deficiences-container {
+    margin-top: var.$space-md;
+
+    .deficiences-checkbox {
+      margin-top: var.$space-md;
+      margin-left: var.$space-sm;
+
+      &__group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var.$space-md;
+        column-gap: var.$space-md;
+
+        > div {
+          display: flex;
+          align-items: center;
+          column-gap: var.$space-sm;
+        }
+      }
+    }
+  }
+}

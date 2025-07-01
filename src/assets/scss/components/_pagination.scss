@@ -1,0 +1,6 @@
+@use "../var";
+
+.pagination {
+  margin: var.$space-lg auto;
+  cursor: pointer;
+}

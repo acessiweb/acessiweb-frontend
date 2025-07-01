@@ -1,11 +1,16 @@
 @use "../var";
 
 .breadcrumb {
-  display: flex;
-  column-gap: var.$space-xs;
   font-size: var.$fs-x-small;
 
-  &__link-desc {
-    margin-right: var.$space-xs;
+  > ol {
+    list-style: none;
+    display: flex;
+
+    li {
+      > span {
+        padding: 0 var.$space-sm;
+      }
+    }
   }
 }
