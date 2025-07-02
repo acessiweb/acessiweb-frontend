@@ -1,5 +1,5 @@
 import Image from "next/image";
-import NotFoundImage from "../assets/images/acessibility-1.png";
+import NotFoundImage from "../assets/images/acessibility-1.webp";
 
 type NoRegistersFoundProps = {
   errorMsg: string;
@@ -19,7 +19,7 @@ export default function NoRegistersFound({
             src={NotFoundImage}
             alt="Desenho de um homem em cadeira de rodas e uma mulher sentada em cima de livros"
             width={1000}
-            height={100}
+            height={1000}
             quality={90}
           />
         </div>

@@ -14,37 +14,39 @@ const PUBLIC_PATHS = [
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const homepageUrl = new URL("/", req.url);
+  const loginUrl = new URL("/auth/logar", req.url);
 
   const token = await getToken({
     req,
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  if (token) {
-    if (pathname.startsWith("/admin") && !isAdmin(token.data.user.role)) {
-      return new NextResponse("Forbidden", { status: 403 });
-    }
-
-    if (
-      (pathname === "/" || pathname === "/diretrizes") &&
-      isAdmin(token.data.user.role)
-    ) {
-      const adminUrl = new URL("/admin", req.url);
-      return NextResponse.redirect(adminUrl);
-    }
-
-    return NextResponse.next();
-  }
-
   // ignora rotas públicas
   if (
     PUBLIC_PATHS.some((path) => pathname.startsWith(path)) ||
     pathname === "/"
   ) {
+    if (
+      token &&
+      isAdmin(token.data.user.role) &&
+      (pathname === "/" || pathname === "/diretrizes")
+    ) {
+      const adminHomepageUrl = new URL("/admin", req.url);
+      return NextResponse.redirect(adminHomepageUrl);
+    }
+
     return NextResponse.next();
   }
 
-  const loginUrl = new URL("/auth/logar", req.url);
+  if (token) {
+    if (pathname.startsWith("/admin") && !isAdmin(token.data.user.role)) {
+      return NextResponse.redirect(homepageUrl);
+    }
+
+    return NextResponse.next();
+  }
+
   return NextResponse.redirect(loginUrl);
 }
 

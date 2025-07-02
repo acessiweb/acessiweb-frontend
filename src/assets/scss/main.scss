@@ -181,14 +181,14 @@ input[type="checkbox"]:focus-visible {
 @include meta.load-css("pages/guideline/guidelines");
 @include meta.load-css("pages/guideline/read-guideline");
 @include meta.load-css("pages/login");
+@include meta.load-css("pages/not-found");
 
 //layouts
 @include meta.load-css("layouts/auth");
 
-//animations
-@include meta.load-css("animation");
-
 //others
+@include meta.load-css("animation");
 @include meta.load-css("overlay");
 @include meta.load-css("screen-reader");
 @include meta.load-css("display");
+@include meta.load-css("fonts");
