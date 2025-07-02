@@ -145,7 +145,7 @@ const authOptions: NextAuthOptions = {
             } as User;
 
             return { ...token, data: userInfo };
-          } catch (error) {
+          } catch {
             return Promise.reject(undefined);
           }
         }
