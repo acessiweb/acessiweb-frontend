@@ -107,7 +107,7 @@ const authOptions: NextAuthOptions = {
       try {
         const user = await lookupUser({ email: profile?.email });
 
-        if (!user) {
+        if ("statusCode" in user && user.statusCode == 404) {
           await createAccount({
             email: profile?.email,
             username: profile?.name,
@@ -124,20 +124,31 @@ const authOptions: NextAuthOptions = {
     },
     async jwt({ token, account, user }) {
       if (user && account) {
-        // if (account.provider !== "credentials") {
-        //   try {
-        //     const backendUser = await lookupUser({ email: user.email! });
-        //     if (backendUser.id) {
-        //       token.sub = backendUser.id;
-        //       token.role = backendUser.role;
-        //     }
+        if (account.provider !== "credentials") {
+          try {
+            const backendUser = await lookupUser({ email: user.email! });
 
-        //     token.provider = account.provider;
-        //     return token;
-        //   } catch (error) {
-        //     return Promise.reject(undefined);
-        //   }
-        // }
+            const userInfo = {
+              user: {
+                id: backendUser.id,
+                email: user.email,
+                role: backendUser.role,
+              },
+              tokens: {
+                access: account.access_token,
+                refresh: "",
+              },
+              validity: {
+                valid_until: account.expires_at,
+                refresh_until: 0,
+              },
+            } as User;
+
+            return { ...token, data: userInfo };
+          } catch (error) {
+            return Promise.reject(undefined);
+          }
+        }
 
         return { ...token, data: user };
       }
