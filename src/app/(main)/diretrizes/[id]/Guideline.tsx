@@ -33,13 +33,15 @@ export default function Guideline({
         />
       )}
       {guideline && guideline.image && guideline.imageDesc && (
-        <Image
-          loader={() => imageKitLoader(guideline.image!)}
-          src={guideline.image}
-          alt={guideline.imageDesc}
-          width={600}
-          height={1000}
-        />
+        <div className="read-guideline__img-wrapper">
+          <Image
+            loader={() => imageKitLoader(guideline.image!)}
+            src={guideline.image}
+            alt={guideline.imageDesc}
+            width={600}
+            height={1000}
+          />
+        </div>
       )}
       <div className="read-guideline__deficiences">
         {guideline?.deficiences?.map((def, i) => (

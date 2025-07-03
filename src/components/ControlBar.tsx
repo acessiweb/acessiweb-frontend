@@ -5,15 +5,14 @@ import useModal from "@/hooks/useModal";
 import { useScreenType } from "@/hooks/useScreenType";
 import { Breadcrumb, BreadcrumbProps } from "./Breadcrumb";
 import { useHotkeys } from "react-hotkeys-hook";
+import { FilterOptions, FiltersAvailable } from "@/types/filter";
+import { MouseEvent, KeyboardEvent } from "react";
 
 type ControlBarProps = Partial<BreadcrumbProps> & {
   handleView: () => void;
   view: string;
-  filtersOptions?: {
-    id: string;
-    desc: string;
-  }[];
-  handleFilters: (_filter: string) => void;
+  filtersOptions?: FilterOptions;
+  handleFilters: (_filter: FiltersAvailable) => void;
 };
 
 export default function ControlBar({
@@ -26,6 +25,13 @@ export default function ControlBar({
   const { isDesktop } = useScreenType();
   const { showModal, isModalOpen, modalRef, toggleModal } = useModal();
   useHotkeys("F", toggleModal);
+
+  const handleClick = (
+    e: MouseEvent<HTMLLIElement> | KeyboardEvent<HTMLLIElement>
+  ) => {
+    const event = e.currentTarget.id as FiltersAvailable;
+    handleFilters(event);
+  };
 
   return (
     <div className="control-bar">
@@ -55,10 +61,8 @@ export default function ControlBar({
                     <li
                       key={val.id}
                       id={val.id}
-                      onClick={(e) => handleFilters(e.currentTarget.id)}
-                      onKeyDown={(e) =>
-                        e.key === "Enter" && handleFilters(e.currentTarget.id)
-                      }
+                      onClick={handleClick}
+                      onKeyDown={(e) => e.key === "Enter" && handleClick(e)}
                       tabIndex={0}
                     >
                       {val.desc}

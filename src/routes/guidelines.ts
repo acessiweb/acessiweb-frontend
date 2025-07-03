@@ -13,14 +13,14 @@ export async function getGuidelines(query?: {
   deficiences?: string[];
   statusCode?: string;
   keyword?: string;
-  initialDate?: Date;
-  endDate?: Date;
+  initialDate?: string;
+  endDate?: string;
   limit?: number;
   offset?: number;
   isRequest?: boolean;
 }): Promise<Guidelines | ApiError> {
   return await fetchData({
-    endpoint: `guidelines?keyword=${query?.keyword}&deficiences=${query?.deficiences}&limit=${query?.limit}&offset=${query?.offset}&isRequest=${query?.isRequest}`,
+    endpoint: `guidelines?keyword=${query?.keyword}&deficiences=${query?.deficiences}&limit=${query?.limit}&offset=${query?.offset}&isRequest=${query?.isRequest}&initialDate=${query?.initialDate}&endDate=${query?.endDate}`,
   });
 }
 

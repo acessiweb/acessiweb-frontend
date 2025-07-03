@@ -119,11 +119,11 @@ function CardBase({
 }: CardLinkProps) {
   return (
     <article className="card">
-      <Link className="card__header" href={readRoute}>
+      <Link className="card__content" href={readRoute}>
         <h3 className="heading-3">{mainText}</h3>
-        {children}
+        {secondaryText && <p>{secondaryText}</p>}
       </Link>
-      {secondaryText && <p>{secondaryText}</p>}
+      {children}
     </article>
   );
 }

@@ -20,6 +20,7 @@ import { Guideline } from "@/types/guideline";
 import { updateGuideline, createGuideline } from "@/routes/user-guidelines";
 import useErrors from "@/hooks/useErrors";
 import Errors from "@/components/Errors";
+import { useScreenType } from "@/hooks/useScreenType";
 
 type AddEditGuidelineProps = {
   isSecPage?: boolean;
@@ -70,6 +71,7 @@ export default function AddEditGuideline({
   const [filename, setFilename] = useState("");
   const { setPushMsg } = usePush();
   const router = useRouter();
+  const { isDesktop } = useScreenType();
   const [code, setCode] = useState("");
   const { handleApiErrors, handleUniqueMsg, errorMsgs, isAlert } = useErrors();
 
@@ -124,13 +126,27 @@ export default function AddEditGuideline({
         if ("errors" in res) {
           handleApiErrors([res]);
           setPushMsg("");
-        } else if (!toEdit && "id" in res) {
-          setPushMsg("Diretriz cadastrada com sucesso 🎉");
+        }
+
+        if (!toEdit && "id" in res) {
           reset();
-          router.push("/admin/diretrizes");
-        } else {
-          setPushMsg("Diretriz atualizada com sucesso");
-          router.push("/admin/diretrizes");
+          setPushMsg("Diretriz cadastrada com sucesso 🎉");
+
+          if (isDesktop) {
+            window.location.reload();
+          } else {
+            router.push("/admin/diretrizes");
+          }
+        }
+
+        if (toEdit && "id" in res) {
+          setPushMsg("Diretriz atualizada com sucesso 🎉");
+
+          if (isDesktop) {
+            window.location.reload();
+          } else {
+            router.push("/admin/diretrizes");
+          }
         }
       }
     }
@@ -252,7 +268,7 @@ export default function AddEditGuideline({
         >
           <input
             {...register("imageDesc")}
-            placeholder="Descrição da imagem, exemplo: para realizar essa implementação pode-se utilizar propriedades do css como overflow"
+            placeholder="Descrição da imagem, exemplo: exemplo de um botão..."
             id="imageDesc"
             name="imageDesc"
             className="input-transparent"

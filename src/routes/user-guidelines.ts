@@ -38,3 +38,20 @@ export async function updateGuideline(
     },
   });
 }
+
+export async function deleteGuideline(
+  userId: string,
+  guidelineId: string
+): Promise<ApiError | { id: string }> {
+  const token = await getAuthSession();
+
+  return fetchData({
+    endpoint: `users/${userId}/guidelines/${guidelineId}`,
+    config: {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  });
+}

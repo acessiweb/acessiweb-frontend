@@ -111,7 +111,7 @@ function CardBase({
   return (
     <article className="card">
       <div
-        className="card__header"
+        className="card__content"
         onClick={onClick}
         onKeyDown={(e) => e.key === "Enter" && onClick(e)}
         tabIndex={0}
@@ -119,9 +119,9 @@ function CardBase({
         aria-label={`Clique para acessar ${mainText}`}
       >
         <h3 className="heading-3">{mainText}</h3>
-        {children}
+        {secondaryText && <p>{secondaryText}</p>}
       </div>
-      {secondaryText && <p>{secondaryText}</p>}
+      {children}
     </article>
   );
 }

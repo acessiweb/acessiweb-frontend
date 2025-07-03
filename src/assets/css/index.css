@@ -119,7 +119,6 @@ input[type=checkbox]:focus-visible {
 @media (max-width: 890px) {
   #app .content > main {
     justify-content: center;
-    padding: 3rem 1.1rem 6rem;
     height: 100%;
   }
 }
@@ -643,25 +642,32 @@ button {
   cursor: pointer;
   transition: transform 0.2s ease;
   row-gap: 0.7rem;
+  position: relative;
+}
+
+.card > div:nth-child(2) {
+  position: absolute;
+  right: 10px;
+  top: 5px;
 }
 
 .card:hover {
   transform: translateY(-5px);
 }
 
-.card__header {
+.card__content {
   display: flex;
+  flex-direction: column;
   row-gap: 1.1rem;
   align-items: flex-start;
   justify-content: space-between;
 }
 
-.card__header h3 {
+.card__content h3 {
   font-size: 1.3rem;
-  align-self: center;
 }
 
-.card > p {
+.card__content > p {
   display: -webkit-box;
   -webkit-line-clamp: 7;
   -webkit-box-orient: vertical;
@@ -948,7 +954,7 @@ button {
 .control-bar {
   display: flex;
   align-items: center;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.9rem;
 }
 
 .control-bar__options {
@@ -1001,7 +1007,7 @@ button {
 .filters-applied {
   display: flex;
   column-gap: 0.7rem;
-  margin: 1.1rem 0 0;
+  margin: 3rem 0 0;
 }
 
 .filters-applied__box {
@@ -1323,15 +1329,15 @@ button {
   flex: 1;
 }
 
-.guidelines .guidelines-filters .search {
-  flex: 1;
-}
-
-@media (min-width: 500px) {
+@media (min-width: 600px) {
   .guidelines .guidelines-filters {
     margin: 0 auto;
   }
 }
+.guidelines .guidelines-filters .search {
+  flex: 1;
+}
+
 .guidelines .guidelines-filters .deficiences-checkbox {
   flex: 1;
   display: flex;
@@ -1341,7 +1347,7 @@ button {
   flex: 1;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 600px) {
   .guidelines .guidelines-filters .deficiences-checkbox > div:first-of-type {
     display: none;
   }
@@ -1351,16 +1357,16 @@ button {
   gap: 1.1rem;
 }
 
-@media (max-width: 499px) {
+@media (max-width: 599px) {
   .guidelines .guidelines-filters .deficiences-checkbox__group {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(auto, 90px));
   }
   .guidelines .guidelines-filters .deficiences-checkbox__group > div:nth-child(5) {
     grid-column: span 2;
   }
 }
-@media (min-width: 500px) {
+@media (min-width: 600px) {
   .guidelines .guidelines-filters .deficiences-checkbox__group {
     display: flex;
   }
@@ -1397,6 +1403,17 @@ button {
 
 .read-guideline .breadcrumb {
   margin-bottom: 1.1rem;
+}
+
+.read-guideline__img-wrapper {
+  height: auto;
+  max-width: 100%;
+}
+
+.read-guideline__img-wrapper > img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
 }
 
 .read-guideline__deficiences {
@@ -1733,7 +1750,7 @@ animation by Loop nerd
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.1rem;
   margin-top: 3rem;
 }

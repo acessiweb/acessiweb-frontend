@@ -8,7 +8,7 @@ import { useScreenType } from "@/hooks/useScreenType";
 import useSecPage from "@/hooks/useSecPage";
 import { getGuideline, getGuidelines } from "@/routes/guidelines";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Guideline as GuidelineType } from "@/types/guideline";
 import Pagination from "@/components/Pagination";
 import usePagination from "@/hooks/usePagination";
@@ -23,8 +23,14 @@ import EditGuideline from "../diretrizes/[id]/editar/EditGuideline";
 import useDeficiencyFilters from "@/hooks/useDeficiencyFilters";
 import ControlBar from "@/components/ControlBar";
 import useControlBar from "@/hooks/useControlBar";
+import { deleteGuideline } from "@/routes/user-guidelines";
+import { useSession } from "next-auth/react";
+import FiltersApplied from "@/components/FiltersApplied";
+import DateFilter from "@/components/DateFilter";
+import { FilterOptions } from "@/types/filter";
+import useDateFilter from "@/hooks/useDateFilter";
 
-const filterOptions = [
+const filterOptions: FilterOptions = [
   {
     id: "creation-date",
     desc: "Por data de criação",
@@ -38,6 +44,8 @@ type GuidelinesAdminProps = {
 export default function GuidelinesAdmin({
   isRequest = false,
 }: GuidelinesAdminProps) {
+  const { handleEndDate, endDate, handleInitialDate, initialDate } =
+    useDateFilter();
   const { isTablet, isDesktop, isMobile } = useScreenType();
   const [search, setSearch] = useState("");
   const {
@@ -63,21 +71,33 @@ export default function GuidelinesAdmin({
     fullScreenLink,
     setFullScreenLink,
   } = useSecPage();
-  const { handleView, handleFiltersChosen, view } = useControlBar();
-  const [guidesStored, setGuidesStored] = useState<GuidelineType[]>([]);
-  const { isFromSearch, loadMore, onLoadLess, onLoadMore, offset } =
+  const {
+    handleView,
+    handleFiltersChosen,
+    view,
+    filtersChosen,
+    deleteFilter,
+    cleanFilters,
+    isFilterApplied,
+  } = useControlBar();
+  const { onLoadLess, onLoadMore, offset, isFiltering, store, handleStore } =
     usePagination({
-      watchFromSearch: [search, hearing, motor, visual, neural, tea],
+      watch: [
+        search,
+        hearing,
+        motor,
+        visual,
+        neural,
+        tea,
+        initialDate,
+        endDate,
+      ],
+      data: [] as GuidelineType[],
     });
   const { pushMsg, setShowPush } = usePush();
+  const { data: session } = useSession();
 
-  useEffect(() => {
-    if (pushMsg) {
-      setShowPush(true);
-    }
-  }, []);
-
-  const { data: guidelines, fetchStatus } = useQuery({
+  const { data: guidelines } = useQuery({
     queryKey: [
       "guidelines",
       search,
@@ -87,6 +107,8 @@ export default function GuidelinesAdmin({
       neural,
       tea,
       offset,
+      initialDate,
+      endDate,
     ],
     queryFn: async () => {
       const g = await getGuidelines({
@@ -94,33 +116,15 @@ export default function GuidelinesAdmin({
         keyword: search,
         deficiences: [hearing, motor, visual, neural, tea],
         isRequest: isRequest,
+        initialDate,
+        endDate,
       });
 
       if ("data" in g) {
-        if (guidesStored.length === 0 || isFromSearch) {
-          setGuidesStored(g.data);
-        } else if (fetchStatus === "fetching") {
-          if (loadMore) {
-            setGuidesStored((guides) => {
-              const prevGuides = [...guides];
-              g.data.map((g) => prevGuides.push(g));
-              return prevGuides;
-            });
-          } else {
-            setGuidesStored((guides) => {
-              const prevGuides = [...guides];
-              prevGuides.splice(
-                guidesStored.length - (guidesStored.length - g.limit)
-              );
-              return prevGuides;
-            });
-          }
-        }
-
-        return g;
+        handleStore(g);
       }
 
-      return null;
+      return g;
     },
   });
 
@@ -157,6 +161,16 @@ export default function GuidelinesAdmin({
       setSecPageContent(<Guideline guideline={guideline} />);
       setSecPageTitle(guideline.name);
       setFullScreenLink(`/admin/diretrizes/${id}`);
+    }
+  };
+
+  const handleDelete = async (guidelineId: string) => {
+    if (session) {
+      const deleted = await deleteGuideline(session.user.id, guidelineId);
+
+      if ("id" in deleted) {
+        handleDelete(guidelineId);
+      }
     }
   };
 
@@ -213,9 +227,23 @@ export default function GuidelinesAdmin({
             visual={visual}
           />
         </div>
-        {guidesStored.length > 0 ? (
+        <FiltersApplied
+          cleanFilters={cleanFilters}
+          filtersChosen={filtersChosen}
+        >
+          {isFilterApplied("creation-date") && (
+            <DateFilter
+              endDate={endDate}
+              handleEndDate={handleEndDate}
+              handleInitialDate={handleInitialDate}
+              initialDate={initialDate}
+              deleteFilter={deleteFilter}
+            />
+          )}
+        </FiltersApplied>
+        {store.length > 0 ? (
           <div className={`${view}`}>
-            {guidesStored.map((guideline) => (
+            {store.map((guideline) => (
               <div className={`${view}__item`} key={guideline.id}>
                 {isRequest && isDesktop && (
                   <CardBtnStatus
@@ -230,7 +258,7 @@ export default function GuidelinesAdmin({
                   <CardBtnUpdateAndDelete
                     mainText={guideline.name}
                     onClick={() => handleReadSecPage(guideline.id)}
-                    onDelete={() => {}}
+                    onDelete={() => handleDelete(guideline.id)}
                     onUpdateClick={() => handleEditSecPage(guideline.id)}
                     registerId={guideline.id}
                     registerName={guideline.name}
@@ -240,7 +268,7 @@ export default function GuidelinesAdmin({
                 {!isRequest && (isMobile || isTablet) && (
                   <CardLinkUpdateAndDelete
                     mainText={guideline.name}
-                    onDelete={() => {}}
+                    onDelete={() => handleDelete(guideline.id)}
                     registerId={guideline.id}
                     registerName={guideline.name}
                     readRoute={`/admin/diretrizes/${guideline.id}`}
@@ -254,9 +282,9 @@ export default function GuidelinesAdmin({
         ) : (
           <NoRegistersFound errorMsg="Não foram encontradas diretrizes" />
         )}
-        {guidelines && (
+        {guidelines && "data" in guidelines && (
           <Pagination
-            isFromSearch={isFromSearch}
+            isFiltering={isFiltering}
             hasNext={guidelines.hasNext}
             hasPrev={guidelines.hasPrev}
             onLoadLess={() => onLoadLess(guidelines.limit)}

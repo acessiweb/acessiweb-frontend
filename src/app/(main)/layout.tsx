@@ -1,4 +1,3 @@
-import "@/assets/css/index.css";
 import App from "./App";
 import PushProvider from "@/context/push";
 import { Metadata } from "next";

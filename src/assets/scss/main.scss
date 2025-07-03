@@ -122,7 +122,6 @@ input[type="checkbox"]:focus-visible {
 
       @media (max-width: var.$tablet) {
         justify-content: center;
-        padding: var.$space-xl var.$space-md calc(var.$space-xl + 3rem);
         height: 100%;
       }
 
@@ -173,10 +172,10 @@ input[type="checkbox"]:focus-visible {
 
 //pages
 @include meta.load-css("pages/homepage-mobile");
-@include meta.load-css("pages/projects");
-@include meta.load-css("pages/cart");
-@include meta.load-css("pages/edit-project");
-@include meta.load-css("pages/read-project");
+@include meta.load-css("pages/project/projects");
+@include meta.load-css("pages/project/cart");
+@include meta.load-css("pages/project/edit-project");
+@include meta.load-css("pages/project/read-project");
 @include meta.load-css("pages/guideline/add-guideline");
 @include meta.load-css("pages/guideline/guidelines");
 @include meta.load-css("pages/guideline/read-guideline");

@@ -1,5 +1,7 @@
 @use "../../var";
 
+$SCREEN_SIZE: 600px;
+
 .guidelines {
   display: flex;
   flex-direction: column;
@@ -10,12 +12,12 @@
     row-gap: var.$space-md;
     flex: 1;
 
-    .search {
-      flex: 1;
+    @media (min-width: $SCREEN_SIZE) {
+      margin: 0 auto;
     }
 
-    @media (min-width: calc(var.$mobile + 1px)) {
-      margin: 0 auto;
+    .search {
+      flex: 1;
     }
 
     .deficiences-checkbox {
@@ -25,7 +27,7 @@
       > div:first-of-type {
         flex: 1;
 
-        @media (min-width: calc(var.$mobile + 1px)) {
+        @media (min-width: $SCREEN_SIZE) {
           display: none;
         }
       }
@@ -34,16 +36,16 @@
         flex: 4;
         gap: var.$space-md;
 
-        @media (max-width: var.$mobile) {
+        @media (max-width: calc($SCREEN_SIZE - 1px)) {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(auto, 90px));
 
           > div:nth-child(5) {
             grid-column: span 2;
           }
         }
 
-        @media (min-width: calc(var.$mobile + 1px)) {
+        @media (min-width: $SCREEN_SIZE) {
           display: flex;
         }
 

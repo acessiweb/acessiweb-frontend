@@ -1,7 +1,10 @@
+import { FiltersAvailable } from "@/types/filter";
 import { useState } from "react";
 
 export default function useControlBar() {
-  const [filtersChosen, setFiltersChosen] = useState<string[]>([]);
+  const [filtersChosen, setFiltersChosen] = useState<Array<FiltersAvailable>>(
+    []
+  );
   const [view, setView] = useState("grid");
 
   const handleView = () => {
@@ -14,7 +17,7 @@ export default function useControlBar() {
     });
   };
 
-  const handleFiltersChosen = (filterId: string) => {
+  const handleFiltersChosen = (filterId: FiltersAvailable) => {
     setFiltersChosen((prev) => {
       const newFilters = [...prev];
       newFilters.push(filterId);
@@ -23,7 +26,7 @@ export default function useControlBar() {
     });
   };
 
-  const deleteFilter = (filterId: string) => {
+  const deleteFilter = (filterId: FiltersAvailable) => {
     setFiltersChosen((prev) => {
       const newFilters = [...prev];
 
@@ -35,6 +38,10 @@ export default function useControlBar() {
     setFiltersChosen([]);
   };
 
+  const isFilterApplied = (filterId: FiltersAvailable) => {
+    return filtersChosen.some((f) => f === filterId);
+  };
+
   return {
     handleFiltersChosen,
     filtersChosen,
@@ -42,5 +49,6 @@ export default function useControlBar() {
     view,
     deleteFilter,
     cleanFilters,
+    isFilterApplied,
   };
 }
