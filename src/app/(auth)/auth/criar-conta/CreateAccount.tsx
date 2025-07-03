@@ -23,7 +23,7 @@ export default function CreateAccount() {
   const { hide, handlePassword } = usePassword();
   const { hide: hideConfirmPassword, handlePassword: handleConfirmPassword } =
     usePassword();
-  const { errorMsgs, handleErrorMsgs, isAlert } = useErrors();
+  const { errorMsgs, handleApiErrors, handleUniqueMsg, isAlert } = useErrors();
   const {
     handleSubmit,
     formState: { errors },
@@ -37,7 +37,7 @@ export default function CreateAccount() {
 
   const onSubmit = async (data: CreateCommonUserSchema) => {
     if (!data.email && !data.mobilePhone) {
-      handleErrorMsgs("Email ou número de celular precisa ser informado");
+      handleUniqueMsg("Email ou número de celular precisa ser informado");
     } else {
       const result = await createAccount(data);
 
@@ -45,7 +45,7 @@ export default function CreateAccount() {
         reset();
         router.push("/auth/logar");
       } else {
-        handleErrorMsgs(result);
+        handleApiErrors([result]);
       }
     }
   };

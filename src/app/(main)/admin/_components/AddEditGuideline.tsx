@@ -71,7 +71,7 @@ export default function AddEditGuideline({
   const { setPushMsg } = usePush();
   const router = useRouter();
   const [code, setCode] = useState("");
-  const { handleErrorMsgs, errorMsgs, isAlert } = useErrors();
+  const { handleApiErrors, handleUniqueMsg, errorMsgs, isAlert } = useErrors();
 
   useEffect(() => {
     setValue("deficiences", [hearing, visual, motor, neural, tea]);
@@ -102,7 +102,7 @@ export default function AddEditGuideline({
 
   const onSubmit = async (data: CreateEditGuidelineSchema) => {
     if (data.deficiences.toString().replaceAll(",", "").length == 0) {
-      handleErrorMsgs(
+      handleUniqueMsg(
         "A diretriz precisa ter ao menos uma deficiência relacionada"
       );
     } else {
@@ -122,7 +122,7 @@ export default function AddEditGuideline({
             : await createGuideline(sessionData.user.id, formData);
 
         if ("errors" in res) {
-          handleErrorMsgs(res);
+          handleApiErrors([res]);
           setPushMsg("");
         } else if (!toEdit && "id" in res) {
           setPushMsg("Diretriz cadastrada com sucesso 🎉");

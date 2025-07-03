@@ -17,6 +17,6 @@ export type ApiError = {
     message: string;
     errorCode: string;
     fields: string[];
-    httpErrorCode: string;
+    httpErrorCode: number;
   }[];
 };

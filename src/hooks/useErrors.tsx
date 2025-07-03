@@ -13,22 +13,26 @@ export default function useErrors({ alertMsg }: ErrorsProps = {}) {
     return [];
   });
 
-  const handleErrorMsgs = (err: ApiError | string[] | string) => {
-    if (typeof err === "string") {
-      setErrorMsgs([err]);
-    } else if (Array.isArray(err)) {
-      setErrorMsgs(err);
-    } else {
-      const errs = [];
-      for (const e of err.errors) {
-        errs.push(e.message);
-      }
-      setErrorMsgs(errs);
+  const handleArrayOfMsgs = (err: string[]) => {
+    setErrorMsgs(err);
+  };
+
+  const handleUniqueMsg = (err: string) => {
+    setErrorMsgs([err]);
+  };
+
+  const handleApiErrors = (err: ApiError[]) => {
+    const errs = [];
+    for (const e of err) {
+      errs.push(e.message);
     }
+    setErrorMsgs(errs);
   };
 
   return {
-    handleErrorMsgs,
+    handleUniqueMsg,
+    handleApiErrors,
+    handleArrayOfMsgs,
     errorMsgs,
     isAlert: alertMsg ? true : false,
   };

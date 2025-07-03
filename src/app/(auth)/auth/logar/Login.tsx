@@ -22,7 +22,7 @@ type LoginProps = Params;
 export default function Login({ searchParams }: LoginProps) {
   const router = useRouter();
   const { hide, handlePassword } = usePassword();
-  const { errorMsgs, handleErrorMsgs, isAlert } = useErrors({
+  const { errorMsgs, handleApiErrors, handleUniqueMsg, isAlert } = useErrors({
     alertMsg:
       searchParams.error && searchParams.error === "AccessDenied"
         ? "Ocorreu um erro: Não foi possível realizar a autenticação. Tente novamente."
@@ -56,7 +56,7 @@ export default function Login({ searchParams }: LoginProps) {
 
   const onSubmit = async (data: LoginSchema) => {
     if (!data.email && !data.mobilePhone) {
-      handleErrorMsgs("Email ou número de celular precisa ser informado");
+      handleUniqueMsg("Email ou número de celular precisa ser informado");
     } else {
       const result = await signIn("credentials", {
         ...data,
@@ -64,7 +64,7 @@ export default function Login({ searchParams }: LoginProps) {
       });
 
       if (result && result.error) {
-        handleErrorMsgs(JSON.parse(result.error));
+        handleApiErrors(JSON.parse(result.error));
       } else {
         reset();
         router.push("/");

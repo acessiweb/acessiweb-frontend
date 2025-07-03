@@ -17,7 +17,7 @@ type LoginProps = Params;
 export default function Login({ searchParams }: LoginProps) {
   const router = useRouter();
   const { hide, handlePassword } = usePassword();
-  const { errorMsgs, handleErrorMsgs, isAlert } = useErrorMsgs({
+  const { errorMsgs, handleApiErrors, isAlert } = useErrorMsgs({
     alertMsg:
       searchParams.error && searchParams.error === "AccessDenied"
         ? "Ocorreu um erro: Não foi possível realizar autenticação"
@@ -44,7 +44,7 @@ export default function Login({ searchParams }: LoginProps) {
     });
 
     if (result && result.error) {
-      handleErrorMsgs(JSON.parse(result.error));
+      handleApiErrors(JSON.parse(result.error));
     } else {
       reset();
       router.push("/admin");
