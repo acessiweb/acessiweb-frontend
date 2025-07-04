@@ -15,7 +15,8 @@
   row-gap: var.$space-sm;
   position: relative;
 
-  > div:nth-child(2) {
+  > div:nth-child(2),
+  > button {
     position: absolute;
     right: 10px;
     top: 5px;

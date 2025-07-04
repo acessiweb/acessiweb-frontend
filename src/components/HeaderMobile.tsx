@@ -87,7 +87,12 @@ export default function HeaderMobile() {
     }
 
     if (!pathname.includes("admin") && isCommonUser(session.user.role)) {
-      return <CommonUserHeaderMobile pathname={pathname} username={""} />;
+      return (
+        <CommonUserHeaderMobile
+          pathname={pathname}
+          username={session.user.username}
+        />
+      );
     }
   }
 

@@ -67,6 +67,7 @@ const authOptions: NextAuthOptions = {
               exp: number;
               aud: string;
               iss: string;
+              username: string;
             };
             const refreshToken = jose.decodeJwt(tokens.accessToken);
 
@@ -75,6 +76,7 @@ const authOptions: NextAuthOptions = {
                 id: accessToken.sub,
                 email: accessToken.email,
                 role: accessToken.role,
+                username: accessToken.username,
               },
               tokens: {
                 access: tokens.accessToken,
@@ -127,12 +129,12 @@ const authOptions: NextAuthOptions = {
         if (account.provider !== "credentials") {
           try {
             const backendUser = await lookupUser({ email: user.email! });
-
             const userInfo = {
               user: {
                 id: backendUser.id,
                 email: user.email,
                 role: backendUser.role,
+                username: backendUser.username,
               },
               tokens: {
                 access: account.access_token,

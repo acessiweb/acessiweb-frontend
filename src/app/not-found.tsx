@@ -4,17 +4,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main
-      className="not-found open-sans"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        width: "100vw",
-        alignItems: "center",
-        minHeight: "100vh",
-        backgroundColor: "#f0f0f0",
-      }}
-    >
+    <main className="not-found open-sans">
       <p>Opa! Não foi possível encontrar o que você está buscando.</p>
       <Link className="btn-link-default" href="/">
         Ir para página inicial

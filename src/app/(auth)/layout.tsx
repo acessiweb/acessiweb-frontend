@@ -1,4 +1,3 @@
-import "@/assets/css/index.css";
 import { ReactNode } from "react";
 
 import { Metadata } from "next";

@@ -20,25 +20,37 @@ import ControlBar from "@/components/ControlBar";
 import useDeficiencyFilters from "@/hooks/useDeficiencyFilters";
 import useControlBar from "@/hooks/useControlBar";
 import FiltersApplied from "@/components/FiltersApplied";
+import useDateFilter from "@/hooks/useDateFilter";
+import { FilterOptions } from "@/types/filter";
+import DateFilter from "@/components/DateFilter";
 
-const filterOptions = [
+const filterOptions: FilterOptions = [
   {
     id: "creation-date",
     desc: "Por data de criação",
   },
 ];
 
-export default function GuidelinesUser() {
+type GuidelinesUserProps = {
+  isRequest?: boolean;
+};
+
+export default function GuidelinesUser({
+  isRequest = false,
+}: GuidelinesUserProps) {
+  const { handleEndDate, endDate, handleInitialDate, initialDate } =
+    useDateFilter();
   const { addGuidelineToCart } = useCart();
   const { isTablet, isDesktop, isMobile } = useScreenType();
   const [search, setSearch] = useState<string>("");
   const {
     handleView,
-    filtersChosen,
     handleFiltersChosen,
     view,
-    cleanFilters,
+    filtersChosen,
     deleteFilter,
+    cleanFilters,
+    isFilterApplied,
   } = useControlBar();
   const {
     handleHearing,
@@ -63,13 +75,21 @@ export default function GuidelinesUser() {
     fullScreenLink,
     setFullScreenLink,
   } = useSecPage();
-  const [guidesStored, setGuidesStored] = useState<GuidelineType[]>([]);
-  const { isFromSearch, loadMore, onLoadLess, onLoadMore, offset } =
+  const { onLoadLess, onLoadMore, offset, isFiltering, store, handleStore } =
     usePagination({
-      watchFromSearch: [search, hearing, motor, visual, neural, tea],
+      watch: [
+        search,
+        hearing,
+        motor,
+        visual,
+        neural,
+        tea,
+        initialDate,
+        endDate,
+      ],
+      data: [] as GuidelineType[],
     });
-
-  const { data: guidelines, fetchStatus } = useQuery({
+  const { data: guidelines } = useQuery({
     queryKey: [
       "guidelines",
       search,
@@ -79,43 +99,26 @@ export default function GuidelinesUser() {
       neural,
       tea,
       offset,
+      initialDate,
+      endDate,
     ],
     queryFn: async () => {
       const g = await getGuidelines({
         offset,
         keyword: search,
         deficiences: [hearing, motor, visual, neural, tea],
-        isRequest: false,
+        isRequest: isRequest,
+        initialDate,
+        endDate,
       });
 
       if ("data" in g) {
-        if (guidesStored.length === 0 || isFromSearch) {
-          setGuidesStored(g.data);
-        } else if (fetchStatus === "fetching") {
-          if (loadMore) {
-            setGuidesStored((guides) => {
-              const prevGuides = [...guides];
-              g.data.map((g) => prevGuides.push(g));
-              return prevGuides;
-            });
-          } else {
-            setGuidesStored((guides) => {
-              const prevGuides = [...guides];
-              prevGuides.splice(
-                guidesStored.length - (guidesStored.length - g.limit)
-              );
-              return prevGuides;
-            });
-          }
-        }
-
-        return g;
+        handleStore(g);
       }
 
-      return null;
+      return g;
     },
   });
-
   const handleSecPage = async (id: string) => {
     const guideline = await getGuideline(id);
 
@@ -159,16 +162,23 @@ export default function GuidelinesUser() {
             visual={visual}
           />
         </div>
-        {filtersChosen.length > 0 && (
-          <FiltersApplied
-            cleanFilters={cleanFilters}
-            deleteFilter={deleteFilter}
-            filtersChosen={filtersChosen}
-          />
-        )}
-        {guidesStored.length > 0 ? (
+        <FiltersApplied
+          cleanFilters={cleanFilters}
+          filtersChosen={filtersChosen}
+        >
+          {isFilterApplied("creation-date") && (
+            <DateFilter
+              endDate={endDate}
+              handleEndDate={handleEndDate}
+              handleInitialDate={handleInitialDate}
+              initialDate={initialDate}
+              deleteFilter={deleteFilter}
+            />
+          )}
+        </FiltersApplied>
+        {store.length > 0 ? (
           <div className={`${view}`} aria-labelledby="page-heading">
-            {guidesStored.map((guideline, i) => (
+            {store.map((guideline, i) => (
               <div className={`${view}__item`} key={i}>
                 {isDesktop && (
                   <CardBtnAdd
@@ -196,13 +206,15 @@ export default function GuidelinesUser() {
         ) : (
           <NoRegistersFound errorMsg="Não foram encontradas diretrizes" />
         )}
-        <Pagination
-          isFromSearch={isFromSearch}
-          hasNext={guidelines?.hasNext}
-          hasPrev={guidelines?.hasPrev}
-          onLoadLess={() => onLoadLess(guidelines?.limit)}
-          onLoadMore={() => onLoadMore(guidelines?.offset)}
-        />
+        {guidelines && "data" in guidelines && (
+          <Pagination
+            isFiltering={isFiltering}
+            hasNext={guidelines.hasNext}
+            hasPrev={guidelines.hasPrev}
+            onLoadLess={() => onLoadLess(guidelines.limit)}
+            onLoadMore={() => onLoadMore(guidelines.offset)}
+          />
+        )}
       </div>
       {isSecPageOpen && isDesktop && (
         <SecondPage
