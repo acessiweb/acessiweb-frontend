@@ -1,9 +1,8 @@
 import { PaginationResponse } from "@/types/response-api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type PaginationProps<T> = Partial<PaginationResponse> & {
   data?: T[];
-  watch?: string[];
 };
 
 function hasIdProperty<T>(item: T): item is T & { id: string } {
@@ -11,14 +10,11 @@ function hasIdProperty<T>(item: T): item is T & { id: string } {
     typeof item === "object" &&
     item !== null &&
     "id" in item &&
-    typeof (item as any).id === "string"
+    typeof item.id === "string"
   );
 }
 
-export default function usePagination<T>({
-  data = [],
-  watch = [],
-}: PaginationProps<T>) {
+export default function usePagination<T>({ data = [] }: PaginationProps<T>) {
   const [isFiltering, setIsFiltering] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
   const [loadLess, setLoadLess] = useState(false);
@@ -29,12 +25,14 @@ export default function usePagination<T>({
     setOffset(offset);
     setLoadMore(true);
     setLoadLess(false);
+    setIsFiltering(false);
   };
 
   const onLoadLess = (limit: number = 0) => {
     setOffset((off) => off - limit);
     setLoadMore(false);
     setLoadLess(true);
+    setIsFiltering(false);
   };
 
   const handleMore = (newData: PaginationProps<T>) => {
@@ -80,14 +78,9 @@ export default function usePagination<T>({
     });
   };
 
-  useEffect(() => {
-    if (watch.some((val) => val)) {
-      setIsFiltering(true);
-      setStore([]);
-      setLoadLess(false);
-      setLoadMore(false);
-    }
-  }, [...watch]);
+  const handleFiltering = (isFiltering: boolean) => {
+    setIsFiltering(isFiltering);
+  };
 
   return {
     onLoadLess,
@@ -97,5 +90,6 @@ export default function usePagination<T>({
     store,
     handleStore,
     handleDelete,
+    handleFiltering,
   };
 }

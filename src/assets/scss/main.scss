@@ -50,6 +50,27 @@ input[type="checkbox"]:focus-visible {
   color: var.$text;
   z-index: 100;
 
+  .help-modal {
+    max-width: 95vw;
+    top: 3%;
+    left: 50%;
+    right: unset;
+    margin-left: 0;
+    bottom: unset;
+    max-height: calc(100vh - var.$header-mobile-height - 2px);
+    transform: translate(-50%, -3%);
+
+    @media (min-width: var.$desktop) {
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  input::placeholder,
+  button {
+    @extend %open-sans;
+  }
+
   a {
     text-decoration: none;
     color: var.$text;

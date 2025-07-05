@@ -6,6 +6,10 @@
   gap: var.$space-md;
   margin-top: var.$space-xl;
 
+  @media (max-width: var.$tablet) {
+    margin-top: var.$space-sm;
+  }
+
   &__item {
     display: flex;
     grid-row: span 1;

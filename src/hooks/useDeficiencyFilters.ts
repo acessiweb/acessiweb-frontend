@@ -1,3 +1,4 @@
+import { FilterHandler } from "@/types/filter";
 import { ChangeEvent, useState } from "react";
 
 function findDeficiency(
@@ -17,11 +18,14 @@ function findDeficiency(
   return "";
 }
 
+type DeficiencyFiltersProps = Partial<FilterHandler> & {
+  defaultValues?: { id: string; name: string }[] | undefined;
+};
+
 export default function useDeficiencyFilters({
   defaultValues,
-}: {
-  defaultValues?: { id: string; name: string }[] | undefined;
-} = {}) {
+  handleFiltering,
+}: DeficiencyFiltersProps) {
   const [visual, setVisual] = useState(() => {
     return findDeficiency("visual", defaultValues);
   });
@@ -42,6 +46,7 @@ export default function useDeficiencyFilters({
     (setter: (value: string) => void) => (e: ChangeEvent<HTMLInputElement>) => {
       const checked = e.target.checked;
       setter(checked ? e.target.value : "");
+      handleFiltering?.(true);
     };
 
   return {

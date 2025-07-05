@@ -12,10 +12,16 @@ export default function useDateFilter() {
     setEndDate(date);
   };
 
+  const cleanDateFilter = () => {
+    handleInitialDate("");
+    handleEndDate("");
+  };
+
   return {
     handleInitialDate,
     handleEndDate,
     initialDate,
     endDate,
+    cleanDateFilter,
   };
 }

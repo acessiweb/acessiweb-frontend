@@ -1,7 +1,7 @@
 "use client";
 
 import useSpeechRecognition from "@/hooks/useSpeechRecognition";
-import { Dispatch, SetStateAction, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { SlMagnifier, SlMicrophone } from "react-icons/sl";
 import { IoCloseOutline } from "react-icons/io5";
 import { useHotkeys } from "react-hotkeys-hook";
@@ -10,7 +10,7 @@ type SearchProps = {
   classname: string;
   handleSearchClose?: () => void;
   placeholderText: string;
-  handleSearch: Dispatch<SetStateAction<string>>;
+  handleSearch: (_text: string) => void;
   searchValue: string;
 };
 

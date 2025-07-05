@@ -5,15 +5,16 @@ import useModal from "@/hooks/useModal";
 import { useScreenType } from "@/hooks/useScreenType";
 import { Breadcrumb, BreadcrumbProps } from "./Breadcrumb";
 import { useHotkeys } from "react-hotkeys-hook";
-import { FilterOptions, FiltersAvailable } from "@/types/filter";
+import { FilterHandler, FilterOptions, FiltersAvailable } from "@/types/filter";
 import { MouseEvent, KeyboardEvent } from "react";
 
-type ControlBarProps = Partial<BreadcrumbProps> & {
-  handleView: () => void;
-  view: string;
-  filtersOptions?: FilterOptions;
-  handleFilters: (_filter: FiltersAvailable) => void;
-};
+type ControlBarProps = FilterHandler &
+  Partial<BreadcrumbProps> & {
+    handleView: () => void;
+    view: string;
+    filtersOptions?: FilterOptions;
+    handleFilters: (_filter: FiltersAvailable) => void;
+  };
 
 export default function ControlBar({
   handleView,
@@ -21,6 +22,7 @@ export default function ControlBar({
   crumbs,
   filtersOptions,
   handleFilters,
+  handleFiltering,
 }: ControlBarProps) {
   const { isDesktop } = useScreenType();
   const { showModal, isModalOpen, modalRef, toggleModal } = useModal();
@@ -31,6 +33,7 @@ export default function ControlBar({
   ) => {
     const event = e.currentTarget.id as FiltersAvailable;
     handleFilters(event);
+    handleFiltering(true);
   };
 
   return (

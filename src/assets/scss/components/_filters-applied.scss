@@ -29,8 +29,8 @@
     &--one {
       display: flex;
       align-items: center;
-      background-color: var.$purple;
       border-radius: 2px;
+      border: none;
 
       svg {
         height: var.$svg-x-small;

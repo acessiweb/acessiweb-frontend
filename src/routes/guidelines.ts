@@ -18,9 +18,10 @@ export async function getGuidelines(query?: {
   limit?: number;
   offset?: number;
   isRequest?: boolean;
+  isDeleted?: boolean;
 }): Promise<Guidelines | ApiError> {
   return await fetchData({
-    endpoint: `guidelines?keyword=${query?.keyword}&deficiences=${query?.deficiences}&limit=${query?.limit}&offset=${query?.offset}&isRequest=${query?.isRequest}&initialDate=${query?.initialDate}&endDate=${query?.endDate}`,
+    endpoint: `guidelines?keyword=${query?.keyword}&deficiences=${query?.deficiences}&limit=${query?.limit}&offset=${query?.offset}&isRequest=${query?.isRequest}&initialDate=${query?.initialDate}&endDate=${query?.endDate}&isDeleted=${query?.isDeleted}`,
   });
 }
 

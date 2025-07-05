@@ -1,6 +1,10 @@
 @use "../var";
 @use "../mixins" as mixins;
 
+button {
+  all: unset;
+}
+
 .nav {
   &__settings,
   &__profile,

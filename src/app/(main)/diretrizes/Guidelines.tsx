@@ -12,7 +12,6 @@ import useSecPage from "@/hooks/useSecPage";
 import { getGuideline, getGuidelines } from "@/routes/guidelines";
 import { useQuery } from "@tanstack/react-query";
 import Guideline from "./[id]/Guideline";
-import { useState } from "react";
 import { Guideline as GuidelineType } from "@/types/guideline";
 import Pagination from "@/components/Pagination";
 import usePagination from "@/hooks/usePagination";
@@ -23,6 +22,7 @@ import FiltersApplied from "@/components/FiltersApplied";
 import useDateFilter from "@/hooks/useDateFilter";
 import { FilterOptions } from "@/types/filter";
 import DateFilter from "@/components/DateFilter";
+import useSearch from "@/hooks/useSearch";
 
 const filterOptions: FilterOptions = [
   {
@@ -38,11 +38,15 @@ type GuidelinesUserProps = {
 export default function GuidelinesUser({
   isRequest = false,
 }: GuidelinesUserProps) {
-  const { handleEndDate, endDate, handleInitialDate, initialDate } =
-    useDateFilter();
+  const {
+    handleEndDate,
+    endDate,
+    handleInitialDate,
+    initialDate,
+    cleanDateFilter,
+  } = useDateFilter();
   const { addGuidelineToCart } = useCart();
   const { isTablet, isDesktop, isMobile } = useScreenType();
-  const [search, setSearch] = useState<string>("");
   const {
     handleView,
     handleFiltersChosen,
@@ -52,6 +56,18 @@ export default function GuidelinesUser({
     cleanFilters,
     isFilterApplied,
   } = useControlBar();
+  const {
+    onLoadLess,
+    onLoadMore,
+    offset,
+    isFiltering,
+    store,
+    handleStore,
+    handleFiltering,
+  } = usePagination({
+    data: [] as GuidelineType[],
+  });
+  const { handleSearch, search } = useSearch({ handleFiltering });
   const {
     handleHearing,
     handleMotor,
@@ -63,7 +79,7 @@ export default function GuidelinesUser({
     neural,
     tea,
     visual,
-  } = useDeficiencyFilters();
+  } = useDeficiencyFilters({ handleFiltering });
   const {
     isOpen: isSecPageOpen,
     setIsOpen: setIsSecPageOpen,
@@ -75,20 +91,7 @@ export default function GuidelinesUser({
     fullScreenLink,
     setFullScreenLink,
   } = useSecPage();
-  const { onLoadLess, onLoadMore, offset, isFiltering, store, handleStore } =
-    usePagination({
-      watch: [
-        search,
-        hearing,
-        motor,
-        visual,
-        neural,
-        tea,
-        initialDate,
-        endDate,
-      ],
-      data: [] as GuidelineType[],
-    });
+
   const { data: guidelines } = useQuery({
     queryKey: [
       "guidelines",
@@ -119,6 +122,7 @@ export default function GuidelinesUser({
       return g;
     },
   });
+
   const handleSecPage = async (id: string) => {
     const guideline = await getGuideline(id);
 
@@ -130,6 +134,11 @@ export default function GuidelinesUser({
     }
   };
 
+  const cleanAllFilters = () => {
+    handleInitialDate("");
+    handleEndDate("");
+  };
+
   return (
     <div className={getSecPageClass()}>
       <div className="guidelines">
@@ -138,6 +147,7 @@ export default function GuidelinesUser({
           view={view}
           filtersOptions={filterOptions}
           handleFilters={handleFiltersChosen}
+          handleFiltering={handleFiltering}
         />
         <h1 className="heading-1" id="page-heading">
           Diretrizes de acessibilidade
@@ -146,7 +156,7 @@ export default function GuidelinesUser({
           <Search
             classname="search"
             placeholderText="Buscar por diretriz..."
-            handleSearch={setSearch}
+            handleSearch={handleSearch}
             searchValue={search}
           />
           <DeficiencesCheckbox
@@ -165,6 +175,7 @@ export default function GuidelinesUser({
         <FiltersApplied
           cleanFilters={cleanFilters}
           filtersChosen={filtersChosen}
+          handleFilters={cleanAllFilters}
         >
           {isFilterApplied("creation-date") && (
             <DateFilter
@@ -172,7 +183,10 @@ export default function GuidelinesUser({
               handleEndDate={handleEndDate}
               handleInitialDate={handleInitialDate}
               initialDate={initialDate}
-              deleteFilter={deleteFilter}
+              cleanDateFilter={() => {
+                deleteFilter("creation-date");
+                cleanDateFilter();
+              }}
             />
           )}
         </FiltersApplied>

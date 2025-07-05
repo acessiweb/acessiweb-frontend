@@ -6,9 +6,7 @@ import Search from "@/components/Search";
 import SecondPage from "@/components/SecondPage";
 import { useScreenType } from "@/hooks/useScreenType";
 import useSecPage from "@/hooks/useSecPage";
-import { getGuideline, getGuidelines } from "@/routes/guidelines";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 import { Guideline as GuidelineType } from "@/types/guideline";
 import Pagination from "@/components/Pagination";
 import usePagination from "@/hooks/usePagination";
@@ -17,7 +15,6 @@ import { CardBtnStatus, CardBtnUpdateAndDelete } from "@/components/CardBtn";
 import { CardLinkUpdateAndDelete } from "@/components/CardLink";
 import { GoPlus } from "react-icons/go";
 import Link from "next/link";
-import { usePush } from "@/context/push";
 import AddGuideline from "../diretrizes/cadastrar/AddGuideline";
 import EditGuideline from "../diretrizes/[id]/editar/EditGuideline";
 import useDeficiencyFilters from "@/hooks/useDeficiencyFilters";
@@ -29,11 +26,17 @@ import FiltersApplied from "@/components/FiltersApplied";
 import DateFilter from "@/components/DateFilter";
 import { FilterOptions } from "@/types/filter";
 import useDateFilter from "@/hooks/useDateFilter";
+import { getGuideline, getGuidelines } from "@/routes/guidelines";
+import useSearch from "@/hooks/useSearch";
 
 const filterOptions: FilterOptions = [
   {
     id: "creation-date",
     desc: "Por data de criação",
+  },
+  {
+    id: "deleted",
+    desc: "Removidas",
   },
 ];
 
@@ -44,10 +47,27 @@ type GuidelinesAdminProps = {
 export default function GuidelinesAdmin({
   isRequest = false,
 }: GuidelinesAdminProps) {
-  const { handleEndDate, endDate, handleInitialDate, initialDate } =
-    useDateFilter();
+  const {
+    handleEndDate,
+    endDate,
+    handleInitialDate,
+    initialDate,
+    cleanDateFilter,
+  } = useDateFilter();
   const { isTablet, isDesktop, isMobile } = useScreenType();
-  const [search, setSearch] = useState("");
+
+  const {
+    onLoadLess,
+    onLoadMore,
+    offset,
+    isFiltering,
+    store,
+    handleStore,
+    handleFiltering,
+  } = usePagination({
+    data: [] as GuidelineType[],
+  });
+  const { handleSearch, search } = useSearch({ handleFiltering });
   const {
     handleHearing,
     handleMotor,
@@ -59,7 +79,9 @@ export default function GuidelinesAdmin({
     neural,
     tea,
     visual,
-  } = useDeficiencyFilters();
+  } = useDeficiencyFilters({
+    handleFiltering,
+  });
   const {
     isOpen: isSecPageOpen,
     setIsOpen: setIsSecPageOpen,
@@ -80,21 +102,6 @@ export default function GuidelinesAdmin({
     cleanFilters,
     isFilterApplied,
   } = useControlBar();
-  const { onLoadLess, onLoadMore, offset, isFiltering, store, handleStore } =
-    usePagination({
-      watch: [
-        search,
-        hearing,
-        motor,
-        visual,
-        neural,
-        tea,
-        initialDate,
-        endDate,
-      ],
-      data: [] as GuidelineType[],
-    });
-  const { pushMsg, setShowPush } = usePush();
   const { data: session } = useSession();
 
   const { data: guidelines } = useQuery({
@@ -109,6 +116,7 @@ export default function GuidelinesAdmin({
       offset,
       initialDate,
       endDate,
+      isFilterApplied("deleted"),
     ],
     queryFn: async () => {
       const g = await getGuidelines({
@@ -118,6 +126,7 @@ export default function GuidelinesAdmin({
         isRequest: isRequest,
         initialDate,
         endDate,
+        isDeleted: isFilterApplied("deleted"),
       });
 
       if ("data" in g) {
@@ -174,6 +183,11 @@ export default function GuidelinesAdmin({
     }
   };
 
+  const cleanAllFilters = () => {
+    handleInitialDate("");
+    handleEndDate("");
+  };
+
   return (
     <div className={getSecPageClass()}>
       <div className="guidelines">
@@ -182,6 +196,7 @@ export default function GuidelinesAdmin({
           view={view}
           filtersOptions={filterOptions}
           handleFilters={handleFiltersChosen}
+          handleFiltering={handleFiltering}
         />
         <h1 className="heading-1">
           {isRequest
@@ -193,7 +208,7 @@ export default function GuidelinesAdmin({
             <Search
               classname="search"
               placeholderText="Buscar por diretriz..."
-              handleSearch={setSearch}
+              handleSearch={handleSearch}
               searchValue={search}
             />
             {isMobile || isTablet
@@ -230,6 +245,7 @@ export default function GuidelinesAdmin({
         <FiltersApplied
           cleanFilters={cleanFilters}
           filtersChosen={filtersChosen}
+          handleFilters={cleanAllFilters}
         >
           {isFilterApplied("creation-date") && (
             <DateFilter
@@ -237,8 +253,14 @@ export default function GuidelinesAdmin({
               handleEndDate={handleEndDate}
               handleInitialDate={handleInitialDate}
               initialDate={initialDate}
-              deleteFilter={deleteFilter}
+              cleanDateFilter={() => {
+                deleteFilter("creation-date");
+                cleanDateFilter();
+              }}
             />
+          )}
+          {isFilterApplied("deleted") && (
+            <div className="filters-applied__box">Diretrizes removidas</div>
           )}
         </FiltersApplied>
         {store.length > 0 ? (

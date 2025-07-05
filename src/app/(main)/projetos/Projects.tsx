@@ -1,18 +1,11 @@
 "use client";
 
-import NoRegistersFound from "@/components/NotFound";
 import useSecPage from "@/hooks/useSecPage";
-import EditProject from "./[id]/editar/EditProject";
 import SecondPage from "@/components/SecondPage";
-import { CardLinkUpdateAndDelete } from "@/components/CardLink";
-import { CardBtnUpdateAndDelete } from "@/components/CardBtn";
-import { useScreenType } from "@/hooks/useScreenType";
 import { useQuery } from "@tanstack/react-query";
-import { getProject, getProjects } from "@/routes/projects";
-import { Project as ProjectType } from "@/types/project";
+import { getProjects } from "@/routes/projects";
 import { useState } from "react";
 import usePagination from "@/hooks/usePagination";
-import Project from "./[id]/Project";
 import { useSession } from "next-auth/react";
 import Search from "@/components/Search";
 
@@ -21,76 +14,71 @@ export default function Projects() {
     isOpen: isSecPageOpen,
     setIsOpen: setIsSecPageOpen,
     getSecPageClass,
-    setNode: setSecPageContent,
     node: secPageContent,
-    setTitle: setSecPageTitle,
     title: secPageTitle,
     fullScreenLink,
-    setFullScreenLink,
   } = useSecPage();
-  const { isTablet } = useScreenType();
+  // const { isTablet } = useScreenType();
   const [search, setSearch] = useState("");
-  const [projsStored, setProjsStored] = useState<ProjectType[]>([]);
-  const { isFromSearch, loadMore, offset } = usePagination({
-    watchFromSearch: [search],
-  });
+  // const [projsStored, setProjsStored] = useState<ProjectType[]>([]);
+  const { offset } = usePagination({});
   const { data } = useSession();
 
-  const { fetchStatus } = useQuery({
+  useQuery({
     queryKey: ["projects", search, offset, data],
     queryFn: async () => {
-      const p = await getProjects({
+      await getProjects({
         userId: data?.user.id,
         offset,
         keyword: search,
       });
 
-      if ("data" in p) {
-        if (projsStored.length === 0 || isFromSearch) {
-          setProjsStored(p.data);
-        } else if (fetchStatus === "fetching") {
-          if (loadMore) {
-            setProjsStored((projs) => {
-              const prevProjs = [...projs];
-              p.data.map((p) => prevProjs.push(p));
-              return prevProjs;
-            });
-          } else {
-            setProjsStored((projs) => {
-              const prevProjs = [...projs];
-              prevProjs.splice(
-                projsStored.length - (projsStored.length - p.limit)
-              );
-              return prevProjs;
-            });
-          }
-        }
+      // if ("data" in p) {
+      //   if (projsStored.length === 0) {
+      //     setProjsStored(p.data);
+      //   } else if (fetchStatus === "fetching") {
+      //     if (onLoadMore) {
+      //       setProjsStored((projs) => {
+      //         const prevProjs = [...projs];
+      //         p.data.map((p) => prevProjs.push(p));
+      //         return prevProjs;
+      //       });
+      //     } else {
+      //       setProjsStored((projs) => {
+      //         const prevProjs = [...projs];
+      //         prevProjs.splice(
+      //           projsStored.length - (projsStored.length - p.limit)
+      //         );
+      //         return prevProjs;
+      //       });
+      //     }
+      //   }
 
-        return p;
-      }
+      //   return p;
+      // }
 
       return null;
     },
   });
 
-  const handleEditSecPage = async (id: string) => {
-    if (data && data.user.id) {
-      const project = await getProject(id);
+  // const handleEditSecPage = async (id: string) => {
+  //   if (data && data.user.id) {
+  //     const project = await getProject(id);
 
-      if ("id" in project) {
-        setIsSecPageOpen(true);
-        setSecPageTitle(project.name);
-        setSecPageContent(
-          <EditProject
-            project={project}
-            isSecPage={true}
-            handleSecPageTitle={setSecPageTitle}
-          />
-        );
-        setFullScreenLink(`/projetos/${id}/editar`);
-      }
-    }
-  };
+  //     if ("id" in project) {
+  //       setIsSecPageOpen(true);
+  //       setSecPageTitle(project.name);
+  //       setSecPageContent(
+  //         <EditProject
+  //           project={project}
+  //           isSecPage={true}
+  //           handleSecPageTitle={setSecPageTitle}
+  //         />
+  //       );
+  //       setFullScreenLink(`/projetos/${id}/editar`);
+  //     }
+  //   }
+  // };
 
   //  const handleAddSecPage = () => {
   //    setIsSecPageOpen(true);
@@ -100,18 +88,18 @@ export default function Projects() {
   //    setFullScreenLink("/admin/diretrizes/cadastrar");
   //  };
 
-  const handleReadSecPage = async (id: string) => {
-    if (data && data.user.id) {
-      const project = await getProject(id);
+  // const handleReadSecPage = async (id: string) => {
+  //   if (data && data.user.id) {
+  //     const project = await getProject(id);
 
-      if ("id" in project) {
-        setIsSecPageOpen(true);
-        setSecPageContent(<Project project={project} />);
-        setSecPageTitle(project.name);
-        setFullScreenLink(`/projetos/${id}`);
-      }
-    }
-  };
+  //     if ("id" in project) {
+  //       setIsSecPageOpen(true);
+  //       setSecPageContent(<Project project={project} />);
+  //       setSecPageTitle(project.name);
+  //       setFullScreenLink(`/projetos/${id}`);
+  //     }
+  //   }
+  // };
 
   return (
     <div className={getSecPageClass()}>
@@ -123,7 +111,7 @@ export default function Projects() {
           handleSearch={setSearch}
           searchValue={search}
         />
-        {projsStored.length > 0 ? (
+        {/* {projsStored.length > 0 ? (
           <div className="grid">
             {projsStored.map((project, i) => (
               <div className="grid__item" key={i}>
@@ -153,7 +141,7 @@ export default function Projects() {
           </div>
         ) : (
           <NoRegistersFound errorMsg="Oops! Você ainda não possui projetos." />
-        )}
+        )} */}
       </div>
       {isSecPageOpen && (
         <SecondPage

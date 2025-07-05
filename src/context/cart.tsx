@@ -2,12 +2,11 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { usePush } from "./push";
-import { Guideline } from "@/types/guideline";
 
 type CartType = {
   name: string;
   description: string;
-  guidelines: Guideline[];
+  guidelines: { id: string; name: string }[];
 };
 
 type CartContextType = {
@@ -50,46 +49,61 @@ export default function CartProvider({
   const addGuidelineToCart = (guideline: { id: string; name: string }) => {
     const cartGuides = [...cart.guidelines];
 
-    const alreadyExists = cartGuides.find((guide) => guide.id === guideline.id);
+    if (cartGuides.length > 0) {
+      const alreadyExists = cartGuides.find(
+        (guide) => guide.id === guideline.id
+      );
 
-    if (!alreadyExists) {
+      if (!alreadyExists) {
+        setGuidelinesTotal((prevTotal: number) => prevTotal + 1);
+
+        setCart((prevCart: CartType) => {
+          const guides = [...prevCart.guidelines];
+
+          guides.push(guideline);
+
+          const newCart = { ...prevCart, guidelines: guides };
+
+          saveCart(newCart);
+
+          return newCart;
+        });
+      } else {
+        setShowPush(true);
+        setPushMsg(
+          "Essa diretriz já foi adicionada ao seu projeto. Acesse ele pelo ícone de carrinho no menu"
+        );
+      }
+    } else {
+      cartGuides.push(guideline);
+
       setGuidelinesTotal((prevTotal: number) => prevTotal + 1);
-
       setCart((prevCart: CartType) => {
-        const guides = [...prevCart.guidelines];
-
-        if (!alreadyExists) {
-          guides.push(alreadyExists!);
-        }
-
-        const newCart = { ...prevCart, guidelines: guides };
-
+        const newCart = { ...prevCart, guidelines: cartGuides };
         saveCart(newCart);
-
         return newCart;
       });
-    } else {
-      setShowPush(true);
-      setPushMsg(
-        "Essa diretriz já foi adicionada ao seu projeto. Acesse ele pelo ícone de carrinho no menu"
-      );
     }
   };
 
   const removeGuidelineOfCart = (guidelineId: string) => {
-    setGuidelinesTotal((prevTotal: number) => prevTotal - 1);
     setCart((prevCart: CartType) => {
       const guides = [...prevCart.guidelines];
 
       const newGuides = guides.filter(
-        (guideline: Guideline) => guideline.id !== guidelineId
+        (guideline) => guideline.id !== guidelineId
       );
 
-      const newCart = { ...prevCart, guidelines: newGuides };
+      if (newGuides.length < guides.length) {
+        const newCart = { ...prevCart, guidelines: newGuides };
 
-      saveCart(newCart);
+        saveCart(newCart);
+        setGuidelinesTotal((prevTotal: number) => prevTotal - 1);
 
-      return newCart;
+        return newCart;
+      }
+
+      return prevCart;
     });
   };
 

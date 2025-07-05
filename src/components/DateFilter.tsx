@@ -1,20 +1,20 @@
-import { FilterType } from "@/types/filter";
 import { ChangeEvent } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 
-type DataFilterProps = FilterType & {
+type DataFilterProps = {
   initialDate: string;
   endDate: string;
   handleInitialDate: (_date: string) => void;
   handleEndDate: (_date: string) => void;
+  cleanDateFilter: () => void;
 };
 
 export default function DateFilter({
-  deleteFilter,
   endDate,
   handleEndDate,
   handleInitialDate,
   initialDate,
+  cleanDateFilter,
 }: DataFilterProps) {
   const handleChangeInitialDate = (e: ChangeEvent<HTMLInputElement>) => {
     handleInitialDate(e.currentTarget.value);
@@ -44,7 +44,7 @@ export default function DateFilter({
         <button
           type="button"
           className="filters-applied__delete--one"
-          onClick={() => deleteFilter("creation-date")}
+          onClick={cleanDateFilter}
         >
           <IoCloseOutline />
         </button>
