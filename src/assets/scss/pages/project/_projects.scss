@@ -5,6 +5,14 @@
   flex-direction: column;
   row-gap: var.$space-sm;
 
+  &__search-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .search {
+    }
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;

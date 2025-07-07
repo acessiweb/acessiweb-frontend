@@ -9,8 +9,10 @@ import {
   CardBtnProps,
   CardBtnUpdateAndDeleteProps,
   CardDeleteProps,
+  CardRestoreProps,
   CardStatusProps,
 } from "@/types/card";
+import CardRestore from "./card/Restore";
 
 export function CardBtnDelete({
   mainText,
@@ -98,6 +100,25 @@ export function CardBtnStatus({
       secondaryText={secondaryText}
     >
       <CardStatus status={status} />
+    </CardBase>
+  );
+}
+
+export function CardBtnRestore({
+  mainText,
+  onClick,
+  registerId,
+  secondaryText,
+  onRestore,
+}: CardBtnProps & CardRestoreProps) {
+  return (
+    <CardBase
+      mainText={mainText}
+      onClick={onClick}
+      registerId={registerId}
+      secondaryText={secondaryText}
+    >
+      <CardRestore onRestore={onRestore} />
     </CardBase>
   );
 }

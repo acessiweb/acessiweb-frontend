@@ -1,14 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
+import { Page } from "@/types/page";
 import AddEditGuideline from "../../_components/AddEditGuideline";
 
-type AddGuidelineProps = {
-  isSecPage?: boolean;
-  handleSecPageTitle?: Dispatch<SetStateAction<string>>;
-  crumbs?: {
-    desc: string;
-    link: string;
-  }[];
-};
+type AddGuidelineProps = Page;
 
 export default function AddGuideline({
   handleSecPageTitle,

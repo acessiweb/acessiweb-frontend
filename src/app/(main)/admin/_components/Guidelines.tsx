@@ -11,7 +11,11 @@ import { Guideline as GuidelineType } from "@/types/guideline";
 import Pagination from "@/components/Pagination";
 import usePagination from "@/hooks/usePagination";
 import Guideline from "../../diretrizes/[id]/Guideline";
-import { CardBtnStatus, CardBtnUpdateAndDelete } from "@/components/CardBtn";
+import {
+  CardBtnRestore,
+  CardBtnStatus,
+  CardBtnUpdateAndDelete,
+} from "@/components/CardBtn";
 import { CardLinkUpdateAndDelete } from "@/components/CardLink";
 import { GoPlus } from "react-icons/go";
 import Link from "next/link";
@@ -28,6 +32,7 @@ import { FilterOptions } from "@/types/filter";
 import useDateFilter from "@/hooks/useDateFilter";
 import { getGuideline, getGuidelines } from "@/routes/guidelines";
 import useSearch from "@/hooks/useSearch";
+import RemovedFilter from "@/components/RemovedFilter";
 
 const filterOptions: FilterOptions = [
   {
@@ -55,15 +60,14 @@ export default function GuidelinesAdmin({
     cleanDateFilter,
   } = useDateFilter();
   const { isTablet, isDesktop, isMobile } = useScreenType();
-
   const {
     onLoadLess,
     onLoadMore,
     offset,
-    isFiltering,
     store,
     handleStore,
     handleFiltering,
+    handleDelete,
   } = usePagination({
     data: [] as GuidelineType[],
   });
@@ -84,14 +88,14 @@ export default function GuidelinesAdmin({
   });
   const {
     isOpen: isSecPageOpen,
-    setIsOpen: setIsSecPageOpen,
+    handleIsOpen: handleIsSecPageOpen,
     getSecPageClass,
-    setNode: setSecPageContent,
+    handleNode: handleSecPageContent,
     node: secPageContent,
     title: secPageTitle,
-    setTitle: setSecPageTitle,
+    handleTitle: handleSecPageTitle,
     fullScreenLink,
-    setFullScreenLink,
+    handleFullScreenLink,
   } = useSecPage();
   const {
     handleView,
@@ -103,7 +107,6 @@ export default function GuidelinesAdmin({
     isFilterApplied,
   } = useControlBar();
   const { data: session } = useSession();
-
   const { data: guidelines } = useQuery({
     queryKey: [
       "guidelines",
@@ -141,44 +144,44 @@ export default function GuidelinesAdmin({
     const guideline = await getGuideline(id);
 
     if ("id" in guideline) {
-      setIsSecPageOpen(true);
-      setSecPageTitle(guideline.name);
-      setSecPageContent(
+      handleIsSecPageOpen(true);
+      handleSecPageTitle(guideline.name);
+      handleSecPageContent(
         <EditGuideline
           guideline={guideline}
           isSecPage={true}
-          handleSecPageTitle={setSecPageTitle}
+          handleSecPageTitle={handleSecPageTitle}
         />
       );
-      setFullScreenLink(`/admin/diretrizes/${id}/editar`);
+      handleFullScreenLink(`/admin/diretrizes/${id}/editar`);
     }
   };
 
   const handleAddSecPage = () => {
-    setIsSecPageOpen(true);
-    setSecPageContent(
-      <AddGuideline isSecPage={true} handleSecPageTitle={setSecPageTitle} />
+    handleIsSecPageOpen(true);
+    handleSecPageContent(
+      <AddGuideline isSecPage={true} handleSecPageTitle={handleSecPageTitle} />
     );
-    setFullScreenLink("/admin/diretrizes/cadastrar");
+    handleFullScreenLink("/admin/diretrizes/cadastrar");
   };
 
   const handleReadSecPage = async (id: string) => {
     const guideline = await getGuideline(id);
 
     if ("id" in guideline) {
-      setIsSecPageOpen(true);
-      setSecPageContent(<Guideline guideline={guideline} />);
-      setSecPageTitle(guideline.name);
-      setFullScreenLink(`/admin/diretrizes/${id}`);
+      handleIsSecPageOpen(true);
+      handleSecPageContent(<Guideline guideline={guideline} />);
+      handleSecPageTitle(guideline.name);
+      handleFullScreenLink(`/admin/diretrizes/${id}`);
     }
   };
 
-  const handleDelete = async (guidelineId: string) => {
+  const handleDeletion = async (guidelineId: string) => {
     if (session) {
       const deleted = await deleteGuideline(session.user.id, guidelineId);
 
       if ("id" in deleted) {
-        handleDelete(guidelineId);
+        handleDelete(deleted.id);
       }
     }
   };
@@ -198,7 +201,7 @@ export default function GuidelinesAdmin({
           handleFilters={handleFiltersChosen}
           handleFiltering={handleFiltering}
         />
-        <h1 className="heading-1">
+        <h1 className="heading-1" id="page-heading">
           {isRequest
             ? "Solicitações de inclusão de diretriz"
             : "Diretrizes de acessibilidade"}
@@ -260,14 +263,25 @@ export default function GuidelinesAdmin({
             />
           )}
           {isFilterApplied("deleted") && (
-            <div className="filters-applied__box">Diretrizes removidas</div>
+            <RemovedFilter
+              desc="Diretrizes removidas"
+              onClick={() => deleteFilter("deleted")}
+            />
           )}
         </FiltersApplied>
         {store.length > 0 ? (
-          <div className={`${view}`}>
+          <div className={`${view}`} aria-labelledby="page-heading">
             {store.map((guideline) => (
               <div className={`${view}__item`} key={guideline.id}>
-                {isRequest && isDesktop && (
+                {isFilterApplied("deleted") && (
+                  <CardBtnRestore
+                    mainText={guideline.name}
+                    onClick={() => handleReadSecPage(guideline.id)}
+                    onRestore={() => {}}
+                    secondaryText={guideline.description}
+                  />
+                )}
+                {isRequest && isDesktop && !isFilterApplied("deleted") && (
                   <CardBtnStatus
                     status={guideline.statusCode!}
                     mainText={guideline.name}
@@ -276,28 +290,30 @@ export default function GuidelinesAdmin({
                     onClick={() => handleReadSecPage(guideline.id)}
                   />
                 )}
-                {!isRequest && isDesktop && (
+                {!isRequest && isDesktop && !isFilterApplied("deleted") && (
                   <CardBtnUpdateAndDelete
                     mainText={guideline.name}
                     onClick={() => handleReadSecPage(guideline.id)}
-                    onDelete={() => handleDelete(guideline.id)}
+                    onDelete={() => handleDeletion(guideline.id)}
                     onUpdateClick={() => handleEditSecPage(guideline.id)}
                     registerId={guideline.id}
                     registerName={guideline.name}
                     secondaryText={guideline.description}
                   />
                 )}
-                {!isRequest && (isMobile || isTablet) && (
-                  <CardLinkUpdateAndDelete
-                    mainText={guideline.name}
-                    onDelete={() => handleDelete(guideline.id)}
-                    registerId={guideline.id}
-                    registerName={guideline.name}
-                    readRoute={`/admin/diretrizes/${guideline.id}`}
-                    updateRoute={`/admin/diretrizes/${guideline.id}/editar`}
-                    secondaryText={guideline.description}
-                  />
-                )}
+                {!isRequest &&
+                  (isMobile || isTablet) &&
+                  !isFilterApplied("deleted") && (
+                    <CardLinkUpdateAndDelete
+                      mainText={guideline.name}
+                      onDelete={() => handleDelete(guideline.id)}
+                      registerId={guideline.id}
+                      registerName={guideline.name}
+                      readRoute={`/admin/diretrizes/${guideline.id}`}
+                      updateRoute={`/admin/diretrizes/${guideline.id}/editar`}
+                      secondaryText={guideline.description}
+                    />
+                  )}
               </div>
             ))}
           </div>
@@ -306,7 +322,6 @@ export default function GuidelinesAdmin({
         )}
         {guidelines && "data" in guidelines && (
           <Pagination
-            isFiltering={isFiltering}
             hasNext={guidelines.hasNext}
             hasPrev={guidelines.hasPrev}
             onLoadLess={() => onLoadLess(guidelines.limit)}
@@ -317,7 +332,7 @@ export default function GuidelinesAdmin({
       {isSecPageOpen && isDesktop && (
         <SecondPage
           title={secPageTitle}
-          onClick={() => setIsSecPageOpen(false)}
+          onClick={() => handleIsSecPageOpen(false)}
           fullScreenLink={fullScreenLink}
         >
           {secPageContent}

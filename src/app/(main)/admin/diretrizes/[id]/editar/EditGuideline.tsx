@@ -1,14 +1,8 @@
 import { Guideline } from "@/types/guideline";
 import AddEditGuideline from "../../../_components/AddEditGuideline";
-import { Dispatch, SetStateAction } from "react";
+import { Page } from "@/types/page";
 
-type EditGuidelineProps = {
-  isSecPage?: boolean;
-  handleSecPageTitle?: Dispatch<SetStateAction<string>>;
-  crumbs?: {
-    desc: string;
-    link: string;
-  }[];
+type EditGuidelineProps = Page & {
   guideline?: Guideline;
 };
 
@@ -20,7 +14,7 @@ export default function EditGuideline({
 }: EditGuidelineProps) {
   return (
     <AddEditGuideline
-      toEdit={true}
+      isEditPage={true}
       crumbs={crumbs}
       handleSecPageTitle={handleSecPageTitle}
       guideline={guideline}

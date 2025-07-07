@@ -29,6 +29,7 @@ export async function middleware(req: NextRequest) {
   ) {
     if (
       token &&
+      "user" in token.data &&
       isAdmin(token.data.user.role) &&
       (pathname === "/" || pathname === "/diretrizes")
     ) {
@@ -39,7 +40,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  if (token) {
+  if (token && "user" in token.data) {
     if (pathname.startsWith("/admin") && !isAdmin(token.data.user.role)) {
       return NextResponse.redirect(homepageUrl);
     }

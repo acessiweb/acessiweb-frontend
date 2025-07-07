@@ -18,13 +18,13 @@ export default function useSecPage() {
 
   return {
     isOpen,
-    setIsOpen,
+    handleIsOpen: (isOpen: boolean) => setIsOpen(isOpen),
     getSecPageClass,
-    setNode,
+    handleNode: (node: ReactNode) => setNode(node),
     node,
     title,
-    setTitle,
+    handleTitle: (id: string) => setTitle(id),
     fullScreenLink,
-    setFullScreenLink,
+    handleFullScreenLink: (link: string) => setFullScreenLink(link),
   };
 }

@@ -3,122 +3,207 @@
 import useSecPage from "@/hooks/useSecPage";
 import SecondPage from "@/components/SecondPage";
 import { useQuery } from "@tanstack/react-query";
-import { getProjects } from "@/routes/projects";
-import { useState } from "react";
+import { deleteProject, getProject, getProjects } from "@/routes/projects";
 import usePagination from "@/hooks/usePagination";
 import { useSession } from "next-auth/react";
 import Search from "@/components/Search";
+import ControlBar from "@/components/ControlBar";
+import useControlBar from "@/hooks/useControlBar";
+import { FilterOptions } from "@/types/filter";
+import { Project as ProjectType } from "@/types/project";
+import { CardLinkUpdateAndDelete } from "@/components/CardLink";
+import { CardBtnUpdateAndDelete } from "@/components/CardBtn";
+import { useScreenType } from "@/hooks/useScreenType";
+import NoRegistersFound from "@/components/NotFound";
+import AddProject from "./cadastrar/AddProject";
+import Project from "./[id]/Project";
+import FiltersApplied from "@/components/FiltersApplied";
+import DateFilter from "@/components/DateFilter";
+import useDateFilter from "@/hooks/useDateFilter";
+import useSearch from "@/hooks/useSearch";
+import RemovedFilter from "@/components/RemovedFilter";
+import EditProject from "./[id]/editar/EditProject";
+
+const filterOptions: FilterOptions = [
+  {
+    id: "creation-date",
+    desc: "Por data de criação",
+  },
+  {
+    id: "deleted",
+    desc: "Removidos",
+  },
+];
 
 export default function Projects() {
   const {
     isOpen: isSecPageOpen,
-    setIsOpen: setIsSecPageOpen,
+    handleIsOpen: handleIsSecPageOpen,
     getSecPageClass,
     node: secPageContent,
     title: secPageTitle,
+    handleTitle: handleSecPageTitle,
     fullScreenLink,
+    handleFullScreenLink,
+    handleNode: handleSecPageContent,
   } = useSecPage();
-  // const { isTablet } = useScreenType();
-  const [search, setSearch] = useState("");
-  // const [projsStored, setProjsStored] = useState<ProjectType[]>([]);
-  const { offset } = usePagination({});
-  const { data } = useSession();
+  const { isTablet, isMobile } = useScreenType();
+  const { data: session } = useSession();
+  const { offset, store, handleStore, handleFiltering, handleDelete } =
+    usePagination({
+      data: [] as ProjectType[],
+    });
+  const { handleSearch, search } = useSearch({
+    handleFiltering,
+  });
+  const {
+    handleView,
+    handleFiltersChosen,
+    view,
+    filtersChosen,
+    deleteFilter,
+    cleanFilters,
+    isFilterApplied,
+  } = useControlBar();
+  const {
+    handleEndDate,
+    endDate,
+    handleInitialDate,
+    initialDate,
+    cleanDateFilter,
+  } = useDateFilter();
 
   useQuery({
-    queryKey: ["projects", search, offset, data],
+    queryKey: ["projects", search, offset, session],
     queryFn: async () => {
-      await getProjects({
-        userId: data?.user.id,
+      const p = await getProjects({
+        userId: session?.user.id,
         offset,
         keyword: search,
       });
 
-      // if ("data" in p) {
-      //   if (projsStored.length === 0) {
-      //     setProjsStored(p.data);
-      //   } else if (fetchStatus === "fetching") {
-      //     if (onLoadMore) {
-      //       setProjsStored((projs) => {
-      //         const prevProjs = [...projs];
-      //         p.data.map((p) => prevProjs.push(p));
-      //         return prevProjs;
-      //       });
-      //     } else {
-      //       setProjsStored((projs) => {
-      //         const prevProjs = [...projs];
-      //         prevProjs.splice(
-      //           projsStored.length - (projsStored.length - p.limit)
-      //         );
-      //         return prevProjs;
-      //       });
-      //     }
-      //   }
+      if ("data" in p) {
+        handleStore(p);
+      }
 
-      //   return p;
-      // }
-
-      return null;
+      return p;
     },
   });
 
-  // const handleEditSecPage = async (id: string) => {
-  //   if (data && data.user.id) {
-  //     const project = await getProject(id);
+  const handleEditSecPage = async (id: string) => {
+    if (session && session.user.id) {
+      const project = await getProject(id);
+      if ("id" in project) {
+        handleIsSecPageOpen(true);
+        handleSecPageTitle(project.name);
+        handleSecPageContent(
+          <EditProject
+            project={project}
+            isSecPage={true}
+            handleSecPageTitle={handleSecPageTitle}
+          />
+        );
+        handleFullScreenLink(`/projetos/${id}/editar`);
+      }
+    }
+  };
 
-  //     if ("id" in project) {
-  //       setIsSecPageOpen(true);
-  //       setSecPageTitle(project.name);
-  //       setSecPageContent(
-  //         <EditProject
-  //           project={project}
-  //           isSecPage={true}
-  //           handleSecPageTitle={setSecPageTitle}
-  //         />
-  //       );
-  //       setFullScreenLink(`/projetos/${id}/editar`);
-  //     }
-  //   }
-  // };
+  const handleDeletion = async (projectId: string) => {
+    if (session) {
+      const deleted = await deleteProject(projectId);
 
-  //  const handleAddSecPage = () => {
-  //    setIsSecPageOpen(true);
-  //    setSecPageContent(
-  //      <AddGuideline isSecPage={true} handleSecPageTitle={setSecPageTitle} />
-  //    );
-  //    setFullScreenLink("/admin/diretrizes/cadastrar");
-  //  };
+      if ("id" in deleted) {
+        handleDelete(deleted.id);
+      }
+    }
+  };
 
-  // const handleReadSecPage = async (id: string) => {
-  //   if (data && data.user.id) {
-  //     const project = await getProject(id);
+  const handleAddSecPage = () => {
+    handleIsSecPageOpen(true);
+    handleSecPageContent(
+      <AddProject isSecPage={true} handleSecPageTitle={handleSecPageTitle} />
+    );
+    handleFullScreenLink("/projetos/cadastrar");
+    handleSecPageTitle("Cadastrar projeto");
+  };
 
-  //     if ("id" in project) {
-  //       setIsSecPageOpen(true);
-  //       setSecPageContent(<Project project={project} />);
-  //       setSecPageTitle(project.name);
-  //       setFullScreenLink(`/projetos/${id}`);
-  //     }
-  //   }
-  // };
+  const handleReadSecPage = async (id: string) => {
+    if (session && session.user.id) {
+      const project = await getProject(id);
+      if ("id" in project) {
+        handleIsSecPageOpen(true);
+        handleSecPageContent(
+          <Project project={project} handleSecPageTitle={handleSecPageTitle} />
+        );
+        handleSecPageTitle(project.name);
+        handleFullScreenLink(`/projetos/${id}`);
+      }
+    }
+  };
+
+  const cleanAllFilters = () => {
+    handleInitialDate("");
+    handleEndDate("");
+  };
 
   return (
     <div className={getSecPageClass()}>
       <div className="projects">
-        <h1 className="heading-1">Meus projetos</h1>
-        <Search
-          classname="search"
-          placeholderText="Buscar por projeto..."
-          handleSearch={setSearch}
-          searchValue={search}
+        <ControlBar
+          handleView={handleView}
+          view={view}
+          filtersOptions={filterOptions}
+          handleFilters={handleFiltersChosen}
+          handleFiltering={handleFiltering}
         />
-        {/* {projsStored.length > 0 ? (
-          <div className="grid">
-            {projsStored.map((project, i) => (
-              <div className="grid__item" key={i}>
-                {isTablet ? (
+        <h1 className="heading-1" id="page-heading">
+          Meus projetos
+        </h1>
+        <div className="projects__search-wrapper">
+          <Search
+            classname="search"
+            placeholderText="Buscar por projeto..."
+            handleSearch={handleSearch}
+            searchValue={search}
+          />
+          <button className="btn-default" onClick={handleAddSecPage}>
+            Criar projeto
+          </button>
+        </div>
+        {filtersChosen.length > 0 && (
+          <FiltersApplied
+            cleanFilters={cleanFilters}
+            filtersChosen={filtersChosen}
+            handleFilters={cleanAllFilters}
+          >
+            {isFilterApplied("creation-date") && (
+              <DateFilter
+                endDate={endDate}
+                handleEndDate={handleEndDate}
+                handleInitialDate={handleInitialDate}
+                initialDate={initialDate}
+                cleanDateFilter={() => {
+                  deleteFilter("creation-date");
+                  cleanDateFilter();
+                }}
+              />
+            )}
+            {isFilterApplied("deleted") && (
+              <RemovedFilter
+                desc="Projetos removidos"
+                onClick={() => deleteFilter("deleted")}
+              />
+            )}
+          </FiltersApplied>
+        )}
+        {store.length > 0 ? (
+          <div className={`${view}`} aria-labelledby="page-heading">
+            {store.map((project) => (
+              <div className={`${view}__item`} key={project.id}>
+                {isTablet || isMobile ? (
                   <CardLinkUpdateAndDelete
                     mainText={project.name}
-                    onDelete={() => {}}
+                    onDelete={() => handleDeletion(project.id)}
                     readRoute={`/projetos/${project.id}`}
                     registerId={project.id}
                     registerName={project.name}
@@ -128,12 +213,12 @@ export default function Projects() {
                 ) : (
                   <CardBtnUpdateAndDelete
                     mainText={project.name}
-                    onDelete={() => {}}
+                    onDelete={() => handleDeletion(project.id)}
                     registerId={project.id}
                     registerName={project.name}
                     secondaryText={project.description}
                     onUpdateClick={() => handleEditSecPage(project.id)}
-                    onClick={handleReadSecPage}
+                    onClick={() => handleReadSecPage(project.id)}
                   />
                 )}
               </div>
@@ -141,12 +226,12 @@ export default function Projects() {
           </div>
         ) : (
           <NoRegistersFound errorMsg="Oops! Você ainda não possui projetos." />
-        )} */}
+        )}
       </div>
       {isSecPageOpen && (
         <SecondPage
           title={secPageTitle}
-          onClick={() => setIsSecPageOpen(false)}
+          onClick={() => handleIsSecPageOpen(false)}
           fullScreenLink={fullScreenLink}
         >
           {secPageContent}

@@ -14,7 +14,21 @@ export default async function Page({ params }: PageProps) {
   const project = await getProject(id);
 
   if (project && "id" in project) {
-    return <EditProject project={project} />;
+    return (
+      <EditProject
+        project={project}
+        crumbs={[
+          {
+            desc: "PROJETOS",
+            link: "/projetos",
+          },
+          {
+            desc: `EDITAR ${project.name}`,
+            link: `/projetos/${project.id}/editar`,
+          },
+        ]}
+      />
+    );
   }
 
   return;

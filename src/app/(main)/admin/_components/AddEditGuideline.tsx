@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import InputTextVoice from "@/components/InputTextVoice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Code from "@/components/Code";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import FileInput from "@/components/FileInput";
 import GuidelinesDeficiencesFilter from "@/components/DeficiencesCheckbox";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -21,22 +21,16 @@ import { updateGuideline, createGuideline } from "@/routes/user-guidelines";
 import useErrors from "@/hooks/useErrors";
 import Errors from "@/components/Errors";
 import { useScreenType } from "@/hooks/useScreenType";
+import { Page } from "@/types/page";
 
-type AddEditGuidelineProps = {
-  isSecPage?: boolean;
-  handleSecPageTitle?: Dispatch<SetStateAction<string>>;
-  toEdit?: boolean;
-  crumbs?: {
-    desc: string;
-    link: string;
-  }[];
+type AddEditGuidelineProps = Page & {
   guideline?: Guideline;
 };
 
 export default function AddEditGuideline({
   isSecPage = false,
   handleSecPageTitle,
-  toEdit = false,
+  isEditPage = false,
   crumbs,
   guideline,
 }: AddEditGuidelineProps) {
@@ -69,7 +63,7 @@ export default function AddEditGuideline({
     },
   });
   const [filename, setFilename] = useState("");
-  const { setPushMsg } = usePush();
+  const { setPushMsg, setShowPush } = usePush();
   const router = useRouter();
   const { isDesktop } = useScreenType();
   const [code, setCode] = useState("");
@@ -85,7 +79,7 @@ export default function AddEditGuideline({
   useEffect(() => {
     if (isSecPage && handleSecPageTitle) {
       handleSecPageTitle(
-        `${toEdit ? "Editar" : "Cadastrar"} ${guidelineName || "diretriz"}`
+        `${isEditPage ? "Editar" : "Cadastrar"} ${guidelineName || "diretriz"}`
       );
     }
   }, [isSecPage, guidelineName, handleSecPageTitle]);
@@ -99,6 +93,20 @@ export default function AddEditGuideline({
   const handleSetValue = (name: string, value: string) => {
     if (name === "guideName" || name === "desc" || name === "imageDesc") {
       setValue(name, value);
+    }
+  };
+
+  const handleResponse = () => {
+    setPushMsg(
+      `Diretriz ${isEditPage ? "atualizada" : "cadastrada"} com sucesso 🎉`
+    );
+    setShowPush(true);
+    reset();
+
+    if (isDesktop) {
+      window.location.reload();
+    } else {
+      router.push("/admin/diretrizes");
     }
   };
 
@@ -119,34 +127,16 @@ export default function AddEditGuideline({
 
       if (sessionData && sessionData.user && sessionData.user.id) {
         const res =
-          toEdit && guideline && guideline.id
+          isEditPage && guideline && guideline.id
             ? await updateGuideline(sessionData.user.id, guideline.id, formData)
             : await createGuideline(sessionData.user.id, formData);
 
         if ("errors" in res) {
           handleApiErrors([res]);
           setPushMsg("");
-        }
-
-        if (!toEdit && "id" in res) {
-          reset();
-          setPushMsg("Diretriz cadastrada com sucesso 🎉");
-
-          if (isDesktop) {
-            window.location.reload();
-          } else {
-            router.push("/admin/diretrizes");
-          }
-        }
-
-        if (toEdit && "id" in res) {
-          setPushMsg("Diretriz atualizada com sucesso 🎉");
-
-          if (isDesktop) {
-            window.location.reload();
-          } else {
-            router.push("/admin/diretrizes");
-          }
+          setShowPush(false);
+        } else {
+          handleResponse();
         }
       }
     }
@@ -157,7 +147,7 @@ export default function AddEditGuideline({
       {!isSecPage && crumbs && <Breadcrumb crumbs={crumbs} />}
       {!isSecPage && (
         <h1 className="heading-1">
-          {toEdit
+          {isEditPage
             ? `Editar diretriz ${guideline?.name}`
             : "Cadastro de diretriz"}
         </h1>
@@ -306,7 +296,7 @@ export default function AddEditGuideline({
         <Errors msgs={errorMsgs} isAlert={isAlert} />
         <div className="cart__form__btn">
           <button type="submit" className="btn-default">
-            {toEdit ? "Editar" : "Criar"}
+            {isEditPage ? "Editar" : "Criar"}
           </button>
         </div>
       </form>

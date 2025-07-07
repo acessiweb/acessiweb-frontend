@@ -38,7 +38,11 @@ export default function usePagination<T>({ data = [] }: PaginationProps<T>) {
   const handleMore = (newData: PaginationProps<T>) => {
     setStore((stored) => {
       const prevStored = [...stored];
-      newData.data!.map((d) => prevStored.push(d));
+
+      if (newData.data) {
+        newData.data.map((d) => prevStored.push(d));
+      }
+
       return prevStored;
     });
   };
@@ -46,7 +50,11 @@ export default function usePagination<T>({ data = [] }: PaginationProps<T>) {
   const handleLess = (newData: PaginationProps<T>) => {
     setStore((stored) => {
       const prevStored = [...stored];
-      newData.data!.splice(store.length - (store.length - newData.limit!));
+
+      if (newData.data && newData.limit) {
+        prevStored.splice(store.length - (store.length - newData.limit));
+      }
+
       return prevStored;
     });
   };

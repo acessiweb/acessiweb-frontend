@@ -1,9 +1,8 @@
-import { lookupUser } from "@/routes/auth";
+import { validateGoogleAuth } from "@/routes/auth";
 import NextAuth, { NextAuthOptions, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import TwitterProvider from "next-auth/providers/twitter";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { createAccount } from "@/routes/common-users";
 import * as jose from "jose";
 import { JWT } from "next-auth/jwt";
 
@@ -30,6 +29,37 @@ import { JWT } from "next-auth/jwt";
 //     };
 //   }
 // }
+
+function getUser(tokens: { accessToken: string; refreshToken: string }) {
+  const accessToken = jose.decodeJwt(tokens.accessToken) as {
+    sub: string;
+    email: string;
+    role: string;
+    iat: number;
+    exp: number;
+    aud: string;
+    iss: string;
+    username: string;
+  };
+  const refreshToken = jose.decodeJwt(tokens.refreshToken);
+
+  return {
+    user: {
+      id: accessToken.sub,
+      email: accessToken.email,
+      role: accessToken.role,
+      username: accessToken.username,
+    },
+    tokens: {
+      access: tokens.accessToken,
+      refresh: tokens.refreshToken,
+    },
+    validity: {
+      valid_until: accessToken.exp,
+      refresh_until: refreshToken.exp,
+    },
+  } as User;
+}
 
 const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -59,34 +89,7 @@ const authOptions: NextAuthOptions = {
 
         if (response.ok) {
           if (tokens.accessToken) {
-            const accessToken = jose.decodeJwt(tokens.accessToken) as {
-              sub: string;
-              email: string;
-              role: string;
-              iat: number;
-              exp: number;
-              aud: string;
-              iss: string;
-              username: string;
-            };
-            const refreshToken = jose.decodeJwt(tokens.accessToken);
-
-            return {
-              user: {
-                id: accessToken.sub,
-                email: accessToken.email,
-                role: accessToken.role,
-                username: accessToken.username,
-              },
-              tokens: {
-                access: tokens.accessToken,
-                refresh: tokens.refreshToken,
-              },
-              validity: {
-                valid_until: accessToken.exp,
-                refresh_until: refreshToken.exp,
-              },
-            } as User;
+            return getUser(tokens);
           }
           return null;
         }
@@ -105,47 +108,12 @@ const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ profile }) {
-      try {
-        const user = await lookupUser({ email: profile?.email });
-
-        if ("statusCode" in user && user.statusCode == 404) {
-          await createAccount({
-            email: profile?.email,
-            username: profile?.name,
-          });
-
-          return true;
-        }
-
-        return true;
-      } catch (error) {
-        console.error("Error during OAuth login:", error);
-        return "/auth/logar?error=AccessDenied";
-      }
-    },
     async jwt({ token, account, user }) {
       if (user && account) {
-        if (account.provider !== "credentials") {
+        if (account.provider === "google") {
           try {
-            const backendUser = await lookupUser({ email: user.email! });
-            const userInfo = {
-              user: {
-                id: backendUser.id,
-                email: user.email,
-                role: backendUser.role,
-                username: backendUser.username,
-              },
-              tokens: {
-                access: account.access_token,
-                refresh: "",
-              },
-              validity: {
-                valid_until: account.expires_at,
-                refresh_until: 0,
-              },
-            } as User;
-
+            const tokens = await validateGoogleAuth(account.id_token!);
+            const userInfo = getUser(tokens);
             return { ...token, data: userInfo };
           } catch {
             return Promise.reject(undefined);

@@ -1,18 +1,12 @@
-import { Dispatch, SetStateAction } from "react";
 import AddEditProject from "../../_components/AddEditProject";
 import { Project } from "@/types/project";
+import { Page } from "@/types/page";
 
-type EditProjectProps = {
-  isSecPage?: boolean;
-  handleSecPageTitle?: Dispatch<SetStateAction<string>>;
-  crumbs?: {
-    desc: string;
-    link: string;
-  }[];
+type EditProjectProps = Page & {
   project: Project;
 };
 
-export default function EditGuideline({
+export default function EditProject({
   crumbs,
   handleSecPageTitle,
   project,
@@ -20,11 +14,11 @@ export default function EditGuideline({
 }: EditProjectProps) {
   return (
     <AddEditProject
-      toEdit={true}
       crumbs={crumbs}
       handleSecPageTitle={handleSecPageTitle}
       project={project}
       isSecPage={isSecPage}
+      isEditPage={true}
     />
   );
 }

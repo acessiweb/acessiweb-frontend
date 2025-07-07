@@ -94,10 +94,10 @@ export default function HeaderDesktop({
   onToggleKeyboard: () => void;
 }) {
   const pathname = usePathname();
-  const { data } = useSession();
+  const { data: session } = useSession();
 
-  if (data && data.user && data.user.role) {
-    if (isAdmin(data.user.role))
+  if (session && session.user && session.user.role) {
+    if (isAdmin(session.user.role))
       return (
         <BaseHeaderDesktop
           onToggleKeyboard={onToggleKeyboard}
@@ -121,7 +121,7 @@ export default function HeaderDesktop({
         </BaseHeaderDesktop>
       );
 
-    if (!pathname.includes("admin") && isCommonUser(data.user.role))
+    if (!pathname.includes("admin") && isCommonUser(session.user.role))
       return (
         <BaseHeaderDesktop
           onToggleKeyboard={onToggleKeyboard}

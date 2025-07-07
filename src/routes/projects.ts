@@ -7,6 +7,66 @@ type Projects = PaginationResponse & {
   data: Project[];
 };
 
+export async function createProject(body: {
+  name: string;
+  guidelines: string[];
+  desc: string;
+}): Promise<ApiError | { id: string }> {
+  const token = await getAuthSession();
+
+  return fetchData({
+    endpoint: `common-users/me/projects`,
+    config: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
+    },
+  });
+}
+
+export async function editProject(
+  projectId: string,
+  body: {
+    name: string;
+    guidelines: string[];
+    desc: string;
+    feedback: string;
+  }
+): Promise<ApiError | Project> {
+  const token = await getAuthSession();
+
+  return fetchData({
+    endpoint: `common-users/me/projects/${projectId}`,
+    config: {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
+    },
+  });
+}
+
+export async function deleteProject(
+  projectId: string
+): Promise<ApiError | { id: string }> {
+  const token = await getAuthSession();
+
+  return fetchData({
+    endpoint: `common-users/me/projects/${projectId}`,
+    config: {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  });
+}
+
 export async function getProjects(query: {
   userId?: string;
   keyword?: string;

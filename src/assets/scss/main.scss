@@ -160,10 +160,12 @@ input[type="checkbox"]:focus-visible {
         display: flex;
         flex: 1;
         column-gap: var.$space-md;
+        width: 100%;
 
         > div {
           flex: 1;
           overflow-y: auto;
+          max-width: 50%;
         }
       }
     }
@@ -194,7 +196,7 @@ input[type="checkbox"]:focus-visible {
 //pages
 @include meta.load-css("pages/homepage-mobile");
 @include meta.load-css("pages/project/projects");
-@include meta.load-css("pages/project/cart");
+@include meta.load-css("pages/project/add-project");
 @include meta.load-css("pages/project/edit-project");
 @include meta.load-css("pages/project/read-project");
 @include meta.load-css("pages/guideline/add-guideline");

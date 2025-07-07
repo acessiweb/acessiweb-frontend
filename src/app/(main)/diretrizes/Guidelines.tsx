@@ -60,7 +60,6 @@ export default function GuidelinesUser({
     onLoadLess,
     onLoadMore,
     offset,
-    isFiltering,
     store,
     handleStore,
     handleFiltering,
@@ -82,14 +81,14 @@ export default function GuidelinesUser({
   } = useDeficiencyFilters({ handleFiltering });
   const {
     isOpen: isSecPageOpen,
-    setIsOpen: setIsSecPageOpen,
+    handleIsOpen: handleIsSecPageOpen,
     getSecPageClass,
-    setNode: setSecPageContent,
+    handleNode: handleSecPageContent,
     node: secPageContent,
     title: secPageTitle,
-    setTitle: setSecPageTitle,
+    handleTitle: handleSecPageTitle,
     fullScreenLink,
-    setFullScreenLink,
+    handleFullScreenLink,
   } = useSecPage();
 
   const { data: guidelines } = useQuery({
@@ -127,10 +126,12 @@ export default function GuidelinesUser({
     const guideline = await getGuideline(id);
 
     if ("id" in guideline) {
-      setIsSecPageOpen(true);
-      setSecPageContent(<Guideline guideline={guideline} isSecPage={true} />);
-      setSecPageTitle(guideline.name);
-      setFullScreenLink(`/diretrizes/${id}`);
+      handleIsSecPageOpen(true);
+      handleSecPageContent(
+        <Guideline guideline={guideline} isSecPage={true} />
+      );
+      handleSecPageTitle(guideline.name);
+      handleFullScreenLink(`/diretrizes/${id}`);
     }
   };
 
@@ -192,8 +193,8 @@ export default function GuidelinesUser({
         </FiltersApplied>
         {store.length > 0 ? (
           <div className={`${view}`} aria-labelledby="page-heading">
-            {store.map((guideline, i) => (
-              <div className={`${view}__item`} key={i}>
+            {store.map((guideline) => (
+              <div className={`${view}__item`} key={guideline.id}>
                 {isDesktop && (
                   <CardBtnAdd
                     onAdd={addGuidelineToCart}
@@ -222,7 +223,6 @@ export default function GuidelinesUser({
         )}
         {guidelines && "data" in guidelines && (
           <Pagination
-            isFiltering={isFiltering}
             hasNext={guidelines.hasNext}
             hasPrev={guidelines.hasPrev}
             onLoadLess={() => onLoadLess(guidelines.limit)}
@@ -233,7 +233,7 @@ export default function GuidelinesUser({
       {isSecPageOpen && isDesktop && (
         <SecondPage
           title={secPageTitle}
-          onClick={() => setIsSecPageOpen(false)}
+          onClick={() => handleIsSecPageOpen(false)}
           fullScreenLink={fullScreenLink}
         >
           {secPageContent}

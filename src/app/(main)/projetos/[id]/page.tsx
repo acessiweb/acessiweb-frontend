@@ -14,7 +14,9 @@ export default async function Page({ params }: PageProps) {
   const project = await getProject(id);
 
   if (project && "id" in project) {
-    return <Project project={project} />;
+    return (
+      <Project project={project} handleSecPageTitle={() => project.name} />
+    );
   }
 
   return;

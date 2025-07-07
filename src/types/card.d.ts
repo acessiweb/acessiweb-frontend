@@ -38,6 +38,10 @@ export type CardStatusProps = {
   status: "APPROVED" | "PENDING" | "REJECTED";
 };
 
+export type CardRestoreProps = {
+  onRestore: () => void;
+};
+
 export type CardBtnUpdateAndDeleteProps = CardUpdateAndDeleteProps & {
   onUpdateClick: () => void;
 };

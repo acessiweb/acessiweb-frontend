@@ -1,12 +1,8 @@
+import { Page } from "@/types/page";
 import { Project as ProjectType } from "@/types/project";
 
-type ProjectProps = {
+type ProjectProps = Page & {
   project: ProjectType;
-  isSecPage?: boolean;
-  crumbs?: {
-    desc: string;
-    link: string;
-  }[];
 };
 
 export default function Project({ project }: ProjectProps) {

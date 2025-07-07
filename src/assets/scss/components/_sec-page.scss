@@ -8,6 +8,10 @@
   background-color: var.$lightPurple;
   padding: var.$space-md;
 
+  .file-input label {
+    background-color: var.$lighterPurple;
+  }
+
   &__header {
     display: flex;
     align-items: center;
@@ -17,6 +21,13 @@
 
     .heading-2 {
       font-style: italic;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
+  }
+
+  input {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

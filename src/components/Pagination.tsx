@@ -3,7 +3,6 @@ type PaginationProps = {
   onLoadLess: () => void;
   hasPrev?: boolean;
   hasNext?: boolean;
-  isFiltering: boolean;
 };
 
 export default function Pagination({
@@ -11,16 +10,15 @@ export default function Pagination({
   hasPrev = false,
   onLoadLess,
   onLoadMore,
-  isFiltering,
 }: PaginationProps) {
   return (
     <div className="pagination">
-      {!isFiltering && hasNext && (
+      {hasNext && (
         <button className="btn-default" onClick={onLoadMore}>
           Carregar mais
         </button>
       )}
-      {!isFiltering && hasPrev && (
+      {hasPrev && (
         <button className="btn-default" onClick={onLoadLess}>
           Carregar menos
         </button>

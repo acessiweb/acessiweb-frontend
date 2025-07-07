@@ -23,3 +23,19 @@ export async function lookupUser({
     endpoint: `auth/lookup?${query}`,
   });
 }
+
+export async function validateGoogleAuth(idToken: string) {
+  console.log(idToken);
+  return await fetchData({
+    endpoint: `auth/google`,
+    config: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        idToken,
+      }),
+    },
+  });
+}

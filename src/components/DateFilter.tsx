@@ -46,7 +46,7 @@ export default function DateFilter({
           className="filters-applied__delete--one"
           onClick={cleanDateFilter}
         >
-          <IoCloseOutline />
+          <IoCloseOutline aria-hidden={true} focusable={false} />
         </button>
       </form>
     </div>
