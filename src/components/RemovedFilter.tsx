@@ -11,10 +11,14 @@ export default function RemovedFilter({ desc, onClick }: RemovedFilterProps) {
       <span>{desc}</span>
       <button
         type="button"
-        className="filters-applied__delete--one"
+        className="filters-applied__delete--one cursor-pointer"
         onClick={onClick}
       >
-        <IoCloseOutline aria-hidden={true} focusable={false} />
+        <IoCloseOutline
+          className="cursor-pointer"
+          aria-hidden={true}
+          focusable={false}
+        />
       </button>
     </div>
   );

@@ -1,0 +1,36 @@
+@use "../../var";
+
+.preferences {
+  display: flex;
+  flex-direction: column;
+  row-gap: calc(var.$space-md + 0.3rem);
+  flex: 1;
+  width: 100%;
+
+  fieldset {
+    flex: 1;
+    padding: var.$space-md;
+    display: flex;
+    flex-direction: column;
+    row-gap: var.$space-md;
+    border-radius: var.$border-radius-default;
+
+    div {
+      display: flex;
+      column-gap: var.$space-md;
+      align-items: center;
+    }
+  }
+
+  form {
+    display: flex;
+    column-gap: var.$space-md;
+    flex: 1;
+    align-items: center;
+  }
+
+  select {
+    padding: var.$space-sm var.$space-xs;
+    border-radius: var.$border-radius-default;
+  }
+}

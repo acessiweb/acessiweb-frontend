@@ -1,13 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-#app input::placeholder,
-#app button, .open-sans {
+@import url("https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap");
+.arial {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+.calibri {
+  font-family: "Carlito", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.helvetica {
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+.tahoma {
   font-family: "Open Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
   font-variation-settings: "wdth" 100;
+}
+
+.times-new-roman {
+  font-family: "Tinos", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.verdana {
+  font-family: "Arimo", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 html,
@@ -29,6 +72,7 @@ body {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  cursor: none;
 }
 
 li[tabindex]:focus-visible {
@@ -39,6 +83,14 @@ li[tabindex]:focus-visible {
 input[type=checkbox]:focus-visible {
   outline: 2px solid rgb(25, 25, 24);
   outline-offset: 2px;
+}
+
+.dark li[tabindex]:focus-visible {
+  box-shadow: inset 0 0 0 2px #f0f0f0;
+}
+.dark *:focus-visible,
+.dark input[type=checkbox]:focus-visible {
+  outline: 2px solid #f0f0f0;
 }
 
 #auth {
@@ -160,12 +212,22 @@ input[type=checkbox]:focus-visible {
   max-width: 50%;
 }
 
+.dark #app {
+  background-color: #303030;
+  color: #f0f0f0;
+}
+.dark #app a {
+  color: #f0f0f0;
+}
+.dark #app svg {
+  color: rgb(25, 25, 24);
+}
+
 .btn-link-default, .btn-default {
   background-color: #c1a6f9;
   border: 1px solid rgb(25, 25, 24);
   border-radius: 15px;
   padding: 0.3rem 0.9rem;
-  cursor: pointer;
   font-size: 1rem;
   font-style: italic;
   font-weight: 600;
@@ -182,7 +244,6 @@ input[type=checkbox]:focus-visible {
   background-color: transparent;
   outline: none;
   border: none;
-  cursor: pointer;
   padding: 0.7rem;
   display: flex;
   align-items: center;
@@ -252,6 +313,10 @@ input[type=checkbox]:focus-visible {
   font-size: 0.9rem;
 }
 
+input[type=range]::-webkit-slider-thumb {
+  background-color: #c1a6f9;
+}
+
 .form-error-msg {
   color: #cc695f;
   font-size: 0.7rem;
@@ -280,6 +345,10 @@ input[type=checkbox]:focus-visible {
   border-radius: 1px;
 }
 
+.dark .input-checkbox {
+  border-color: #f0f0f0;
+}
+
 .file-input {
   display: flex;
   flex-direction: column;
@@ -291,7 +360,6 @@ input[type=checkbox]:focus-visible {
   border-radius: 12px;
   padding: 0.7rem;
   background-color: #e5d9ff;
-  cursor: pointer;
   flex: 1;
   border: 1px solid transparent;
 }
@@ -372,10 +440,6 @@ button {
   all: unset;
 }
 
-.nav__settings, .nav__profile, .nav__cart, .nav__logout, .nav__keyboard, .nav__person {
-  cursor: pointer;
-}
-
 .nav__help, .nav__settings {
   display: flex;
   align-items: center;
@@ -411,7 +475,6 @@ button {
 
 .nav__help > button,
 .nav__help > button > svg {
-  cursor: pointer;
   position: absolute;
   left: 50%;
   right: 50%;
@@ -503,6 +566,10 @@ button {
 .nav__profile ul {
   top: 50px;
   right: 50px;
+}
+
+.dark .nav__cart svg {
+  fill: #f0f0f0;
 }
 
 .sec-page {
@@ -667,7 +734,6 @@ button {
   border-radius: 25px;
   border: 1px solid rgb(25, 25, 24);
   font-weight: 500;
-  cursor: pointer;
   transition: transform 0.2s ease;
   row-gap: 0.7rem;
   position: relative;
@@ -704,7 +770,6 @@ button {
   text-overflow: ellipsis;
   font-size: 0.9rem;
   flex: 1;
-  line-height: 1.5em;
 }
 
 .card:hover {
@@ -718,6 +783,10 @@ button {
 .card svg {
   height: 2.1rem !important;
   width: 2.1rem !important;
+}
+
+.dark .card {
+  color: rgb(25, 25, 24);
 }
 
 .push-wrapper {
@@ -895,7 +964,6 @@ button {
 .search .btn-icon {
   background-color: #e5d9ff;
   padding: 0.7rem;
-  cursor: pointer;
 }
 
 .search__search-form {
@@ -924,7 +992,6 @@ button {
   align-items: center;
   background-color: transparent;
   border: none;
-  cursor: pointer;
 }
 
 .search-header {
@@ -945,7 +1012,6 @@ button {
 .search-header .btn-icon {
   background-color: #c1a6f9;
   padding: 0.4rem 0.7rem;
-  cursor: pointer;
 }
 
 .search-header__search-form {
@@ -974,7 +1040,6 @@ button {
   align-items: center;
   background-color: transparent;
   border: none;
-  cursor: pointer;
 }
 
 .search-header input::placeholder {
@@ -1009,7 +1074,6 @@ button {
 }
 
 .control-bar__options .modal ul li {
-  cursor: pointer;
   padding: 0.7rem;
   border-top: 1px solid rgb(25, 25, 24);
 }
@@ -1031,15 +1095,6 @@ button {
   top: 10%;
   left: -300%;
   bottom: 0;
-}
-
-#app input::placeholder,
-#app button, .open-sans {
-  font-family: "Open Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings: "wdth" 100;
 }
 
 .filters-applied {
@@ -1076,7 +1131,6 @@ button {
   align-items: center;
   border-radius: 2px;
   border: none;
-  cursor: pointer;
 }
 
 .filters-applied__delete--one svg {
@@ -1090,7 +1144,6 @@ button {
 
 .pagination {
   margin: 1.9rem auto;
-  cursor: pointer;
 }
 
 .code {
@@ -1471,12 +1524,52 @@ button {
   height: 100%;
 }
 
+.preferences {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.4rem;
+  flex: 1;
+  width: 100%;
+}
+
+.preferences fieldset {
+  flex: 1;
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.1rem;
+  border-radius: 12px;
+}
+
+.preferences fieldset div {
+  display: flex;
+  column-gap: 1.1rem;
+  align-items: center;
+}
+
+.preferences form {
+  display: flex;
+  column-gap: 1.1rem;
+  flex: 1;
+  align-items: center;
+}
+
+.preferences select {
+  padding: 0.7rem 0.3rem;
+  border-radius: 12px;
+}
+
 .auth {
   background-color: #c1a6f9;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+  cursor: auto;
+}
+
+.auth * {
+  cursor: auto;
 }
 
 .auth .heading-3 {
@@ -1594,7 +1687,6 @@ button {
 .auth .email-or-mobile-phone > button:nth-child(2) {
   all: unset;
   margin-left: auto;
-  cursor: pointer;
   font-size: 0.9rem;
 }
 
@@ -1609,6 +1701,53 @@ button {
 
 .auth .password input {
   flex: 1;
+}
+
+.config {
+  display: flex;
+  width: 100%;
+  column-gap: 1.9rem;
+  padding: 0 1.1rem;
+}
+
+.config__tab--active {
+  background-color: #c1a6f9;
+}
+
+.config aside {
+  flex: 2;
+}
+
+.config__menu {
+  background-color: #e5d9ff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1px solid rgb(25, 25, 24);
+}
+
+.config__menu li {
+  padding: 1.1rem;
+  border-bottom: 1px solid rgb(25, 25, 24);
+}
+
+.config__menu li:hover {
+  background-color: #c1a6f9;
+}
+
+.config__content {
+  flex: 3;
+}
+
+.dark .config__menu {
+  background-color: #c1a6f9;
+}
+
+.dark .config__menu li a {
+  color: rgb(25, 25, 24) !important;
+}
+
+.dark .config__menu li:hover {
+  background-color: #f9f6ff;
 }
 
 /* ----------------------------------------------
@@ -1741,13 +1880,912 @@ animation by Loop nerd
   flex: 1;
 }
 
-#app input::placeholder,
-#app button, .open-sans {
+.arial {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+.calibri {
+  font-family: "Carlito", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.helvetica {
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+.tahoma {
   font-family: "Open Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
   font-variation-settings: "wdth" 100;
+}
+
+.times-new-roman {
+  font-family: "Tinos", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.verdana {
+  font-family: "Arimo", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.fs-small,
+.fs-small select {
+  font-size: 1rem;
+}
+
+.fs-medium,
+.fs-medium select {
+  font-size: 1.3rem;
+}
+
+.fs-large,
+.fs-large select {
+  font-size: 1.7rem;
+}
+
+.fs-x-large,
+.fs-x-large select {
+  font-size: 2rem;
+}
+
+.brightness-0 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-1 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-2 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-3 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-4 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-5 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-6 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-7 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-8 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-9 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-10 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-11 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-12 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-13 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-14 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-15 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-16 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-17 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-18 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-19 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-20 {
+  filter: brightness(0.2);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-21 {
+  filter: brightness(0.21);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-22 {
+  filter: brightness(0.22);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-23 {
+  filter: brightness(0.23);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-24 {
+  filter: brightness(0.24);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-25 {
+  filter: brightness(0.25);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-26 {
+  filter: brightness(0.26);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-27 {
+  filter: brightness(0.27);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-28 {
+  filter: brightness(0.28);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-29 {
+  filter: brightness(0.29);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-30 {
+  filter: brightness(0.3);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-31 {
+  filter: brightness(0.31);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-32 {
+  filter: brightness(0.32);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-33 {
+  filter: brightness(0.33);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-34 {
+  filter: brightness(0.34);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-35 {
+  filter: brightness(0.35);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-36 {
+  filter: brightness(0.36);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-37 {
+  filter: brightness(0.37);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-38 {
+  filter: brightness(0.38);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-39 {
+  filter: brightness(0.39);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-40 {
+  filter: brightness(0.4);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-41 {
+  filter: brightness(0.41);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-42 {
+  filter: brightness(0.42);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-43 {
+  filter: brightness(0.43);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-44 {
+  filter: brightness(0.44);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-45 {
+  filter: brightness(0.45);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-46 {
+  filter: brightness(0.46);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-47 {
+  filter: brightness(0.47);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-48 {
+  filter: brightness(0.48);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-49 {
+  filter: brightness(0.49);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-50 {
+  filter: brightness(0.5);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-51 {
+  filter: brightness(0.51);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-52 {
+  filter: brightness(0.52);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-53 {
+  filter: brightness(0.53);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-54 {
+  filter: brightness(0.54);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-55 {
+  filter: brightness(0.55);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-56 {
+  filter: brightness(0.56);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-57 {
+  filter: brightness(0.57);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-58 {
+  filter: brightness(0.58);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-59 {
+  filter: brightness(0.59);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-60 {
+  filter: brightness(0.6);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-61 {
+  filter: brightness(0.61);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-62 {
+  filter: brightness(0.62);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-63 {
+  filter: brightness(0.63);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-64 {
+  filter: brightness(0.64);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-65 {
+  filter: brightness(0.65);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-66 {
+  filter: brightness(0.66);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-67 {
+  filter: brightness(0.67);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-68 {
+  filter: brightness(0.68);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-69 {
+  filter: brightness(0.69);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-70 {
+  filter: brightness(0.7);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-71 {
+  filter: brightness(0.71);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-72 {
+  filter: brightness(0.72);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-73 {
+  filter: brightness(0.73);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-74 {
+  filter: brightness(0.74);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-75 {
+  filter: brightness(0.75);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-76 {
+  filter: brightness(0.76);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-77 {
+  filter: brightness(0.77);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-78 {
+  filter: brightness(0.78);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-79 {
+  filter: brightness(0.79);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-80 {
+  filter: brightness(0.8);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-81 {
+  filter: brightness(0.81);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-82 {
+  filter: brightness(0.82);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-83 {
+  filter: brightness(0.83);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-84 {
+  filter: brightness(0.84);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-85 {
+  filter: brightness(0.85);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-86 {
+  filter: brightness(0.86);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-87 {
+  filter: brightness(0.87);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-88 {
+  filter: brightness(0.88);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-89 {
+  filter: brightness(0.89);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-90 {
+  filter: brightness(0.9);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-91 {
+  filter: brightness(0.91);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-92 {
+  filter: brightness(0.92);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-93 {
+  filter: brightness(0.93);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-94 {
+  filter: brightness(0.94);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-95 {
+  filter: brightness(0.95);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-96 {
+  filter: brightness(0.96);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-97 {
+  filter: brightness(0.97);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-98 {
+  filter: brightness(0.98);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-99 {
+  filter: brightness(0.99);
+  transition: filter 0.1s ease-out;
+}
+
+.brightness-100 {
+  filter: brightness(1);
+  transition: filter 0.1s ease-out;
+}
+
+.line-space-15 .card__content > p {
+  line-height: 1.5 !important;
+}
+
+.line-space-16 .card__content > p {
+  line-height: 1.6 !important;
+}
+
+.line-space-17 .card__content > p {
+  line-height: 1.7 !important;
+}
+
+.line-space-18 .card__content > p {
+  line-height: 1.8 !important;
+}
+
+.line-space-19 .card__content > p {
+  line-height: 1.9 !important;
+}
+
+.line-space-20 .card__content > p {
+  line-height: 2 !important;
+}
+
+.line-space-21 .card__content > p {
+  line-height: 2.1 !important;
+}
+
+.line-space-22 .card__content > p {
+  line-height: 2.2 !important;
+}
+
+.line-space-23 .card__content > p {
+  line-height: 2.3 !important;
+}
+
+.line-space-24 .card__content > p {
+  line-height: 2.4 !important;
+}
+
+.line-space-25 .card__content > p {
+  line-height: 2.5 !important;
+}
+
+.line-space-26 .card__content > p {
+  line-height: 2.6 !important;
+}
+
+.line-space-27 .card__content > p {
+  line-height: 2.7 !important;
+}
+
+.line-space-28 .card__content > p {
+  line-height: 2.8 !important;
+}
+
+.line-space-29 .card__content > p {
+  line-height: 2.9 !important;
+}
+
+.line-space-30 .card__content > p {
+  line-height: 3 !important;
+}
+
+.letter-space-12 .card__content > p {
+  letter-spacing: 0.12em !important;
+}
+
+.letter-space-13 .card__content > p {
+  letter-spacing: 0.13em !important;
+}
+
+.letter-space-14 .card__content > p {
+  letter-spacing: 0.14em !important;
+}
+
+.letter-space-15 .card__content > p {
+  letter-spacing: 0.15em !important;
+}
+
+.letter-space-16 .card__content > p {
+  letter-spacing: 0.16em !important;
+}
+
+.letter-space-17 .card__content > p {
+  letter-spacing: 0.17em !important;
+}
+
+.letter-space-18 .card__content > p {
+  letter-spacing: 0.18em !important;
+}
+
+.letter-space-19 .card__content > p {
+  letter-spacing: 0.19em !important;
+}
+
+.letter-space-20 .card__content > p {
+  letter-spacing: 0.2em !important;
+}
+
+.cursor-small.cursor-pink *,
+.cursor-small.cursor-pink input,
+.cursor-small.cursor-pink select {
+  cursor: url(../images/svg/cursor/pink/cursor-pink-small.svg), auto;
+}
+
+.cursor-small.cursor-pink .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/pink/cursor-pointer-pink-small.svg), pointer;
+}
+
+.cursor-small.cursor-blue *,
+.cursor-small.cursor-blue input,
+.cursor-small.cursor-blue select {
+  cursor: url(../images/svg/cursor/blue/cursor-blue-small.svg), auto;
+}
+
+.cursor-small.cursor-blue .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/blue/cursor-pointer-blue-small.svg), pointer;
+}
+
+.cursor-small.cursor-green *,
+.cursor-small.cursor-green input,
+.cursor-small.cursor-green select {
+  cursor: url(../images/svg/cursor/green/cursor-green-small.svg), auto;
+}
+
+.cursor-small.cursor-green .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/green/cursor-pointer-green-small.svg), pointer;
+}
+
+.cursor-small.cursor-orange *,
+.cursor-small.cursor-orange input,
+.cursor-small.cursor-orange select {
+  cursor: url(../images/svg/cursor/orange/cursor-orange-small.svg), auto;
+}
+
+.cursor-small.cursor-orange .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/orange/cursor-pointer-orange-small.svg), pointer;
+}
+
+.cursor-small.cursor-purple *,
+.cursor-small.cursor-purple input,
+.cursor-small.cursor-purple select {
+  cursor: url(../images/svg/cursor/purple/cursor-purple-small.svg), auto;
+}
+
+.cursor-small.cursor-purple .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/purple/cursor-pointer-purple-small.svg), pointer;
+}
+
+.cursor-small.cursor-yellow *,
+.cursor-small.cursor-yellow input,
+.cursor-small.cursor-yellow select {
+  cursor: url(../images/svg/cursor/yellow/cursor-yellow-small.svg), auto;
+}
+
+.cursor-small.cursor-yellow .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/yellow/cursor-pointer-yellow-small.svg), pointer;
+}
+
+.cursor-small.cursor-black *,
+.cursor-small.cursor-black input,
+.cursor-small.cursor-black select {
+  cursor: url(../images/svg/cursor/black/cursor-black-small.svg), auto;
+}
+
+.cursor-small.cursor-black .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/black/cursor-pointer-black-small.svg), pointer;
+}
+
+.cursor-small.cursor-white *,
+.cursor-small.cursor-white input,
+.cursor-small.cursor-white select {
+  cursor: url(../images/svg/cursor/white/cursor-white-small.svg), auto;
+}
+
+.cursor-small.cursor-white .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/white/cursor-pointer-white-small.svg), pointer;
+}
+
+.cursor-medium.cursor-pink *,
+.cursor-medium.cursor-pink input,
+.cursor-medium.cursor-pink select {
+  cursor: url(../images/svg/cursor/pink/cursor-pink-medium.svg), auto;
+}
+
+.cursor-medium.cursor-pink .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/pink/cursor-pointer-pink-medium.svg), pointer;
+}
+
+.cursor-medium.cursor-blue *,
+.cursor-medium.cursor-blue input,
+.cursor-medium.cursor-blue select {
+  cursor: url(../images/svg/cursor/blue/cursor-blue-medium.svg), auto;
+}
+
+.cursor-medium.cursor-blue .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/blue/cursor-pointer-blue-medium.svg), pointer;
+}
+
+.cursor-medium.cursor-green *,
+.cursor-medium.cursor-green input,
+.cursor-medium.cursor-green select {
+  cursor: url(../images/svg/cursor/green/cursor-green-medium.svg), auto;
+}
+
+.cursor-medium.cursor-green .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/green/cursor-pointer-green-medium.svg), pointer;
+}
+
+.cursor-medium.cursor-orange *,
+.cursor-medium.cursor-orange input,
+.cursor-medium.cursor-orange select {
+  cursor: url(../images/svg/cursor/orange/cursor-orange-medium.svg), auto;
+}
+
+.cursor-medium.cursor-orange .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/orange/cursor-pointer-orange-medium.svg), pointer;
+}
+
+.cursor-medium.cursor-purple *,
+.cursor-medium.cursor-purple input,
+.cursor-medium.cursor-purple select {
+  cursor: url(../images/svg/cursor/purple/cursor-purple-medium.svg), auto;
+}
+
+.cursor-medium.cursor-purple .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/purple/cursor-pointer-purple-medium.svg), pointer;
+}
+
+.cursor-medium.cursor-yellow *,
+.cursor-medium.cursor-yellow input,
+.cursor-medium.cursor-yellow select {
+  cursor: url(../images/svg/cursor/yellow/cursor-yellow-medium.svg), auto;
+}
+
+.cursor-medium.cursor-yellow .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/yellow/cursor-pointer-yellow-medium.svg), pointer;
+}
+
+.cursor-medium.cursor-black *,
+.cursor-medium.cursor-black input,
+.cursor-medium.cursor-black select {
+  cursor: url(../images/svg/cursor/black/cursor-black-medium.svg), auto;
+}
+
+.cursor-medium.cursor-black .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/black/cursor-pointer-black-medium.svg), pointer;
+}
+
+.cursor-medium.cursor-white *,
+.cursor-medium.cursor-white input,
+.cursor-medium.cursor-white select {
+  cursor: url(../images/svg/cursor/white/cursor-white-medium.svg), auto;
+}
+
+.cursor-medium.cursor-white .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/white/cursor-pointer-white-medium.svg), pointer;
+}
+
+.cursor-large.cursor-pink *,
+.cursor-large.cursor-pink input,
+.cursor-large.cursor-pink select {
+  cursor: url(../images/svg/cursor/pink/cursor-pink-large.svg), auto;
+}
+
+.cursor-large.cursor-pink .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/pink/cursor-pointer-pink-large.svg), pointer;
+}
+
+.cursor-large.cursor-blue *,
+.cursor-large.cursor-blue input,
+.cursor-large.cursor-blue select {
+  cursor: url(../images/svg/cursor/blue/cursor-blue-large.svg), auto;
+}
+
+.cursor-large.cursor-blue .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/blue/cursor-pointer-blue-large.svg), pointer;
+}
+
+.cursor-large.cursor-green *,
+.cursor-large.cursor-green input,
+.cursor-large.cursor-green select {
+  cursor: url(../images/svg/cursor/green/cursor-green-large.svg), auto;
+}
+
+.cursor-large.cursor-green .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/green/cursor-pointer-green-large.svg), pointer;
+}
+
+.cursor-large.cursor-orange *,
+.cursor-large.cursor-orange input,
+.cursor-large.cursor-orange select {
+  cursor: url(../images/svg/cursor/orange/cursor-orange-large.svg), auto;
+}
+
+.cursor-large.cursor-orange .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/orange/cursor-pointer-orange-large.svg), pointer;
+}
+
+.cursor-large.cursor-purple *,
+.cursor-large.cursor-purple input,
+.cursor-large.cursor-purple select {
+  cursor: url(../images/svg/cursor/purple/cursor-purple-large.svg), auto;
+}
+
+.cursor-large.cursor-purple .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/purple/cursor-pointer-purple-large.svg), pointer;
+}
+
+.cursor-large.cursor-yellow *,
+.cursor-large.cursor-yellow input,
+.cursor-large.cursor-yellow select {
+  cursor: url(../images/svg/cursor/yellow/cursor-yellow-large.svg), auto;
+}
+
+.cursor-large.cursor-yellow .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/yellow/cursor-pointer-yellow-large.svg), pointer;
+}
+
+.cursor-large.cursor-black *,
+.cursor-large.cursor-black input,
+.cursor-large.cursor-black select {
+  cursor: url(../images/svg/cursor/black/cursor-black-large.svg), auto;
+}
+
+.cursor-large.cursor-black .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/black/cursor-pointer-black-large.svg), pointer;
+}
+
+.cursor-large.cursor-white *,
+.cursor-large.cursor-white input,
+.cursor-large.cursor-white select {
+  cursor: url(../images/svg/cursor/white/cursor-white-large.svg), auto;
+}
+
+.cursor-large.cursor-white .cursor-pointer {
+  cursor: url(../images/svg/cursor-pointer/white/cursor-pointer-white-large.svg), pointer;
 }
 
 /*# sourceMappingURL=index.css.map */

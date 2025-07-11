@@ -5,7 +5,6 @@
   border: var.$border-1;
   border-radius: var.$border-radius-3;
   padding: var.$space-xs calc(var.$space-sm + 0.2rem);
-  cursor: pointer;
   font-size: var.$fs-small;
   font-style: italic;
   font-weight: var.$semibold;
@@ -22,7 +21,6 @@
   background-color: transparent;
   outline: none;
   border: none;
-  cursor: pointer;
   padding: var.$space-sm;
   display: flex;
   align-items: center;

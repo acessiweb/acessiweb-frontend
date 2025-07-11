@@ -1,0 +1,54 @@
+@use "../var";
+
+.config {
+  display: flex;
+  width: 100%;
+  column-gap: var.$space-lg;
+  padding: 0 var.$space-md;
+
+  &__tab {
+    &--active {
+      background-color: var.$purple;
+    }
+  }
+
+  aside {
+    flex: 2;
+  }
+
+  &__menu {
+    background-color: var.$lightPurple;
+    display: flex;
+    flex-direction: column;
+    border-radius: var.$border-1;
+
+    li {
+      padding: var.$space-md;
+      border-bottom: var.$border-1;
+    }
+
+    li:hover {
+      background-color: var.$purple;
+    }
+  }
+
+  &__content {
+    flex: 3;
+  }
+}
+
+.dark {
+  .config {
+    &__menu {
+      background-color: var.$purple;
+
+      li a {
+        color: var.$text !important;
+      }
+
+      li:hover {
+        background-color: var.$lighterPurple;
+      }
+    }
+  }
+}

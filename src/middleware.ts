@@ -10,12 +10,14 @@ const PUBLIC_PATHS = [
   "/auth/criar-conta",
   "/admin/auth/logar",
   "/diretrizes",
+  "/config/preferencias",
 ];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const homepageUrl = new URL("/", req.url);
   const loginUrl = new URL("/auth/logar", req.url);
+  const accountUrl = new URL("/config/conta", req.url);
 
   const token = await getToken({
     req,
@@ -43,6 +45,10 @@ export async function middleware(req: NextRequest) {
   if (token && "user" in token.data) {
     if (pathname.startsWith("/admin") && !isAdmin(token.data.user.role)) {
       return NextResponse.redirect(homepageUrl);
+    }
+
+    if (pathname === "/config") {
+      return NextResponse.redirect(accountUrl);
     }
 
     return NextResponse.next();

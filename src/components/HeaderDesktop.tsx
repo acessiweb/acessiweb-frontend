@@ -162,7 +162,7 @@ export default function HeaderDesktop({
         <Cart />
       </li>
       <li id="settings" tabIndex={0}>
-        <Settings link="/config" />
+        <Settings link="/config/preferencias" />
       </li>
       <li>
         <Link href="/auth/logar" className="btn-link-default">

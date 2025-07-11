@@ -67,6 +67,7 @@ export default function ControlBar({
                       onClick={handleClick}
                       onKeyDown={(e) => e.key === "Enter" && handleClick(e)}
                       tabIndex={0}
+                      className="cursor-pointer"
                     >
                       {val.desc}
                     </li>

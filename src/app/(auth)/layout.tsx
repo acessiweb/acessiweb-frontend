@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-BR">
-      <body>
+      <body className="open-sans">
         <App>{children}</App>
       </body>
     </html>

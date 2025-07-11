@@ -8,7 +8,7 @@ import useErrors from "@/hooks/useErrors";
 import Errors from "@/components/Errors";
 import { Project } from "@/types/project";
 import { Page } from "@/types/page";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useCart } from "@/context/cart";
 import { CardBtnDelete } from "@/components/CardBtn";
 import Link from "next/link";
@@ -39,7 +39,13 @@ export default function AddEditProject({
   project,
   handleSecPageTitle,
 }: AddEditProjectProps) {
-  const { cart, removeGuidelineOfCart } = useCart();
+  const {
+    cart,
+    removeGuidelineOfCart,
+    addDescriptionToCart,
+    addNameToCart,
+    cleanCart,
+  } = useCart();
   const {
     isOpen: isSecPageOpen,
     handleIsOpen: handleIsSecPageOpen,
@@ -82,15 +88,7 @@ export default function AddEditProject({
           : projectName || "Cadastrar projeto"
       );
     }
-  }, [projectName]);
-
-  useEffect(() => {
-    if (!isEditPage) {
-      setValue("projName", cart.name);
-      setValue("desc", cart.description);
-      setValue("guidelines", cart.guidelines);
-    }
-  }, [cart]);
+  }, [projectName, handleSecPageTitle, isEditPage, project]);
 
   const handleSetValue = (name: string, value: string) => {
     if (name === "projName" || name === "desc") {
@@ -123,6 +121,18 @@ export default function AddEditProject({
     }
   };
 
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!isEditPage) {
+      addNameToCart(e.target.value);
+    }
+  };
+
+  const handleDescChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    if (!isEditPage) {
+      addDescriptionToCart(e.target.value);
+    }
+  };
+
   const onSubmit = async (data: CreateProjectSchema | EditProjectSchema) => {
     const res =
       isEditPage && "feedback" in data && project
@@ -144,6 +154,10 @@ export default function AddEditProject({
       setShowPush(false);
     } else {
       handleResponse();
+
+      if (!isEditPage) {
+        cleanCart();
+      }
     }
   };
 
@@ -200,6 +214,7 @@ export default function AddEditProject({
               aria-errormessage={
                 errors.projName ? "invalid-project-name" : undefined
               }
+              onChange={handleNameChange}
             />
           </InputTextVoice>
           {errors.projName && (
@@ -231,6 +246,7 @@ export default function AddEditProject({
               }
               aria-keyshortcuts="alt+shift+d"
               rows={5}
+              onChange={handleDescChange}
             />
           </InputTextVoice>
           {errors.desc && (

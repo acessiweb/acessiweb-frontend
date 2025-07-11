@@ -3,30 +3,24 @@
 import { isCommonUser } from "@/utils/authorization";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 
-function UserAside() {
+function BaseAside({
+  children,
+  pathname,
+}: {
+  children?: ReactNode;
+  pathname: string;
+}) {
   return (
-    <BaseAside>
-      <li>
-        <Link href="/config/perfil">Meu perfil</Link>
-      </li>
-      <li>
-        <Link href="/config/conta">Minha conta</Link>
-      </li>
-    </BaseAside>
-  );
-}
-
-function DefaultAside() {
-  return <BaseAside />;
-}
-
-function BaseAside({ children }: { children?: ReactNode }) {
-  return (
-    <ul className="aside__menu">
+    <ul className="config__menu">
       {children}
-      <li>
+      <li
+        className={
+          pathname.includes("pref") ? "config__tab--active" : undefined
+        }
+      >
         <Link href="/config/preferencias">Preferências</Link>
       </li>
     </ul>
@@ -35,17 +29,33 @@ function BaseAside({ children }: { children?: ReactNode }) {
 
 export default function ConfigLayout({ children }: { children: ReactNode }) {
   const { data: session } = useSession();
+  const pathname = usePathname();
 
   return (
-    <div>
+    <main className="config">
       <aside>
         {session && isCommonUser(session.user.role) ? (
-          <UserAside />
+          <BaseAside pathname={pathname}>
+            <li
+              className={
+                pathname.includes("perfil") ? "config__tab--active" : undefined
+              }
+            >
+              <Link href="/config/perfil">Meu perfil</Link>
+            </li>
+            <li
+              className={
+                pathname.includes("conta") ? "config__tab--active" : undefined
+              }
+            >
+              <Link href="/config/conta">Minha conta</Link>
+            </li>
+          </BaseAside>
         ) : (
-          <DefaultAside />
+          <BaseAside pathname={pathname} />
         )}
       </aside>
-      {children}
-    </div>
+      <div className="config__content">{children}</div>
+    </main>
   );
 }

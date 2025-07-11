@@ -1,5 +1,4 @@
 @use "../var";
-@use "../fonts";
 
 .filters-applied {
   display: flex;
@@ -25,7 +24,6 @@
         padding: var.$space-xs;
         border: var.$border-1;
         border-radius: 5px;
-        @extend %open-sans;
       }
     }
   }
@@ -36,7 +34,6 @@
       align-items: center;
       border-radius: 2px;
       border: none;
-      cursor: pointer;
 
       svg {
         height: var.$svg-x-small;

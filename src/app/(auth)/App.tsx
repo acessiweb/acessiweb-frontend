@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import Logo from "@/assets/images/logo-horizontal-purple.png";
 import Image from "next/image";
 import "react-simple-keyboard/build/css/index.css";
@@ -15,10 +15,6 @@ export default function App({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { showKeyboard, toggleKeyboard } = useKeyboard();
   useHotkeys("shift+h", () => router.push("/"));
-
-  useEffect(() => {
-    document.body.classList.add("open-sans");
-  }, []);
 
   return (
     <main className="auth" id="auth">

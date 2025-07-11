@@ -130,9 +130,9 @@ function CardBase({
   onClick,
 }: CardBtnProps) {
   return (
-    <article className="card">
+    <article className="card cursor-pointer">
       <div
-        className="card__content"
+        className="card__content cursor-pointer"
         onClick={onClick}
         onKeyDown={(e) => e.key === "Enter" && onClick(e)}
         tabIndex={0}
@@ -140,7 +140,7 @@ function CardBase({
         aria-label={`Clique para acessar ${mainText}`}
       >
         <h3 className="heading-3">{mainText}</h3>
-        {secondaryText && <p>{secondaryText}</p>}
+        {secondaryText && <p className="cursor-pointer">{secondaryText}</p>}
       </div>
       {children}
     </article>

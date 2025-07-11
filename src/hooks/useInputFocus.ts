@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function useInputFocus() {
   const [target, setTarget] = useState<HTMLInputElement>();
+
   const handleFocus = (e: FocusEvent) => {
     const t = e.target as HTMLInputElement;
     setTarget(t);

@@ -27,7 +27,7 @@ export default function Profile() {
           aria-label="Opções de deslogar e configurações"
         >
           <li role="menuitem">
-            <Settings link="/config" />
+            <Settings link="/config/perfil" />
           </li>
           <li role="menuitem">
             <Logout />

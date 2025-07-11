@@ -10,9 +10,10 @@ import { useKeyboard } from "@/hooks/useKeyboard";
 import { useScreenType } from "@/hooks/useScreenType";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
-import { useEffect } from "react";
 import { usePush } from "@/context/push";
 import Push from "@/components/Push";
+import { setPreferences } from "@/utils/storage";
+import { useEffect } from "react";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +23,7 @@ export default function App({ children }: { children?: React.ReactNode }) {
   const { showPush } = usePush();
 
   useEffect(() => {
-    document.body.classList.add("open-sans");
+    setPreferences();
   }, []);
 
   return (

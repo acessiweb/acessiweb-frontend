@@ -6,15 +6,6 @@ button {
 }
 
 .nav {
-  &__settings,
-  &__profile,
-  &__cart,
-  &__logout,
-  &__keyboard,
-  &__person {
-    cursor: pointer;
-  }
-
   &__help,
   &__settings {
     display: flex;
@@ -54,7 +45,6 @@ button {
 
     > button,
     > button > svg {
-      cursor: pointer;
       position: absolute;
       left: 50%;
       right: 50%;
@@ -130,5 +120,11 @@ button {
       top: 50px;
       right: 50px;
     }
+  }
+}
+
+.dark .nav {
+  &__cart svg {
+    fill: var.$lightText;
   }
 }

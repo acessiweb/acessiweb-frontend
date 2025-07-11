@@ -68,13 +68,9 @@ export default function AddEditGuideline({
   const { isDesktop } = useScreenType();
   const [code, setCode] = useState("");
   const { handleApiErrors, handleUniqueMsg, errorMsgs, isAlert } = useErrors();
-
-  useEffect(() => {
-    setValue("deficiences", [hearing, visual, motor, neural, tea]);
-  }, [hearing, visual, motor, neural, tea]);
-
   const guidelineImage = watch("guideImage");
   const guidelineName = watch("guideName");
+  setValue("deficiences", [hearing, visual, motor, neural, tea]);
 
   useEffect(() => {
     if (isSecPage && handleSecPageTitle) {
@@ -82,13 +78,13 @@ export default function AddEditGuideline({
         `${isEditPage ? "Editar" : "Cadastrar"} ${guidelineName || "diretriz"}`
       );
     }
-  }, [isSecPage, guidelineName, handleSecPageTitle]);
+  }, [handleSecPageTitle, isEditPage, guidelineName, isSecPage]);
 
   useEffect(() => {
     if (guidelineImage instanceof FileList) {
       setFilename(guidelineImage[0]?.name || "");
     }
-  }, [guidelineImage]);
+  }, [guidelineImage, setFilename]);
 
   const handleSetValue = (name: string, value: string) => {
     if (name === "guideName" || name === "desc" || name === "imageDesc") {

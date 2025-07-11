@@ -1,16 +1,11 @@
 "use client";
 
 import { usePush } from "@/context/push";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 
 export default function Push() {
   const { pushMsg, setShowPush, setPushMsg } = usePush();
-  const [onMount, setOnMount] = useState(false);
-
-  useEffect(() => {
-    setOnMount(true);
-  }, []);
 
   const clear = () => {
     setPushMsg("");
@@ -21,13 +16,13 @@ export default function Push() {
     setTimeout(() => {
       clear();
     }, 4500);
-  }, [onMount]);
+  }, []);
 
   return (
     <div className="push-wrapper slide-fwd-top">
       <div className="push-wrapper__push">
         <p>{pushMsg}</p>
-        <button onClick={() => clear()} className="btn-transparent">
+        <button onClick={clear} className="btn-transparent">
           <ClearIcon />
         </button>
       </div>

@@ -10,7 +10,6 @@
   border-radius: var.$border-radius-2;
   border: var.$border-1;
   font-weight: var.$medium;
-  cursor: pointer;
   transition: transform 0.2s ease;
   row-gap: var.$space-sm;
   position: relative;
@@ -45,7 +44,6 @@
       text-overflow: ellipsis;
       font-size: var.$fs-x-small;
       flex: 1;
-      line-height: 1.5em;
     }
   }
 
@@ -65,4 +63,8 @@
     height: var.$svg-large !important;
     width: var.$svg-large !important;
   }
+}
+
+.dark .card {
+  color: var.$text;
 }

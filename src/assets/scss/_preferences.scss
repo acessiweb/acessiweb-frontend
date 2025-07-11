@@ -1,0 +1,94 @@
+@use "./var";
+
+//fonts
+.fs-small,
+.fs-small select {
+  font-size: var.$fs-small;
+}
+
+.fs-medium,
+.fs-medium select {
+  font-size: var.$fs-medium;
+}
+
+.fs-large,
+.fs-large select {
+  font-size: var.$fs-large;
+}
+
+.fs-x-large,
+.fs-x-large select {
+  font-size: var.$fs-x-large;
+}
+
+//brightness
+@for $i from 0 through 100 {
+  $actual-brightness-value: max($i, 20);
+  $filter-value: $actual-brightness-value / 100;
+
+  .brightness-#{$i} {
+    filter: brightness($filter-value);
+    transition: filter 0.1s ease-out;
+  }
+}
+
+//line and letter space
+$min-line-space: 1.5;
+$max-line-space: 3;
+$step-line-space: 0.1;
+
+$num-iterations-line: round(
+  ($max-line-space - $min-line-space) / $step-line-space
+);
+
+@for $i from 0 through $num-iterations-line {
+  $line-space-value: $min-line-space + ($i * $step-line-space);
+  $class-suffix: round($line-space-value * 10);
+
+  .line-space-#{$class-suffix} {
+    .card__content > p {
+      line-height: $line-space-value !important;
+    }
+  }
+}
+
+$min-letter-space: 0.12;
+$max-letter-space: 0.2;
+$step-letter-space: 0.01;
+
+$num-iterations-letter: round(
+  ($max-letter-space - $min-letter-space) / $step-letter-space
+);
+
+@for $i from 0 through $num-iterations-letter {
+  $letter-space-value: $min-letter-space + ($i * $step-letter-space);
+  $class-suffix: round($letter-space-value * 100);
+
+  .letter-space-#{$class-suffix} {
+    .card__content > p {
+      letter-spacing: #{$letter-space-value}em !important;
+    }
+  }
+}
+
+//cursor
+$sizes: small, medium, large;
+$colors: "pink", "blue", "green", "orange", "purple", "yellow", "black", "white";
+
+@each $size in $sizes {
+  @each $color in $colors {
+    .cursor-#{$size}.cursor-#{$color} {
+      *,
+      input,
+      select {
+        cursor: url(../images/svg/cursor/#{$color}/cursor-#{$color}-#{$size}.svg),
+          auto;
+      }
+
+      .cursor-pointer {
+        cursor: url(../images/svg/cursor-pointer/#{$color}/cursor-pointer-#{$color}-#{$size}.svg),
+          pointer;
+      }
+    }
+  }
+}
