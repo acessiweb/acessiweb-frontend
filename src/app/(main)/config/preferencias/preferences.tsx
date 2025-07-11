@@ -99,10 +99,10 @@ export default function Preferences() {
         <label>Espaçamento entre linhas</label>
         <input
           type="range"
-          min="15"
+          min="1.5"
           max="3"
           onChange={handleLineSpacing}
-          step="-1"
+          step="0.1"
           {...(prefs && { defaultValue: `${prefs.lineSpace.split("-")[2]}` })}
         />
       </form>
@@ -111,10 +111,10 @@ export default function Preferences() {
         <label>Espaçamento entre letras</label>
         <input
           type="range"
-          min="12"
-          max="2"
+          min="0.12"
+          max="0.2"
           onChange={handleLetterSpacing}
-          step="-1"
+          step="0.01"
           {...(prefs && { defaultValue: `${prefs.letterSpace.split("-")[2]}` })}
         />
       </form>
