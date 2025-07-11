@@ -15,7 +15,7 @@ export default function Push() {
   useEffect(() => {
     setTimeout(() => {
       clear();
-    }, 4500);
+    }, 5000);
   }, []);
 
   return (
