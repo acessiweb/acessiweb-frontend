@@ -82,11 +82,11 @@ $colors: "pink", "blue", "green", "orange", "purple", "yellow", "black", "white"
       *,
       input,
       select {
-        cursor: url(/cursor/#{$color}/cursor-#{$color}-#{$size}.svg), auto;
+        cursor: url("/cursor/#{$color}/cursor-#{$color}-#{$size}.svg"), auto;
       }
 
       .cursor-pointer {
-        cursor: url(/cursor-pointer/#{$color}/cursor-pointer-#{$color}-#{$size}.svg),
+        cursor: url("/cursor-pointer/#{$color}/cursor-pointer-#{$color}-#{$size}.svg"),
           pointer;
       }
     }
