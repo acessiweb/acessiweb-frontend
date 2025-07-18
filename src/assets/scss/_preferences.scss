@@ -1,4 +1,5 @@
 @use "./var";
+@use "sass:math";
 
 //fonts
 .fs-small,
@@ -24,7 +25,7 @@
 //brightness
 @for $i from 0 through 100 {
   $actual-brightness-value: max($i, 20);
-  $filter-value: $actual-brightness-value / 100;
+  $filter-value: math.div($actual-brightness-value, 100);
 
   .brightness-#{$i} {
     filter: brightness($filter-value);
@@ -38,7 +39,7 @@ $max-line-space: 3;
 $step-line-space: 0.1;
 
 $num-iterations-line: round(
-  ($max-line-space - $min-line-space) / $step-line-space
+  math.div(($max-line-space - $min-line-space), $step-line-space)
 );
 
 @for $i from 0 through $num-iterations-line {
@@ -57,7 +58,7 @@ $max-letter-space: 0.2;
 $step-letter-space: 0.01;
 
 $num-iterations-letter: round(
-  ($max-letter-space - $min-letter-space) / $step-letter-space
+  math.div(($max-letter-space - $min-letter-space), $step-letter-space)
 );
 
 @for $i from 0 through $num-iterations-letter {
@@ -81,12 +82,11 @@ $colors: "pink", "blue", "green", "orange", "purple", "yellow", "black", "white"
       *,
       input,
       select {
-        cursor: url(../images/svg/cursor/#{$color}/cursor-#{$color}-#{$size}.svg),
-          auto;
+        cursor: url(/cursor/#{$color}/cursor-#{$color}-#{$size}.svg), auto;
       }
 
       .cursor-pointer {
-        cursor: url(../images/svg/cursor-pointer/#{$color}/cursor-pointer-#{$color}-#{$size}.svg),
+        cursor: url(/cursor-pointer/#{$color}/cursor-pointer-#{$color}-#{$size}.svg),
           pointer;
       }
     }
