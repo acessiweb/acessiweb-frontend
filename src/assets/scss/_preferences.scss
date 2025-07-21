@@ -81,7 +81,8 @@ $colors: "pink", "blue", "green", "orange", "purple", "yellow", "black", "white"
     .cursor-#{$size}.cursor-#{$color} {
       *,
       input,
-      select {
+      select,
+      p {
         cursor: url("/cursor/#{$color}/cursor-#{$color}-#{$size}.svg"), auto;
       }
 

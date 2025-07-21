@@ -2550,7 +2550,8 @@ animation by Loop nerd
 
 .cursor-small.cursor-pink *,
 .cursor-small.cursor-pink input,
-.cursor-small.cursor-pink select {
+.cursor-small.cursor-pink select,
+.cursor-small.cursor-pink p {
   cursor: url("/cursor/pink/cursor-pink-small.svg"), auto;
 }
 
@@ -2560,7 +2561,8 @@ animation by Loop nerd
 
 .cursor-small.cursor-blue *,
 .cursor-small.cursor-blue input,
-.cursor-small.cursor-blue select {
+.cursor-small.cursor-blue select,
+.cursor-small.cursor-blue p {
   cursor: url("/cursor/blue/cursor-blue-small.svg"), auto;
 }
 
@@ -2570,7 +2572,8 @@ animation by Loop nerd
 
 .cursor-small.cursor-green *,
 .cursor-small.cursor-green input,
-.cursor-small.cursor-green select {
+.cursor-small.cursor-green select,
+.cursor-small.cursor-green p {
   cursor: url("/cursor/green/cursor-green-small.svg"), auto;
 }
 
@@ -2580,7 +2583,8 @@ animation by Loop nerd
 
 .cursor-small.cursor-orange *,
 .cursor-small.cursor-orange input,
-.cursor-small.cursor-orange select {
+.cursor-small.cursor-orange select,
+.cursor-small.cursor-orange p {
   cursor: url("/cursor/orange/cursor-orange-small.svg"), auto;
 }
 
@@ -2590,7 +2594,8 @@ animation by Loop nerd
 
 .cursor-small.cursor-purple *,
 .cursor-small.cursor-purple input,
-.cursor-small.cursor-purple select {
+.cursor-small.cursor-purple select,
+.cursor-small.cursor-purple p {
   cursor: url("/cursor/purple/cursor-purple-small.svg"), auto;
 }
 
@@ -2600,7 +2605,8 @@ animation by Loop nerd
 
 .cursor-small.cursor-yellow *,
 .cursor-small.cursor-yellow input,
-.cursor-small.cursor-yellow select {
+.cursor-small.cursor-yellow select,
+.cursor-small.cursor-yellow p {
   cursor: url("/cursor/yellow/cursor-yellow-small.svg"), auto;
 }
 
@@ -2610,7 +2616,8 @@ animation by Loop nerd
 
 .cursor-small.cursor-black *,
 .cursor-small.cursor-black input,
-.cursor-small.cursor-black select {
+.cursor-small.cursor-black select,
+.cursor-small.cursor-black p {
   cursor: url("/cursor/black/cursor-black-small.svg"), auto;
 }
 
@@ -2620,7 +2627,8 @@ animation by Loop nerd
 
 .cursor-small.cursor-white *,
 .cursor-small.cursor-white input,
-.cursor-small.cursor-white select {
+.cursor-small.cursor-white select,
+.cursor-small.cursor-white p {
   cursor: url("/cursor/white/cursor-white-small.svg"), auto;
 }
 
@@ -2630,7 +2638,8 @@ animation by Loop nerd
 
 .cursor-medium.cursor-pink *,
 .cursor-medium.cursor-pink input,
-.cursor-medium.cursor-pink select {
+.cursor-medium.cursor-pink select,
+.cursor-medium.cursor-pink p {
   cursor: url("/cursor/pink/cursor-pink-medium.svg"), auto;
 }
 
@@ -2640,7 +2649,8 @@ animation by Loop nerd
 
 .cursor-medium.cursor-blue *,
 .cursor-medium.cursor-blue input,
-.cursor-medium.cursor-blue select {
+.cursor-medium.cursor-blue select,
+.cursor-medium.cursor-blue p {
   cursor: url("/cursor/blue/cursor-blue-medium.svg"), auto;
 }
 
@@ -2650,7 +2660,8 @@ animation by Loop nerd
 
 .cursor-medium.cursor-green *,
 .cursor-medium.cursor-green input,
-.cursor-medium.cursor-green select {
+.cursor-medium.cursor-green select,
+.cursor-medium.cursor-green p {
   cursor: url("/cursor/green/cursor-green-medium.svg"), auto;
 }
 
@@ -2660,7 +2671,8 @@ animation by Loop nerd
 
 .cursor-medium.cursor-orange *,
 .cursor-medium.cursor-orange input,
-.cursor-medium.cursor-orange select {
+.cursor-medium.cursor-orange select,
+.cursor-medium.cursor-orange p {
   cursor: url("/cursor/orange/cursor-orange-medium.svg"), auto;
 }
 
@@ -2670,7 +2682,8 @@ animation by Loop nerd
 
 .cursor-medium.cursor-purple *,
 .cursor-medium.cursor-purple input,
-.cursor-medium.cursor-purple select {
+.cursor-medium.cursor-purple select,
+.cursor-medium.cursor-purple p {
   cursor: url("/cursor/purple/cursor-purple-medium.svg"), auto;
 }
 
@@ -2680,7 +2693,8 @@ animation by Loop nerd
 
 .cursor-medium.cursor-yellow *,
 .cursor-medium.cursor-yellow input,
-.cursor-medium.cursor-yellow select {
+.cursor-medium.cursor-yellow select,
+.cursor-medium.cursor-yellow p {
   cursor: url("/cursor/yellow/cursor-yellow-medium.svg"), auto;
 }
 
@@ -2690,7 +2704,8 @@ animation by Loop nerd
 
 .cursor-medium.cursor-black *,
 .cursor-medium.cursor-black input,
-.cursor-medium.cursor-black select {
+.cursor-medium.cursor-black select,
+.cursor-medium.cursor-black p {
   cursor: url("/cursor/black/cursor-black-medium.svg"), auto;
 }
 
@@ -2700,7 +2715,8 @@ animation by Loop nerd
 
 .cursor-medium.cursor-white *,
 .cursor-medium.cursor-white input,
-.cursor-medium.cursor-white select {
+.cursor-medium.cursor-white select,
+.cursor-medium.cursor-white p {
   cursor: url("/cursor/white/cursor-white-medium.svg"), auto;
 }
 
@@ -2710,7 +2726,8 @@ animation by Loop nerd
 
 .cursor-large.cursor-pink *,
 .cursor-large.cursor-pink input,
-.cursor-large.cursor-pink select {
+.cursor-large.cursor-pink select,
+.cursor-large.cursor-pink p {
   cursor: url("/cursor/pink/cursor-pink-large.svg"), auto;
 }
 
@@ -2720,7 +2737,8 @@ animation by Loop nerd
 
 .cursor-large.cursor-blue *,
 .cursor-large.cursor-blue input,
-.cursor-large.cursor-blue select {
+.cursor-large.cursor-blue select,
+.cursor-large.cursor-blue p {
   cursor: url("/cursor/blue/cursor-blue-large.svg"), auto;
 }
 
@@ -2730,7 +2748,8 @@ animation by Loop nerd
 
 .cursor-large.cursor-green *,
 .cursor-large.cursor-green input,
-.cursor-large.cursor-green select {
+.cursor-large.cursor-green select,
+.cursor-large.cursor-green p {
   cursor: url("/cursor/green/cursor-green-large.svg"), auto;
 }
 
@@ -2740,7 +2759,8 @@ animation by Loop nerd
 
 .cursor-large.cursor-orange *,
 .cursor-large.cursor-orange input,
-.cursor-large.cursor-orange select {
+.cursor-large.cursor-orange select,
+.cursor-large.cursor-orange p {
   cursor: url("/cursor/orange/cursor-orange-large.svg"), auto;
 }
 
@@ -2750,7 +2770,8 @@ animation by Loop nerd
 
 .cursor-large.cursor-purple *,
 .cursor-large.cursor-purple input,
-.cursor-large.cursor-purple select {
+.cursor-large.cursor-purple select,
+.cursor-large.cursor-purple p {
   cursor: url("/cursor/purple/cursor-purple-large.svg"), auto;
 }
 
@@ -2760,7 +2781,8 @@ animation by Loop nerd
 
 .cursor-large.cursor-yellow *,
 .cursor-large.cursor-yellow input,
-.cursor-large.cursor-yellow select {
+.cursor-large.cursor-yellow select,
+.cursor-large.cursor-yellow p {
   cursor: url("/cursor/yellow/cursor-yellow-large.svg"), auto;
 }
 
@@ -2770,7 +2792,8 @@ animation by Loop nerd
 
 .cursor-large.cursor-black *,
 .cursor-large.cursor-black input,
-.cursor-large.cursor-black select {
+.cursor-large.cursor-black select,
+.cursor-large.cursor-black p {
   cursor: url("/cursor/black/cursor-black-large.svg"), auto;
 }
 
@@ -2780,7 +2803,8 @@ animation by Loop nerd
 
 .cursor-large.cursor-white *,
 .cursor-large.cursor-white input,
-.cursor-large.cursor-white select {
+.cursor-large.cursor-white select,
+.cursor-large.cursor-white p {
   cursor: url("/cursor/white/cursor-white-large.svg"), auto;
 }
 

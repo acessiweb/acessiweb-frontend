@@ -1,8 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import NotFoundImage from "../assets/images/acessibility-2.webp";
 import Link from "next/link";
+import { useEffect } from "react";
+import { setPreferences } from "@/utils/storage";
 
 export default function NotFound() {
+  useEffect(() => {
+    setPreferences();
+  }, []);
+
   return (
     <main className="not-found open-sans">
       <p>Opa! Não foi possível encontrar o que você está buscando.</p>

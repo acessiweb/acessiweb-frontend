@@ -13,6 +13,14 @@ const PUBLIC_PATHS = [
   "/config/preferencias",
 ];
 
+const PROTECTED_PATHS = [
+  "/projetos",
+  "/solicitacoes",
+  "/config/conta",
+  "/config/perfil",
+  "/admin",
+];
+
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const homepageUrl = new URL("/", req.url);
@@ -38,8 +46,6 @@ export async function middleware(req: NextRequest) {
       const adminHomepageUrl = new URL("/admin", req.url);
       return NextResponse.redirect(adminHomepageUrl);
     }
-
-    return NextResponse.next();
   }
 
   if (token && "user" in token.data) {
@@ -50,11 +56,13 @@ export async function middleware(req: NextRequest) {
     if (pathname === "/config") {
       return NextResponse.redirect(accountUrl);
     }
-
-    return NextResponse.next();
   }
 
-  return NextResponse.redirect(loginUrl);
+  if (PROTECTED_PATHS.some((p) => pathname.startsWith(p)) && !token) {
+    return NextResponse.redirect(loginUrl);
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
