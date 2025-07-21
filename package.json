@@ -30,7 +30,7 @@
     "@uiw/codemirror-theme-quietlight": "^4.23.13",
     "@uiw/codemirror-theme-sublime": "^4.23.13",
     "@uiw/react-codemirror": "^4.23.13",
-    "next": "15.2.4",
+    "next": "^15.4.2",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

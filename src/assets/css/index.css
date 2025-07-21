@@ -2551,241 +2551,241 @@ animation by Loop nerd
 .cursor-small.cursor-pink *,
 .cursor-small.cursor-pink input,
 .cursor-small.cursor-pink select {
-  cursor: url(/cursor/pink/cursor-pink-small.svg), auto;
+  cursor: url("/cursor/pink/cursor-pink-small.svg"), auto;
 }
 
 .cursor-small.cursor-pink .cursor-pointer {
-  cursor: url(/cursor-pointer/pink/cursor-pointer-pink-small.svg), pointer;
+  cursor: url("/cursor-pointer/pink/cursor-pointer-pink-small.svg"), pointer;
 }
 
 .cursor-small.cursor-blue *,
 .cursor-small.cursor-blue input,
 .cursor-small.cursor-blue select {
-  cursor: url(/cursor/blue/cursor-blue-small.svg), auto;
+  cursor: url("/cursor/blue/cursor-blue-small.svg"), auto;
 }
 
 .cursor-small.cursor-blue .cursor-pointer {
-  cursor: url(/cursor-pointer/blue/cursor-pointer-blue-small.svg), pointer;
+  cursor: url("/cursor-pointer/blue/cursor-pointer-blue-small.svg"), pointer;
 }
 
 .cursor-small.cursor-green *,
 .cursor-small.cursor-green input,
 .cursor-small.cursor-green select {
-  cursor: url(/cursor/green/cursor-green-small.svg), auto;
+  cursor: url("/cursor/green/cursor-green-small.svg"), auto;
 }
 
 .cursor-small.cursor-green .cursor-pointer {
-  cursor: url(/cursor-pointer/green/cursor-pointer-green-small.svg), pointer;
+  cursor: url("/cursor-pointer/green/cursor-pointer-green-small.svg"), pointer;
 }
 
 .cursor-small.cursor-orange *,
 .cursor-small.cursor-orange input,
 .cursor-small.cursor-orange select {
-  cursor: url(/cursor/orange/cursor-orange-small.svg), auto;
+  cursor: url("/cursor/orange/cursor-orange-small.svg"), auto;
 }
 
 .cursor-small.cursor-orange .cursor-pointer {
-  cursor: url(/cursor-pointer/orange/cursor-pointer-orange-small.svg), pointer;
+  cursor: url("/cursor-pointer/orange/cursor-pointer-orange-small.svg"), pointer;
 }
 
 .cursor-small.cursor-purple *,
 .cursor-small.cursor-purple input,
 .cursor-small.cursor-purple select {
-  cursor: url(/cursor/purple/cursor-purple-small.svg), auto;
+  cursor: url("/cursor/purple/cursor-purple-small.svg"), auto;
 }
 
 .cursor-small.cursor-purple .cursor-pointer {
-  cursor: url(/cursor-pointer/purple/cursor-pointer-purple-small.svg), pointer;
+  cursor: url("/cursor-pointer/purple/cursor-pointer-purple-small.svg"), pointer;
 }
 
 .cursor-small.cursor-yellow *,
 .cursor-small.cursor-yellow input,
 .cursor-small.cursor-yellow select {
-  cursor: url(/cursor/yellow/cursor-yellow-small.svg), auto;
+  cursor: url("/cursor/yellow/cursor-yellow-small.svg"), auto;
 }
 
 .cursor-small.cursor-yellow .cursor-pointer {
-  cursor: url(/cursor-pointer/yellow/cursor-pointer-yellow-small.svg), pointer;
+  cursor: url("/cursor-pointer/yellow/cursor-pointer-yellow-small.svg"), pointer;
 }
 
 .cursor-small.cursor-black *,
 .cursor-small.cursor-black input,
 .cursor-small.cursor-black select {
-  cursor: url(/cursor/black/cursor-black-small.svg), auto;
+  cursor: url("/cursor/black/cursor-black-small.svg"), auto;
 }
 
 .cursor-small.cursor-black .cursor-pointer {
-  cursor: url(/cursor-pointer/black/cursor-pointer-black-small.svg), pointer;
+  cursor: url("/cursor-pointer/black/cursor-pointer-black-small.svg"), pointer;
 }
 
 .cursor-small.cursor-white *,
 .cursor-small.cursor-white input,
 .cursor-small.cursor-white select {
-  cursor: url(/cursor/white/cursor-white-small.svg), auto;
+  cursor: url("/cursor/white/cursor-white-small.svg"), auto;
 }
 
 .cursor-small.cursor-white .cursor-pointer {
-  cursor: url(/cursor-pointer/white/cursor-pointer-white-small.svg), pointer;
+  cursor: url("/cursor-pointer/white/cursor-pointer-white-small.svg"), pointer;
 }
 
 .cursor-medium.cursor-pink *,
 .cursor-medium.cursor-pink input,
 .cursor-medium.cursor-pink select {
-  cursor: url(/cursor/pink/cursor-pink-medium.svg), auto;
+  cursor: url("/cursor/pink/cursor-pink-medium.svg"), auto;
 }
 
 .cursor-medium.cursor-pink .cursor-pointer {
-  cursor: url(/cursor-pointer/pink/cursor-pointer-pink-medium.svg), pointer;
+  cursor: url("/cursor-pointer/pink/cursor-pointer-pink-medium.svg"), pointer;
 }
 
 .cursor-medium.cursor-blue *,
 .cursor-medium.cursor-blue input,
 .cursor-medium.cursor-blue select {
-  cursor: url(/cursor/blue/cursor-blue-medium.svg), auto;
+  cursor: url("/cursor/blue/cursor-blue-medium.svg"), auto;
 }
 
 .cursor-medium.cursor-blue .cursor-pointer {
-  cursor: url(/cursor-pointer/blue/cursor-pointer-blue-medium.svg), pointer;
+  cursor: url("/cursor-pointer/blue/cursor-pointer-blue-medium.svg"), pointer;
 }
 
 .cursor-medium.cursor-green *,
 .cursor-medium.cursor-green input,
 .cursor-medium.cursor-green select {
-  cursor: url(/cursor/green/cursor-green-medium.svg), auto;
+  cursor: url("/cursor/green/cursor-green-medium.svg"), auto;
 }
 
 .cursor-medium.cursor-green .cursor-pointer {
-  cursor: url(/cursor-pointer/green/cursor-pointer-green-medium.svg), pointer;
+  cursor: url("/cursor-pointer/green/cursor-pointer-green-medium.svg"), pointer;
 }
 
 .cursor-medium.cursor-orange *,
 .cursor-medium.cursor-orange input,
 .cursor-medium.cursor-orange select {
-  cursor: url(/cursor/orange/cursor-orange-medium.svg), auto;
+  cursor: url("/cursor/orange/cursor-orange-medium.svg"), auto;
 }
 
 .cursor-medium.cursor-orange .cursor-pointer {
-  cursor: url(/cursor-pointer/orange/cursor-pointer-orange-medium.svg), pointer;
+  cursor: url("/cursor-pointer/orange/cursor-pointer-orange-medium.svg"), pointer;
 }
 
 .cursor-medium.cursor-purple *,
 .cursor-medium.cursor-purple input,
 .cursor-medium.cursor-purple select {
-  cursor: url(/cursor/purple/cursor-purple-medium.svg), auto;
+  cursor: url("/cursor/purple/cursor-purple-medium.svg"), auto;
 }
 
 .cursor-medium.cursor-purple .cursor-pointer {
-  cursor: url(/cursor-pointer/purple/cursor-pointer-purple-medium.svg), pointer;
+  cursor: url("/cursor-pointer/purple/cursor-pointer-purple-medium.svg"), pointer;
 }
 
 .cursor-medium.cursor-yellow *,
 .cursor-medium.cursor-yellow input,
 .cursor-medium.cursor-yellow select {
-  cursor: url(/cursor/yellow/cursor-yellow-medium.svg), auto;
+  cursor: url("/cursor/yellow/cursor-yellow-medium.svg"), auto;
 }
 
 .cursor-medium.cursor-yellow .cursor-pointer {
-  cursor: url(/cursor-pointer/yellow/cursor-pointer-yellow-medium.svg), pointer;
+  cursor: url("/cursor-pointer/yellow/cursor-pointer-yellow-medium.svg"), pointer;
 }
 
 .cursor-medium.cursor-black *,
 .cursor-medium.cursor-black input,
 .cursor-medium.cursor-black select {
-  cursor: url(/cursor/black/cursor-black-medium.svg), auto;
+  cursor: url("/cursor/black/cursor-black-medium.svg"), auto;
 }
 
 .cursor-medium.cursor-black .cursor-pointer {
-  cursor: url(/cursor-pointer/black/cursor-pointer-black-medium.svg), pointer;
+  cursor: url("/cursor-pointer/black/cursor-pointer-black-medium.svg"), pointer;
 }
 
 .cursor-medium.cursor-white *,
 .cursor-medium.cursor-white input,
 .cursor-medium.cursor-white select {
-  cursor: url(/cursor/white/cursor-white-medium.svg), auto;
+  cursor: url("/cursor/white/cursor-white-medium.svg"), auto;
 }
 
 .cursor-medium.cursor-white .cursor-pointer {
-  cursor: url(/cursor-pointer/white/cursor-pointer-white-medium.svg), pointer;
+  cursor: url("/cursor-pointer/white/cursor-pointer-white-medium.svg"), pointer;
 }
 
 .cursor-large.cursor-pink *,
 .cursor-large.cursor-pink input,
 .cursor-large.cursor-pink select {
-  cursor: url(/cursor/pink/cursor-pink-large.svg), auto;
+  cursor: url("/cursor/pink/cursor-pink-large.svg"), auto;
 }
 
 .cursor-large.cursor-pink .cursor-pointer {
-  cursor: url(/cursor-pointer/pink/cursor-pointer-pink-large.svg), pointer;
+  cursor: url("/cursor-pointer/pink/cursor-pointer-pink-large.svg"), pointer;
 }
 
 .cursor-large.cursor-blue *,
 .cursor-large.cursor-blue input,
 .cursor-large.cursor-blue select {
-  cursor: url(/cursor/blue/cursor-blue-large.svg), auto;
+  cursor: url("/cursor/blue/cursor-blue-large.svg"), auto;
 }
 
 .cursor-large.cursor-blue .cursor-pointer {
-  cursor: url(/cursor-pointer/blue/cursor-pointer-blue-large.svg), pointer;
+  cursor: url("/cursor-pointer/blue/cursor-pointer-blue-large.svg"), pointer;
 }
 
 .cursor-large.cursor-green *,
 .cursor-large.cursor-green input,
 .cursor-large.cursor-green select {
-  cursor: url(/cursor/green/cursor-green-large.svg), auto;
+  cursor: url("/cursor/green/cursor-green-large.svg"), auto;
 }
 
 .cursor-large.cursor-green .cursor-pointer {
-  cursor: url(/cursor-pointer/green/cursor-pointer-green-large.svg), pointer;
+  cursor: url("/cursor-pointer/green/cursor-pointer-green-large.svg"), pointer;
 }
 
 .cursor-large.cursor-orange *,
 .cursor-large.cursor-orange input,
 .cursor-large.cursor-orange select {
-  cursor: url(/cursor/orange/cursor-orange-large.svg), auto;
+  cursor: url("/cursor/orange/cursor-orange-large.svg"), auto;
 }
 
 .cursor-large.cursor-orange .cursor-pointer {
-  cursor: url(/cursor-pointer/orange/cursor-pointer-orange-large.svg), pointer;
+  cursor: url("/cursor-pointer/orange/cursor-pointer-orange-large.svg"), pointer;
 }
 
 .cursor-large.cursor-purple *,
 .cursor-large.cursor-purple input,
 .cursor-large.cursor-purple select {
-  cursor: url(/cursor/purple/cursor-purple-large.svg), auto;
+  cursor: url("/cursor/purple/cursor-purple-large.svg"), auto;
 }
 
 .cursor-large.cursor-purple .cursor-pointer {
-  cursor: url(/cursor-pointer/purple/cursor-pointer-purple-large.svg), pointer;
+  cursor: url("/cursor-pointer/purple/cursor-pointer-purple-large.svg"), pointer;
 }
 
 .cursor-large.cursor-yellow *,
 .cursor-large.cursor-yellow input,
 .cursor-large.cursor-yellow select {
-  cursor: url(/cursor/yellow/cursor-yellow-large.svg), auto;
+  cursor: url("/cursor/yellow/cursor-yellow-large.svg"), auto;
 }
 
 .cursor-large.cursor-yellow .cursor-pointer {
-  cursor: url(/cursor-pointer/yellow/cursor-pointer-yellow-large.svg), pointer;
+  cursor: url("/cursor-pointer/yellow/cursor-pointer-yellow-large.svg"), pointer;
 }
 
 .cursor-large.cursor-black *,
 .cursor-large.cursor-black input,
 .cursor-large.cursor-black select {
-  cursor: url(/cursor/black/cursor-black-large.svg), auto;
+  cursor: url("/cursor/black/cursor-black-large.svg"), auto;
 }
 
 .cursor-large.cursor-black .cursor-pointer {
-  cursor: url(/cursor-pointer/black/cursor-pointer-black-large.svg), pointer;
+  cursor: url("/cursor-pointer/black/cursor-pointer-black-large.svg"), pointer;
 }
 
 .cursor-large.cursor-white *,
 .cursor-large.cursor-white input,
 .cursor-large.cursor-white select {
-  cursor: url(/cursor/white/cursor-white-large.svg), auto;
+  cursor: url("/cursor/white/cursor-white-large.svg"), auto;
 }
 
 .cursor-large.cursor-white .cursor-pointer {
-  cursor: url(/cursor-pointer/white/cursor-pointer-white-large.svg), pointer;
+  cursor: url("/cursor-pointer/white/cursor-pointer-white-large.svg"), pointer;
 }
 
 /*# sourceMappingURL=index.css.map */
