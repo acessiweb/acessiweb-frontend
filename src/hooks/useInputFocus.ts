@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function useInputFocus() {
   const [target, setTarget] = useState<HTMLInputElement>();
 
-  const handleFocus = (e: FocusEvent) => {
+  const handleFocus = useCallback((e: FocusEvent) => {
     const t = e.target as HTMLInputElement;
     setTarget(t);
-  };
+  }, []);
 
-  const handleBlur = (e: FocusEvent) => {
+  const handleBlur = useCallback((e: FocusEvent) => {
     const t = e.target as HTMLInputElement;
     setTarget(t);
-  };
+  }, []);
 
   const handleKeyboardKeyPress = (button: string) => {
     if (target) {

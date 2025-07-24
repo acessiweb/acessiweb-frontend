@@ -49,25 +49,37 @@
 }
 
 .arial {
-  @extend %arial;
+  * {
+    @extend %arial;
+  }
 }
 
 .calibri {
-  @extend %calibri;
+  * {
+    @extend %calibri;
+  }
 }
 
 .helvetica {
-  @extend %helvetica;
+  * {
+    @extend %helvetica;
+  }
 }
 
 .tahoma {
-  @extend %tahoma;
+  * {
+    @extend %tahoma;
+  }
 }
 
 .times-new-roman {
-  @extend %times-new-roman;
+  * {
+    @extend %times-new-roman;
+  }
 }
 
 .verdana {
-  @extend %verdana;
+  * {
+    @extend %verdana;
+  }
 }

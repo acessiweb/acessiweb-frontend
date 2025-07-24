@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 export default function useModal(
@@ -23,7 +23,7 @@ export default function useModal(
     }
   };
 
-  const handleClickOutside = (event: MouseEvent) => {
+  const handleClickOutside = useCallback((event: MouseEvent) => {
     const target = event.target as HTMLElement;
 
     if (!dialogRef.current) {
@@ -33,7 +33,7 @@ export default function useModal(
     if (dialogRef.current && !dialogRef.current.contains(target)) {
       hideModal();
     }
-  };
+  }, [])
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);

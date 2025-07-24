@@ -4,55 +4,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&display=swap");
-.arial {
-  font-family: "Roboto", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings: "wdth" 100;
-}
-
-.calibri {
-  font-family: "Carlito", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.helvetica {
-  font-family: "Noto Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings: "wdth" 100;
-}
-
-.tahoma {
-  font-family: "Open Sans", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings: "wdth" 100;
-}
-
-.times-new-roman {
-  font-family: "Tinos", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.verdana {
-  font-family: "Arimo", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
-
 html,
 body {
   min-height: 100vh;
@@ -1977,7 +1928,7 @@ animation by Loop nerd
   flex: 1;
 }
 
-.arial {
+.arial * {
   font-family: "Roboto", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -1985,13 +1936,13 @@ animation by Loop nerd
   font-variation-settings: "wdth" 100;
 }
 
-.calibri {
+.calibri * {
   font-family: "Carlito", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
-.helvetica {
+.helvetica * {
   font-family: "Noto Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -1999,7 +1950,7 @@ animation by Loop nerd
   font-variation-settings: "wdth" 100;
 }
 
-.tahoma {
+.tahoma * {
   font-family: "Open Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
@@ -2007,13 +1958,13 @@ animation by Loop nerd
   font-variation-settings: "wdth" 100;
 }
 
-.times-new-roman {
+.times-new-roman * {
   font-family: "Tinos", serif;
   font-weight: 400;
   font-style: normal;
 }
 
-.verdana {
+.verdana * {
   font-family: "Arimo", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;

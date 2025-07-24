@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const MOBILE_SCREEN_SIZE = 499;
 const TABLET_SCREEN_SIZE = 890;
@@ -26,9 +26,9 @@ function getScreenType() {
 export function useScreenType() {
   const [screenType, setScreenType] = useState(() => getScreenType());
 
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     setScreenType(getScreenType());
-  };
+  }, []);
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
