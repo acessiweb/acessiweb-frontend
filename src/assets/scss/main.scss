@@ -192,6 +192,14 @@ input[type="checkbox"]:focus-visible {
   }
 }
 
+.dark .hg-theme-default {
+  background-color: var.$text;
+
+  .hg-button {
+    background-color: var.$dark;
+  }
+}
+
 //elements
 @include meta.load-css("elements/button");
 @include meta.load-css("elements/heading");

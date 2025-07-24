@@ -1,6 +1,5 @@
 "use client";
 
-import "react-simple-keyboard/build/css/index.css";
 import FooterMobile from "@/components/FooterMobile";
 import HeaderDesktop from "@/components/HeaderDesktop";
 import HeaderMobile from "@/components/HeaderMobile";

@@ -3,7 +3,6 @@
 import { ReactNode, useEffect } from "react";
 import Logo from "@/assets/images/logo-horizontal.png";
 import Image from "next/image";
-import "react-simple-keyboard/build/css/index.css";
 import Help from "@/components/nav/Help";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useRouter } from "next/navigation";

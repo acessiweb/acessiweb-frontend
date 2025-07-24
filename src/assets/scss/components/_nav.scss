@@ -103,6 +103,15 @@ button {
       padding: var.$space-md var.$space-md;
       row-gap: var.$space-sm;
       z-index: 1000;
+
+      .btn-icon {
+        border: none;
+        background-color: transparent;
+
+        &:hover {
+          background-color: var.$lightText;
+        }
+      }
     }
   }
 
@@ -126,5 +135,12 @@ button {
 .dark .nav {
   &__cart svg {
     fill: var.$lightText;
+  }
+
+  &__profile,
+  &__person {
+    ul {
+      background-color: var.$text;
+    }
   }
 }

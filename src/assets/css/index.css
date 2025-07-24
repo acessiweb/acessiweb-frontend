@@ -223,6 +223,13 @@ input[type=checkbox]:focus-visible {
   color: rgb(25, 25, 24);
 }
 
+.dark .hg-theme-default {
+  background-color: rgb(25, 25, 24);
+}
+.dark .hg-theme-default .hg-button {
+  background-color: #303030;
+}
+
 .btn-link-default, .btn-default {
   background-color: #c1a6f9;
   border: 1px solid rgb(25, 25, 24);
@@ -589,6 +596,15 @@ button {
   z-index: 1000;
 }
 
+.nav__profile ul .btn-icon, .nav__person ul .btn-icon {
+  border: none;
+  background-color: transparent;
+}
+
+.nav__profile ul .btn-icon:hover, .nav__person ul .btn-icon:hover {
+  background-color: #f0f0f0;
+}
+
 .nav__person {
   position: relative;
 }
@@ -605,6 +621,10 @@ button {
 
 .dark .nav__cart svg {
   fill: #f0f0f0;
+}
+
+.dark .nav__profile ul, .dark .nav__person ul {
+  background-color: rgb(25, 25, 24);
 }
 
 .sec-page {
