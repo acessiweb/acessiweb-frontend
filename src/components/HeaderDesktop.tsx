@@ -45,7 +45,7 @@ function BaseHeaderDesktop({
     <header className="header-desktop">
       <Link href={logoLink}>
         <div className="header-desktop__logo-wrapper">
-          {prefs && prefs.theme === "dark" ? (
+          {prefs?.theme === "dark" ? (
             <Image alt="Logo do acessiweb" src={LogoDarkTheme} />
           ) : (
             <Image alt="Logo do acessiweb" src={Logo} />
@@ -62,7 +62,9 @@ function BaseHeaderDesktop({
                 : undefined
             }
           >
-            <Link href={logoLink}>Início</Link>
+            <Link href={logoLink} className="cursor-pointer">
+              Início
+            </Link>
           </li>
         )}
         {navLinks &&
@@ -76,7 +78,9 @@ function BaseHeaderDesktop({
                   : undefined
               }
             >
-              <Link href={item.href}>{item.desc}</Link>
+              <Link className="cursor-pointer" href={item.href}>
+                {item.desc}
+              </Link>
             </li>
           ))}
       </ul>
@@ -105,7 +109,7 @@ export default function HeaderDesktop({
   const { data: session } = useSession();
 
   if (session && session.user && session.user.role) {
-    if (isAdmin(session.user.role))
+    if (isAdmin(session.user.role)) {
       return (
         <BaseHeaderDesktop
           onToggleKeyboard={onToggleKeyboard}
@@ -128,8 +132,9 @@ export default function HeaderDesktop({
           </li>
         </BaseHeaderDesktop>
       );
+    }
 
-    if (!pathname.includes("admin") && isCommonUser(session.user.role))
+    if (!pathname.includes("admin") && isCommonUser(session.user.role)) {
       return (
         <BaseHeaderDesktop
           onToggleKeyboard={onToggleKeyboard}
@@ -157,6 +162,7 @@ export default function HeaderDesktop({
           </li>
         </BaseHeaderDesktop>
       );
+    }
   }
 
   return (

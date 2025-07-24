@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import Logo from "@/assets/images/logo-horizontal.png";
 import Image from "next/image";
 import "react-simple-keyboard/build/css/index.css";
@@ -15,6 +15,10 @@ export default function App({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { showKeyboard, toggleKeyboard } = useKeyboard();
   useHotkeys("shift+h", () => router.push("/"));
+
+  useEffect(() => {
+    document.body.className = "tahoma cursor-black cursor-small";
+  }, []);
 
   return (
     <main className="auth" id="auth">

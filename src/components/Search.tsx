@@ -35,11 +35,15 @@ export function BtnSearch({ classname }: { classname: string }) {
 
   return (
     <button
-      className="btn-icon"
+      className="btn-icon cursor-pointer"
       onClick={toggleSearch}
-      style={{ cursor: "pointer" }}
+      aria-label="Abrir pesquisar"
     >
-      <SlMagnifier />
+      <SlMagnifier
+        className="cursor-pointer"
+        aria-hidden={true}
+        focusable={false}
+      />
     </button>
   );
 }

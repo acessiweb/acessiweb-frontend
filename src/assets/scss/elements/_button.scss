@@ -60,6 +60,15 @@
       fill: var.$lightText;
       stroke: var.$lightText;
     }
+
+    &:hover {
+      background-color: var.$lightPurple;
+
+      svg {
+        fill: var.$text;
+        stroke: var.$text;
+      }
+    }
   }
 
   .btn-default,

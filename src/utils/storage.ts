@@ -7,6 +7,7 @@ import { compareArrays } from "./compare";
 
 const LOCAL_STORAGE_PREFS = "acessiweb-prefs";
 const LOCAL_STORAGE_CART = "acessiweb-cart";
+
 const DEFAULT_PREFS = {
   theme: "light",
   font: "tahoma",
@@ -16,6 +17,12 @@ const DEFAULT_PREFS = {
   letterSpace: "letter-space-12",
   cursorSize: "cursor-small",
   cursorColor: "cursor-black",
+};
+
+const DEFAULT_CART = {
+  name: "",
+  description: "",
+  guidelines: [],
 };
 
 //preferences
@@ -77,15 +84,22 @@ export function getCart(): CartType | undefined {
 
   const cart = localStorage.getItem(LOCAL_STORAGE_CART);
 
-  if (!cart || cart === "undefined") return;
+  if (!cart || cart === "undefined") {
+    saveCart(DEFAULT_CART);
+    return DEFAULT_CART;
+  }
 
-  return (
-    JSON.parse(cart) || {
-      name: "",
-      description: "",
-      guidelines: [],
-    }
-  );
+  const parsed = JSON.parse(cart);
+
+  if (
+    typeof parsed !== "object" ||
+    !compareArrays(Object.keys(parsed), Object.keys(DEFAULT_CART))
+  ) {
+    saveCart(DEFAULT_CART);
+    return DEFAULT_CART;
+  }
+
+  return parsed;
 }
 
 export function saveCart(cart: CartType) {

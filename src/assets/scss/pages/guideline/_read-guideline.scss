@@ -57,3 +57,13 @@
     }
   }
 }
+
+.dark {
+  .read-guideline {
+    &__deficiences {
+      &__checkbox {
+        border-color: var.$contrast;
+      }
+    }
+  }
+}

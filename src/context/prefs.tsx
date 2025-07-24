@@ -2,7 +2,7 @@
 
 import { Prefs } from "@/types/prefs";
 import { getPreferences, savePreference } from "@/utils/storage";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type PrefsContextType = {
   prefs: Prefs | undefined;
@@ -16,7 +16,11 @@ export default function PrefsProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [prefs, setPrefs] = useState<Prefs | undefined>(() => getPreferences());
+  const [prefs, setPrefs] = useState<Prefs | undefined>(undefined);
+
+  useEffect(() => {
+    setPrefs(getPreferences());
+  }, []);
 
   const savePref = <K extends keyof Prefs>(type: K, value: string | number) => {
     setPrefs((oldPrefs: Prefs | undefined) => {

@@ -95,6 +95,14 @@ input[type="range"]::-webkit-slider-thumb {
   }
 }
 
+.dark .input-text-voice {
+  background-color: var.$dark;
+
+  textarea {
+    outline: none;
+  }
+}
+
 .error-msgs-container {
   display: flex;
   flex-direction: column;

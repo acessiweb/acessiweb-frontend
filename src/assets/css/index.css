@@ -276,6 +276,15 @@ input[type=checkbox]:focus-visible {
   stroke: #f0f0f0;
 }
 
+.dark .btn-icon:hover {
+  background-color: #e5d9ff;
+}
+
+.dark .btn-icon:hover svg {
+  fill: rgb(25, 25, 24);
+  stroke: rgb(25, 25, 24);
+}
+
 .dark .btn-default,
 .dark .btn-link-default {
   color: rgb(25, 25, 24) !important;
@@ -403,6 +412,14 @@ input[type=range]::-webkit-slider-thumb {
 
 .input-text-voice button {
   align-self: flex-start;
+}
+
+.dark .input-text-voice {
+  background-color: #303030;
+}
+
+.dark .input-text-voice textarea {
+  outline: none;
 }
 
 .error-msgs-container {
@@ -620,6 +637,10 @@ button {
 .sec-page input {
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.dark .sec-page {
+  background-color: rgb(25, 25, 24);
 }
 
 .header-desktop {
@@ -1006,6 +1027,7 @@ button {
 .search__search-form input {
   flex: 1;
   color: rgb(25, 25, 24);
+  outline: none;
 }
 
 .search__search-form input::placeholder {
@@ -1055,6 +1077,7 @@ button {
 .search-header__search-form input {
   flex: 1;
   color: rgb(25, 25, 24);
+  outline: none;
 }
 
 .search-header__search-form input::placeholder {
@@ -1086,6 +1109,7 @@ button {
 
 .dark .search__search-form input {
   color: #f0f0f0;
+  outline: none;
 }
 
 .dark .search__search-form svg {
@@ -1131,10 +1155,6 @@ button {
 
 .control-bar__options .modal ul li:hover {
   background-color: #c1a6f9;
-}
-
-.control-bar .btn-icon:hover {
-  background-color: #e5d9ff;
 }
 
 .control-bar .btn-icon svg {
@@ -1519,6 +1539,10 @@ button {
   font-size: 1.1rem;
 }
 
+.dark .read-guideline__deficiences__checkbox {
+  border-color: #f5f3fa;
+}
+
 .login__links-container, .login__social-media-container {
   text-align: center;
 }
@@ -1617,11 +1641,6 @@ button {
   height: 100%;
   display: flex;
   flex-direction: column;
-  cursor: auto;
-}
-
-.auth * {
-  cursor: auto;
 }
 
 .auth .heading-3 {
@@ -1692,6 +1711,12 @@ button {
   right: 0;
   margin-top: 0.3rem;
   margin-right: 0.7rem;
+  border: none;
+}
+
+.auth .nav__keyboard:hover {
+  background-color: transparent;
+  transform: scale(1.1);
 }
 
 .auth .nav__keyboard svg {

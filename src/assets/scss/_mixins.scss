@@ -55,6 +55,7 @@
     input {
       flex: 1;
       color: var.$text;
+      outline: none;
 
       &::placeholder {
         font-style: italic;

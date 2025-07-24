@@ -27,22 +27,30 @@ export default function SecondPage({
     <div className="sec-page">
       <div className="sec-page__header">
         <button
-          className="btn-default"
+          className="btn-default cursor-pointer"
           onClick={onClick}
           aria-label="Fechar segunda tela"
           title="shift+f"
         >
-          <KeyboardDoubleArrowRight aria-hidden={true} focusable={false} />
+          <KeyboardDoubleArrowRight
+            className="cursor-pointer"
+            aria-hidden={true}
+            focusable={false}
+          />
         </button>
         <h2 className="heading-2">{title}</h2>
         <Link
           aria-label="Expandir segunda tela"
-          className="btn-default"
+          className="btn-default cursor-pointer"
           onClick={onClick}
           href={fullScreenLink}
           title="Pressione a tecla E"
         >
-          <SlSizeFullscreen aria-hidden={true} focusable={false} />
+          <SlSizeFullscreen
+            className="cursor-pointer"
+            aria-hidden={true}
+            focusable={false}
+          />
         </Link>
       </div>
       {children}

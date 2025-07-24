@@ -6,11 +6,6 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  cursor: auto;
-
-  * {
-    cursor: auto;
-  }
 
   .heading-3 {
     font-style: italic;
@@ -79,6 +74,12 @@
     right: 0;
     margin-top: var.$space-xs;
     margin-right: var.$space-sm;
+    border: none;
+
+    &:hover {
+      background-color: transparent;
+      transform: scale(1.1);
+    }
 
     svg {
       height: var.$svg-medium;

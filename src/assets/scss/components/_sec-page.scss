@@ -31,3 +31,9 @@
     text-overflow: ellipsis;
   }
 }
+
+.dark {
+  .sec-page {
+    background-color: var.$text;
+  }
+}
