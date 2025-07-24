@@ -21,7 +21,10 @@ export default function FiltersApplied({
     <div className="filters-applied">
       {children}
       {filtersChosen.length > 0 && (
-        <button className="btn-default" onClick={handleCleanFilters}>
+        <button
+          className="btn-default cursor-pointer"
+          onClick={handleCleanFilters}
+        >
           Limpar todos
         </button>
       )}

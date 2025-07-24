@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { ReactNode } from "react";
 import { SlArrowLeft } from "react-icons/sl";
 import Profile from "@/components/nav/Profile";
-import LogoImage from "@/assets/images/logo-horizontal-purple.png";
+import LogoImage from "@/assets/images/logo-horizontal.png";
 import Image from "next/image";
 
 type BaseHeaderProps = {

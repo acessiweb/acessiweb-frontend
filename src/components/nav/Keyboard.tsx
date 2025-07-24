@@ -12,13 +12,17 @@ export default function KeyboardNav({ onToggleKeyboard }: KeyboardNavProps) {
 
   return (
     <button
-      className={`nav__keyboard ${isDesktop && "btn-icon"}`}
+      className={`nav__keyboard ${isDesktop && "btn-icon"} cursor-pointer`}
       onClick={onToggleKeyboard}
       aria-label="Alternar teclado virtual"
       title="Pressione a tecla T"
       aria-keyshortcuts="T"
     >
-      <CiKeyboard aria-hidden={true} focusable={false} />
+      <CiKeyboard
+        className="cursor-pointer"
+        aria-hidden={true}
+        focusable={false}
+      />
     </button>
   );
 }

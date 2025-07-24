@@ -12,7 +12,7 @@ export default function Profile() {
     >
       <button
         aria-label="Abrir opções de deslogar e configurações"
-        className="btn-icon"
+        className="btn-icon cursor-pointer"
         onClick={() => setShowMenu((prev) => !prev)}
         aria-haspopup="menu"
         aria-controls={showMenu ? "logout-and-settings" : undefined}

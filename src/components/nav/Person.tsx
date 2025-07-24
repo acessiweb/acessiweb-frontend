@@ -16,8 +16,13 @@ export default function Person() {
         aria-haspopup="menu"
         aria-controls={showMenu ? "login-and-register" : undefined}
         aria-expanded={showMenu}
+        className="cursor-pointer"
       >
-        <IoPersonOutline aria-hidden={true} focusable={false} />
+        <IoPersonOutline
+          className="cursor-pointer"
+          aria-hidden={true}
+          focusable={false}
+        />
       </button>
       {showMenu && (
         <ul

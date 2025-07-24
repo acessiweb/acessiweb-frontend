@@ -11,6 +11,7 @@ const PUBLIC_PATHS = [
   "/admin/auth/logar",
   "/diretrizes",
   "/config/preferencias",
+  "/projetos/cadastrar",
 ];
 
 const PROTECTED_PATHS = [
@@ -46,6 +47,8 @@ export async function middleware(req: NextRequest) {
       const adminHomepageUrl = new URL("/admin", req.url);
       return NextResponse.redirect(adminHomepageUrl);
     }
+
+    return NextResponse.next();
   }
 
   if (token && "user" in token.data) {

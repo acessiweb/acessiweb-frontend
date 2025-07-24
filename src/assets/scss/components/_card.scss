@@ -5,20 +5,21 @@
   flex-direction: column;
   flex: 1;
   column-gap: var.$space-sm;
-  background-color: var.$lightPurple;
-  padding: var.$space-md;
+  background-color: var.$contrast;
+  padding: var.$space-lg var.$space-lg;
   border-radius: var.$border-radius-2;
   border: var.$border-1;
   font-weight: var.$medium;
   transition: transform 0.2s ease;
   row-gap: var.$space-sm;
   position: relative;
+  box-shadow: 5px 10px 10px var.$lightPurple;
 
   > div:nth-child(2),
   > button {
     position: absolute;
-    right: 10px;
-    top: 5px;
+    right: 16px;
+    top: 8px;
   }
 
   &:hover {
@@ -66,5 +67,10 @@
 }
 
 .dark .card {
-  color: var.$text;
+  background-color: var.$dark;
+  box-shadow: 5px 10px 10px var.$text;
+
+  svg {
+    fill: var.$lightText;
+  }
 }

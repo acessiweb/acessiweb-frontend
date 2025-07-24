@@ -7,11 +7,15 @@ export default function CardRestore({ onRestore }: CardRestoreProps) {
   return (
     <button
       type="button"
-      className="btn-transparent"
+      className="btn-transparent cursor-pointer"
       aria-label="Ação de restaurar"
       onClick={onRestore}
     >
-      <MdRestore aria-hidden={true} focusable={false} />
+      <MdRestore
+        className="cursor-pointer"
+        aria-hidden={true}
+        focusable={false}
+      />
     </button>
   );
 }

@@ -7,11 +7,15 @@ export default function Logout() {
 
   return (
     <button
-      className={`nav__logout ${isDesktop && "btn-icon"}`}
+      className={`nav__logout ${isDesktop && "btn-icon"} cursor-pointer`}
       aria-label="Deslogar"
       onClick={() => signOut()}
     >
-      <SlLogout aria-hidden={true} focusable={false} />
+      <SlLogout
+        className="cursor-pointer"
+        aria-hidden={true}
+        focusable={false}
+      />
     </button>
   );
 }

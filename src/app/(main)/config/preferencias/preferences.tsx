@@ -1,41 +1,41 @@
 "use client";
 
-import { getPreferences, savePreference } from "@/utils/storage";
+import { usePrefs } from "@/context/prefs";
 import { ChangeEvent } from "react";
 
 export default function Preferences() {
-  const prefs = getPreferences();
+  const { prefs, savePref } = usePrefs();
 
   const handleFontSize = (e: ChangeEvent<HTMLSelectElement>) => {
-    savePreference("fontSize", e.target.value);
+    savePref("fontSize", e.target.value);
   };
 
   const handleFont = (e: ChangeEvent<HTMLSelectElement>) => {
-    savePreference("font", e.target.value);
+    savePref("font", e.target.value);
   };
 
   const handleBrightness = (e: ChangeEvent<HTMLInputElement>) => {
-    savePreference("brightness", `brightness-${e.target.value}`);
+    savePref("brightness", `brightness-${e.target.value}`);
   };
 
   const handleLineSpacing = (e: ChangeEvent<HTMLInputElement>) => {
-    savePreference("lineSpace", `line-space-${e.target.value}`);
+    savePref("lineSpace", `line-space-${e.target.value}`);
   };
 
   const handleLetterSpacing = (e: ChangeEvent<HTMLInputElement>) => {
-    savePreference("letterSpace", `letter-space-${e.target.value}`);
+    savePref("letterSpace", `letter-space-${e.target.value}`);
   };
 
   const handleCursorSize = (e: ChangeEvent<HTMLSelectElement>) => {
-    savePreference("cursorSize", `cursor-${e.target.value}`);
+    savePref("cursorSize", `cursor-${e.target.value}`);
   };
 
   const handleCursorColor = (e: ChangeEvent<HTMLSelectElement>) => {
-    savePreference("cursorColor", `cursor-${e.target.value}`);
+    savePref("cursorColor", `cursor-${e.target.value}`);
   };
 
   const handleTheme = (e: ChangeEvent<HTMLSelectElement>) => {
-    savePreference("theme", e.target.value);
+    savePref("theme", e.target.value);
   };
 
   return (

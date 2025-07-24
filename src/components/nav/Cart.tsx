@@ -9,9 +9,13 @@ export default function Cart() {
     <Link
       href="/projetos/cadastrar"
       aria-label="Ir para tela de cadastro de projeto"
-      className="nav__cart"
+      className="nav__cart cursor-pointer"
     >
-      <SlBasket aria-hidden={true} focusable={false} />
+      <SlBasket
+        className="cursor-pointer"
+        aria-hidden={true}
+        focusable={false}
+      />
       <span role="status" aria-atomic={true}>
         <span className="sr-only">Total de </span>
         {guidelinesTotal}

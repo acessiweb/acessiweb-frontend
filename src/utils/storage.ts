@@ -1,17 +1,27 @@
 "use client";
 
-const LOCAL_STORAGE_KEY = "acessiweb-prefs";
+import { CartType } from "@/types/cart";
+import { Prefs } from "@/types/prefs";
+import { setBodyClasses } from "./body";
+import { compareArrays } from "./compare";
 
-type Prefs = {
-  theme: string;
-  font: string;
-  fontSize: string;
-  brightness: string;
-  lineSpace: string;
-  letterSpace: string;
-  cursorSize: string;
-  cursorColor: string;
+const LOCAL_STORAGE_PREFS = "acessiweb-prefs";
+const LOCAL_STORAGE_CART = "acessiweb-cart";
+const DEFAULT_PREFS = {
+  theme: "light",
+  font: "tahoma",
+  fontSize: "fs-small",
+  brightness: "brightness-100",
+  lineSpace: "line-space-15",
+  letterSpace: "letter-space-12",
+  cursorSize: "cursor-small",
+  cursorColor: "cursor-black",
 };
+
+//preferences
+function savePreferences(prefs: Prefs) {
+  localStorage.setItem(LOCAL_STORAGE_PREFS, JSON.stringify(prefs));
+}
 
 export function savePreference<K extends keyof Prefs>(
   type: K,
@@ -22,49 +32,62 @@ export function savePreference<K extends keyof Prefs>(
   const prefs = getPreferences();
 
   if (prefs) {
-    localStorage.setItem(
-      LOCAL_STORAGE_KEY,
-      JSON.stringify({
-        ...prefs,
-        [type]: value,
-      })
-    );
+    savePreferences({
+      ...prefs,
+      [type]: value,
+    });
   }
 
   const newPrefs = getPreferences();
-  document.body.className = "";
 
   if (newPrefs) {
-    Object.values(newPrefs).map((val) => document.body.classList.add(val));
-  }
-}
-
-export function setPreferences() {
-  if (typeof window === "undefined") return;
-
-  const prefs = getPreferences();
-  document.body.className = "";
-
-  if (!prefs) {
-    const defaultPrefs = {
-      theme: "light",
-      font: "tahoma",
-      fontSize: "fs-small",
-      brightness: "brightness-100",
-      lineSpace: "line-space-15",
-      letterSpace: "letter-space-12",
-      cursorSize: "cursor-small",
-      cursorColor: "cursor-black",
-    };
-
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(defaultPrefs));
-    Object.values(defaultPrefs).map((val) => document.body.classList.add(val));
-  } else {
-    Object.values(prefs).map((val) => document.body.classList.add(val));
+    setBodyClasses(newPrefs);
   }
 }
 
 export function getPreferences(): Prefs | undefined {
   if (typeof window === "undefined") return;
-  return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)!);
+
+  const prefs = localStorage.getItem(LOCAL_STORAGE_PREFS);
+
+  if (!prefs || prefs === "undefined") {
+    setBodyClasses(DEFAULT_PREFS);
+    savePreferences(DEFAULT_PREFS);
+    return DEFAULT_PREFS;
+  }
+
+  const parsed = JSON.parse(prefs);
+
+  if (
+    typeof parsed !== "object" ||
+    !compareArrays(Object.keys(parsed), Object.keys(DEFAULT_PREFS))
+  ) {
+    setBodyClasses(DEFAULT_PREFS);
+    savePreferences(DEFAULT_PREFS);
+    return DEFAULT_PREFS;
+  }
+
+  setBodyClasses(parsed);
+  return parsed;
+}
+
+//cart
+export function getCart(): CartType | undefined {
+  if (typeof window === "undefined") return;
+
+  const cart = localStorage.getItem(LOCAL_STORAGE_CART);
+
+  if (!cart || cart === "undefined") return;
+
+  return (
+    JSON.parse(cart) || {
+      name: "",
+      description: "",
+      guidelines: [],
+    }
+  );
+}
+
+export function saveCart(cart: CartType) {
+  localStorage.setItem("acessibiweb-cart", JSON.stringify(cart));
 }

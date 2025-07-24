@@ -69,9 +69,9 @@ export default function AddEditProject({
   } = useForm<EditProjectSchema | CreateProjectSchema>({
     resolver: zodResolver(isEditPage ? editProjectSchema : createProjectSchema),
     defaultValues: {
-      projName: isEditPage ? project?.name : cart.name,
-      desc: isEditPage ? project?.description : cart.description,
-      guidelines: isEditPage ? project?.guidelines : cart.guidelines,
+      projName: cart && !isEditPage ? cart.name : project?.name,
+      desc: cart && !isEditPage ? cart.description : project?.description,
+      guidelines: cart && !isEditPage ? cart.guidelines : project?.guidelines,
       feedback: project?.feedback || "",
     },
   });
@@ -258,7 +258,7 @@ export default function AddEditProject({
               {errors.desc.message}
             </small>
           )}
-          {guidelinesShown && cart.guidelines.length > 0 && (
+          {guidelinesShown && cart && cart.guidelines.length > 0 && (
             <div className="grid" id="guidelines-grid">
               {cart.guidelines.map((guide) => (
                 <div className="grid__item" key={guide.id}>

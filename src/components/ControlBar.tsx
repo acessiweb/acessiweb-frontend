@@ -42,7 +42,7 @@ export default function ControlBar({
       <div className="control-bar__options">
         {filtersOptions && filtersOptions.length > 0 && (
           <button
-            className="btn-icon"
+            className="btn-icon cursor-pointer"
             aria-label="Abrir opções de filtro"
             title="Pressione a tecla F"
             aria-expanded={isModalOpen}
@@ -51,7 +51,11 @@ export default function ControlBar({
             aria-haspopup="dialog"
             aria-keyshortcuts="F"
           >
-            <LuListFilter aria-hidden={true} focusable={false} />
+            <LuListFilter
+              className="cursor-pointer"
+              aria-hidden={true}
+              focusable={false}
+            />
             {isModalOpen && (
               <dialog
                 className="modal"
@@ -79,13 +83,25 @@ export default function ControlBar({
         )}
         {isDesktop && (
           <button
-            className="btn-icon"
+            className="btn-icon cursor-pointer"
             onClick={handleView}
             aria-label="Alternar layout dos cards"
             aria-pressed={view === "grid" ? false : true}
           >
-            {view === "grid" && <SlList aria-hidden={true} focusable={false} />}
-            {view === "list" && <SlGrid aria-hidden={true} focusable={false} />}
+            {view === "grid" && (
+              <SlList
+                className="cursor-pointer"
+                aria-hidden={true}
+                focusable={false}
+              />
+            )}
+            {view === "list" && (
+              <SlGrid
+                className="cursor-pointer"
+                aria-hidden={true}
+                focusable={false}
+              />
+            )}
             <span role="status" className="sr-only">
               {view === "grid"
                 ? "Layout grid ativado"

@@ -9,12 +9,14 @@ import Help from "@/components/nav/Help";
 import Settings from "@/components/nav/Settings";
 import { BtnSearch } from "./Search";
 import { useSession } from "next-auth/react";
-import Logo from "../assets/images/logo-horizontal-purple.png";
+import Logo from "../assets/images/logo-horizontal.png";
+import LogoDarkTheme from "../assets/images/logo-horizontal-dark-theme.png";
 import Image from "next/image";
 import { HOMEPAGE_LINKS } from "@/utils/homepage-links";
 import Logout from "./nav/Logout";
 import KeyboardNav from "./nav/Keyboard";
 import Profile from "./nav/Profile";
+import { usePrefs } from "@/context/prefs";
 
 type BaseHeaderProps = {
   showHomepageLink: boolean;
@@ -37,11 +39,17 @@ function BaseHeaderDesktop({
   pathname,
   onToggleKeyboard,
 }: BaseHeaderProps) {
+  const { prefs } = usePrefs();
+
   return (
     <header className="header-desktop">
       <Link href={logoLink}>
         <div className="header-desktop__logo-wrapper">
-          <Image alt="Logo do acessiweb" src={Logo} />
+          {prefs && prefs.theme === "dark" ? (
+            <Image alt="Logo do acessiweb" src={LogoDarkTheme} />
+          ) : (
+            <Image alt="Logo do acessiweb" src={Logo} />
+          )}
         </div>
       </Link>
       <ul className="header-desktop__nav-links">
@@ -165,12 +173,15 @@ export default function HeaderDesktop({
         <Settings link="/config/preferencias" />
       </li>
       <li>
-        <Link href="/auth/logar" className="btn-link-default">
+        <Link href="/auth/logar" className="btn-link-default cursor-pointer">
           Logar
         </Link>
       </li>
       <li>
-        <Link href="/auth/criar-conta" className="btn-link-default">
+        <Link
+          href="/auth/criar-conta"
+          className="btn-link-default cursor-pointer"
+        >
           Criar conta
         </Link>
       </li>

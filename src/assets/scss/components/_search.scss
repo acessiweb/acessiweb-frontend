@@ -1,61 +1,40 @@
 @use "../var";
-
-@mixin search($padding, $mainColor) {
-  display: flex;
-  align-items: center;
-  column-gap: var.$space-xs;
-
-  svg {
-    height: calc(var.$svg-small - 0.2rem);
-    width: calc(var.$svg-small - 0.2rem);
-  }
-
-  input {
-    all: unset;
-  }
-
-  .btn-icon {
-    background-color: $mainColor;
-    padding: $padding;
-  }
-
-  &__search-form {
-    border: var.$border-1;
-    border-radius: var.$border-radius-3;
-    background-color: $mainColor !important;
-    display: flex;
-    align-items: center;
-    padding: $padding;
-    outline: none;
-    column-gap: var.$space-xs;
-    flex: 1;
-
-    input {
-      flex: 1;
-      color: var.$text;
-
-      &::placeholder {
-        font-style: italic;
-      }
-    }
-
-    button {
-      display: flex;
-      align-items: center;
-      background-color: transparent;
-      border: none;
-    }
-  }
-}
+@use "../mixins";
 
 .search {
-  @include search(var.$space-sm, var.$lightPurple);
+  @include mixins.search(var.$space-sm, var.$contrast);
 }
 
 .search-header {
-  @include search(calc(var.$space-xs + 0.1rem) var.$space-sm, var.$purple);
+  @include mixins.search(
+    calc(var.$space-xs + 0.1rem) var.$space-sm,
+    var.$purple
+  );
 
   input::placeholder {
     color: var.$text;
+  }
+}
+
+.dark .search {
+  .btn-icon {
+    background-color: var.$dark;
+
+    > svg {
+      fill: var.$lightText;
+    }
+  }
+
+  &__search-form {
+    background-color: var.$dark !important;
+
+    input {
+      color: var.$lightText;
+    }
+
+    svg {
+      stroke: var.$lightText;
+      fill: var.$lightText;
+    }
   }
 }

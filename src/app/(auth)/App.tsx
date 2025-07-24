@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode } from "react";
-import Logo from "@/assets/images/logo-horizontal-purple.png";
+import Logo from "@/assets/images/logo-horizontal.png";
 import Image from "next/image";
 import "react-simple-keyboard/build/css/index.css";
 import Help from "@/components/nav/Help";

@@ -1,16 +1,12 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { usePush } from "./push";
-
-type CartType = {
-  name: string;
-  description: string;
-  guidelines: { id: string; name: string }[];
-};
+import { CartType } from "@/types/cart";
+import { getCart, saveCart } from "@/utils/storage";
 
 type CartContextType = {
-  cart: CartType;
+  cart: CartType | undefined;
   guidelinesTotal: number;
   addGuidelineToCart: (_guide: { id: string; name: string }) => void;
   removeGuidelineOfCart: (_guideId: string) => void;
@@ -26,28 +22,16 @@ export default function CartProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [cart, setCart] = useState<CartType>({
-    name: "",
-    description: "",
-    guidelines: [],
+  const [cart, setCart] = useState<CartType | undefined>(() => getCart());
+  const [guidelinesTotal, setGuidelinesTotal] = useState(() => {
+    const cart = getCart();
+    if (cart) return cart.guidelines.length;
+    return 0;
   });
-  const [guidelinesTotal, setGuidelinesTotal] = useState(0);
   const { setPushMsg, setShowPush } = usePush();
 
-  useEffect(() => {
-    const c = localStorage.getItem("acessibiweb-cart");
-
-    if (c) {
-      const cParsed: CartType = JSON.parse(c);
-      const guides = [...cParsed.guidelines];
-
-      setCart(cParsed);
-      setGuidelinesTotal(guides.length);
-    }
-  }, []);
-
   const addGuidelineToCart = (guideline: { id: string; name: string }) => {
-    const cartGuides = [...cart.guidelines];
+    const cartGuides = cart ? [...cart.guidelines] : [];
 
     if (cartGuides.length > 0) {
       const alreadyExists = cartGuides.find(
@@ -57,7 +41,9 @@ export default function CartProvider({
       if (!alreadyExists) {
         setGuidelinesTotal((prevTotal: number) => prevTotal + 1);
 
-        setCart((prevCart: CartType) => {
+        setCart((prevCart: CartType | undefined) => {
+          if (!prevCart) return;
+
           const guides = [...prevCart.guidelines];
 
           guides.push(guideline);
@@ -78,7 +64,9 @@ export default function CartProvider({
       cartGuides.push(guideline);
 
       setGuidelinesTotal((prevTotal: number) => prevTotal + 1);
-      setCart((prevCart: CartType) => {
+      setCart((prevCart: CartType | undefined) => {
+        if (!prevCart) return;
+
         const newCart = { ...prevCart, guidelines: cartGuides };
         saveCart(newCart);
         return newCart;
@@ -87,7 +75,8 @@ export default function CartProvider({
   };
 
   const removeGuidelineOfCart = (guidelineId: string) => {
-    setCart((prevCart: CartType) => {
+    setCart((prevCart: CartType | undefined) => {
+      if (!prevCart) return;
       const guides = [...prevCart.guidelines];
 
       const newGuides = guides.filter(
@@ -108,7 +97,9 @@ export default function CartProvider({
   };
 
   const addNameToCart = (name: string) => {
-    setCart((prevCart: CartType) => {
+    setCart((prevCart: CartType | undefined) => {
+      if (!prevCart) return;
+
       const newCart = {
         ...prevCart,
         name,
@@ -121,7 +112,9 @@ export default function CartProvider({
   };
 
   const addDescriptionToCart = (desc: string) => {
-    setCart((prevCart: CartType) => {
+    setCart((prevCart: CartType | undefined) => {
+      if (!prevCart) return;
+
       const newCart = {
         ...prevCart,
         description: desc,
@@ -143,10 +136,6 @@ export default function CartProvider({
     setCart(newCart);
     setGuidelinesTotal(0);
     saveCart(newCart);
-  };
-
-  const saveCart = (cart: CartType) => {
-    localStorage.setItem("acessibiweb-cart", JSON.stringify(cart));
   };
 
   return (

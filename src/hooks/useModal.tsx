@@ -40,7 +40,7 @@ export default function useModal(
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [handleClickOutside]);
 
   return {
     showModal,

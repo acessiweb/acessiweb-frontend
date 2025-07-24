@@ -120,7 +120,7 @@ function CardBase({
   return (
     <article className="card">
       <Link className="card__content" href={readRoute}>
-        <h3 className="heading-3">{mainText}</h3>
+        <h3 className="heading-3 cursor-pointer">{mainText}</h3>
         {secondaryText && <p>{secondaryText}</p>}
       </Link>
       {children}

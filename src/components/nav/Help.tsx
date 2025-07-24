@@ -24,12 +24,16 @@ export default function Help({ appId }: HelpProps) {
           onClick={showModal}
           aria-label="Abrir painel de atalhos do sistema"
           title="Ajuda H"
-          className={`${isDesktop && "btn-icon"}`}
+          className={`${isDesktop && "btn-icon"} cursor-pointer`}
           aria-haspopup="dialog"
           aria-expanded={isModalOpen}
           aria-controls="help-modal"
         >
-          <IoHelp aria-hidden={true} focusable={false} />
+          <IoHelp
+            className="cursor-pointer"
+            aria-hidden={true}
+            focusable={false}
+          />
         </button>
         {isModalOpen &&
           createPortal(

@@ -23,10 +23,14 @@ export function CardLinkUpdateAndDeleteEl({
     >
       <Link
         href={updateRoute}
-        className="btn-transparent"
+        className="btn-transparent cursor-pointer"
         aria-label="Ir para a tela de edição"
       >
-        <SlPencil aria-hidden={true} focusable={false} />
+        <SlPencil
+          className="cursor-pointer"
+          aria-hidden={true}
+          focusable={false}
+        />
       </Link>
     </CardUpdateAndDelete>
   );
@@ -46,11 +50,15 @@ export function CardBtnUpdateAndDeleteEl({
     >
       <button
         type="button"
-        className="btn-transparent"
+        className="btn-transparent cursor-pointer"
         onClick={onUpdateClick}
         aria-label="Abrir tela de edição"
       >
-        <SlPencil aria-hidden={true} focusable={false} />
+        <SlPencil
+          className="cursor-pointer"
+          aria-hidden={true}
+          focusable={false}
+        />
       </button>
     </CardUpdateAndDelete>
   );

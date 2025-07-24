@@ -13,7 +13,7 @@
   color: var.$text;
 
   &:hover {
-    background-color: var.$lighterPurple;
+    background-color: var.$lightPurple;
   }
 }
 
@@ -26,7 +26,7 @@
   align-items: center;
 
   &:hover {
-    border-radius: var.$border-radius-3;
+    border-radius: 20px;
     background-color: var.$lighterPurple;
   }
 }
@@ -43,7 +43,27 @@
   display: flex;
   align-items: center;
   padding: var.$space-xs calc(var.$space-xs + 0.2rem);
-  background-color: var.$purple;
+  background-color: var.$contrast;
   border: var.$border-1;
   border-radius: var.$border-radius-default;
+
+  &:hover {
+    background-color: var.$lightPurple;
+  }
+}
+
+.dark {
+  .btn-icon {
+    background-color: var.$dark;
+
+    svg {
+      fill: var.$lightText;
+      stroke: var.$lightText;
+    }
+  }
+
+  .btn-default,
+  .btn-link-default {
+    color: var.$text !important;
+  }
 }

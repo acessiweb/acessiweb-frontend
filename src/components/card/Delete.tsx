@@ -23,14 +23,18 @@ export default function CardDelete({
     <>
       <button
         type="button"
-        className="btn-transparent btn-delete"
+        className="btn-transparent btn-delete cursor-pointer"
         aria-label="Ação de deletar"
         onClick={showModal}
         aria-haspopup="dialog"
         aria-expanded={isModalOpen}
         aria-controls="delete-modal"
       >
-        <SlTrash aria-hidden={true} focusable={false} />
+        <SlTrash
+          className="cursor-pointer"
+          aria-hidden={true}
+          focusable={false}
+        />
       </button>
       {isModalOpen &&
         createPortal(

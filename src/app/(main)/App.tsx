@@ -12,8 +12,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 import { usePush } from "@/context/push";
 import Push from "@/components/Push";
-import { setPreferences } from "@/utils/storage";
-import { useEffect } from "react";
+import PrefsProvider from "@/context/prefs";
 
 const queryClient = new QueryClient();
 
@@ -22,26 +21,24 @@ export default function App({ children }: { children?: React.ReactNode }) {
   const { toggleKeyboard, showKeyboard } = useKeyboard();
   const { showPush } = usePush();
 
-  useEffect(() => {
-    setPreferences();
-  }, []);
-
   return (
     <div id="app">
       <QueryClientProvider client={queryClient}>
         <SessionProvider>
           <CartProvider>
-            <div className="content">
-              {isTablet || isMobile ? (
-                <HeaderMobile />
-              ) : (
-                <HeaderDesktop onToggleKeyboard={toggleKeyboard} />
-              )}
-              <main>{children}</main>
-              {showKeyboard && <Keyboard isKeyboardOpened={showKeyboard} />}
-            </div>
-            {(isTablet || isMobile) && <FooterMobile />}
-            {showPush && <Push />}
+            <PrefsProvider>
+              <div className="content">
+                {isTablet || isMobile ? (
+                  <HeaderMobile />
+                ) : (
+                  <HeaderDesktop onToggleKeyboard={toggleKeyboard} />
+                )}
+                <main>{children}</main>
+                {showKeyboard && <Keyboard isKeyboardOpened={showKeyboard} />}
+              </div>
+              {(isTablet || isMobile) && <FooterMobile />}
+              {showPush && <Push />}
+            </PrefsProvider>
           </CartProvider>
         </SessionProvider>
       </QueryClientProvider>

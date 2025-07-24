@@ -139,7 +139,7 @@ function CardBase({
         role="button"
         aria-label={`Clique para acessar ${mainText}`}
       >
-        <h3 className="heading-3">{mainText}</h3>
+        <h3 className="heading-3 cursor-pointer">{mainText}</h3>
         {secondaryText && <p className="cursor-pointer">{secondaryText}</p>}
       </div>
       {children}
