@@ -139,7 +139,7 @@ export default function Preferences() {
         <label>Espaçamento entre letras</label>
         <input
           type="range"
-          min="0.12"
+          min="0.01"
           max="0.2"
           onChange={handleLetterSpacing}
           step="0.01"

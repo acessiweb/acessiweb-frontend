@@ -2639,6 +2639,72 @@ line space
 letter space
 
 */
+.letter-space-001 p,
+.letter-space-001 input::placeholder,
+.letter-space-001 textarea::placeholder {
+  letter-spacing: 0.01em !important;
+}
+
+.letter-space-002 p,
+.letter-space-002 input::placeholder,
+.letter-space-002 textarea::placeholder {
+  letter-spacing: 0.02em !important;
+}
+
+.letter-space-003 p,
+.letter-space-003 input::placeholder,
+.letter-space-003 textarea::placeholder {
+  letter-spacing: 0.03em !important;
+}
+
+.letter-space-004 p,
+.letter-space-004 input::placeholder,
+.letter-space-004 textarea::placeholder {
+  letter-spacing: 0.04em !important;
+}
+
+.letter-space-005 p,
+.letter-space-005 input::placeholder,
+.letter-space-005 textarea::placeholder {
+  letter-spacing: 0.05em !important;
+}
+
+.letter-space-006 p,
+.letter-space-006 input::placeholder,
+.letter-space-006 textarea::placeholder {
+  letter-spacing: 0.06em !important;
+}
+
+.letter-space-007 p,
+.letter-space-007 input::placeholder,
+.letter-space-007 textarea::placeholder {
+  letter-spacing: 0.07em !important;
+}
+
+.letter-space-008 p,
+.letter-space-008 input::placeholder,
+.letter-space-008 textarea::placeholder {
+  letter-spacing: 0.08em !important;
+}
+
+.letter-space-009 p,
+.letter-space-009 input::placeholder,
+.letter-space-009 textarea::placeholder {
+  letter-spacing: 0.09em !important;
+}
+
+.letter-space-01 p,
+.letter-space-01 input::placeholder,
+.letter-space-01 textarea::placeholder {
+  letter-spacing: 0.1em !important;
+}
+
+.letter-space-011 p,
+.letter-space-011 input::placeholder,
+.letter-space-011 textarea::placeholder {
+  letter-spacing: 0.11em !important;
+}
+
 .letter-space-012 p,
 .letter-space-012 input::placeholder,
 .letter-space-012 textarea::placeholder {
