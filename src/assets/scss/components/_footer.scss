@@ -103,3 +103,19 @@
     }
   }
 }
+
+.dark .footer-mobile {
+  background-color: var.$dark;
+
+  svg {
+    fill: var.$lightText;
+    stroke: var.$lightText;
+  }
+
+  .nav__help {
+    svg {
+      fill: var.$text;
+      stroke: var.$text;
+    }
+  }
+}

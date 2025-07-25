@@ -13,7 +13,7 @@ import Logout from "@/components/nav/Logout";
 import Help from "@/components/nav/Help";
 import { SlHome } from "react-icons/sl";
 
-type BaseHeaderProps = {
+type BaseFooterProps = {
   secItem: ReactNode;
   fourthItem: ReactNode;
   fifthItem: ReactNode;
@@ -33,7 +33,7 @@ function AdminFooterMobile() {
           <span>&#43;</span>
         </Link>
       }
-      fourthItem={<Settings link="/admin/config" />}
+      fourthItem={<Settings link="/admin/config/preferencias" />}
       fifthItem={<Logout />}
     />
   );
@@ -44,7 +44,7 @@ function VisitorFooterMobile() {
     <BaseFooterMobile
       secItem={<Cart />}
       fourthItem={<Person />}
-      fifthItem={<Settings link="/config" />}
+      fifthItem={<Settings link="/config/preferencias" />}
     />
   );
 }
@@ -59,9 +59,9 @@ function CommonUserFooterMobile() {
   );
 }
 
-function BaseFooterMobile(props: BaseHeaderProps) {
+function BaseFooterMobile(props: BaseFooterProps) {
   return (
-    <header className="footer-mobile">
+    <footer className="footer-mobile">
       <div>
         <Link
           className="nav__homepage"
@@ -75,7 +75,7 @@ function BaseFooterMobile(props: BaseHeaderProps) {
         {props.fourthItem}
         {props.fifthItem}
       </div>
-    </header>
+    </footer>
   );
 }
 

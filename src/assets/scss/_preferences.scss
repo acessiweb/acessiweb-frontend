@@ -1,28 +1,32 @@
 @use "./var";
 @use "sass:math";
+@use "./function";
+@use "./mixins";
 
-//fonts
-.fs-small,
-.fs-small select {
-  font-size: var.$fs-small;
+/**
+
+font size
+
+*/
+
+.fs-medium {
+  @include mixins.switch-font-size(var.$fs-medium);
 }
 
-.fs-medium,
-.fs-medium select {
-  font-size: var.$fs-medium;
+.fs-large {
+  @include mixins.switch-font-size(var.$fs-large);
 }
 
-.fs-large,
-.fs-large select {
-  font-size: var.$fs-large;
+.fs-x-large {
+  @include mixins.switch-font-size(var.$fs-x-large);
 }
 
-.fs-x-large,
-.fs-x-large select {
-  font-size: var.$fs-x-large;
-}
+/**
 
-//brightness
+brightness
+
+*/
+
 @for $i from 0 through 100 {
   $actual-brightness-value: max($i, 20);
   $filter-value: math.div($actual-brightness-value, 100);
@@ -33,51 +37,64 @@
   }
 }
 
-//line and letter space
-$min-line-space: 1.5;
-$max-line-space: 3;
-$step-line-space: 0.1;
+/**
 
-$num-iterations-line: round(
-  math.div(($max-line-space - $min-line-space), $step-line-space)
+line space
+
+
+*/
+
+$num-iterations-line: function.calculate-interations(
+  var.$min-line-space,
+  var.$max-line-space,
+  var.$step-line-space
 );
 
 @for $i from 0 through $num-iterations-line {
-  $line-space-value: $min-line-space + ($i * $step-line-space);
-  $class-suffix: round($line-space-value * 10);
+  $line-space-value: var.$min-line-space + ($i * var.$step-line-space);
+  $class-suffix: function.str-replace($line-space-value + "", ".", "");
 
   .line-space-#{$class-suffix} {
-    .card__content > p {
+    p,
+    input::placeholder,
+    textarea::placeholder {
       line-height: $line-space-value !important;
     }
   }
 }
 
-$min-letter-space: 0.12;
-$max-letter-space: 0.2;
-$step-letter-space: 0.01;
+/**
 
-$num-iterations-letter: round(
-  math.div(($max-letter-space - $min-letter-space), $step-letter-space)
+letter space
+
+*/
+$num-iterations-letter: function.calculate-interations(
+  var.$min-letter-space,
+  var.$max-letter-space,
+  var.$step-letter-space
 );
 
 @for $i from 0 through $num-iterations-letter {
-  $letter-space-value: $min-letter-space + ($i * $step-letter-space);
-  $class-suffix: round($letter-space-value * 100);
+  $letter-space-value: var.$min-letter-space + ($i * var.$step-letter-space);
+  $class-suffix: function.str-replace($letter-space-value + "", ".", "");
 
   .letter-space-#{$class-suffix} {
-    .card__content > p {
+    p,
+    input::placeholder,
+    textarea::placeholder {
       letter-spacing: #{$letter-space-value}em !important;
     }
   }
 }
 
-//cursor
-$sizes: small, medium, large;
-$colors: "pink", "blue", "green", "orange", "purple", "yellow", "black", "white";
+/**
 
-@each $size in $sizes {
-  @each $color in $colors {
+
+cursor
+
+*/
+@each $size in var.$cursor-sizes {
+  @each $color in var.$cursor-colors {
     .cursor-#{$size}.cursor-#{$color} {
       *,
       input,

@@ -141,6 +141,11 @@ button {
   &__person {
     ul {
       background-color: var.$text;
+
+      svg {
+        fill: var.$lightText;
+        stroke: var.$lightText;
+      }
     }
   }
 }

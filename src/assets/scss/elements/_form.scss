@@ -19,10 +19,6 @@
   }
 }
 
-input[type="range"]::-webkit-slider-thumb {
-  background-color: var.$purple;
-}
-
 .form-error-msg {
   color: var.$red;
   font-size: calc(var.$fs-x-small - 0.2rem);

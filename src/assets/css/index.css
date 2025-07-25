@@ -298,10 +298,6 @@ input[type=checkbox]:focus-visible {
   font-size: 0.9rem;
 }
 
-input[type=range]::-webkit-slider-thumb {
-  background-color: #c1a6f9;
-}
-
 .form-error-msg {
   color: #cc695f;
   font-size: 0.7rem;
@@ -576,6 +572,11 @@ button {
 
 .dark .nav__profile ul, .dark .nav__person ul {
   background-color: rgb(25, 25, 24);
+}
+
+.dark .nav__profile ul svg, .dark .nav__person ul svg {
+  fill: #f0f0f0;
+  stroke: #f0f0f0;
 }
 
 .sec-page {
@@ -962,6 +963,20 @@ button {
   height: 1.9rem !important;
 }
 
+.dark .footer-mobile {
+  background-color: #303030;
+}
+
+.dark .footer-mobile svg {
+  fill: #f0f0f0;
+  stroke: #f0f0f0;
+}
+
+.dark .footer-mobile .nav__help svg {
+  fill: rgb(25, 25, 24);
+  stroke: rgb(25, 25, 24);
+}
+
 .search {
   display: flex;
   align-items: center;
@@ -1224,30 +1239,31 @@ button {
 
 .homepage-mobile .card {
   display: flex;
+  flex-direction: row;
   flex: none;
   margin-bottom: 0;
   padding-right: 1.1rem;
-  height: 90px;
 }
 
-.homepage-mobile .card:hover .card__desc > span:first-of-type {
+.homepage-mobile .card:hover .card__content h3 {
   font-weight: 700;
 }
 
-.homepage-mobile .card__desc {
+.homepage-mobile .card__content {
   margin-top: 0;
-  flex: 1;
+  width: 80%;
+}
+
+.homepage-mobile .card__content h3 {
   font-size: 1.2rem;
 }
 
-.homepage-mobile .card__desc > span:first-of-type {
-  font-weight: 500;
-}
-
-.homepage-mobile .card > div:nth-child(2) {
-  flex: 3;
+.homepage-mobile .card > div {
+  position: relative;
   display: flex;
   justify-content: flex-end;
+  width: 20%;
+  top: 0;
 }
 
 .homepage-mobile .card svg {
@@ -1971,26 +1987,46 @@ animation by Loop nerd
   font-style: normal;
 }
 
-.fs-small,
-.fs-small select {
-  font-size: 1rem;
-}
+/**
 
-.fs-medium,
-.fs-medium select {
+font size
+
+*/
+.fs-medium p,
+.fs-medium select,
+.fs-medium input,
+.fs-medium label,
+.fs-medium h3,
+.fs-medium span,
+.fs-medium li {
   font-size: 1.3rem;
 }
 
-.fs-large,
-.fs-large select {
+.fs-large p,
+.fs-large select,
+.fs-large input,
+.fs-large label,
+.fs-large h3,
+.fs-large span,
+.fs-large li {
   font-size: 1.7rem;
 }
 
-.fs-x-large,
-.fs-x-large select {
+.fs-x-large p,
+.fs-x-large select,
+.fs-x-large input,
+.fs-x-large label,
+.fs-x-large h3,
+.fs-x-large span,
+.fs-x-large li {
   font-size: 2rem;
 }
 
+/**
+
+brightness
+
+*/
 .brightness-0 {
   filter: brightness(0.2);
   transition: filter 0.1s ease-out;
@@ -2496,106 +2532,173 @@ animation by Loop nerd
   transition: filter 0.1s ease-out;
 }
 
-.line-space-15 .card__content > p {
+/**
+
+line space
+
+
+*/
+.line-space-15 p,
+.line-space-15 input::placeholder,
+.line-space-15 textarea::placeholder {
   line-height: 1.5 !important;
 }
 
-.line-space-16 .card__content > p {
+.line-space-16 p,
+.line-space-16 input::placeholder,
+.line-space-16 textarea::placeholder {
   line-height: 1.6 !important;
 }
 
-.line-space-17 .card__content > p {
+.line-space-17 p,
+.line-space-17 input::placeholder,
+.line-space-17 textarea::placeholder {
   line-height: 1.7 !important;
 }
 
-.line-space-18 .card__content > p {
+.line-space-18 p,
+.line-space-18 input::placeholder,
+.line-space-18 textarea::placeholder {
   line-height: 1.8 !important;
 }
 
-.line-space-19 .card__content > p {
+.line-space-19 p,
+.line-space-19 input::placeholder,
+.line-space-19 textarea::placeholder {
   line-height: 1.9 !important;
 }
 
-.line-space-20 .card__content > p {
+.line-space-2 p,
+.line-space-2 input::placeholder,
+.line-space-2 textarea::placeholder {
   line-height: 2 !important;
 }
 
-.line-space-21 .card__content > p {
+.line-space-21 p,
+.line-space-21 input::placeholder,
+.line-space-21 textarea::placeholder {
   line-height: 2.1 !important;
 }
 
-.line-space-22 .card__content > p {
+.line-space-22 p,
+.line-space-22 input::placeholder,
+.line-space-22 textarea::placeholder {
   line-height: 2.2 !important;
 }
 
-.line-space-23 .card__content > p {
+.line-space-23 p,
+.line-space-23 input::placeholder,
+.line-space-23 textarea::placeholder {
   line-height: 2.3 !important;
 }
 
-.line-space-24 .card__content > p {
+.line-space-24 p,
+.line-space-24 input::placeholder,
+.line-space-24 textarea::placeholder {
   line-height: 2.4 !important;
 }
 
-.line-space-25 .card__content > p {
+.line-space-25 p,
+.line-space-25 input::placeholder,
+.line-space-25 textarea::placeholder {
   line-height: 2.5 !important;
 }
 
-.line-space-26 .card__content > p {
+.line-space-26 p,
+.line-space-26 input::placeholder,
+.line-space-26 textarea::placeholder {
   line-height: 2.6 !important;
 }
 
-.line-space-27 .card__content > p {
+.line-space-27 p,
+.line-space-27 input::placeholder,
+.line-space-27 textarea::placeholder {
   line-height: 2.7 !important;
 }
 
-.line-space-28 .card__content > p {
+.line-space-28 p,
+.line-space-28 input::placeholder,
+.line-space-28 textarea::placeholder {
   line-height: 2.8 !important;
 }
 
-.line-space-29 .card__content > p {
+.line-space-29 p,
+.line-space-29 input::placeholder,
+.line-space-29 textarea::placeholder {
   line-height: 2.9 !important;
 }
 
-.line-space-30 .card__content > p {
+.line-space-3 p,
+.line-space-3 input::placeholder,
+.line-space-3 textarea::placeholder {
   line-height: 3 !important;
 }
 
-.letter-space-12 .card__content > p {
+/**
+
+letter space
+
+*/
+.letter-space-012 p,
+.letter-space-012 input::placeholder,
+.letter-space-012 textarea::placeholder {
   letter-spacing: 0.12em !important;
 }
 
-.letter-space-13 .card__content > p {
+.letter-space-013 p,
+.letter-space-013 input::placeholder,
+.letter-space-013 textarea::placeholder {
   letter-spacing: 0.13em !important;
 }
 
-.letter-space-14 .card__content > p {
+.letter-space-014 p,
+.letter-space-014 input::placeholder,
+.letter-space-014 textarea::placeholder {
   letter-spacing: 0.14em !important;
 }
 
-.letter-space-15 .card__content > p {
+.letter-space-015 p,
+.letter-space-015 input::placeholder,
+.letter-space-015 textarea::placeholder {
   letter-spacing: 0.15em !important;
 }
 
-.letter-space-16 .card__content > p {
+.letter-space-016 p,
+.letter-space-016 input::placeholder,
+.letter-space-016 textarea::placeholder {
   letter-spacing: 0.16em !important;
 }
 
-.letter-space-17 .card__content > p {
+.letter-space-017 p,
+.letter-space-017 input::placeholder,
+.letter-space-017 textarea::placeholder {
   letter-spacing: 0.17em !important;
 }
 
-.letter-space-18 .card__content > p {
+.letter-space-018 p,
+.letter-space-018 input::placeholder,
+.letter-space-018 textarea::placeholder {
   letter-spacing: 0.18em !important;
 }
 
-.letter-space-19 .card__content > p {
+.letter-space-019 p,
+.letter-space-019 input::placeholder,
+.letter-space-019 textarea::placeholder {
   letter-spacing: 0.19em !important;
 }
 
-.letter-space-20 .card__content > p {
+.letter-space-02 p,
+.letter-space-02 input::placeholder,
+.letter-space-02 textarea::placeholder {
   letter-spacing: 0.2em !important;
 }
 
+/**
+
+
+cursor
+
+*/
 .cursor-small.cursor-pink *,
 .cursor-small.cursor-pink input,
 .cursor-small.cursor-pink select,

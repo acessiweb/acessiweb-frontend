@@ -9,33 +9,32 @@
 
   .card {
     display: flex;
+    flex-direction: row;
     flex: none;
     margin-bottom: 0;
     padding-right: var.$space-md;
-    height: 90px;
 
     &:hover {
-      .card__desc {
-        > span:first-of-type {
-          font-weight: var.$bold;
-        }
+      .card__content h3 {
+        font-weight: var.$bold;
       }
     }
 
-    &__desc {
+    &__content {
       margin-top: 0;
-      flex: 1;
-      font-size: calc(var.$fs-small + 0.2rem);
+      width: 80%;
 
-      > span:first-of-type {
-        font-weight: var.$medium;
+      h3 {
+        font-size: calc(var.$fs-small + 0.2rem);
       }
     }
 
-    > div:nth-child(2) {
-      flex: 3;
+    > div {
+      position: relative;
       display: flex;
       justify-content: flex-end;
+      width: 20%;
+      top: 0;
     }
 
     svg {

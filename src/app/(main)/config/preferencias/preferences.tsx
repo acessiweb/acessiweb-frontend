@@ -1,10 +1,38 @@
 "use client";
 
 import { usePrefs } from "@/context/prefs";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useMemo } from "react";
 
 export default function Preferences() {
   const { prefs, savePref } = usePrefs();
+
+  const defaultLineSpace = useMemo(() => {
+    const lineSpace = prefs?.lineSpace.split("-")[2];
+
+    if (lineSpace) {
+      if (lineSpace.length === 1) {
+        return Number.parseInt(lineSpace);
+      }
+
+      return Number.parseInt(lineSpace) / 10;
+    }
+
+    return 1.5;
+  }, [prefs?.lineSpace]);
+
+  const defaultLetterSpace = useMemo(() => {
+    const letterSpace = prefs?.letterSpace.split("-")[2];
+
+    if (letterSpace) {
+      if (letterSpace.length === 2) {
+        return Number.parseInt(letterSpace) / 10;
+      }
+
+      return Number.parseInt(letterSpace) / 100;
+    }
+
+    return 0.12;
+  }, [prefs?.letterSpace]);
 
   const handleFontSize = (e: ChangeEvent<HTMLSelectElement>) => {
     savePref("fontSize", e.target.value);
@@ -19,11 +47,11 @@ export default function Preferences() {
   };
 
   const handleLineSpacing = (e: ChangeEvent<HTMLInputElement>) => {
-    savePref("lineSpace", `line-space-${e.target.value}`);
+    savePref("lineSpace", `line-space-${e.target.value.replace(".", "")}`);
   };
 
   const handleLetterSpacing = (e: ChangeEvent<HTMLInputElement>) => {
-    savePref("letterSpace", `letter-space-${e.target.value}`);
+    savePref("letterSpace", `letter-space-${e.target.value.replace(".", "")}`);
   };
 
   const handleCursorSize = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -103,7 +131,7 @@ export default function Preferences() {
           max="3"
           onChange={handleLineSpacing}
           step="0.1"
-          {...(prefs && { defaultValue: `${prefs.lineSpace.split("-")[2]}` })}
+          {...(prefs && { defaultValue: defaultLineSpace })}
         />
       </form>
 
@@ -115,7 +143,7 @@ export default function Preferences() {
           max="0.2"
           onChange={handleLetterSpacing}
           step="0.01"
-          {...(prefs && { defaultValue: `${prefs.letterSpace.split("-")[2]}` })}
+          {...(prefs && { defaultValue: defaultLetterSpace })}
         />
       </form>
 

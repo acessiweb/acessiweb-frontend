@@ -70,3 +70,15 @@
     }
   }
 }
+
+@mixin switch-font-size($fs) {
+  p,
+  select,
+  input,
+  label,
+  h3,
+  span,
+  li {
+    font-size: $fs;
+  }
+}

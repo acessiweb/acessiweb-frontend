@@ -60,3 +60,18 @@ $desktop: 891px;
 //rules
 $header-mobile-height: 70px;
 $header-desktop-height: 80px;
+
+//line space
+$min-line-space: 1.5;
+$max-line-space: 3;
+$step-line-space: 0.1;
+
+//letter space
+$min-letter-space: 0.12;
+$max-letter-space: 0.2;
+$step-letter-space: 0.01;
+
+//cursor
+$cursor-sizes: small, medium, large;
+$cursor-colors: "pink", "blue", "green", "orange", "purple", "yellow", "black",
+  "white";
