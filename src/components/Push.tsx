@@ -10,7 +10,7 @@ export default function Push() {
   const clear = useCallback(() => {
     setPushMsg("");
     setShowPush(false);
-  }, []);
+  }, [setPushMsg, setShowPush]);
 
   useEffect(() => {
     setTimeout(() => {
