@@ -4,7 +4,7 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import Code from "@/components/Code";
 import Image from "next/image";
 import { Guideline as GuidelineType } from "@/types/guideline";
-import imageKitLoader from "@/utils/imageKitLoader";
+import imageKitLoader from "@/utils/image-kit-loader";
 
 type GuidelineProps = {
   guideline: GuidelineType;

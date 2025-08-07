@@ -23,3 +23,18 @@ export async function createAccount(
     },
   });
 }
+
+export async function validateGoogleAuth(idToken: string) {
+  return await fetchData({
+    endpoint: `common-users/google`,
+    config: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        idToken,
+      }),
+    },
+  });
+}

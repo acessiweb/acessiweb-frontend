@@ -24,13 +24,16 @@ import EditGuideline from "../diretrizes/[id]/editar/EditGuideline";
 import useDeficiencyFilters from "@/hooks/useDeficiencyFilters";
 import ControlBar from "@/components/ControlBar";
 import useControlBar from "@/hooks/useControlBar";
-import { deleteGuideline } from "@/routes/user-guidelines";
 import { useSession } from "next-auth/react";
 import FiltersApplied from "@/components/FiltersApplied";
 import DateFilter from "@/components/DateFilter";
 import { FilterOptions } from "@/types/filter";
 import useDateFilter from "@/hooks/useDateFilter";
-import { getGuideline, getGuidelines } from "@/routes/guidelines";
+import {
+  deleteGuideline,
+  getGuideline,
+  getGuidelines,
+} from "@/routes/guidelines";
 import useSearch from "@/hooks/useSearch";
 import RemovedFilter from "@/components/RemovedFilter";
 
@@ -126,7 +129,6 @@ export default function GuidelinesAdmin({
         offset,
         keyword: search,
         deficiences: [hearing, motor, visual, neural, tea],
-        isRequest: isRequest,
         initialDate,
         endDate,
         isDeleted: isFilterApplied("deleted"),
@@ -178,7 +180,7 @@ export default function GuidelinesAdmin({
 
   const handleDeletion = async (guidelineId: string) => {
     if (session) {
-      const deleted = await deleteGuideline(session.user.id, guidelineId);
+      const deleted = await deleteGuideline(guidelineId);
 
       if ("id" in deleted) {
         handleDelete(deleted.id);

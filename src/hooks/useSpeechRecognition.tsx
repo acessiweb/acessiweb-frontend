@@ -1,7 +1,7 @@
 import { SlMicrophone } from "react-icons/sl";
 import { createRoot } from "react-dom/client";
 import { RefObject, useRef, useState } from "react";
-import { symbolMap } from "@/utils/voice-commands";
+import { symbolMap } from "@/utils/constants";
 
 type UseSpeechRecognitionOptions = {
   inputId: string;

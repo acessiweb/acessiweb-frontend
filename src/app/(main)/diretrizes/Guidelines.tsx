@@ -23,6 +23,7 @@ import useDateFilter from "@/hooks/useDateFilter";
 import { FilterOptions } from "@/types/filter";
 import DateFilter from "@/components/DateFilter";
 import useSearch from "@/hooks/useSearch";
+import { getGuidelinesRequests } from "@/routes/guidelines-requests";
 
 const filterOptions: FilterOptions = [
   {
@@ -105,14 +106,22 @@ export default function GuidelinesUser({
       endDate,
     ],
     queryFn: async () => {
-      const g = await getGuidelines({
-        offset,
-        keyword: search,
-        deficiences: [hearing, motor, visual, neural, tea],
-        isRequest: isRequest,
-        initialDate,
-        endDate,
-      });
+      const g = isRequest
+        ? await getGuidelinesRequests({
+            offset,
+            keyword: search,
+            deficiences: [hearing, motor, visual, neural, tea],
+            isRequest: isRequest,
+            initialDate,
+            endDate,
+          })
+        : await getGuidelines({
+            offset,
+            keyword: search,
+            deficiences: [hearing, motor, visual, neural, tea],
+            initialDate,
+            endDate,
+          });
 
       if ("data" in g) {
         handleStore(g);
@@ -142,7 +151,7 @@ export default function GuidelinesUser({
 
   return (
     <div className={getSecPageClass()}>
-      <div className="guidelines">
+      <div className={`${isRequest ? "requests" : "guidelines"}`}>
         <ControlBar
           handleView={handleView}
           view={view}
@@ -151,15 +160,31 @@ export default function GuidelinesUser({
           handleFiltering={handleFiltering}
         />
         <h1 className="heading-1" id="page-heading">
-          Diretrizes de acessibilidade
+          {isRequest ? "Suas solicitações" : "Diretrizes de acessibilidade"}{" "}
+          {isRequest && <span>de inclusão de diretriz</span>}
         </h1>
         <div className="guidelines-filters">
-          <Search
-            classname="search"
-            placeholderText="Buscar por diretriz..."
-            handleSearch={handleSearch}
-            searchValue={search}
-          />
+          {!isRequest && (
+            <Search
+              classname="search"
+              placeholderText="Buscar por diretriz..."
+              handleSearch={handleSearch}
+              searchValue={search}
+            />
+          )}
+          {isRequest && (
+            <div className="requests__search-wrapper">
+              <Search
+                classname="search"
+                placeholderText="Buscar por solicitação..."
+                handleSearch={handleSearch}
+                searchValue={search}
+              />
+              <button className="btn-default cursor-pointer">
+                Criar solicitação
+              </button>
+            </div>
+          )}
           <DeficiencesCheckbox
             onHearingChange={handleHearing}
             onMotorChange={handleMotor}
@@ -173,24 +198,26 @@ export default function GuidelinesUser({
             visual={visual}
           />
         </div>
-        <FiltersApplied
-          cleanFilters={cleanFilters}
-          filtersChosen={filtersChosen}
-          handleFilters={cleanAllFilters}
-        >
-          {isFilterApplied("creation-date") && (
-            <DateFilter
-              endDate={endDate}
-              handleEndDate={handleEndDate}
-              handleInitialDate={handleInitialDate}
-              initialDate={initialDate}
-              cleanDateFilter={() => {
-                deleteFilter("creation-date");
-                cleanDateFilter();
-              }}
-            />
-          )}
-        </FiltersApplied>
+        {filtersChosen.length > 0 && (
+          <FiltersApplied
+            cleanFilters={cleanFilters}
+            filtersChosen={filtersChosen}
+            handleFilters={cleanAllFilters}
+          >
+            {isFilterApplied("creation-date") && (
+              <DateFilter
+                endDate={endDate}
+                handleEndDate={handleEndDate}
+                handleInitialDate={handleInitialDate}
+                initialDate={initialDate}
+                cleanDateFilter={() => {
+                  deleteFilter("creation-date");
+                  cleanDateFilter();
+                }}
+              />
+            )}
+          </FiltersApplied>
+        )}
         {store.length > 0 ? (
           <div className={`${view}`} aria-labelledby="page-heading">
             {store.map((guideline) => (

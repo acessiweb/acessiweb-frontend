@@ -12,11 +12,11 @@ import { useSession } from "next-auth/react";
 import Logo from "../assets/images/logo-horizontal.png";
 import LogoDarkTheme from "../assets/images/logo-horizontal-dark-theme.png";
 import Image from "next/image";
-import { HOMEPAGE_LINKS } from "@/utils/homepage-links";
 import Logout from "./nav/Logout";
 import KeyboardNav from "./nav/Keyboard";
 import Profile from "./nav/Profile";
 import { usePrefs } from "@/context/prefs";
+import { HOMEPAGE_LINKS } from "@/utils/constants";
 
 type BaseHeaderProps = {
   showHomepageLink: boolean;

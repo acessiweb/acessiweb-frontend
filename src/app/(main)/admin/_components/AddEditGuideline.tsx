@@ -17,11 +17,11 @@ import {
   CreateEditGuidelineSchema,
 } from "@/schemas/guideline.schema";
 import { Guideline } from "@/types/guideline";
-import { updateGuideline, createGuideline } from "@/routes/user-guidelines";
 import useErrors from "@/hooks/useErrors";
 import Errors from "@/components/Errors";
 import { useScreenType } from "@/hooks/useScreenType";
 import { Page } from "@/types/page";
+import { createGuideline, updateGuideline } from "@/routes/guidelines";
 
 type AddEditGuidelineProps = Page & {
   guideline?: Guideline;
@@ -124,8 +124,8 @@ export default function AddEditGuideline({
       if (sessionData && sessionData.user && sessionData.user.id) {
         const res =
           isEditPage && guideline && guideline.id
-            ? await updateGuideline(sessionData.user.id, guideline.id, formData)
-            : await createGuideline(sessionData.user.id, formData);
+            ? await updateGuideline(guideline.id, formData)
+            : await createGuideline(formData);
 
         if ("errors" in res) {
           handleApiErrors([res]);

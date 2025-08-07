@@ -3,9 +3,9 @@ import { useScreenType } from "@/hooks/useScreenType";
 import { IoHelp } from "react-icons/io5";
 import { SlClose } from "react-icons/sl";
 import { useHotkeys } from "react-hotkeys-hook";
-import { symbolMap } from "../../utils/voice-commands";
 import React from "react";
 import { createPortal } from "react-dom";
+import { symbolMap } from "@/utils/constants";
 
 type HelpProps = {
   appId: string;

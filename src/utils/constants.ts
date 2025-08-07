@@ -1,3 +1,10 @@
+export const HOMEPAGE_LINKS = [
+  "/",
+  "/admin",
+  "/admin/diretrizes",
+  "/diretrizes",
+];
+
 export const symbolMap: Record<string, string> = {
   arroba: "@",
   hashtag: "#",
@@ -32,4 +39,13 @@ export const symbolMap: Record<string, string> = {
   "abre chaves": "{",
   "fecha chaves": "}",
   "sem espaço": "",
+};
+
+export const LOCAL_STORAGE_PREFS = "acessiweb-prefs";
+export const LOCAL_STORAGE_CART = "acessiweb-cart";
+
+export const DEFAULT_CART = {
+  name: "",
+  description: "",
+  guidelines: [],
 };

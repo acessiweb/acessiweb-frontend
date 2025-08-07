@@ -4,7 +4,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: var.$space-md;
-  margin-top: var.$space-lg;
+  margin-top: var.$space-xl;
 
   @media (max-width: var.$tablet) {
     margin-top: var.$space-sm;
@@ -22,7 +22,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   row-gap: var.$space-md;
-  margin-top: var.$space-lg;
+  margin-top: var.$space-xl;
 
   &__item {
     flex: 1;

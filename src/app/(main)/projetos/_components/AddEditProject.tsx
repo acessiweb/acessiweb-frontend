@@ -27,6 +27,8 @@ import {
   EditProjectSchema,
   editProjectSchema,
 } from "@/schemas/project.schema";
+import { useSession } from "next-auth/react";
+import { ApiError } from "@/types/response-api";
 
 type AddEditProjectProps = Page & {
   project?: Project;
@@ -79,6 +81,7 @@ export default function AddEditProject({
   const { setPushMsg, setShowPush } = usePush();
   const router = useRouter();
   const projectName = watch("projName");
+  const { data: session } = useSession();
 
   useEffect(() => {
     if (handleSecPageTitle) {
@@ -134,24 +137,36 @@ export default function AddEditProject({
   };
 
   const onSubmit = async (data: CreateProjectSchema | EditProjectSchema) => {
-    const res =
-      isEditPage && "feedback" in data && project
-        ? await editProject(project.id, {
-            name: data.projName,
-            desc: data.desc,
-            guidelines: data.guidelines.map((guide) => guide.id),
-            feedback: data.feedback || "",
-          })
-        : await createProject({
-            name: data.projName,
-            desc: data.desc,
-            guidelines: data.guidelines.map((guide) => guide.id),
-          });
+    let res:
+      | ApiError
+      | Project
+      | {
+          id: string;
+        } = {} as ApiError;
+
+    if (isEditPage && "feedback" in data && project) {
+      res = await editProject(project.id, {
+        name: data.projName,
+        desc: data.desc,
+        guidelines: data.guidelines.map((guide) => guide.id),
+        feedback: data.feedback || "",
+      });
+    }
+
+    if (!isEditPage && session?.user.id) {
+      res = await createProject({
+        name: data.projName,
+        desc: data.desc,
+        guidelines: data.guidelines.map((guide) => guide.id),
+      });
+    }
 
     if ("errors" in res) {
       handleApiErrors([res]);
       setPushMsg("");
       setShowPush(false);
+    } else if (Object.keys(res).length === 0) {
+      router.push("/auth/logar");
     } else {
       handleResponse();
 
@@ -282,6 +297,9 @@ export default function AddEditProject({
                 </div>
               ))}
             </div>
+          )}
+          {guidelinesShown && cart && cart.guidelines.length === 0 && (
+            <div>Ainda não foram selecionadas diretrizes para esse projeto</div>
           )}
           {errors.guidelines && (
             <small

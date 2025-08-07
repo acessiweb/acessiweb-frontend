@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "ik.imagekit.io",
-        pathname: "/6vdq2o9vy/acessibiweb",
+        pathname: "/6vdq2o9vy/acessiweb",
       },
     ],
   },

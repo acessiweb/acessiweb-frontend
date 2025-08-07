@@ -1,7 +1,7 @@
 @use "../var";
 
 .auth {
-  background-color: var.$lightPurple;
+  background-color: var.$lighterPurple;
   width: 100%;
   height: 100%;
   display: flex;
@@ -105,11 +105,14 @@
 
     button,
     button + a {
-      background-color: var.$purple;
       margin: 0 auto;
       padding: var.$space-sm;
       border: var.$border-1;
       border-radius: var.$border-radius-default;
+    }
+
+    > button {
+      background-color: var.$purple;
     }
 
     button + a {

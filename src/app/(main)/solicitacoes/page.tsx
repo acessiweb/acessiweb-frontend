@@ -1,5 +1,5 @@
-"use client";
+import GuidelinesUser from "../diretrizes/Guidelines";
 
-export default function GuidelineRequests() {
-  return <div>Aqui vão ficar as solicitações</div>;
+export default function Page() {
+  return <GuidelinesUser isRequest={true} />;
 }

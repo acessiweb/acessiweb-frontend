@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <main className="not-found tahoma">
+    <main className="not-found tahoma cursor-black cursor-small">
       <p>Opa! Não foi possível encontrar o que você está buscando.</p>
       <Link className="btn-link-default" href="/">
         Ir para página inicial

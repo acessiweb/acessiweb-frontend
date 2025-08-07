@@ -56,18 +56,17 @@
 
     li {
       font-weight: bold;
-      font-style: italic;
-
-      &:hover {
-        a {
-          color: var.$purple !important;
-        }
-      }
     }
 
+    a {
+      font-style: italic;
+    }
+
+    li:hover,
     &--active {
       a {
-        color: var.$purple !important;
+        font-weight: var.$bold;
+        text-decoration: underline !important;
       }
     }
   }

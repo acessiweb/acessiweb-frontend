@@ -107,7 +107,7 @@
 
   &__error-msg {
     color: var.$red;
-    font-weight: var.$bold;
+    font-weight: var.$bold !important;
     font-size: var.$fs-x-small;
   }
 }

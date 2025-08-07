@@ -4,9 +4,11 @@ import { CartType } from "@/types/cart";
 import { Prefs } from "@/types/prefs";
 import { setBodyClasses } from "./body";
 import { compareArrays } from "./compare";
-
-const LOCAL_STORAGE_PREFS = "acessiweb-prefs";
-const LOCAL_STORAGE_CART = "acessiweb-cart";
+import {
+  DEFAULT_CART,
+  LOCAL_STORAGE_CART,
+  LOCAL_STORAGE_PREFS,
+} from "./constants";
 
 const DEFAULT_PREFS = {
   theme: "light",
@@ -17,12 +19,6 @@ const DEFAULT_PREFS = {
   letterSpace: "letter-space-12",
   cursorSize: "cursor-small",
   cursorColor: "cursor-black",
-};
-
-const DEFAULT_CART = {
-  name: "",
-  description: "",
-  guidelines: [],
 };
 
 //preferences
@@ -103,5 +99,5 @@ export function getCart(): CartType | undefined {
 }
 
 export function saveCart(cart: CartType) {
-  localStorage.setItem("acessibiweb-cart", JSON.stringify(cart));
+  localStorage.setItem(LOCAL_STORAGE_CART, JSON.stringify(cart));
 }

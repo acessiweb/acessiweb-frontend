@@ -6,7 +6,7 @@
   flex: 1;
   column-gap: var.$space-sm;
   background-color: var.$contrast;
-  padding: var.$space-lg var.$space-lg;
+  padding: var.$space-lg var.$space-md;
   border-radius: var.$border-radius-2;
   border: var.$border-1;
   font-weight: var.$medium;
@@ -14,11 +14,12 @@
   row-gap: var.$space-sm;
   position: relative;
   box-shadow: 5px 10px 10px var.$lightPurple;
+  width: 100%;
 
   > div:nth-child(2),
   > button {
     position: absolute;
-    right: 16px;
+    right: 4px;
     top: 8px;
   }
 
@@ -32,9 +33,17 @@
     row-gap: var.$space-md;
     align-items: flex-start;
     justify-content: space-between;
+    width: 100%;
 
-    h3 {
+    .heading-3 {
+      display: -webkit-box;
+      word-break: break-all;
       font-size: var.$fs-medium;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 70%;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
 
     > p {
@@ -61,8 +70,8 @@
   }
 
   svg {
-    height: var.$svg-large !important;
-    width: var.$svg-large !important;
+    height: calc(var.$svg-small + 0.2rem) !important;
+    width: calc(var.$svg-small + 0.2rem) !important;
   }
 }
 

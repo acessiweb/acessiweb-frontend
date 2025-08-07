@@ -4,6 +4,7 @@ import { createContext, useContext, useState } from "react";
 import { usePush } from "./push";
 import { CartType } from "@/types/cart";
 import { getCart, saveCart } from "@/utils/storage";
+import { DEFAULT_CART } from "@/utils/constants";
 
 type CartContextType = {
   cart: CartType | undefined;
@@ -87,7 +88,13 @@ export default function CartProvider({
         const newCart = { ...prevCart, guidelines: newGuides };
 
         saveCart(newCart);
-        setGuidelinesTotal((prevTotal: number) => prevTotal - 1);
+        setGuidelinesTotal((prevTotal: number) => {
+          const sum = prevTotal - 1;
+
+          if (sum < 0) return 0;
+
+          return sum;
+        });
 
         return newCart;
       }
@@ -127,15 +134,9 @@ export default function CartProvider({
   };
 
   const cleanCart = () => {
-    const newCart = {
-      name: "",
-      description: "",
-      guidelines: [],
-    };
-
-    setCart(newCart);
+    setCart(DEFAULT_CART);
     setGuidelinesTotal(0);
-    saveCart(newCart);
+    saveCart(DEFAULT_CART);
   };
 
   return (
