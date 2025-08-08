@@ -15,7 +15,7 @@ export async function createProject(body: {
   const token = await getAuthSession();
 
   return fetchData({
-    endpoint: `common-users/me/projects`,
+    endpoint: "projects",
     config: {
       method: "POST",
       headers: {
@@ -39,7 +39,7 @@ export async function editProject(
   const token = await getAuthSession();
 
   return fetchData({
-    endpoint: `common-users/me/projects/${projectId}`,
+    endpoint: `projects/${projectId}`,
     config: {
       method: "PUT",
       headers: {
@@ -57,7 +57,7 @@ export async function deleteProject(
   const token = await getAuthSession();
 
   return fetchData({
-    endpoint: `common-users/me/projects/${projectId}`,
+    endpoint: `projects/${projectId}`,
     config: {
       method: "DELETE",
       headers: {
@@ -78,7 +78,7 @@ export async function getProjects(query: {
   const token = await getAuthSession();
 
   return await fetchData({
-    endpoint: `common-users/me/projects?keyword=${query?.keyword}&limit=${query?.limit}&offset=${query?.offset}`,
+    endpoint: `projects?keyword=${query?.keyword}&limit=${query?.limit}&offset=${query?.offset}&initialDate=${query?.initialDate}&endDate=${query?.endDate}`,
     config: {
       method: "GET",
       headers: {
@@ -92,7 +92,7 @@ export async function getProject(id: string): Promise<Project | ApiError> {
   const token = await getAuthSession();
 
   return await fetchData({
-    endpoint: `common-users/me/projects/${id}`,
+    endpoint: `projects/${id}`,
     config: {
       method: "GET",
       headers: {
