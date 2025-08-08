@@ -15,9 +15,7 @@ const projName = z
 
 const desc = z.string().trim();
 
-const guidelines = z
-  .array(guidelinesSchema)
-  .min(1, "O projeto precisa ter ao menos uma diretriz relacionada");
+const guidelines = z.array(guidelinesSchema);
 
 export const createProjectSchema = z.object({
   projName,
