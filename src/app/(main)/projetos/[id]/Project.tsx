@@ -1,13 +1,24 @@
-import { Page } from "@/types/page";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { Project as ProjectType } from "@/types/project";
 
-type ProjectProps = Page & {
+type ProjectProps = {
   project: ProjectType;
+  isSecPage?: boolean;
+  crumbs?: {
+    desc: string;
+    link: string;
+  }[];
 };
 
-export default function Project({ project }: ProjectProps) {
+export default function Project({
+  project,
+  isSecPage = false,
+  crumbs,
+}: ProjectProps) {
   return (
     <div className="read-project">
+      {!isSecPage && crumbs && <Breadcrumb crumbs={crumbs} />}
+      <h1 className="heading-1">{project.name}</h1>
       <p>{project.description}</p>
       {project.guidelines && project.guidelines.length > 0 && (
         <div className="grid" id="guidelines-grid">

@@ -15,7 +15,19 @@ export default async function Page({ params }: PageProps) {
 
   if (project && "id" in project) {
     return (
-      <Project project={project} handleSecPageTitle={() => project.name} />
+      <Project
+        project={project}
+        crumbs={[
+          {
+            desc: "PROJETOS",
+            link: "/projetos",
+          },
+          {
+            desc: project.name,
+            link: `/projetos/${project.id}`,
+          },
+        ]}
+      />
     );
   }
 

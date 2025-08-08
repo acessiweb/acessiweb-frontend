@@ -23,9 +23,9 @@ export default function Guideline({
   return (
     <div className="read-guideline">
       {!isSecPage && crumbs && <Breadcrumb crumbs={crumbs} />}
-      <h1 className="heading-1">{guideline?.name}</h1>
-      <p>{guideline?.description}</p>
-      {guideline?.code && (
+      <h1 className="heading-1">{guideline.name}</h1>
+      <p>{guideline.description}</p>
+      {guideline.code && (
         <Code
           code={guideline.code || ""}
           editable={false}
@@ -44,7 +44,7 @@ export default function Guideline({
         </div>
       )}
       <div className="read-guideline__deficiences">
-        {guideline?.deficiences?.map((def, i) => (
+        {guideline.deficiences?.map((def, i) => (
           <div key={i}>
             <div className="read-guideline__deficiences__checkbox"></div>
             <span>{def.name}</span>
