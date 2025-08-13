@@ -1036,6 +1036,12 @@ button {
   border: none;
 }
 
+.search:has(.search__search-form > input:focus) .search__search-form,
+.search:has(.search__search-form > input:focus) button {
+  outline: auto;
+  outline-width: 2px;
+}
+
 .search-header {
   display: flex;
   align-items: center;
@@ -1084,6 +1090,12 @@ button {
   align-items: center;
   background-color: transparent;
   border: none;
+}
+
+.search-header:has(.search__search-form > input:focus) .search__search-form,
+.search-header:has(.search__search-form > input:focus) button {
+  outline: auto;
+  outline-width: 2px;
 }
 
 .search-header input::placeholder {
@@ -1293,6 +1305,10 @@ button {
   justify-content: space-between;
 }
 
+.projects__search-wrapper .search {
+  width: 60%;
+}
+
 .projects__header {
   display: flex;
   justify-content: space-between;
@@ -1475,16 +1491,6 @@ button {
 .two-pages .guidelines .guidelines-filters > div:first-of-type .search {
   margin: 0;
   flex: 1;
-}
-
-.read-guideline {
-  display: flex;
-  flex-direction: column;
-  row-gap: 0.7rem;
-}
-
-.read-guideline .breadcrumb {
-  margin-bottom: 1.1rem;
 }
 
 .read-guideline__img-wrapper {
@@ -1679,6 +1685,16 @@ button {
 .preferences select {
   padding: 0.7rem 0.3rem;
   border-radius: 12px;
+}
+
+.read-page {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.7rem;
+}
+
+.read-page .breadcrumb {
+  margin-bottom: 1.1rem;
 }
 
 .auth {

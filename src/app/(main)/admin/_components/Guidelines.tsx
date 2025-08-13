@@ -219,7 +219,7 @@ export default function GuidelinesAdmin({
             {isMobile || isTablet
               ? !isRequest && (
                   <Link
-                    className="btn-default"
+                    className="btn-default cursor-pointer"
                     href="/admin/diretrizes/cadastrar"
                   >
                     <GoPlus />
@@ -227,7 +227,7 @@ export default function GuidelinesAdmin({
                 )
               : !isRequest && (
                   <button
-                    className="btn-default"
+                    className="btn-default cursor-pointer"
                     onClick={() => handleAddSecPage()}
                   >
                     Criar diretriz

@@ -1,0 +1,11 @@
+@use "../../var";
+
+.read-page {
+  display: flex;
+  flex-direction: column;
+  row-gap: var.$space-sm;
+
+  .breadcrumb {
+    margin-bottom: var.$space-md;
+  }
+}

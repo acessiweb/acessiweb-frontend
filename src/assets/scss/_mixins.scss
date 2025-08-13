@@ -69,6 +69,14 @@
       border: none;
     }
   }
+
+  &:has(.search__search-form > input:focus) {
+    .search__search-form,
+    button {
+      outline: auto;
+      outline-width: 2px;
+    }
+  }
 }
 
 @mixin switch-font-size($fs) {

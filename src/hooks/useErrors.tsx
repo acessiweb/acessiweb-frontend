@@ -1,14 +1,28 @@
+"use client";
+
+import { AlertMsgs } from "@/types/error";
 import { ApiError } from "@/types/response-api";
 import { useState } from "react";
 
 type ErrorsProps = {
-  alertMsg?: string | undefined;
+  alertMsg?: AlertMsgs;
 };
 
 export default function useErrors({ alertMsg }: ErrorsProps = {}) {
   const [errorMsgs, setErrorMsgs] = useState<string[]>(() => {
     if (alertMsg) {
-      return [alertMsg];
+      switch (alertMsg) {
+        case "AccessDenied":
+          return [
+            "Ocorreu um erro: Não foi possível realizar a autenticação. Tente novamente.",
+          ];
+        case "GoogleAuthError":
+          return [
+            "Ocorreu um erro: Não foi possível autenticar com o serviço Google. Tente novamente.",
+          ];
+        default:
+          return [];
+      }
     }
     return [];
   });

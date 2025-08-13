@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FaSquareXTwitter, FaSquareFacebook, FaGoogle } from "react-icons/fa6";
+import { FaGoogle, FaSquareGithub } from "react-icons/fa6";
 import { signIn } from "next-auth/react";
 import { Params } from "@/types/params";
 import { useForm } from "react-hook-form";
@@ -16,6 +16,7 @@ import useErrors from "@/hooks/useErrors";
 import Errors from "@/components/Errors";
 import { useHotkeys } from "react-hotkeys-hook";
 import InputTextVoice from "@/components/InputTextVoice";
+import { AlertMsgs } from "@/types/error";
 
 type LoginProps = Params;
 
@@ -23,10 +24,7 @@ export default function Login({ searchParams }: LoginProps) {
   const router = useRouter();
   const { hide, handlePassword } = usePassword();
   const { errorMsgs, handleApiErrors, handleUniqueMsg, isAlert } = useErrors({
-    alertMsg:
-      searchParams.error && searchParams.error === "AccessDenied"
-        ? "Ocorreu um erro: Não foi possível realizar a autenticação. Tente novamente."
-        : "",
+    alertMsg: searchParams.error as AlertMsgs,
   });
   const { handleType, inputType } = useEmailOrMobilePhone();
   const {
@@ -47,8 +45,8 @@ export default function Login({ searchParams }: LoginProps) {
     });
   };
 
-  const loginWithX = () => {
-    signIn("twitter", {
+  const loginWithGithub = () => {
+    signIn("github", {
       callbackUrl: "/",
       redirect: true,
     });
@@ -79,7 +77,7 @@ export default function Login({ searchParams }: LoginProps) {
   };
 
   useHotkeys("G", loginWithGoogle);
-  useHotkeys("X", loginWithX);
+  useHotkeys("B", loginWithGithub);
 
   return (
     <div className="login">
@@ -187,15 +185,12 @@ export default function Login({ searchParams }: LoginProps) {
             <FaGoogle aria-hidden={true} focusable={false} />
           </button>
           <button
-            onClick={loginWithX}
-            aria-label="Logar com X"
-            title="Pressione a tecla X"
-            aria-keyshortcuts="X"
+            onClick={loginWithGithub}
+            aria-label="Logar com Github"
+            title="Pressione a tecla B"
+            aria-keyshortcuts="B"
           >
-            <FaSquareXTwitter aria-hidden={true} focusable={false} />
-          </button>
-          <button>
-            <FaSquareFacebook aria-hidden={true} focusable={false} />
+            <FaSquareGithub aria-hidden={true} focusable={false} />
           </button>
         </div>
       </div>

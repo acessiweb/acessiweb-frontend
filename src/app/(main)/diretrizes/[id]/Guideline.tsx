@@ -21,7 +21,7 @@ export default function Guideline({
   crumbs,
 }: GuidelineProps) {
   return (
-    <div className="read-guideline">
+    <div className="read-page read-guideline">
       {!isSecPage && crumbs && <Breadcrumb crumbs={crumbs} />}
       <h1 className="heading-1">{guideline.name}</h1>
       <p>{guideline.description}</p>

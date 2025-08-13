@@ -11,5 +11,10 @@ export default async function fetchData({ endpoint, config }: FetchDataParams) {
     config
   );
 
-  return await response.json();
+  const responseJSON = await response.json();
+
+  return {
+    ok: response.ok,
+    ...responseJSON,
+  };
 }

@@ -1,47 +1,14 @@
-import NextAuth, { NextAuthOptions, User } from "next-auth";
+import NextAuth, { DecodedJWT, NextAuthOptions, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import TwitterProvider from "next-auth/providers/twitter";
+import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import * as jose from "jose";
-import { JWT } from "next-auth/jwt";
-import { validateGoogleAuth } from "@/routes/common-users";
-
-// async function refreshAccessToken(nextAuthJWT: JWT): Promise<JWT> {
-//   try {
-//     // Get a new access token from backend using the refresh token
-//     const res = await refresh(nextAuthJWT.data.tokens.refresh);
-//     const accessToken: BackendAccessJWT = await res.json();
-
-//     if (!res.ok) throw accessToken;
-//     const { exp }: DecodedJWT = jwtDecode(accessToken.access);
-
-//     // Update the token and validity in the next-auth object
-//     nextAuthJWT.data.validity.valid_until = exp;
-//     nextAuthJWT.data.tokens.access = accessToken.access;
-//     // Ensure the returned jwt has a new object reference ID
-//     // (jwt will not be updated otherwise)
-//     return { ...nextAuthJWT };
-//   } catch (error) {
-//     console.debug(error);
-//     return {
-//       ...nextAuthJWT,
-//       error: "RefreshAccessTokenError"
-//     };
-//   }
-// }
+import { validateGithubAuth, validateGoogleAuth } from "@/routes/common-users";
+import { refreshAccessToken, refreshGoogleAccessToken } from "@/utils/refresh";
 
 function getUser(tokens: { accessToken: string; refreshToken: string }) {
-  const accessToken = jose.decodeJwt(tokens.accessToken) as {
-    sub: string;
-    email: string;
-    role: string;
-    iat: number;
-    exp: number;
-    aud: string;
-    iss: string;
-    username: string;
-  };
-  const refreshToken = jose.decodeJwt(tokens.refreshToken);
+  const accessToken = jose.decodeJwt(tokens.accessToken) as DecodedJWT;
+  const refreshToken = jose.decodeJwt(tokens.refreshToken) as DecodedJWT;
 
   return {
     user: {
@@ -51,12 +18,16 @@ function getUser(tokens: { accessToken: string; refreshToken: string }) {
       username: accessToken.username,
     },
     tokens: {
-      access: tokens.accessToken,
-      refresh: tokens.refreshToken,
-    },
-    validity: {
-      valid_until: accessToken.exp,
-      refresh_until: refreshToken.exp,
+      access: {
+        exp: accessToken.exp,
+        iat: accessToken.iat,
+        token: tokens.accessToken,
+      },
+      refresh: {
+        exp: refreshToken.exp,
+        iat: refreshToken.iat,
+        token: tokens.refreshToken,
+      },
     },
   } as User;
 }
@@ -101,33 +72,106 @@ const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
-    TwitterProvider({
-      clientId: process.env.TWITTER_CLIENT_ID!,
-      clientSecret: process.env.TWITTER_CLIENT_SECRET!,
-      version: "2.0",
+    GithubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     }),
   ],
   callbacks: {
     async jwt({ token, account, user }) {
       if (user && account) {
         if (account.provider === "google") {
-          try {
-            const tokens = await validateGoogleAuth(account.id_token!);
-            const userInfo = getUser(tokens);
-            return { ...token, data: userInfo };
-          } catch {
-            return Promise.reject(undefined);
+          const tokens = await validateGoogleAuth(account?.id_token);
+
+          if (tokens.ok) {
+            return {
+              ...token,
+              provider: "google",
+              data: getUser(tokens),
+              error: "",
+            };
           }
+
+          return {
+            ...token,
+            data: {} as User,
+            error: "GoogleAuthError",
+          };
         }
 
-        return { ...token, data: user };
+        if (account.provider === "github") {
+          const tokens = await validateGithubAuth(account?.access_token);
+
+          if (tokens.ok) {
+            return {
+              ...token,
+              provider: "github",
+              data: getUser(tokens),
+              error: "",
+            };
+          }
+
+          return {
+            ...token,
+            data: {} as User,
+            error: "GithubAuthError",
+          };
+        }
+
+        return { ...token, data: user, provider: "credentials", error: "" };
       }
 
-      return { ...token, error: "RefreshTokenExpired" } as JWT;
+      if ("provider" in token && !token.error) {
+        const timeNowSecs = Date.now() / 1000;
+
+        if (token.data.tokens.access.exp) {
+          if (token.provider === "google") {
+            if (timeNowSecs >= token.data.tokens.access.exp) {
+              const tokens = await refreshGoogleAccessToken(
+                token.data.tokens.refresh.token
+              );
+
+              if (tokens.accessToken) {
+                user = getUser(tokens);
+              } else {
+                user = {} as User;
+              }
+
+              return { ...token, data: user };
+            }
+          }
+
+          //precisa implementar do github
+
+          if (token.provider === "credentials") {
+            if (timeNowSecs >= token.data.tokens.access.exp) {
+              const tokens = await refreshAccessToken(
+                token.data.tokens.refresh.token
+              );
+
+              if (tokens.accessToken) {
+                user = getUser(tokens);
+              } else {
+                user = {} as User;
+              }
+
+              return { ...token, data: user };
+            }
+          }
+
+          if (timeNowSecs < token.data.tokens.access.exp) {
+            return { ...token };
+          }
+        }
+      }
+
+      return {
+        ...token,
+        error: "",
+      };
     },
     async session({ session, token }) {
       session.user = token.data.user;
-      session.validity = token.data.validity;
       session.error = token.error;
       return session;
     },

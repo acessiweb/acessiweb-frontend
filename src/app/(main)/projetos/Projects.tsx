@@ -21,17 +21,12 @@ import FiltersApplied from "@/components/FiltersApplied";
 import DateFilter from "@/components/DateFilter";
 import useDateFilter from "@/hooks/useDateFilter";
 import useSearch from "@/hooks/useSearch";
-import RemovedFilter from "@/components/RemovedFilter";
 import EditProject from "./[id]/editar/EditProject";
 
 const filterOptions: FilterOptions = [
   {
     id: "creation-date",
     desc: "Por data de criação",
-  },
-  {
-    id: "deleted",
-    desc: "Removidos",
   },
 ];
 
@@ -132,9 +127,7 @@ export default function Projects() {
       const project = await getProject(id);
       if ("id" in project) {
         handleIsSecPageOpen(true);
-        handleSecPageContent(
-          <Project project={project} handleSecPageTitle={handleSecPageTitle} />
-        );
+        handleSecPageContent(<Project project={project} />);
         handleSecPageTitle(project.name);
         handleFullScreenLink(`/projetos/${id}`);
       }
@@ -186,12 +179,6 @@ export default function Projects() {
                   deleteFilter("creation-date");
                   cleanDateFilter();
                 }}
-              />
-            )}
-            {isFilterApplied("deleted") && (
-              <RemovedFilter
-                desc="Projetos removidos"
-                onClick={() => deleteFilter("deleted")}
               />
             )}
           </FiltersApplied>

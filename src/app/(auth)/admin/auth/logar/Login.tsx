@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import Password from "@/app/(auth)/_components/Password";
 import usePassword from "@/app/(auth)/_hooks/usePassword";
 import Errors from "@/components/Errors";
+import { AlertMsgs } from "@/types/error";
 
 type LoginProps = Params;
 
@@ -18,10 +19,7 @@ export default function Login({ searchParams }: LoginProps) {
   const router = useRouter();
   const { hide, handlePassword } = usePassword();
   const { errorMsgs, handleApiErrors, isAlert } = useErrorMsgs({
-    alertMsg:
-      searchParams.error && searchParams.error === "AccessDenied"
-        ? "Ocorreu um erro: Não foi possível realizar autenticação"
-        : "",
+    alertMsg: searchParams.error as AlertMsgs,
   });
   const {
     register,

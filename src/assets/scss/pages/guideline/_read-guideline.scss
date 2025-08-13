@@ -1,14 +1,6 @@
 @use "../../var";
 
 .read-guideline {
-  display: flex;
-  flex-direction: column;
-  row-gap: var.$space-sm;
-
-  .breadcrumb {
-    margin-bottom: var.$space-md;
-  }
-
   &__img-wrapper {
     height: auto;
     max-width: 100%;

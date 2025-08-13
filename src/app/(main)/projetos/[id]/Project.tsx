@@ -16,7 +16,7 @@ export default function Project({
   crumbs,
 }: ProjectProps) {
   return (
-    <div className="read-project">
+    <div className="read-page read-project">
       {!isSecPage && crumbs && <Breadcrumb crumbs={crumbs} />}
       <h1 className="heading-1">{project.name}</h1>
       <p>{project.description}</p>

@@ -24,6 +24,9 @@ import { FilterOptions } from "@/types/filter";
 import DateFilter from "@/components/DateFilter";
 import useSearch from "@/hooks/useSearch";
 import { getGuidelinesRequests } from "@/routes/guidelines-requests";
+import Link from "next/link";
+import { GoPlus } from "react-icons/go";
+import AddGuidelineRequest from "../solicitacoes/cadastrar/AddGuidelineRequest";
 
 const filterOptions: FilterOptions = [
   {
@@ -131,6 +134,17 @@ export default function GuidelinesUser({
     },
   });
 
+  const handleAddSecPage = () => {
+    handleIsSecPageOpen(true);
+    handleSecPageContent(
+      <AddGuidelineRequest
+        isSecPage={true}
+        handleSecPageTitle={handleSecPageTitle}
+      />
+    );
+    handleFullScreenLink("/solicitacoes/cadastrar");
+  };
+
   const handleSecPage = async (id: string) => {
     const guideline = await getGuideline(id);
 
@@ -160,7 +174,7 @@ export default function GuidelinesUser({
           handleFiltering={handleFiltering}
         />
         <h1 className="heading-1" id="page-heading">
-          {isRequest ? "Suas solicitações" : "Diretrizes de acessibilidade"}{" "}
+          {isRequest ? "Minhas solicitações" : "Diretrizes de acessibilidade"}{" "}
           {isRequest && <span>de inclusão de diretriz</span>}
         </h1>
         <div className="guidelines-filters">
@@ -180,9 +194,21 @@ export default function GuidelinesUser({
                 handleSearch={handleSearch}
                 searchValue={search}
               />
-              <button className="btn-default cursor-pointer">
-                Criar solicitação
-              </button>
+              {isRequest && (isMobile || isTablet) ? (
+                <Link
+                  className="btn-default cursor-pointer"
+                  href="/solicitacoes/cadastrar"
+                >
+                  <GoPlus />
+                </Link>
+              ) : (
+                <button
+                  className="btn-default cursor-pointer"
+                  onClick={() => handleAddSecPage()}
+                >
+                  Criar solicitação
+                </button>
+              )}
             </div>
           )}
           <DeficiencesCheckbox
@@ -246,7 +272,11 @@ export default function GuidelinesUser({
             ))}
           </div>
         ) : (
-          <NoRegistersFound errorMsg="Não foram encontradas diretrizes" />
+          <NoRegistersFound
+            errorMsg={`Não foram encontradas ${
+              isRequest ? "solicitações" : "diretrizes"
+            }`}
+          />
         )}
         {guidelines && "data" in guidelines && (
           <Pagination

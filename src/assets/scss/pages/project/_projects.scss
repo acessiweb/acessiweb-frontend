@@ -8,6 +8,10 @@
   &__search-wrapper {
     display: flex;
     justify-content: space-between;
+
+    .search {
+      width: 60%;
+    }
   }
 
   &__header {

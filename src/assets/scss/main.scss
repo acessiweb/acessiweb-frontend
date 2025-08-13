@@ -233,6 +233,7 @@ input[type="checkbox"]:focus-visible {
 @include meta.load-css("pages/login");
 @include meta.load-css("pages/not-found");
 @include meta.load-css("pages/config/preferences");
+@include meta.load-css("pages/skeletons/read");
 
 //layouts
 @include meta.load-css("layouts/auth");

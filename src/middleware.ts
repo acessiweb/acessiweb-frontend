@@ -33,15 +33,22 @@ export async function middleware(req: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
+  if (
+    !pathname.includes("auth/logar") &&
+    ["GoogleAuthError", "RefreshTokenExpired"].includes(token?.error)
+  ) {
+    return NextResponse.redirect(
+      new URL(`/auth/logar?error=${token?.error}`, req.url)
+    );
+  }
+
   // ignora rotas públicas
   if (
     PUBLIC_PATHS.some((path) => pathname.startsWith(path)) ||
     pathname === "/"
   ) {
     if (
-      token &&
-      "user" in token.data &&
-      isAdmin(token.data.user.role) &&
+      isAdmin(token?.data?.user?.role) &&
       (pathname === "/" || pathname === "/diretrizes")
     ) {
       const adminHomepageUrl = new URL("/admin", req.url);
@@ -51,14 +58,12 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  if (token && "user" in token.data) {
-    if (pathname.startsWith("/admin") && !isAdmin(token.data.user.role)) {
-      return NextResponse.redirect(homepageUrl);
-    }
+  if (pathname.startsWith("/admin") && !isAdmin(token?.data?.user?.role)) {
+    return NextResponse.redirect(homepageUrl);
+  }
 
-    if (pathname === "/config") {
-      return NextResponse.redirect(accountUrl);
-    }
+  if (pathname === "/config") {
+    return NextResponse.redirect(accountUrl);
   }
 
   if (PROTECTED_PATHS.some((p) => pathname.startsWith(p)) && !token) {
