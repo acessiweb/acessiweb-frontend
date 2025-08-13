@@ -4,7 +4,11 @@ import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import * as jose from "jose";
 import { validateGithubAuth, validateGoogleAuth } from "@/routes/common-users";
-import { refreshAccessToken, refreshGoogleAccessToken } from "@/utils/refresh";
+import {
+  refreshAccessToken,
+  refreshGithubAccessToken,
+  refreshGoogleAccessToken,
+} from "@/utils/refresh";
 
 function getUser(tokens: { accessToken: string; refreshToken: string }) {
   const accessToken = jose.decodeJwt(tokens.accessToken) as DecodedJWT;
@@ -141,7 +145,21 @@ const authOptions: NextAuthOptions = {
             }
           }
 
-          //precisa implementar do github
+          if (token.provider === "github") {
+            if (timeNowSecs >= token.data.tokens.access.exp) {
+              const tokens = await refreshGithubAccessToken(
+                token.data.tokens.refresh.token
+              );
+
+              if (tokens.accessToken) {
+                user = getUser(tokens);
+              } else {
+                user = {} as User;
+              }
+
+              return { ...token, data: user };
+            }
+          }
 
           if (token.provider === "credentials") {
             if (timeNowSecs >= token.data.tokens.access.exp) {
