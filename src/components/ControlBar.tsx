@@ -7,6 +7,7 @@ import { Breadcrumb, BreadcrumbProps } from "./Breadcrumb";
 import { useHotkeys } from "react-hotkeys-hook";
 import { FilterHandler, FilterOptions, FiltersAvailable } from "@/types/filter";
 import { MouseEvent, KeyboardEvent } from "react";
+import { PiDotsThreeOutlineFill } from "react-icons/pi";
 
 type ControlBarProps = FilterHandler &
   Partial<BreadcrumbProps> & {
@@ -14,6 +15,8 @@ type ControlBarProps = FilterHandler &
     view: string;
     filtersOptions?: FilterOptions;
     handleFilters: (_filter: FiltersAvailable) => void;
+    showMoreOptions?: boolean;
+    moreOptions?: string[];
   };
 
 export default function ControlBar({
@@ -23,10 +26,24 @@ export default function ControlBar({
   filtersOptions,
   handleFilters,
   handleFiltering,
+  showMoreOptions = false,
+  moreOptions,
 }: ControlBarProps) {
   const { isDesktop } = useScreenType();
-  const { showModal, isModalOpen, modalRef, toggleModal } = useModal();
-  useHotkeys("F", toggleModal);
+  const {
+    showModal: showFiltersModal,
+    isModalOpen: isFiltersModalOpen,
+    modalRef: filtersModalRef,
+    toggleModal: toggleFiltersModal,
+  } = useModal();
+  const {
+    showModal: showOptionsModal,
+    isModalOpen: isOptionsModalOpen,
+    modalRef: optionsModalRef,
+    toggleModal: toggleOptionsModal,
+  } = useModal();
+  useHotkeys("F", toggleFiltersModal);
+  useHotkeys("O", toggleOptionsModal);
 
   const handleClick = (
     e: MouseEvent<HTMLLIElement> | KeyboardEvent<HTMLLIElement>
@@ -45,9 +62,9 @@ export default function ControlBar({
             className="btn-icon cursor-pointer"
             aria-label="Abrir opções de filtro"
             title="Pressione a tecla F"
-            aria-expanded={isModalOpen}
+            aria-expanded={isFiltersModalOpen}
             style={{ position: "relative" }}
-            onClick={showModal}
+            onClick={showFiltersModal}
             aria-haspopup="dialog"
             aria-keyshortcuts="F"
           >
@@ -56,10 +73,10 @@ export default function ControlBar({
               aria-hidden={true}
               focusable={false}
             />
-            {isModalOpen && (
+            {isFiltersModalOpen && (
               <dialog
                 className="modal"
-                ref={modalRef}
+                ref={filtersModalRef}
                 aria-modal={true}
                 aria-label="Opções de filtro"
               >
@@ -107,6 +124,47 @@ export default function ControlBar({
                 ? "Layout grid ativado"
                 : "Layout de lista ativado"}
             </span>
+          </button>
+        )}
+        {showMoreOptions && moreOptions && (
+          <button
+            className="btn-icon cursor-pointer"
+            aria-label="Abrir opções de filtro"
+            title="Pressione a tecla F"
+            aria-expanded={isOptionsModalOpen}
+            style={{ position: "relative" }}
+            onClick={showOptionsModal}
+            aria-haspopup="dialog"
+            aria-keyshortcuts="F"
+          >
+            <PiDotsThreeOutlineFill
+              className="cursor-pointer"
+              aria-hidden={true}
+              focusable={false}
+            />
+            {isOptionsModalOpen && (
+              <dialog
+                className="modal"
+                ref={optionsModalRef}
+                aria-modal={true}
+                aria-label="Opções de filtro"
+              >
+                <ul>
+                  {moreOptions.map((option) => (
+                    <li
+                      key={option}
+                      id={option}
+                      onClick={handleClick}
+                      onKeyDown={(e) => e.key === "Enter" && handleClick(e)}
+                      tabIndex={0}
+                      className="cursor-pointer"
+                    >
+                      {option}
+                    </li>
+                  ))}
+                </ul>
+              </dialog>
+            )}
           </button>
         )}
       </div>

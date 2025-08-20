@@ -4,11 +4,7 @@ import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 import * as jose from "jose";
 import { validateGithubAuth, validateGoogleAuth } from "@/routes/common-users";
-import {
-  refreshAccessToken,
-  refreshGithubAccessToken,
-  refreshGoogleAccessToken,
-} from "@/utils/refresh";
+import { refreshAccessToken } from "@/utils/refresh";
 
 function getUser(tokens: { accessToken: string; refreshToken: string }) {
   const accessToken = jose.decodeJwt(tokens.accessToken) as DecodedJWT;
@@ -125,62 +121,24 @@ const authOptions: NextAuthOptions = {
         return { ...token, data: user, provider: "credentials", error: "" };
       }
 
-      if ("provider" in token && !token.error) {
+      if (!token.error && token.data.tokens.access.exp) {
         const timeNowSecs = Date.now() / 1000;
 
-        if (token.data.tokens.access.exp) {
-          if (token.provider === "google") {
-            if (timeNowSecs >= token.data.tokens.access.exp) {
-              const tokens = await refreshGoogleAccessToken(
-                token.data.tokens.refresh.token
-              );
+        if (timeNowSecs >= token.data.tokens.access.exp) {
+          const tokens = await refreshAccessToken(
+            token.data.tokens.refresh.token
+          );
 
-              if (tokens.accessToken) {
-                user = getUser(tokens);
-              } else {
-                user = {} as User;
-              }
-
-              return { ...token, data: user };
-            }
+          if (tokens.accessToken) {
+            user = getUser(tokens);
+          } else {
+            user = {} as User;
           }
 
-          if (token.provider === "github") {
-            if (timeNowSecs >= token.data.tokens.access.exp) {
-              const tokens = await refreshGithubAccessToken(
-                token.data.tokens.refresh.token
-              );
-
-              if (tokens.accessToken) {
-                user = getUser(tokens);
-              } else {
-                user = {} as User;
-              }
-
-              return { ...token, data: user };
-            }
-          }
-
-          if (token.provider === "credentials") {
-            if (timeNowSecs >= token.data.tokens.access.exp) {
-              const tokens = await refreshAccessToken(
-                token.data.tokens.refresh.token
-              );
-
-              if (tokens.accessToken) {
-                user = getUser(tokens);
-              } else {
-                user = {} as User;
-              }
-
-              return { ...token, data: user };
-            }
-          }
-
-          if (timeNowSecs < token.data.tokens.access.exp) {
-            return { ...token };
-          }
+          return { ...token, data: user };
         }
+
+        return { ...token };
       }
 
       return {

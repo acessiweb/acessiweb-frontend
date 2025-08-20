@@ -1,6 +1,9 @@
+"use server";
+
 import fetchData from "@/utils/fetch";
 import { Guideline } from "@/types/guideline";
 import { ApiError, PaginationResponse } from "@/types/response-api";
+import { getAuthSession } from "./auth-server-session";
 
 type Guidelines = PaginationResponse & {
   data: Guideline[];
@@ -16,8 +19,16 @@ export async function getGuidelinesRequests(query?: {
   statusCode?: string;
   isRequest?: boolean;
 }): Promise<Guidelines | ApiError> {
+  const token = await getAuthSession();
+
   return await fetchData({
     endpoint: `guidelines-requests?keyword=${query?.keyword}&deficiences=${query?.deficiences}&limit=${query?.limit}&offset=${query?.offset}&initialDate=${query?.initialDate}&endDate=${query?.endDate}&statusCode=${query?.statusCode}&isRequest=${query?.isRequest}`,
+    config: {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    },
   });
 }
 

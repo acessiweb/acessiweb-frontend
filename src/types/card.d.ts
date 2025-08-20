@@ -35,7 +35,7 @@ export type CardUpdateAndDeleteProps = {
 };
 
 export type CardStatusProps = {
-  status: "APPROVED" | "PENDING" | "REJECTED";
+  status: "APPROVED" | "PENDING" | "REJECTED" | "STANDBY";
 };
 
 export type CardRestoreProps = {

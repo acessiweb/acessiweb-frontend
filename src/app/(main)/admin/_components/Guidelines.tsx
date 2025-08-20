@@ -202,6 +202,8 @@ export default function GuidelinesAdmin({
           filtersOptions={filterOptions}
           handleFilters={handleFiltersChosen}
           handleFiltering={handleFiltering}
+          showMoreOptions={isRequest}
+          moreOptions={["Buscar por removidas"]}
         />
         <h1 className="heading-1" id="page-heading">
           {isRequest
