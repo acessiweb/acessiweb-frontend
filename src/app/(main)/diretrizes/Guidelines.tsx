@@ -26,7 +26,7 @@ import { getGuidelinesRequests } from "@/routes/guidelines-requests";
 import Link from "next/link";
 import { GoPlus } from "react-icons/go";
 import AddGuidelineRequest from "../solicitacoes/cadastrar/AddGuidelineRequest";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 
 const filterOptions: FilterOptions = [
   {
@@ -94,7 +94,7 @@ export default function GuidelinesUser({
     fullScreenLink,
     handleFullScreenLink,
   } = useSecPage();
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
 
   const { data: guidelines } = useQuery({
     queryKey: [
@@ -155,31 +155,6 @@ export default function GuidelinesUser({
       handleSecPageTitle(guideline.name);
       handleFullScreenLink(`/admin/diretrizes/${id}`);
     }
-  };
-
-  const handleEditSecPage = async (id: string) => {
-    // const guideline = await getGuideline(id);
-    // if ("id" in guideline) {
-    //   handleIsSecPageOpen(true);
-    //   handleSecPageTitle(guideline.name);
-    //   handleSecPageContent(
-    //     <EditGuideline
-    //       guideline={guideline}
-    //       isSecPage={true}
-    //       handleSecPageTitle={handleSecPageTitle}
-    //     />
-    //   );
-    //   handleFullScreenLink(`/admin/diretrizes/${id}/editar`);
-    // }
-  };
-
-  const handleDeletion = async (guidelineId: string) => {
-    // if (session) {
-    //   const deleted = await deleteGuideline(guidelineId);
-    //   if ("id" in deleted) {
-    //     handleDelete(deleted.id);
-    //   }
-    // }
   };
 
   const cleanAllFilters = () => {
@@ -285,8 +260,8 @@ export default function GuidelinesUser({
                   <CardBtnUpdateAndDelete
                     mainText={guideline.name}
                     onClick={() => handleReadSecPage(guideline.id)}
-                    onDelete={() => handleDeletion(guideline.id)}
-                    onUpdateClick={() => handleEditSecPage(guideline.id)}
+                    onDelete={() => {}}
+                    onUpdateClick={() => {}}
                     registerId={guideline.id}
                     registerName={guideline.name}
                     secondaryText={guideline.description}
