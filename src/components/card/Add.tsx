@@ -1,13 +1,9 @@
 "use client";
 
-import { CardAddProps } from "@/types/card";
+import { AddBtnProps } from "@/types/card";
 import { BsCartPlus } from "react-icons/bs";
 
-export default function CardAdd({
-  onAdd,
-  registerId,
-  registerName,
-}: CardAddProps) {
+export function AddBtn({ onAdd, registerId, registerName }: AddBtnProps) {
   return (
     <button
       type="button"

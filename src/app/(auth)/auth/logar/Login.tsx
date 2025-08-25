@@ -58,6 +58,7 @@ export default function Login({ searchParams }: LoginProps) {
     } else {
       const result = await signIn("credentials", {
         ...data,
+        isAdmin: false,
         redirect: false,
       });
 

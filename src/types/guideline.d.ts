@@ -1,3 +1,5 @@
+export type GuidelineStatus = "APPROVED" | "PENDING" | "REJECTED" | "STANDBY";
+
 export type Guideline = {
   id: string;
   name: string;
@@ -9,5 +11,7 @@ export type Guideline = {
     id: string;
     name: string;
   }[];
-  statusCode?: "APPROVED" | "PENDING" | "REJECTED";
+  statusCode?: GuidelineStatus;
+  statusMsg?: string;
+  isRequest: boolean;
 };

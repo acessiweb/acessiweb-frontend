@@ -5,9 +5,9 @@ import { SlEnvolope, SlFolder } from "react-icons/sl";
 import { ReactNode } from "react";
 import { useSession } from "next-auth/react";
 import { isCommonUser } from "@/utils/authorization";
-import { CardLink } from "@/components/CardLink";
 import { useScreenType } from "@/hooks/useScreenType";
 import GuidelinesUser from "./diretrizes/page";
+import CardLink from "@/components/CardLink";
 
 function HomeUserMobile() {
   return (

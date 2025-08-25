@@ -48,6 +48,31 @@
       font-size: calc(var.$fs-medium - 0.2rem);
     }
   }
+
+  &__situation {
+    margin-top: var.$space-md;
+    background-color: var.$lightPurple;
+    padding: var.$space-sm;
+    border-radius: var.$border-radius-default;
+
+    h3 {
+      font-size: var.$fs-small;
+      font-weight: var.$bold;
+      margin-bottom: var.$space-sm;
+    }
+
+    &__status-code {
+      background-color: var.$purple;
+      padding: var.$space-xs var.$space-sm;
+      width: max-content;
+      border-radius: var.$border-radius-2;
+      font-weight: var.$semibold !important;
+    }
+
+    &__status-msg {
+      margin-top: var.$space-sm;
+    }
+  }
 }
 
 .dark {

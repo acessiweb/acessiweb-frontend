@@ -10,14 +10,12 @@ import { Project } from "@/types/project";
 import { Page } from "@/types/page";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useCart } from "@/context/cart";
-import { CardBtnDelete } from "@/components/CardBtn";
 import Link from "next/link";
 import useSecPage from "@/hooks/useSecPage";
 import SecondPage from "@/components/SecondPage";
 import { useScreenType } from "@/hooks/useScreenType";
 import { getGuideline } from "@/routes/guidelines";
 import Guideline from "../../diretrizes/[id]/Guideline";
-import { CardLinkDelete } from "@/components/CardLink";
 import { createProject, editProject } from "@/routes/projects";
 import { usePush } from "@/context/push";
 import { useRouter } from "next/navigation";
@@ -29,6 +27,9 @@ import {
 } from "@/schemas/project.schema";
 import { useSession } from "next-auth/react";
 import { ApiError } from "@/types/response-api";
+import { CardBtn } from "@/components/CardBtn";
+import DeleteBtn from "@/components/card/Delete";
+import CardLink from "@/components/CardLink";
 
 type AddEditProjectProps = Page & {
   project?: Project;
@@ -278,21 +279,28 @@ export default function AddEditProject({
               {cart.guidelines.map((guide) => (
                 <div className="grid__item" key={guide.id}>
                   {isDesktop ? (
-                    <CardBtnDelete
+                    <CardBtn
                       mainText={guide.name}
                       registerId={guide.id}
                       onClick={() => handleReadSecPage(guide.id)}
-                      registerName={guide.name}
-                      onDelete={() => removeGuidelineOfCart(guide.id)}
-                    />
+                    >
+                      <DeleteBtn
+                        onDelete={() => removeGuidelineOfCart(guide.id)}
+                        registerId=""
+                        registerName=""
+                      ></DeleteBtn>
+                    </CardBtn>
                   ) : (
-                    <CardLinkDelete
+                    <CardLink
                       mainText={guide.name}
-                      onDelete={() => removeGuidelineOfCart(guide.id)}
                       readRoute={`/diretrizes/${guide.id}`}
-                      registerId={guide.id}
-                      registerName={guide.name}
-                    />
+                    >
+                      <DeleteBtn
+                        onDelete={() => removeGuidelineOfCart(guide.id)}
+                        registerId={guide.id}
+                        registerName={guide.name}
+                      ></DeleteBtn>
+                    </CardLink>
                   )}
                 </div>
               ))}

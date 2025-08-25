@@ -5,6 +5,7 @@ import Code from "@/components/Code";
 import Image from "next/image";
 import { Guideline as GuidelineType } from "@/types/guideline";
 import imageKitLoader from "@/utils/image-kit-loader";
+import { STATUS_CODE_TRANSLATE } from "@/utils/constants";
 
 type GuidelineProps = {
   guideline: GuidelineType;
@@ -50,6 +51,26 @@ export default function Guideline({
             <span>{def.name}</span>
           </div>
         ))}
+      </div>
+      <div className="read-guideline__situation">
+        <h3>Situação</h3>
+        {guideline.isRequest && (
+          <div className="read-guideline__situation__status-code">
+            {guideline.statusCode === "APPROVED" &&
+              STATUS_CODE_TRANSLATE.approved}
+            {guideline.statusCode === "PENDING" &&
+              STATUS_CODE_TRANSLATE.pending}
+            {guideline.statusCode === "REJECTED" &&
+              STATUS_CODE_TRANSLATE.rejected}
+            {guideline.statusCode === "STANDBY" &&
+              STATUS_CODE_TRANSLATE.standby}
+          </div>
+        )}
+        {guideline.statusMsg && (
+          <div className="read-guideline__situation__status-msg">
+            {guideline.statusMsg}
+          </div>
+        )}
       </div>
     </div>
   );

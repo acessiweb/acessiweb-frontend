@@ -1,15 +1,15 @@
 "use client";
 
 import useModal from "@/hooks/useModal";
-import { CardDeleteProps } from "@/types/card";
+import { DeleteBtnProps } from "@/types/card";
 import { createPortal } from "react-dom";
 import { SlTrash } from "react-icons/sl";
 
-export default function CardDelete({
+export default function DeleteBtn({
   onDelete,
   registerId,
   registerName,
-}: CardDeleteProps) {
+}: DeleteBtnProps) {
   const { Overlay, hideModal, isModalOpen, modalRef, showModal } = useModal();
 
   const handleConfirmation = () => {

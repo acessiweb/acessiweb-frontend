@@ -79,3 +79,19 @@ export async function deleteGuideline(
     },
   });
 }
+
+export async function restoreGuideline(
+  guidelineId: string
+): Promise<ApiError | Guideline> {
+  const token = await getAuthSession();
+
+  return fetchData({
+    endpoint: `guidelines/restore/${guidelineId}`,
+    config: {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  });
+}

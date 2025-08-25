@@ -1,9 +1,9 @@
 "use client";
 
-import { CardRestoreProps } from "@/types/card";
+import { RestoreBtnProps } from "@/types/card";
 import { MdRestore } from "react-icons/md";
 
-export default function CardRestore({ onRestore }: CardRestoreProps) {
+export default function RestoreBtn({ onRestore }: RestoreBtnProps) {
   return (
     <button
       type="button"

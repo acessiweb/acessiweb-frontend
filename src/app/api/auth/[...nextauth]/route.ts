@@ -40,21 +40,27 @@ const authOptions: NextAuthOptions = {
       name: "credentials",
       credentials: {},
       async authorize(credentials) {
-        const { email, mobilePhone, password } = credentials as {
+        const { email, mobilePhone, password, isAdmin } = credentials as {
           email?: string;
           mobilePhone?: string;
           password: string;
+          isAdmin: string;
         };
 
-        const response = await fetch(`${process.env.BACKEND_URL}/auth/login`, {
-          method: "POST",
-          body: JSON.stringify({
-            email,
-            mobilePhone,
-            password,
-          }),
-          headers: { "Content-Type": "application/json" },
-        });
+        const response = await fetch(
+          `${process.env.BACKEND_URL}/auth/${
+            isAdmin === "true" ? "admin/login" : "login"
+          }`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              email,
+              mobilePhone,
+              password,
+            }),
+            headers: { "Content-Type": "application/json" },
+          }
+        );
 
         const tokens = await response.json();
 

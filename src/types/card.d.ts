@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { GuidelineStatus } from "./guideline";
 
 export type CardProps = {
   registerId?: string;
@@ -15,37 +16,22 @@ export type CardBtnProps = CardProps & {
   onClick: (_e) => void;
 };
 
-export type CardAddProps = {
+export type AddBtnProps = {
   registerId: string;
   registerName: string;
   onAdd: (obj: { id: string; name: string }) => void;
 };
 
-export type CardDeleteProps = {
+export type DeleteBtnProps = {
   registerId: string;
   registerName: string;
   onDelete: (id: string) => void;
 };
 
-export type CardUpdateAndDeleteProps = {
-  registerId: string;
-  registerName: string;
-  onDelete: (id: string) => void;
-  children?: ReactNode;
+export type StatusBtnProps = {
+  status: GuidelineStatus | undefined;
 };
 
-export type CardStatusProps = {
-  status: "APPROVED" | "PENDING" | "REJECTED" | "STANDBY";
-};
-
-export type CardRestoreProps = {
+export type RestoreBtnProps = {
   onRestore: () => void;
-};
-
-export type CardBtnUpdateAndDeleteProps = CardUpdateAndDeleteProps & {
-  onUpdateClick: () => void;
-};
-
-export type CardLinkUpdateAndDeleteProps = CardUpdateAndDeleteProps & {
-  updateRoute: string;
 };

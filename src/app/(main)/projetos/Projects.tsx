@@ -11,8 +11,6 @@ import ControlBar from "@/components/ControlBar";
 import useControlBar from "@/hooks/useControlBar";
 import { FilterOptions } from "@/types/filter";
 import { Project as ProjectType } from "@/types/project";
-import { CardLinkUpdateAndDelete } from "@/components/CardLink";
-import { CardBtnUpdateAndDelete } from "@/components/CardBtn";
 import { useScreenType } from "@/hooks/useScreenType";
 import NoRegistersFound from "@/components/NotFound";
 import AddProject from "./cadastrar/AddProject";
@@ -22,6 +20,11 @@ import DateFilter from "@/components/DateFilter";
 import useDateFilter from "@/hooks/useDateFilter";
 import useSearch from "@/hooks/useSearch";
 import EditProject from "./[id]/editar/EditProject";
+import CardLink from "@/components/CardLink";
+import { UpdateBtn, UpdateLink } from "@/components/card/Update";
+import DeleteBtn from "@/components/card/Delete";
+import { CardBtn } from "@/components/CardBtn";
+import useAction from "@/hooks/useAction";
 
 const filterOptions: FilterOptions = [
   {
@@ -44,10 +47,15 @@ export default function Projects() {
   } = useSecPage();
   const { isTablet, isMobile } = useScreenType();
   const { data: session } = useSession();
-  const { offset, store, handleStore, handleFiltering, handleDelete } =
-    usePagination({
-      data: [] as ProjectType[],
-    });
+  const {
+    offset,
+    store,
+    handleStore,
+    handleFiltering,
+    handleDelete: handleDeletion,
+  } = usePagination({
+    data: [] as ProjectType[],
+  });
   const { handleSearch, search } = useSearch({
     handleFiltering,
   });
@@ -67,6 +75,7 @@ export default function Projects() {
     initialDate,
     cleanDateFilter,
   } = useDateFilter();
+  const { handleDelete } = useAction();
 
   useQuery({
     queryKey: ["projects", search, offset, session],
@@ -99,16 +108,6 @@ export default function Projects() {
           />
         );
         handleFullScreenLink(`/projetos/${id}/editar`);
-      }
-    }
-  };
-
-  const handleDeletion = async (projectId: string) => {
-    if (session) {
-      const deleted = await deleteProject(projectId);
-
-      if ("id" in deleted) {
-        handleDelete(deleted.id);
       }
     }
   };
@@ -188,25 +187,38 @@ export default function Projects() {
             {store.map((project) => (
               <div className={`${view}__item`} key={project.id}>
                 {isTablet || isMobile ? (
-                  <CardLinkUpdateAndDelete
+                  <CardLink
                     mainText={project.name}
-                    onDelete={() => handleDeletion(project.id)}
                     readRoute={`/projetos/${project.id}`}
-                    registerId={project.id}
-                    registerName={project.name}
-                    updateRoute={`/projetos/${project.id}/editar`}
                     secondaryText={project.description}
-                  />
+                  >
+                    <UpdateLink
+                      updateRoute={`/projetos/${project.id}/editar`}
+                    ></UpdateLink>
+                    <DeleteBtn
+                      onDelete={() =>
+                        handleDelete(project.id, deleteProject, handleDeletion)
+                      }
+                      registerId={project.id}
+                      registerName={project.name}
+                    ></DeleteBtn>
+                  </CardLink>
                 ) : (
-                  <CardBtnUpdateAndDelete
+                  <CardBtn
                     mainText={project.name}
-                    onDelete={() => handleDeletion(project.id)}
                     registerId={project.id}
-                    registerName={project.name}
                     secondaryText={project.description}
-                    onUpdateClick={() => handleEditSecPage(project.id)}
                     onClick={() => handleReadSecPage(project.id)}
-                  />
+                  >
+                    <UpdateBtn
+                      onUpdateClick={() => handleEditSecPage(project.id)}
+                    ></UpdateBtn>
+                    <DeleteBtn
+                      onDelete={() => handleDeletion(project.id)}
+                      registerId={project.id}
+                      registerName={project.name}
+                    ></DeleteBtn>
+                  </CardBtn>
                 )}
               </div>
             ))}

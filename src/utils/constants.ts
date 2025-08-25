@@ -49,3 +49,10 @@ export const DEFAULT_CART = {
   description: "",
   guidelines: [],
 };
+
+export const STATUS_CODE_TRANSLATE = {
+  approved: "APROVADA",
+  rejected: "REJEITADA",
+  pending: "PENDENTE DE ANÁLISE",
+  standby: "AGUARDANDO ENVIO",
+};

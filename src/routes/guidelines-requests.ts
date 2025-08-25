@@ -32,20 +32,24 @@ export async function getGuidelinesRequests(query?: {
   });
 }
 
-// export async function updateGuideline(
-//   guidelineId: string,
-//   formData: FormData
-// ): Promise<ApiError | { id: string }> {
-//   const token = await getAuthSession();
+export async function updateGuidelineStatus(
+  guidelineId: string,
+  statusCode?: string,
+  statusMsg?: string
+): Promise<ApiError | Guideline> {
+  const token = await getAuthSession();
 
-//   return fetchData({
-//     endpoint: `guidelines/${guidelineId}`,
-//     config: {
-//       method: "PUT",
-//       body: formData,
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     },
-//   });
-// }
+  return fetchData({
+    endpoint: `guidelines-requests/${guidelineId}`,
+    config: {
+      method: "PATCH",
+      body: JSON.stringify({
+        statusCode,
+        statusMsg,
+      }),
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  });
+}

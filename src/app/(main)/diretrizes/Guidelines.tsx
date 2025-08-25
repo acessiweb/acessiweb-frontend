@@ -1,14 +1,17 @@
 "use client";
 
-import { CardBtnStatus, CardBtnUpdateAndDelete } from "@/components/CardBtn";
-import { CardLinkUpdateAndDelete } from "@/components/CardLink";
+import { CardBtn } from "@/components/CardBtn";
 import DeficiencesCheckbox from "@/components/DeficiencesCheckbox";
 import NoRegistersFound from "@/components/NotFound";
 import Search from "@/components/Search";
 import SecondPage from "@/components/SecondPage";
 import { useScreenType } from "@/hooks/useScreenType";
 import useSecPage from "@/hooks/useSecPage";
-import { getGuideline, getGuidelines } from "@/routes/guidelines";
+import {
+  deleteGuideline,
+  getGuideline,
+  getGuidelines,
+} from "@/routes/guidelines";
 import { useQuery } from "@tanstack/react-query";
 import Guideline from "./[id]/Guideline";
 import { Guideline as GuidelineType } from "@/types/guideline";
@@ -22,11 +25,22 @@ import useDateFilter from "@/hooks/useDateFilter";
 import { FilterOptions } from "@/types/filter";
 import DateFilter from "@/components/DateFilter";
 import useSearch from "@/hooks/useSearch";
-import { getGuidelinesRequests } from "@/routes/guidelines-requests";
+import {
+  getGuidelinesRequests,
+  updateGuidelineStatus,
+} from "@/routes/guidelines-requests";
 import Link from "next/link";
 import { GoPlus } from "react-icons/go";
 import AddGuidelineRequest from "../solicitacoes/cadastrar/AddGuidelineRequest";
-// import { useSession } from "next-auth/react";
+import { useCart } from "@/context/cart";
+import { UpdateBtn, UpdateLink } from "@/components/card/Update";
+import StatusBtn from "@/components/card/Status";
+import DeleteBtn from "@/components/card/Delete";
+import CardLink from "@/components/CardLink";
+import EditGuideline from "../admin/diretrizes/[id]/editar/EditGuideline";
+import useAction from "@/hooks/useAction";
+import { AddBtn } from "@/components/card/Add";
+import { BsSend } from "react-icons/bs";
 
 const filterOptions: FilterOptions = [
   {
@@ -42,6 +56,8 @@ type GuidelinesUserProps = {
 export default function GuidelinesUser({
   isRequest = false,
 }: GuidelinesUserProps) {
+  const { addGuidelineToCart } = useCart();
+
   const {
     handleEndDate,
     endDate,
@@ -49,7 +65,9 @@ export default function GuidelinesUser({
     initialDate,
     cleanDateFilter,
   } = useDateFilter();
+
   const { isTablet, isDesktop, isMobile } = useScreenType();
+
   const {
     handleView,
     handleFiltersChosen,
@@ -59,6 +77,7 @@ export default function GuidelinesUser({
     cleanFilters,
     isFilterApplied,
   } = useControlBar();
+
   const {
     onLoadLess,
     onLoadMore,
@@ -66,11 +85,13 @@ export default function GuidelinesUser({
     store,
     handleStore,
     handleFiltering,
-    handleDelete,
+    handleDelete: handleDeletion,
   } = usePagination({
     data: [] as GuidelineType[],
   });
+
   const { handleSearch, search } = useSearch({ handleFiltering });
+
   const {
     handleHearing,
     handleMotor,
@@ -83,18 +104,20 @@ export default function GuidelinesUser({
     tea,
     visual,
   } = useDeficiencyFilters({ handleFiltering });
+
+  const { handleDelete } = useAction();
+
   const {
+    secPageClass,
+    handleAddSecPage,
+    handleEditSecPage,
+    handleReadSecPage,
     isOpen: isSecPageOpen,
     handleIsOpen: handleIsSecPageOpen,
-    getSecPageClass,
-    handleNode: handleSecPageContent,
-    node: secPageContent,
     title: secPageTitle,
-    handleTitle: handleSecPageTitle,
     fullScreenLink,
-    handleFullScreenLink,
-  } = useSecPage();
-  // const { data: session } = useSession();
+    node: secPageContent,
+  } = useGuidelineSecPage();
 
   const { data: guidelines } = useQuery({
     queryKey: [
@@ -135,26 +158,8 @@ export default function GuidelinesUser({
     },
   });
 
-  const handleAddSecPage = () => {
-    handleIsSecPageOpen(true);
-    handleSecPageContent(
-      <AddGuidelineRequest
-        isSecPage={true}
-        handleSecPageTitle={handleSecPageTitle}
-      />
-    );
-    handleFullScreenLink("/solicitacoes/cadastrar");
-  };
-
-  const handleReadSecPage = async (id: string) => {
-    const guideline = await getGuideline(id);
-
-    if ("id" in guideline) {
-      handleIsSecPageOpen(true);
-      handleSecPageContent(<Guideline guideline={guideline} />);
-      handleSecPageTitle(guideline.name);
-      handleFullScreenLink(`/admin/diretrizes/${id}`);
-    }
+  const handleGuidelineShip = async (id: string) => {
+    await updateGuidelineStatus(id);
   };
 
   const cleanAllFilters = () => {
@@ -163,7 +168,7 @@ export default function GuidelinesUser({
   };
 
   return (
-    <div className={getSecPageClass()}>
+    <div className={secPageClass}>
       <div className={`${isRequest ? "requests" : "guidelines"}`}>
         <ControlBar
           handleView={handleView}
@@ -248,38 +253,80 @@ export default function GuidelinesUser({
             {store.map((guideline) => (
               <div className={`${view}__item`} key={guideline.id}>
                 {isRequest && isDesktop && (
-                  <CardBtnStatus
-                    status={guideline.statusCode!}
-                    mainText={guideline.name}
-                    registerId={guideline.id}
-                    secondaryText={guideline.description}
-                    onClick={() => handleReadSecPage(guideline.id)}
-                  />
-                )}
-                {!isRequest && isDesktop && (
-                  <CardBtnUpdateAndDelete
+                  <CardBtn
                     mainText={guideline.name}
                     onClick={() => handleReadSecPage(guideline.id)}
-                    onDelete={() => {}}
-                    onUpdateClick={() => {}}
-                    registerId={guideline.id}
-                    registerName={guideline.name}
                     secondaryText={guideline.description}
-                  />
+                  >
+                    <StatusBtn status={guideline.statusCode} />
+                    {guideline.statusCode === "STANDBY" && (
+                      <button
+                        className="btn-transparent cursor-pointer"
+                        title="Enviar"
+                        onClick={() => handleGuidelineShip(guideline.id)}
+                        aria-label="Ação de enviar para análise"
+                      >
+                        <BsSend aria-hidden={true} focusable={false} />
+                      </button>
+                    )}
+                    {!["APPROVED", "PENDING"].includes(
+                      guideline.statusCode!
+                    ) && (
+                      <>
+                        <UpdateBtn
+                          onUpdateClick={() => handleEditSecPage(guideline.id)}
+                        />
+                        <DeleteBtn
+                          onDelete={() =>
+                            handleDelete(
+                              guideline.id,
+                              deleteGuideline,
+                              handleDeletion
+                            )
+                          }
+                          registerId={guideline.id}
+                          registerName={guideline.name}
+                        />
+                      </>
+                    )}
+                  </CardBtn>
                 )}
-                {!isRequest &&
-                  (isMobile || isTablet) &&
-                  !isFilterApplied("deleted") && (
-                    <CardLinkUpdateAndDelete
-                      mainText={guideline.name}
-                      onDelete={() => handleDelete(guideline.id)}
+                {isRequest && !isDesktop && (
+                  <CardLink
+                    mainText={guideline.name}
+                    secondaryText={guideline.description}
+                    readRoute={`solicitacoes/${guideline.id}`}
+                  >
+                    <StatusBtn status={guideline.statusCode} />
+                    <UpdateLink
+                      updateRoute={`solicitacoes/${guideline.id}/editar`}
+                    />
+                    <DeleteBtn
+                      onDelete={() =>
+                        handleDelete(
+                          guideline.id,
+                          deleteGuideline,
+                          handleDeletion
+                        )
+                      }
                       registerId={guideline.id}
                       registerName={guideline.name}
-                      readRoute={`/admin/diretrizes/${guideline.id}`}
-                      updateRoute={`/admin/diretrizes/${guideline.id}/editar`}
-                      secondaryText={guideline.description}
                     />
-                  )}
+                  </CardLink>
+                )}
+                {!isRequest && (
+                  <CardBtn
+                    mainText={guideline.name}
+                    secondaryText={guideline.description}
+                    onClick={() => handleReadSecPage(guideline.id)}
+                  >
+                    <AddBtn
+                      onAdd={addGuidelineToCart}
+                      registerId={guideline.id}
+                      registerName={guideline.name}
+                    />
+                  </CardBtn>
+                )}
               </div>
             ))}
           </div>
@@ -310,4 +357,69 @@ export default function GuidelinesUser({
       )}
     </div>
   );
+}
+
+function useGuidelineSecPage() {
+  const {
+    isOpen,
+    handleIsOpen,
+    getSecPageClass,
+    handleNode: handleSecPageContent,
+    node,
+    title,
+    handleTitle: handleSecPageTitle,
+    fullScreenLink,
+    handleFullScreenLink,
+  } = useSecPage();
+
+  const handleAddSecPage = () => {
+    handleIsOpen(true);
+    handleSecPageContent(
+      <AddGuidelineRequest
+        isSecPage={true}
+        handleSecPageTitle={handleSecPageTitle}
+      />
+    );
+    handleFullScreenLink("/solicitacoes/cadastrar");
+  };
+
+  const handleReadSecPage = async (id: string) => {
+    const guideline = await getGuideline(id);
+
+    if ("id" in guideline) {
+      handleIsOpen(true);
+      handleSecPageContent(<Guideline guideline={guideline} />);
+      handleSecPageTitle(guideline.name);
+      handleFullScreenLink(`/admin/diretrizes/${id}`);
+    }
+  };
+
+  const handleEditSecPage = async (id: string) => {
+    const guideline = await getGuideline(id);
+
+    if ("id" in guideline) {
+      handleIsOpen(true);
+      handleSecPageTitle(guideline.name);
+      handleSecPageContent(
+        <EditGuideline
+          guideline={guideline}
+          isSecPage={true}
+          handleSecPageTitle={handleSecPageTitle}
+        />
+      );
+      handleFullScreenLink(`/admin/diretrizes/${id}/editar`);
+    }
+  };
+
+  return {
+    secPageClass: getSecPageClass(),
+    handleAddSecPage,
+    handleEditSecPage,
+    handleReadSecPage,
+    isOpen,
+    handleIsOpen,
+    title,
+    fullScreenLink,
+    node,
+  };
 }

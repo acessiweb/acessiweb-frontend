@@ -11,12 +11,6 @@ import { Guideline as GuidelineType } from "@/types/guideline";
 import Pagination from "@/components/Pagination";
 import usePagination from "@/hooks/usePagination";
 import Guideline from "../../diretrizes/[id]/Guideline";
-import {
-  CardBtnRestore,
-  CardBtnStatus,
-  CardBtnUpdateAndDelete,
-} from "@/components/CardBtn";
-import { CardLinkUpdateAndDelete } from "@/components/CardLink";
 import { GoPlus } from "react-icons/go";
 import Link from "next/link";
 import AddGuideline from "../diretrizes/cadastrar/AddGuideline";
@@ -33,9 +27,19 @@ import {
   deleteGuideline,
   getGuideline,
   getGuidelines,
+  restoreGuideline,
 } from "@/routes/guidelines";
 import useSearch from "@/hooks/useSearch";
 import RemovedFilter from "@/components/RemovedFilter";
+import { CardBtn } from "@/components/CardBtn";
+import RestoreBtn from "@/components/card/Restore";
+import StatusBtn from "@/components/card/Status";
+import { UpdateBtn, UpdateLink } from "@/components/card/Update";
+import DeleteBtn from "@/components/card/Delete";
+import CardLink from "@/components/CardLink";
+import { getGuidelinesRequests } from "@/routes/guidelines-requests";
+import Request from "../solicitacoes/[id]/Request";
+import useAction from "@/hooks/useAction";
 
 const filterOptions: FilterOptions = [
   {
@@ -70,7 +74,7 @@ export default function GuidelinesAdmin({
     store,
     handleStore,
     handleFiltering,
-    handleDelete,
+    handleDelete: handleDeletion,
   } = usePagination({
     data: [] as GuidelineType[],
   });
@@ -110,6 +114,7 @@ export default function GuidelinesAdmin({
     isFilterApplied,
   } = useControlBar();
   const { data: session } = useSession();
+  const { handleDelete } = useAction();
   const { data: guidelines } = useQuery({
     queryKey: [
       "guidelines",
@@ -125,14 +130,22 @@ export default function GuidelinesAdmin({
       isFilterApplied("deleted"),
     ],
     queryFn: async () => {
-      const g = await getGuidelines({
-        offset,
-        keyword: search,
-        deficiences: [hearing, motor, visual, neural, tea],
-        initialDate,
-        endDate,
-        isDeleted: isFilterApplied("deleted"),
-      });
+      const g = isRequest
+        ? await getGuidelinesRequests({
+            offset,
+            keyword: search,
+            deficiences: [hearing, motor, visual, neural, tea],
+            initialDate,
+            endDate,
+          })
+        : await getGuidelines({
+            offset,
+            keyword: search,
+            deficiences: [hearing, motor, visual, neural, tea],
+            initialDate,
+            endDate,
+            isDeleted: isFilterApplied("deleted"),
+          });
 
       if ("data" in g) {
         handleStore(g);
@@ -172,20 +185,22 @@ export default function GuidelinesAdmin({
 
     if ("id" in guideline) {
       handleIsSecPageOpen(true);
-      handleSecPageContent(<Guideline guideline={guideline} />);
+      handleSecPageContent(
+        isRequest ? (
+          <Request request={guideline} />
+        ) : (
+          <Guideline guideline={guideline} />
+        )
+      );
       handleSecPageTitle(guideline.name);
-      handleFullScreenLink(`/admin/diretrizes/${id}`);
+      handleFullScreenLink(
+        isRequest ? `/admin/solicitacoes/${id}` : `/admin/diretrizes/${id}`
+      );
     }
   };
 
-  const handleDeletion = async (guidelineId: string) => {
-    if (session) {
-      const deleted = await deleteGuideline(guidelineId);
-
-      if ("id" in deleted) {
-        handleDelete(deleted.id);
-      }
-    }
+  const handleRestore = async (guidelineId: string) => {
+    await restoreGuideline(guidelineId);
   };
 
   const cleanAllFilters = () => {
@@ -277,52 +292,70 @@ export default function GuidelinesAdmin({
           <div className={`${view}`} aria-labelledby="page-heading">
             {store.map((guideline) => (
               <div className={`${view}__item`} key={guideline.id}>
-                {isFilterApplied("deleted") && (
-                  <CardBtnRestore
-                    mainText={guideline.name}
-                    onClick={() => handleReadSecPage(guideline.id)}
-                    onRestore={() => {}}
-                    secondaryText={guideline.description}
-                  />
-                )}
-                {isRequest && isDesktop && !isFilterApplied("deleted") && (
-                  <CardBtnStatus
-                    status={guideline.statusCode!}
-                    mainText={guideline.name}
-                    registerId={guideline.id}
-                    secondaryText={guideline.description}
-                    onClick={() => handleReadSecPage(guideline.id)}
-                  />
-                )}
-                {!isRequest && isDesktop && !isFilterApplied("deleted") && (
-                  <CardBtnUpdateAndDelete
-                    mainText={guideline.name}
-                    onClick={() => handleReadSecPage(guideline.id)}
-                    onDelete={() => handleDeletion(guideline.id)}
-                    onUpdateClick={() => handleEditSecPage(guideline.id)}
-                    registerId={guideline.id}
-                    registerName={guideline.name}
-                    secondaryText={guideline.description}
-                  />
-                )}
+                <CardBtn
+                  mainText={guideline.name}
+                  onClick={() => handleReadSecPage(guideline.id)}
+                  secondaryText={guideline.description}
+                >
+                  {isFilterApplied("deleted") && (
+                    <RestoreBtn onRestore={() => handleRestore(guideline.id)} />
+                  )}
+                  {isRequest && isDesktop && !isFilterApplied("deleted") && (
+                    <StatusBtn status={guideline.statusCode!} />
+                  )}
+                  {!isRequest && isDesktop && !isFilterApplied("deleted") && (
+                    <>
+                      <UpdateBtn
+                        onUpdateClick={() => handleEditSecPage(guideline.id)}
+                      />
+                      <DeleteBtn
+                        registerId={guideline.id}
+                        registerName={guideline.name}
+                        onDelete={() =>
+                          handleDelete(
+                            guideline.id,
+                            deleteGuideline,
+                            handleDeletion
+                          )
+                        }
+                      />
+                    </>
+                  )}
+                </CardBtn>
                 {!isRequest &&
                   (isMobile || isTablet) &&
                   !isFilterApplied("deleted") && (
-                    <CardLinkUpdateAndDelete
+                    <CardLink
                       mainText={guideline.name}
-                      onDelete={() => handleDelete(guideline.id)}
                       registerId={guideline.id}
-                      registerName={guideline.name}
                       readRoute={`/admin/diretrizes/${guideline.id}`}
-                      updateRoute={`/admin/diretrizes/${guideline.id}/editar`}
                       secondaryText={guideline.description}
-                    />
+                    >
+                      <UpdateLink
+                        updateRoute={`/admin/diretrizes/${guideline.id}/editar`}
+                      />
+                      <DeleteBtn
+                        onDelete={() =>
+                          handleDelete(
+                            guideline.id,
+                            deleteGuideline,
+                            handleDeletion
+                          )
+                        }
+                        registerId={guideline.id}
+                        registerName={guideline.name}
+                      />
+                    </CardLink>
                   )}
               </div>
             ))}
           </div>
         ) : (
-          <NoRegistersFound errorMsg="Não foram encontradas diretrizes" />
+          <NoRegistersFound
+            errorMsg={`Não foram encontradas ${
+              isRequest ? "solicitações" : "diretrizes"
+            }`}
+          />
         )}
         {guidelines && "data" in guidelines && (
           <Pagination
