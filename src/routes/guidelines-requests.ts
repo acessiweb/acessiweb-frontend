@@ -2,11 +2,17 @@
 
 import fetchData from "@/utils/fetch";
 import { Guideline } from "@/types/guideline";
-import { ApiError, PaginationResponse } from "@/types/response-api";
+import { ApiError, FetchResponse, PaginationResponse } from "@/types/fetch";
 import { getAuthSession } from "./auth-server-session";
 
-type Guidelines = PaginationResponse & {
-  data: Guideline[];
+type FetchGuidelines = FetchResponse & {
+  data: PaginationResponse & {
+    data: Guideline[];
+  };
+};
+
+type FetchUpdateResult = FetchResponse & {
+  data: Guideline;
 };
 
 export async function getGuidelinesRequests(query?: {
@@ -18,7 +24,7 @@ export async function getGuidelinesRequests(query?: {
   offset?: number;
   statusCode?: string;
   isRequest?: boolean;
-}): Promise<Guidelines | ApiError> {
+}): Promise<FetchGuidelines | ApiError> {
   const token = await getAuthSession();
 
   return await fetchData({
@@ -36,7 +42,7 @@ export async function updateGuidelineStatus(
   guidelineId: string,
   statusCode?: string,
   statusMsg?: string
-): Promise<ApiError | Guideline> {
+): Promise<FetchUpdateResult | ApiError> {
   const token = await getAuthSession();
 
   return fetchData({

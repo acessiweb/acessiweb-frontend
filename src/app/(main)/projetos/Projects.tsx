@@ -13,18 +13,18 @@ import { FilterOptions } from "@/types/filter";
 import { Project as ProjectType } from "@/types/project";
 import { useScreenType } from "@/hooks/useScreenType";
 import NoRegistersFound from "@/components/NotFound";
-import AddProject from "./cadastrar/AddProject";
 import Project from "./[id]/Project";
 import FiltersApplied from "@/components/FiltersApplied";
 import DateFilter from "@/components/DateFilter";
 import useDateFilter from "@/hooks/useDateFilter";
 import useSearch from "@/hooks/useSearch";
-import EditProject from "./[id]/editar/EditProject";
 import CardLink from "@/components/CardLink";
 import { UpdateBtn, UpdateLink } from "@/components/card/Update";
 import DeleteBtn from "@/components/card/Delete";
 import { CardBtn } from "@/components/CardBtn";
-import useAction from "@/hooks/useAction";
+import AddEditProject from "./_components/AddEditProject";
+import Link from "next/link";
+import { GoPlus } from "react-icons/go";
 
 const filterOptions: FilterOptions = [
   {
@@ -34,31 +34,19 @@ const filterOptions: FilterOptions = [
 ];
 
 export default function Projects() {
-  const {
-    isOpen: isSecPageOpen,
-    handleIsOpen: handleIsSecPageOpen,
-    getSecPageClass,
-    node: secPageContent,
-    title: secPageTitle,
-    handleTitle: handleSecPageTitle,
-    fullScreenLink,
-    handleFullScreenLink,
-    handleNode: handleSecPageContent,
-  } = useSecPage();
-  const { isTablet, isMobile } = useScreenType();
+  const { isTablet, isMobile, isDesktop } = useScreenType();
+
   const { data: session } = useSession();
-  const {
-    offset,
-    store,
-    handleStore,
-    handleFiltering,
-    handleDelete: handleDeletion,
-  } = usePagination({
-    data: [] as ProjectType[],
-  });
+
+  const { offset, store, handlePagination, handleFiltering, handleDelete } =
+    usePagination({
+      data: [] as ProjectType[],
+    });
+
   const { handleSearch, search } = useSearch({
     handleFiltering,
   });
+
   const {
     handleView,
     handleFiltersChosen,
@@ -68,6 +56,7 @@ export default function Projects() {
     cleanFilters,
     isFilterApplied,
   } = useControlBar();
+
   const {
     handleEndDate,
     endDate,
@@ -75,63 +64,35 @@ export default function Projects() {
     initialDate,
     cleanDateFilter,
   } = useDateFilter();
-  const { handleDelete } = useAction();
+
+  const {
+    secPageClass,
+    handleAddSecPage,
+    handleEditSecPage,
+    handleReadSecPage,
+    isOpen: isSecPageOpen,
+    handleIsOpen: handleIsSecPageOpen,
+    title: secPageTitle,
+    fullScreenLink,
+    node: secPageContent,
+  } = useProjectsSecPage();
 
   useQuery({
     queryKey: ["projects", search, offset, session],
     queryFn: async () => {
-      const p = await getProjects({
+      const res = await getProjects({
         userId: session?.user.id,
         offset,
         keyword: search,
       });
 
-      if ("data" in p) {
-        handleStore(p);
+      if (res.ok && "data" in res) {
+        handlePagination(res.data);
       }
 
-      return p;
+      return "data" in res ? res.data : res;
     },
   });
-
-  const handleEditSecPage = async (id: string) => {
-    if (session && session.user.id) {
-      const project = await getProject(id);
-      if ("id" in project) {
-        handleIsSecPageOpen(true);
-        handleSecPageTitle(project.name);
-        handleSecPageContent(
-          <EditProject
-            project={project}
-            isSecPage={true}
-            handleSecPageTitle={handleSecPageTitle}
-          />
-        );
-        handleFullScreenLink(`/projetos/${id}/editar`);
-      }
-    }
-  };
-
-  const handleAddSecPage = () => {
-    handleIsSecPageOpen(true);
-    handleSecPageContent(
-      <AddProject isSecPage={true} handleSecPageTitle={handleSecPageTitle} />
-    );
-    handleFullScreenLink("/projetos/cadastrar");
-    handleSecPageTitle("Cadastrar projeto");
-  };
-
-  const handleReadSecPage = async (id: string) => {
-    if (session && session.user.id) {
-      const project = await getProject(id);
-      if ("id" in project) {
-        handleIsSecPageOpen(true);
-        handleSecPageContent(<Project project={project} />);
-        handleSecPageTitle(project.name);
-        handleFullScreenLink(`/projetos/${id}`);
-      }
-    }
-  };
 
   const cleanAllFilters = () => {
     handleInitialDate("");
@@ -139,7 +100,7 @@ export default function Projects() {
   };
 
   return (
-    <div className={getSecPageClass()}>
+    <div className={secPageClass}>
       <div className="projects">
         <ControlBar
           handleView={handleView}
@@ -158,9 +119,18 @@ export default function Projects() {
             handleSearch={handleSearch}
             searchValue={search}
           />
-          <button className="btn-default" onClick={handleAddSecPage}>
-            Criar projeto
-          </button>
+          {isDesktop ? (
+            <button className="btn-default" onClick={handleAddSecPage}>
+              Criar projeto
+            </button>
+          ) : (
+            <Link
+              className="btn-default cursor-pointer"
+              href="/projetos/cadastrar"
+            >
+              <GoPlus />
+            </Link>
+          )}
         </div>
         {filtersChosen.length > 0 && (
           <FiltersApplied
@@ -194,14 +164,12 @@ export default function Projects() {
                   >
                     <UpdateLink
                       updateRoute={`/projetos/${project.id}/editar`}
-                    ></UpdateLink>
+                    />
                     <DeleteBtn
-                      onDelete={() =>
-                        handleDelete(project.id, deleteProject, handleDeletion)
-                      }
+                      onDelete={() => handleDelete(project.id, deleteProject)}
                       registerId={project.id}
                       registerName={project.name}
-                    ></DeleteBtn>
+                    />
                   </CardLink>
                 ) : (
                   <CardBtn
@@ -212,12 +180,12 @@ export default function Projects() {
                   >
                     <UpdateBtn
                       onUpdateClick={() => handleEditSecPage(project.id)}
-                    ></UpdateBtn>
+                    />
                     <DeleteBtn
-                      onDelete={() => handleDeletion(project.id)}
+                      onDelete={() => handleDelete(project.id, deleteProject)}
                       registerId={project.id}
                       registerName={project.name}
-                    ></DeleteBtn>
+                    />
                   </CardBtn>
                 )}
               </div>
@@ -238,4 +206,68 @@ export default function Projects() {
       )}
     </div>
   );
+}
+
+function useProjectsSecPage() {
+  const {
+    isOpen,
+    handleIsOpen,
+    getSecPageClass,
+    node,
+    title,
+    handleTitle,
+    fullScreenLink,
+    handleFullScreenLink,
+    handleNode,
+  } = useSecPage();
+
+  const handleEditSecPage = async (id: string) => {
+    const res = await getProject(id);
+
+    if (res.ok && "data" in res) {
+      handleIsOpen(true);
+      handleTitle(res.data.name);
+      handleNode(
+        <AddEditProject
+          project={res.data}
+          isSecPage={true}
+          handleSecPageTitle={handleTitle}
+          isEditPage={true}
+        />
+      );
+      handleFullScreenLink(`/projetos/${id}/editar`);
+    }
+  };
+
+  const handleAddSecPage = () => {
+    handleIsOpen(true);
+    handleNode(
+      <AddEditProject isSecPage={true} handleSecPageTitle={handleTitle} />
+    );
+    handleFullScreenLink("/projetos/cadastrar");
+    handleTitle("Cadastrar projeto");
+  };
+
+  const handleReadSecPage = async (id: string) => {
+    const res = await getProject(id);
+
+    if (res.ok && "data" in res) {
+      handleIsOpen(true);
+      handleNode(<Project project={res.data} />);
+      handleTitle(res.data.name);
+      handleFullScreenLink(`/projetos/${id}`);
+    }
+  };
+
+  return {
+    secPageClass: getSecPageClass(),
+    handleAddSecPage,
+    handleEditSecPage,
+    handleReadSecPage,
+    isOpen,
+    handleIsOpen,
+    title,
+    fullScreenLink,
+    node,
+  };
 }

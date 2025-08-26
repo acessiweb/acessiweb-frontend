@@ -6,20 +6,20 @@ type PageProps = ParamsPromise;
 
 export default async function Page({ params }: PageProps) {
   const { id } = await params;
-  const guideline = await getGuideline(id);
+  const res = await getGuideline(id);
 
-  if (guideline && "id" in guideline) {
+  if (res.ok && "data" in res) {
     return (
       <Guideline
-        guideline={guideline}
+        guideline={res.data}
         crumbs={[
           {
             desc: "DIRETRIZES",
             link: "/diretrizes",
           },
           {
-            desc: guideline.name,
-            link: `/diretrizes/${guideline.id}`,
+            desc: res.data.name,
+            link: `/diretrizes/${res.data.id}`,
           },
         ]}
         isRequest={false}

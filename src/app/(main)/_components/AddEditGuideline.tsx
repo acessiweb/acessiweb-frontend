@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import InputTextVoice from "@/components/InputTextVoice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Code from "@/components/Code";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import FileInput from "@/components/FileInput";
 import GuidelinesDeficiencesFilter from "@/components/DeficiencesCheckbox";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -75,6 +75,15 @@ export default function AddEditGuideline({
   setValue("deficiences", [hearing, visual, motor, neural, tea]);
 
   useEffect(() => {
+    if (guideline) {
+      setValue("guideName", guideline.name);
+      setValue("guideImage", guideline.image);
+      setValue("desc", guideline.description);
+      setValue("imageDesc", guideline.imageDesc);
+    }
+  }, [guideline, setValue]);
+
+  useEffect(() => {
     if (isSecPage && handleSecPageTitle) {
       handleSecPageTitle(
         `${isEditPage ? "Editar" : "Cadastrar"} ${guidelineName || "diretriz"}`
@@ -131,7 +140,7 @@ export default function AddEditGuideline({
             ? await updateGuideline(guideline.id, formData)
             : await createGuideline(formData);
 
-        if ("apiRes" in res && "errors" in res.apiRes) {
+        if ("errors" in res) {
           handleApiErrors(res);
           setPushMsg("");
           setShowPush(false);

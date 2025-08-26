@@ -2,8 +2,9 @@
 
 .filters-applied {
   display: flex;
-  column-gap: var.$space-sm;
+  gap: var.$space-sm;
   margin: var.$space-xl 0 0;
+  flex-wrap: wrap;
 
   &__box {
     display: flex;

@@ -5,7 +5,7 @@ type RequestProps = Page & {
   request: Guideline;
 };
 
-export default function Request({ request, crumbs }: RequestProps) {
+export default function Request({ request }: RequestProps) {
   return (
     <div className="admin-request">
       <div>

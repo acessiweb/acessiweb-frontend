@@ -11,20 +11,20 @@ type PageProps = ParamsPromise;
 
 export default async function Page({ params }: PageProps) {
   const { id } = await params;
-  const project = await getProject(id);
+  const res = await getProject(id);
 
-  if (project && "id" in project) {
+  if (res.ok && "data" in res) {
     return (
       <Project
-        project={project}
+        project={res.data}
         crumbs={[
           {
             desc: "PROJETOS",
             link: "/projetos",
           },
           {
-            desc: project.name,
-            link: `/projetos/${project.id}`,
+            desc: res.data.name,
+            link: `/projetos/${res.data.id}`,
           },
         ]}
       />

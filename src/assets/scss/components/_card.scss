@@ -11,16 +11,9 @@
   font-weight: var.$medium;
   transition: transform 0.2s ease;
   row-gap: var.$space-sm;
-  position: relative;
   box-shadow: 5px 10px 10px var.$lightPurple;
   width: 100%;
-
-  > div:nth-child(2),
-  &__buttons {
-    position: absolute;
-    right: 4px;
-    top: 8px;
-  }
+  justify-content: space-between;
 
   &__content {
     display: flex;
@@ -28,11 +21,10 @@
     row-gap: var.$space-md;
     align-items: flex-start;
     justify-content: space-between;
-    width: 100%;
+    width: 50%;
 
     .heading-3 {
       display: -webkit-box;
-      word-break: break-all;
       font-size: var.$fs-medium;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -54,6 +46,12 @@
 
   &__buttons {
     display: flex;
+    align-items: flex-start;
+  }
+
+  button,
+  a {
+    height: fit-content;
   }
 
   &:hover {
@@ -70,8 +68,8 @@
   }
 
   svg {
-    height: calc(var.$svg-small + 0.2rem) !important;
-    width: calc(var.$svg-small + 0.2rem) !important;
+    height: calc(var.$svg-small + 0.1rem) !important;
+    width: calc(var.$svg-small + 0.1rem) !important;
   }
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
-import { PaginationResponse } from "@/types/response-api";
+import { usePush } from "@/context/push";
+import { ApiError, FetchUpdateResult, PaginationResponse } from "@/types/fetch";
 import { useState } from "react";
 
 type PaginationProps<T> = Partial<PaginationResponse> & {
@@ -22,6 +23,7 @@ export default function usePagination<T>({ data = [] }: PaginationProps<T>) {
   const [loadLess, setLoadLess] = useState(false);
   const [offset, setOffset] = useState(0);
   const [store, setStore] = useState(data);
+  const { setPushMsg, setShowPush } = usePush();
 
   const onLoadMore = (offset: number = 0) => {
     setOffset(offset);
@@ -61,7 +63,7 @@ export default function usePagination<T>({ data = [] }: PaginationProps<T>) {
     });
   };
 
-  const handleStore = (newData: PaginationProps<T>) => {
+  const handlePagination = (newData: PaginationProps<T>) => {
     if (store.length === 0 || isFiltering) {
       setStore(newData.data || []);
     }
@@ -75,21 +77,47 @@ export default function usePagination<T>({ data = [] }: PaginationProps<T>) {
     }
   };
 
-  const handleDelete = (deletedId: string) => {
-    setStore((prev) => {
-      const prevCopy = [...prev];
-      return prevCopy.filter((dt) => {
-        if (hasIdProperty(dt)) {
-          return dt.id !== deletedId;
-        }
+  const handleDelete = async (
+    id: string,
+    deleteFunction: (id: string) => Promise<FetchUpdateResult | ApiError>
+  ) => {
+    const res = await deleteFunction(id);
 
-        return;
+    if (res.ok && "data" in res) {
+      setStore((prev) => {
+        const prevCopy = [...prev];
+        return prevCopy.filter((dt) => {
+          if (hasIdProperty(dt)) {
+            return dt.id !== res.data.id;
+          }
+
+          return;
+        });
       });
-    });
+    }
+
+    if (!res.ok && "errors" in res) {
+      setShowPush(true);
+      setPushMsg(res.errors[0].message);
+    }
   };
 
   const handleFiltering = (isFiltering: boolean) => {
     setIsFiltering(isFiltering);
+  };
+
+  const updateItemFromStore = (data: T) => {
+    setStore((prevStore: T[]) => {
+      const storeCopy = [...prevStore];
+
+      const newStore: T[] = storeCopy.map((item) => {
+        if (hasIdProperty(item) && hasIdProperty(data) && item.id === data.id)
+          return data;
+        return item;
+      });
+
+      return newStore;
+    });
   };
 
   return {
@@ -98,8 +126,9 @@ export default function usePagination<T>({ data = [] }: PaginationProps<T>) {
     isFiltering,
     offset,
     store,
-    handleStore,
+    handlePagination,
     handleDelete,
     handleFiltering,
+    updateItemFromStore,
   };
 }

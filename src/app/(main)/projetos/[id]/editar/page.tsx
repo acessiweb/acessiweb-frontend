@@ -1,7 +1,7 @@
 import { Metadata } from "next/types";
-import EditProject from "./EditProject";
 import { ParamsPromise } from "@/types/params";
 import { getProject } from "@/routes/projects";
+import AddEditProject from "../../_components/AddEditProject";
 
 export const metadata: Metadata = {
   title: "Meus projetos",
@@ -11,22 +11,23 @@ type PageProps = ParamsPromise;
 
 export default async function Page({ params }: PageProps) {
   const { id } = await params;
-  const project = await getProject(id);
+  const res = await getProject(id);
 
-  if (project && "id" in project) {
+  if (res.ok && "data" in res) {
     return (
-      <EditProject
-        project={project}
+      <AddEditProject
+        project={res.data}
         crumbs={[
           {
             desc: "PROJETOS",
             link: "/projetos",
           },
           {
-            desc: `EDITAR ${project.name}`,
-            link: `/projetos/${project.id}/editar`,
+            desc: `EDITAR ${res.data.name}`,
+            link: `/projetos/${res.data.id}/editar`,
           },
         ]}
+        isEditPage={true}
       />
     );
   }

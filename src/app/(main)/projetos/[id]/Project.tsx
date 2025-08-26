@@ -1,3 +1,5 @@
+"use client";
+
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Project as ProjectType } from "@/types/project";
 
@@ -15,6 +17,7 @@ export default function Project({
   isSecPage = false,
   crumbs,
 }: ProjectProps) {
+  console.log(project.guidelines);
   return (
     <div className="read-page read-project">
       {!isSecPage && crumbs && <Breadcrumb crumbs={crumbs} />}

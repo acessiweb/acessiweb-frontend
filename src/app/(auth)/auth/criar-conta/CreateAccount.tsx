@@ -39,13 +39,13 @@ export default function CreateAccount() {
     if (!data.email && !data.mobilePhone) {
       handleUniqueMsg("Email ou número de celular precisa ser informado");
     } else {
-      const result = await createAccount(data);
+      const res = await createAccount(data);
 
-      if ("id" in result) {
+      if (!res.ok && "errors" in res) {
+        handleApiErrors(res);
+      } else {
         reset();
         router.push("/auth/logar");
-      } else {
-        handleApiErrors([result]);
       }
     }
   };

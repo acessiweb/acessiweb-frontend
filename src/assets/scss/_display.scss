@@ -7,7 +7,7 @@
   margin-top: var.$space-xl;
 
   @media (max-width: var.$tablet) {
-    margin-top: var.$space-sm;
+    margin-top: var.$space-lg;
   }
 
   &__item {
@@ -23,6 +23,10 @@
   flex-wrap: wrap;
   row-gap: var.$space-md;
   margin-top: var.$space-xl;
+
+  @media (max-width: var.$tablet) {
+    margin-top: var.$space-lg;
+  }
 
   &__item {
     flex: 1;

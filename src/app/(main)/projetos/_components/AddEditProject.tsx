@@ -26,10 +26,11 @@ import {
   editProjectSchema,
 } from "@/schemas/project.schema";
 import { useSession } from "next-auth/react";
-import { ApiError } from "@/types/response-api";
+import { ApiError, FetchResponse, FetchUpdateResult } from "@/types/fetch";
 import { CardBtn } from "@/components/CardBtn";
 import DeleteBtn from "@/components/card/Delete";
 import CardLink from "@/components/CardLink";
+import { Guideline as GuidelineType } from "@/types/guideline";
 
 type AddEditProjectProps = Page & {
   project?: Project;
@@ -85,6 +86,15 @@ export default function AddEditProject({
   const { data: session } = useSession();
 
   useEffect(() => {
+    if (project) {
+      setValue("projName", project.name);
+      setValue("desc", project.description);
+      setValue("feedback", project.feedback);
+      setValue("guidelines", project.guidelines);
+    }
+  }, [project, setValue]);
+
+  useEffect(() => {
     if (handleSecPageTitle) {
       handleSecPageTitle(
         isEditPage
@@ -101,12 +111,14 @@ export default function AddEditProject({
   };
 
   const handleReadSecPage = async (id: string) => {
-    const guideline = await getGuideline(id);
+    const res = await getGuideline(id);
 
-    if ("id" in guideline) {
+    if (res.ok && "data" in res) {
       handleIsSecPageOpen(true);
-      handleSecPageContent(<Guideline guideline={guideline} />);
-      handleTitle(guideline.name);
+      handleSecPageContent(
+        <Guideline guideline={res.data} isRequest={false} />
+      );
+      handleTitle(res.data.name);
       handleFullScreenLink(`/diretrizes/${id}`);
     }
   };
@@ -138,12 +150,8 @@ export default function AddEditProject({
   };
 
   const onSubmit = async (data: CreateProjectSchema | EditProjectSchema) => {
-    let res:
-      | ApiError
-      | Project
-      | {
-          id: string;
-        } = {} as ApiError;
+    let res: ApiError | (FetchResponse & Project) | FetchUpdateResult =
+      {} as ApiError;
 
     if (isEditPage && "feedback" in data && project) {
       res = await editProject(project.id, {
@@ -162,8 +170,8 @@ export default function AddEditProject({
       });
     }
 
-    if ("errors" in res) {
-      handleApiErrors([res]);
+    if (!res.ok && "errors" in res) {
+      handleApiErrors(res);
       setPushMsg("");
       setShowPush(false);
     } else if (Object.keys(res).length === 0) {
@@ -177,9 +185,50 @@ export default function AddEditProject({
     }
   };
 
+  const Guidelines = ({
+    guides,
+  }: {
+    guides: { id: string; name: string }[] | GuidelineType[];
+  }) => {
+    return (
+      <div className="grid" id="guidelines-grid">
+        {guides.map((guide) => (
+          <div className="grid__item" key={guide.id}>
+            {isDesktop ? (
+              <CardBtn
+                mainText={guide.name}
+                registerId={guide.id}
+                onClick={() => handleReadSecPage(guide.id)}
+              >
+                <DeleteBtn
+                  onDelete={() => removeGuidelineOfCart(guide.id)}
+                  registerId=""
+                  registerName=""
+                ></DeleteBtn>
+              </CardBtn>
+            ) : (
+              <CardLink
+                mainText={guide.name}
+                readRoute={`/diretrizes/${guide.id}`}
+              >
+                <DeleteBtn
+                  onDelete={() => removeGuidelineOfCart(guide.id)}
+                  registerId={guide.id}
+                  registerName={guide.name}
+                ></DeleteBtn>
+              </CardLink>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className={getSecPageClass()}>
-      <div className={`${isEditPage ? "edit-project" : "add-project"}`}>
+      <div
+        className={`${isEditPage ? "edit-project edit-page" : "add-project"}`}
+      >
         {!isSecPage && crumbs && <Breadcrumb crumbs={crumbs} />}
         {!isSecPage && (
           <h1
@@ -274,41 +323,22 @@ export default function AddEditProject({
               {errors.desc.message}
             </small>
           )}
-          {guidelinesShown && cart && cart.guidelines.length > 0 && (
-            <div className="grid" id="guidelines-grid">
-              {cart.guidelines.map((guide) => (
-                <div className="grid__item" key={guide.id}>
-                  {isDesktop ? (
-                    <CardBtn
-                      mainText={guide.name}
-                      registerId={guide.id}
-                      onClick={() => handleReadSecPage(guide.id)}
-                    >
-                      <DeleteBtn
-                        onDelete={() => removeGuidelineOfCart(guide.id)}
-                        registerId=""
-                        registerName=""
-                      ></DeleteBtn>
-                    </CardBtn>
-                  ) : (
-                    <CardLink
-                      mainText={guide.name}
-                      readRoute={`/diretrizes/${guide.id}`}
-                    >
-                      <DeleteBtn
-                        onDelete={() => removeGuidelineOfCart(guide.id)}
-                        registerId={guide.id}
-                        registerName={guide.name}
-                      ></DeleteBtn>
-                    </CardLink>
-                  )}
-                </div>
-              ))}
-            </div>
+          {guidelinesShown &&
+            !isEditPage &&
+            cart &&
+            cart.guidelines.length > 0 && (
+              <Guidelines guides={cart.guidelines} />
+            )}
+          {guidelinesShown && isEditPage && project && (
+            <Guidelines guides={project.guidelines} />
           )}
-          {guidelinesShown && cart && cart.guidelines.length === 0 && (
-            <div>Ainda não foram selecionadas diretrizes para esse projeto</div>
-          )}
+          {guidelinesShown &&
+            (cart?.guidelines.length === 0 ||
+              project?.guidelines.length === 0) && (
+              <div>
+                Ainda não foram selecionadas diretrizes para esse projeto
+              </div>
+            )}
           {errors.guidelines && (
             <small
               role="status"

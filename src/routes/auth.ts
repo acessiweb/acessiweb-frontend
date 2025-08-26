@@ -1,9 +1,11 @@
-import { ResponseCustom } from "@/types/response";
+import { FetchResponse } from "@/types/fetch";
 import fetchData from "@/utils/fetch";
 
-export async function refreshToken(
-  refreshToken: string
-): Promise<ResponseCustom & { accessToken: string; refreshToken: string }> {
+type FetchTokens = FetchResponse & {
+  data: { accessToken: string; refreshToken: string };
+};
+
+export async function refreshToken(refreshToken: string): Promise<FetchTokens> {
   return await fetchData({
     endpoint: "auth/refresh",
     config: {

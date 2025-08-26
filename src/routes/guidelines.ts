@@ -1,12 +1,23 @@
 "use server";
 
-import { ApiError, PaginationResponse } from "@/types/response-api";
+import {
+  ApiError,
+  FetchResponse,
+  FetchUpdateResult,
+  PaginationResponse,
+} from "@/types/fetch";
 import fetchData from "@/utils/fetch";
 import { Guideline } from "@/types/guideline";
 import { getAuthSession } from "./auth-server-session";
 
-type Guidelines = PaginationResponse & {
-  data: Guideline[];
+type FetchGuidelines = FetchResponse & {
+  data: PaginationResponse & {
+    data: Guideline[];
+  };
+};
+
+type FetchGuideline = FetchResponse & {
+  data: Guideline;
 };
 
 export async function getGuidelines(query?: {
@@ -17,13 +28,15 @@ export async function getGuidelines(query?: {
   limit?: number;
   offset?: number;
   isDeleted?: boolean;
-}): Promise<Guidelines | ApiError> {
+}): Promise<FetchGuidelines | ApiError> {
   return await fetchData({
     endpoint: `guidelines?keyword=${query?.keyword}&deficiences=${query?.deficiences}&limit=${query?.limit}&offset=${query?.offset}&initialDate=${query?.initialDate}&endDate=${query?.endDate}&isDeleted=${query?.isDeleted}`,
   });
 }
 
-export async function getGuideline(id: string): Promise<Guideline | ApiError> {
+export async function getGuideline(
+  id: string
+): Promise<FetchGuideline | ApiError> {
   return await fetchData({
     endpoint: `guidelines/${id}`,
   });
@@ -31,7 +44,7 @@ export async function getGuideline(id: string): Promise<Guideline | ApiError> {
 
 export async function createGuideline(
   formData: FormData
-): Promise<ApiError | { id: string }> {
+): Promise<FetchUpdateResult | ApiError> {
   const token = await getAuthSession();
 
   return fetchData({
@@ -49,7 +62,7 @@ export async function createGuideline(
 export async function updateGuideline(
   guidelineId: string,
   formData: FormData
-): Promise<ApiError | { id: string }> {
+): Promise<FetchGuideline | ApiError> {
   const token = await getAuthSession();
 
   return fetchData({
@@ -66,7 +79,7 @@ export async function updateGuideline(
 
 export async function deleteGuideline(
   guidelineId: string
-): Promise<ApiError | { id: string }> {
+): Promise<FetchUpdateResult | ApiError> {
   const token = await getAuthSession();
 
   return fetchData({
@@ -82,7 +95,7 @@ export async function deleteGuideline(
 
 export async function restoreGuideline(
   guidelineId: string
-): Promise<ApiError | Guideline> {
+): Promise<FetchUpdateResult | ApiError> {
   const token = await getAuthSession();
 
   return fetchData({

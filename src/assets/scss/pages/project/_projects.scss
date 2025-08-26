@@ -8,6 +8,7 @@
   &__search-wrapper {
     display: flex;
     justify-content: space-between;
+    column-gap: var.$space-sm;
 
     .search {
       width: 60%;

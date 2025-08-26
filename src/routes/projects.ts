@@ -1,17 +1,28 @@
 import { Project } from "@/types/project";
-import { ApiError, PaginationResponse } from "@/types/response-api";
+import {
+  ApiError,
+  FetchResponse,
+  FetchUpdateResult,
+  PaginationResponse,
+} from "@/types/fetch";
 import fetchData from "@/utils/fetch";
 import { getAuthSession } from "./auth-server-session";
 
-type Projects = PaginationResponse & {
-  data: Project[];
+type FetchProjects = FetchResponse & {
+  data: PaginationResponse & {
+    data: Project[];
+  };
+};
+
+type FetchProject = FetchResponse & {
+  data: Project;
 };
 
 export async function createProject(body: {
   name: string;
   guidelines: string[];
   desc: string;
-}): Promise<ApiError | { id: string }> {
+}): Promise<ApiError | FetchUpdateResult> {
   const token = await getAuthSession();
 
   return fetchData({
@@ -35,7 +46,7 @@ export async function editProject(
     desc: string;
     feedback: string;
   }
-): Promise<ApiError | Project> {
+): Promise<ApiError | FetchProject> {
   const token = await getAuthSession();
 
   return fetchData({
@@ -53,7 +64,7 @@ export async function editProject(
 
 export async function deleteProject(
   projectId: string
-): Promise<ApiError | { id: string }> {
+): Promise<ApiError | FetchUpdateResult> {
   const token = await getAuthSession();
 
   return fetchData({
@@ -74,7 +85,7 @@ export async function getProjects(query: {
   endDate?: Date;
   limit?: number;
   offset?: number;
-}): Promise<Projects | ApiError> {
+}): Promise<FetchProjects | ApiError> {
   const token = await getAuthSession();
 
   return await fetchData({
@@ -88,7 +99,7 @@ export async function getProjects(query: {
   });
 }
 
-export async function getProject(id: string): Promise<Project | ApiError> {
+export async function getProject(id: string): Promise<FetchProject | ApiError> {
   const token = await getAuthSession();
 
   return await fetchData({

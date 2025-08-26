@@ -29,10 +29,8 @@ import {
   deleteGuideline,
   getGuideline,
   getGuidelines,
-  restoreGuideline,
 } from "@/routes/guidelines";
 import useSecPage from "@/hooks/useSecPage";
-import useAction from "@/hooks/useAction";
 import { CardBtn } from "@/components/CardBtn";
 import { AddBtn } from "@/components/card/Add";
 import { UpdateBtn, UpdateLink } from "@/components/card/Update";
@@ -78,9 +76,10 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
     onLoadMore,
     offset,
     store,
-    handleStore,
     handleFiltering,
-    handleDelete: handleDeletion,
+    handleDelete,
+    handlePagination,
+    updateItemFromStore,
   } = usePagination({
     data: [] as GuidelineType[],
   });
@@ -114,8 +113,6 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
     node: secPageContent,
   } = useGuidelinesSecPage({ isRequest, isAdmin });
 
-  const { handleDelete } = useAction();
-
   const { setShowPush, setPushMsg } = usePush();
 
   const { data: guidelines } = useQuery({
@@ -133,7 +130,7 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
       isFilterApplied("deleted"),
     ],
     queryFn: async () => {
-      const g = isRequest
+      const res = isRequest
         ? await getGuidelinesRequests({
             offset,
             keyword: search,
@@ -151,25 +148,29 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
             isDeleted: isFilterApplied("deleted"),
           });
 
-      if ("data" in g) {
-        handleStore(g);
+      if (res.ok && "data" in res) {
+        handlePagination(res.data);
       }
 
-      return g;
+      return "data" in res ? res.data : res;
     },
   });
 
   const title = useMemo(() => {
     if (isAdmin && isRequest) return "Solicitações de inclusão de diretriz";
-    if ((isAdmin && !isRequest) || !(isAdmin && isRequest))
+    if ((isAdmin && !isRequest) || (!isAdmin && !isRequest))
       return "Diretrizes de acessibilidade";
     if (!isAdmin && isRequest)
-      return "Minhas solicitações de inclusão de diretriz";
+      return (
+        <>
+          Minhas solicitações <span>de inclusão de diretriz</span>
+        </>
+      );
     return "";
   }, [isAdmin, isRequest]);
 
   const filterOptions = useMemo(() => {
-    let fo: FilterOptions = [
+    const fo: FilterOptions = [
       {
         id: "creation-date",
         desc: "Por data de criação",
@@ -192,34 +193,18 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
   };
 
   const handleGuidelineShip = async (id: string) => {
-    const guideline = await updateGuidelineStatus(id);
+    const res = await updateGuidelineStatus(id);
 
-    if (guideline && "id" in guideline) {
-      const storeCopy = [...store];
-
-      console.log(storeCopy);
-
-      const newStore = storeCopy.map((guide) => {
-        if (guide.id === guideline.id) return guideline;
-        return guide;
-      });
-
-      console.log(guideline);
-      console.log(newStore);
-
-      handleStore({
-        ...storeCopy,
-        data: newStore,
-      });
-
+    if (res.ok && "data" in res) {
       setShowPush(true);
       setPushMsg("Solicitação enviada para análise");
+      updateItemFromStore(res.data);
     }
   };
 
-  const handleRestore = async (guidelineId: string) => {
-    await restoreGuideline(guidelineId);
-  };
+  // const handleRestore = async (guidelineId: string) => {
+  //   await restoreGuideline(guidelineId);
+  // };
 
   return (
     <div className={secPageClass}>
@@ -348,11 +333,7 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
                         />
                         <DeleteBtn
                           onDelete={() =>
-                            handleDelete(
-                              guideline.id,
-                              deleteGuideline,
-                              handleDeletion
-                            )
+                            handleDelete(guideline.id, deleteGuideline)
                           }
                           registerId={guideline.id}
                           registerName={guideline.name}
@@ -373,18 +354,14 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
                     />
                     <DeleteBtn
                       onDelete={() =>
-                        handleDelete(
-                          guideline.id,
-                          deleteGuideline,
-                          handleDeletion
-                        )
+                        handleDelete(guideline.id, deleteGuideline)
                       }
                       registerId={guideline.id}
                       registerName={guideline.name}
                     />
                   </CardLink>
                 )}
-                {!isRequest && (
+                {!isRequest && isDesktop && (
                   <CardBtn
                     mainText={guideline.name}
                     secondaryText={guideline.description}
@@ -397,11 +374,7 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
                         />
                         <DeleteBtn
                           onDelete={() =>
-                            handleDelete(
-                              guideline.id,
-                              deleteGuideline,
-                              handleDeletion
-                            )
+                            handleDelete(guideline.id, deleteGuideline)
                           }
                           registerId={guideline.id}
                           registerName={guideline.name}
@@ -415,6 +388,34 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
                       />
                     )}
                   </CardBtn>
+                )}
+                {!isRequest && !isDesktop && (
+                  <CardLink
+                    mainText={guideline.name}
+                    secondaryText={guideline.description}
+                    readRoute={`/diretrizes/${guideline.id}`}
+                  >
+                    {isAdmin ? (
+                      <>
+                        <UpdateLink
+                          updateRoute={`/admin/diretrizes/${guideline.id}/editar`}
+                        />
+                        <DeleteBtn
+                          onDelete={() =>
+                            handleDelete(guideline.id, deleteGuideline)
+                          }
+                          registerId={guideline.id}
+                          registerName={guideline.name}
+                        />
+                      </>
+                    ) : (
+                      <AddBtn
+                        onAdd={addGuidelineToCart}
+                        registerId={guideline.id}
+                        registerName={guideline.name}
+                      />
+                    )}
+                  </CardLink>
                 )}
               </div>
             ))}
@@ -479,9 +480,9 @@ function useGuidelinesSecPage({
   };
 
   const handleReadSecPage = async (id: string) => {
-    const guideline = await getGuideline(id);
+    const res = await getGuideline(id);
 
-    if ("id" in guideline) {
+    if ("data" in res) {
       let fullScreenLink = "";
 
       if (!isAdmin && isRequest) fullScreenLink = `/solicitacoes/${id}`;
@@ -490,16 +491,16 @@ function useGuidelinesSecPage({
       if (isAdmin && isRequest) fullScreenLink = `/admin/solicitacoes/${id}`;
 
       handleIsOpen(true);
-      handleNode(<Guideline guideline={guideline} isRequest={isRequest} />);
-      handleTitle(guideline.name);
+      handleNode(<Guideline guideline={res.data} isRequest={isRequest} />);
+      handleTitle(res.data.name);
       handleFullScreenLink(fullScreenLink);
     }
   };
 
   const handleEditSecPage = async (id: string) => {
-    const guideline = await getGuideline(id);
+    const res = await getGuideline(id);
 
-    if ("id" in guideline) {
+    if ("data" in res) {
       let fullScreenLink = "";
 
       if (!isAdmin && isRequest) fullScreenLink = `/solicitacoes/editar/${id}`;
@@ -508,12 +509,12 @@ function useGuidelinesSecPage({
       if (isAdmin && isRequest) fullScreenLink = `/admin/solicitacoes/${id}`;
 
       handleIsOpen(true);
-      handleTitle(guideline.name);
+      handleTitle(res.data.name);
       handleNode(
         <AddEditGuideline
           isEditPage={true}
           isRequest={isRequest}
-          guideline={guideline}
+          guideline={res.data}
         />
       );
       handleFullScreenLink(fullScreenLink);

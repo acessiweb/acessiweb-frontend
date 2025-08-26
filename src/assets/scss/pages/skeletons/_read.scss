@@ -1,6 +1,7 @@
 @use "../../var";
 
-.read-page {
+.read-page,
+.edit-page {
   display: flex;
   flex-direction: column;
   row-gap: var.$space-sm;

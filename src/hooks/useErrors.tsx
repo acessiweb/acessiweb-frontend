@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertMsgs } from "@/types/error";
-import { ApiError } from "@/types/response-api";
+import { ApiError } from "@/types/fetch";
 import { useState } from "react";
 
 type ErrorsProps = {
@@ -37,7 +37,7 @@ export default function useErrors({ alertMsg }: ErrorsProps = {}) {
 
   const handleApiErrors = (err: ApiError) => {
     const errs = [];
-    for (const e of err.apiRes.errors) {
+    for (const e of err.errors) {
       errs.push(e.message);
     }
     setErrorMsgs(errs);

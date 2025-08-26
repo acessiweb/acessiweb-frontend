@@ -87,13 +87,13 @@ const authOptions: NextAuthOptions = {
     async jwt({ token, account, user }) {
       if (user && account) {
         if (account.provider === "google") {
-          const tokens = await validateGoogleAuth(account?.id_token);
+          const res = await validateGoogleAuth(account?.id_token);
 
-          if (tokens.ok) {
+          if (res.ok && "data" in res) {
             return {
               ...token,
               provider: "google",
-              data: getUser(tokens),
+              data: getUser(res.data),
               error: "",
             };
           }
@@ -106,13 +106,13 @@ const authOptions: NextAuthOptions = {
         }
 
         if (account.provider === "github") {
-          const tokens = await validateGithubAuth(account?.access_token);
+          const res = await validateGithubAuth(account?.access_token);
 
-          if (tokens.ok) {
+          if (res.ok && "data" in res) {
             return {
               ...token,
               provider: "github",
-              data: getUser(tokens),
+              data: getUser(res.data),
               error: "",
             };
           }

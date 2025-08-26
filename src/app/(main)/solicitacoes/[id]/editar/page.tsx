@@ -11,9 +11,9 @@ type PageProps = ParamsPromise;
 
 export default async function Page({ params }: PageProps) {
   const { id } = await params;
-  const guideline = await getGuideline(id);
+  const res = await getGuideline(id);
 
-  if (guideline && "id" in guideline) {
+  if (res.ok && "data" in res) {
     return (
       <AddEditGuideline
         isRequest={true}
@@ -23,10 +23,12 @@ export default async function Page({ params }: PageProps) {
             link: "/solicitacoes",
           },
           {
-            desc: `EDITAR ${guideline.name}`,
-            link: `/solicitacoes/editar/${guideline.id}`,
+            desc: `EDITAR ${res.data.name}`,
+            link: `/solicitacoes/editar/${res.data.id}`,
           },
         ]}
+        isEditPage={true}
+        guideline={res.data}
       />
     );
   }

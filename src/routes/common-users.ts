@@ -2,17 +2,24 @@
 
 import { CreateCommonUserSchema } from "@/schemas/user.schema";
 import fetchData from "../utils/fetch";
-import { ApiError } from "@/types/response-api";
-import { ResponseCustom } from "@/types/response";
+import { ApiError, FetchResponse } from "@/types/fetch";
+
+type FetchUpdateResult = FetchResponse & {
+  data: {
+    id: string;
+  };
+};
+
+type FetchTokens = FetchResponse & {
+  data: {
+    accessToken: string;
+    refreshToken: string;
+  };
+};
 
 export async function createAccount(
   body: Partial<CreateCommonUserSchema>
-): Promise<
-  | {
-      id: string;
-    }
-  | ApiError
-> {
+): Promise<FetchUpdateResult | ApiError> {
   return await fetchData({
     endpoint: "common-users",
     config: {
@@ -25,12 +32,9 @@ export async function createAccount(
   });
 }
 
-export async function validateGoogleAuth(idToken: string | undefined): Promise<
-  ResponseCustom & {
-    accessToken: string;
-    refreshToken: string;
-  }
-> {
+export async function validateGoogleAuth(
+  idToken: string | undefined
+): Promise<FetchTokens | ApiError> {
   return await fetchData({
     endpoint: `common-users/google`,
     config: {
@@ -47,12 +51,7 @@ export async function validateGoogleAuth(idToken: string | undefined): Promise<
 
 export async function validateGithubAuth(
   accessToken: string | undefined
-): Promise<
-  ResponseCustom & {
-    accessToken: string;
-    refreshToken: string;
-  }
-> {
+): Promise<FetchTokens | ApiError> {
   return await fetchData({
     endpoint: `common-users/github`,
     config: {
