@@ -1,61 +1,56 @@
 "use client";
 
-import { CardBtn } from "@/components/CardBtn";
-import DeficiencesCheckbox from "@/components/DeficiencesCheckbox";
-import NoRegistersFound from "@/components/NotFound";
-import Search from "@/components/Search";
-import SecondPage from "@/components/SecondPage";
-import { useScreenType } from "@/hooks/useScreenType";
-import useSecPage from "@/hooks/useSecPage";
-import {
-  deleteGuideline,
-  getGuideline,
-  getGuidelines,
-} from "@/routes/guidelines";
-import { useQuery } from "@tanstack/react-query";
-import Guideline from "./[id]/Guideline";
-import { Guideline as GuidelineType } from "@/types/guideline";
-import Pagination from "@/components/Pagination";
-import usePagination from "@/hooks/usePagination";
 import ControlBar from "@/components/ControlBar";
-import useDeficiencyFilters from "@/hooks/useDeficiencyFilters";
 import useControlBar from "@/hooks/useControlBar";
-import FiltersApplied from "@/components/FiltersApplied";
-import useDateFilter from "@/hooks/useDateFilter";
+import usePagination from "@/hooks/usePagination";
 import { FilterOptions } from "@/types/filter";
-import DateFilter from "@/components/DateFilter";
+import { useMemo } from "react";
+import { Guideline as GuidelineType } from "@/types/guideline";
 import useSearch from "@/hooks/useSearch";
+import useDeficiencyFilters from "@/hooks/useDeficiencyFilters";
+import useDateFilter from "@/hooks/useDateFilter";
+import { useScreenType } from "@/hooks/useScreenType";
+import { useCart } from "@/context/cart";
+import Search from "@/components/Search";
+import Link from "next/link";
+import { GoPlus } from "react-icons/go";
+import DeficiencesCheckbox from "@/components/DeficiencesCheckbox";
+import FiltersApplied from "@/components/FiltersApplied";
+import DateFilter from "@/components/DateFilter";
+import NoRegistersFound from "@/components/NotFound";
+import Pagination from "@/components/Pagination";
+import SecondPage from "@/components/SecondPage";
+import { useQuery } from "@tanstack/react-query";
 import {
   getGuidelinesRequests,
   updateGuidelineStatus,
 } from "@/routes/guidelines-requests";
-import Link from "next/link";
-import { GoPlus } from "react-icons/go";
-import AddGuidelineRequest from "../solicitacoes/cadastrar/AddGuidelineRequest";
-import { useCart } from "@/context/cart";
-import { UpdateBtn, UpdateLink } from "@/components/card/Update";
-import StatusBtn from "@/components/card/Status";
-import DeleteBtn from "@/components/card/Delete";
-import CardLink from "@/components/CardLink";
-import EditGuideline from "../admin/diretrizes/[id]/editar/EditGuideline";
+import {
+  deleteGuideline,
+  getGuideline,
+  getGuidelines,
+  restoreGuideline,
+} from "@/routes/guidelines";
+import useSecPage from "@/hooks/useSecPage";
 import useAction from "@/hooks/useAction";
+import { CardBtn } from "@/components/CardBtn";
 import { AddBtn } from "@/components/card/Add";
+import { UpdateBtn, UpdateLink } from "@/components/card/Update";
+import DeleteBtn from "@/components/card/Delete";
+import StatusBtn from "@/components/card/Status";
 import { BsSend } from "react-icons/bs";
+import CardLink from "@/components/CardLink";
+import Guideline from "./Guideline";
+import AddEditGuideline from "./AddEditGuideline";
+import RemovedFilter from "@/components/RemovedFilter";
+import { usePush } from "@/context/push";
 
-const filterOptions: FilterOptions = [
-  {
-    id: "creation-date",
-    desc: "Por data de criação",
-  },
-];
-
-type GuidelinesUserProps = {
-  isRequest?: boolean;
+type GuidelinesProps = {
+  isRequest: boolean;
+  isAdmin: boolean;
 };
 
-export default function GuidelinesUser({
-  isRequest = false,
-}: GuidelinesUserProps) {
+export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
   const { addGuidelineToCart } = useCart();
 
   const {
@@ -103,9 +98,9 @@ export default function GuidelinesUser({
     neural,
     tea,
     visual,
-  } = useDeficiencyFilters({ handleFiltering });
-
-  const { handleDelete } = useAction();
+  } = useDeficiencyFilters({
+    handleFiltering,
+  });
 
   const {
     secPageClass,
@@ -117,7 +112,11 @@ export default function GuidelinesUser({
     title: secPageTitle,
     fullScreenLink,
     node: secPageContent,
-  } = useGuidelineSecPage();
+  } = useGuidelinesSecPage({ isRequest, isAdmin });
+
+  const { handleDelete } = useAction();
+
+  const { setShowPush, setPushMsg } = usePush();
 
   const { data: guidelines } = useQuery({
     queryKey: [
@@ -131,6 +130,7 @@ export default function GuidelinesUser({
       offset,
       initialDate,
       endDate,
+      isFilterApplied("deleted"),
     ],
     queryFn: async () => {
       const g = isRequest
@@ -138,9 +138,9 @@ export default function GuidelinesUser({
             offset,
             keyword: search,
             deficiences: [hearing, motor, visual, neural, tea],
-            isRequest: isRequest,
             initialDate,
             endDate,
+            isRequest,
           })
         : await getGuidelines({
             offset,
@@ -148,6 +148,7 @@ export default function GuidelinesUser({
             deficiences: [hearing, motor, visual, neural, tea],
             initialDate,
             endDate,
+            isDeleted: isFilterApplied("deleted"),
           });
 
       if ("data" in g) {
@@ -158,13 +159,66 @@ export default function GuidelinesUser({
     },
   });
 
-  const handleGuidelineShip = async (id: string) => {
-    await updateGuidelineStatus(id);
-  };
+  const title = useMemo(() => {
+    if (isAdmin && isRequest) return "Solicitações de inclusão de diretriz";
+    if ((isAdmin && !isRequest) || !(isAdmin && isRequest))
+      return "Diretrizes de acessibilidade";
+    if (!isAdmin && isRequest)
+      return "Minhas solicitações de inclusão de diretriz";
+    return "";
+  }, [isAdmin, isRequest]);
+
+  const filterOptions = useMemo(() => {
+    let fo: FilterOptions = [
+      {
+        id: "creation-date",
+        desc: "Por data de criação",
+      },
+    ];
+
+    if (isAdmin) {
+      fo.push({
+        id: "deleted",
+        desc: "Removidas",
+      });
+    }
+
+    return fo;
+  }, [isAdmin]);
 
   const cleanAllFilters = () => {
     handleInitialDate("");
     handleEndDate("");
+  };
+
+  const handleGuidelineShip = async (id: string) => {
+    const guideline = await updateGuidelineStatus(id);
+
+    if (guideline && "id" in guideline) {
+      const storeCopy = [...store];
+
+      console.log(storeCopy);
+
+      const newStore = storeCopy.map((guide) => {
+        if (guide.id === guideline.id) return guideline;
+        return guide;
+      });
+
+      console.log(guideline);
+      console.log(newStore);
+
+      handleStore({
+        ...storeCopy,
+        data: newStore,
+      });
+
+      setShowPush(true);
+      setPushMsg("Solicitação enviada para análise");
+    }
+  };
+
+  const handleRestore = async (guidelineId: string) => {
+    await restoreGuideline(guidelineId);
   };
 
   return (
@@ -176,45 +230,55 @@ export default function GuidelinesUser({
           filtersOptions={filterOptions}
           handleFilters={handleFiltersChosen}
           handleFiltering={handleFiltering}
+          showMoreOptions={isRequest && isAdmin}
+          moreOptions={["Buscar por removidas"]}
         />
         <h1 className="heading-1" id="page-heading">
-          {isRequest ? "Minhas solicitações" : "Diretrizes de acessibilidade"}{" "}
-          {isRequest && <span>de inclusão de diretriz</span>}
+          {title}
         </h1>
         <div className="guidelines-filters">
-          {!isRequest && (
+          <div className="guidelines-filters__search-wrapper">
             <Search
               classname="search"
-              placeholderText="Buscar por diretriz..."
+              placeholderText={`Buscar por ${
+                isRequest ? "solicitação" : "diretriz"
+              }...`}
               handleSearch={handleSearch}
               searchValue={search}
             />
-          )}
-          {isRequest && (
-            <div className="requests__search-wrapper">
-              <Search
-                classname="search"
-                placeholderText="Buscar por solicitação..."
-                handleSearch={handleSearch}
-                searchValue={search}
-              />
-              {isRequest && (isMobile || isTablet) ? (
-                <Link
-                  className="btn-default cursor-pointer"
-                  href="/solicitacoes/cadastrar"
-                >
-                  <GoPlus />
-                </Link>
-              ) : (
-                <button
-                  className="btn-default cursor-pointer"
-                  onClick={() => handleAddSecPage()}
-                >
-                  Criar solicitação
-                </button>
-              )}
-            </div>
-          )}
+            {!isAdmin && isRequest && (isMobile || isTablet) && (
+              <Link
+                className="btn-default cursor-pointer"
+                href="/solicitacoes/cadastrar"
+              >
+                <GoPlus />
+              </Link>
+            )}
+            {!isAdmin && isRequest && isDesktop && (
+              <button
+                className="btn-default cursor-pointer"
+                onClick={() => handleAddSecPage()}
+              >
+                Criar solicitação
+              </button>
+            )}
+            {isAdmin && !isRequest && (isMobile || isTablet) && (
+              <Link
+                className="btn-default cursor-pointer"
+                href="/admin/diretrizes/cadastrar"
+              >
+                <GoPlus />
+              </Link>
+            )}
+            {isAdmin && !isRequest && isDesktop && (
+              <button
+                className="btn-default cursor-pointer"
+                onClick={() => handleAddSecPage()}
+              >
+                Criar diretriz
+              </button>
+            )}
+          </div>
           <DeficiencesCheckbox
             onHearingChange={handleHearing}
             onMotorChange={handleMotor}
@@ -246,6 +310,12 @@ export default function GuidelinesUser({
                 }}
               />
             )}
+            {isFilterApplied("deleted") && (
+              <RemovedFilter
+                desc="Diretrizes removidas"
+                onClick={() => deleteFilter("deleted")}
+              />
+            )}
           </FiltersApplied>
         )}
         {store.length > 0 ? (
@@ -269,7 +339,7 @@ export default function GuidelinesUser({
                         <BsSend aria-hidden={true} focusable={false} />
                       </button>
                     )}
-                    {!["APPROVED", "PENDING"].includes(
+                    {["STANDBY", "REJECTED"].includes(
                       guideline.statusCode!
                     ) && (
                       <>
@@ -320,11 +390,30 @@ export default function GuidelinesUser({
                     secondaryText={guideline.description}
                     onClick={() => handleReadSecPage(guideline.id)}
                   >
-                    <AddBtn
-                      onAdd={addGuidelineToCart}
-                      registerId={guideline.id}
-                      registerName={guideline.name}
-                    />
+                    {isAdmin ? (
+                      <>
+                        <UpdateBtn
+                          onUpdateClick={() => handleEditSecPage(guideline.id)}
+                        />
+                        <DeleteBtn
+                          onDelete={() =>
+                            handleDelete(
+                              guideline.id,
+                              deleteGuideline,
+                              handleDeletion
+                            )
+                          }
+                          registerId={guideline.id}
+                          registerName={guideline.name}
+                        />
+                      </>
+                    ) : (
+                      <AddBtn
+                        onAdd={addGuidelineToCart}
+                        registerId={guideline.id}
+                        registerName={guideline.name}
+                      />
+                    )}
                   </CardBtn>
                 )}
               </div>
@@ -359,38 +448,51 @@ export default function GuidelinesUser({
   );
 }
 
-function useGuidelineSecPage() {
+function useGuidelinesSecPage({
+  isRequest,
+  isAdmin,
+}: {
+  isRequest: boolean;
+  isAdmin: boolean;
+}) {
   const {
     isOpen,
     handleIsOpen,
     getSecPageClass,
-    handleNode: handleSecPageContent,
+    handleNode,
     node,
     title,
-    handleTitle: handleSecPageTitle,
+    handleTitle,
     fullScreenLink,
     handleFullScreenLink,
   } = useSecPage();
 
   const handleAddSecPage = () => {
+    const fullScreenLink = isAdmin
+      ? "/admin/diretrizes/cadastrar"
+      : "/solicitacoes/cadastrar";
+
     handleIsOpen(true);
-    handleSecPageContent(
-      <AddGuidelineRequest
-        isSecPage={true}
-        handleSecPageTitle={handleSecPageTitle}
-      />
-    );
-    handleFullScreenLink("/solicitacoes/cadastrar");
+    handleNode(<AddEditGuideline isRequest={isRequest} />);
+    handleFullScreenLink(fullScreenLink);
+    handleTitle("");
   };
 
   const handleReadSecPage = async (id: string) => {
     const guideline = await getGuideline(id);
 
     if ("id" in guideline) {
+      let fullScreenLink = "";
+
+      if (!isAdmin && isRequest) fullScreenLink = `/solicitacoes/${id}`;
+      if (!isAdmin && !isRequest) fullScreenLink = `/diretrizes/${id}`;
+      if (isAdmin && !isRequest) fullScreenLink = `/admin/diretrizes/${id}`;
+      if (isAdmin && isRequest) fullScreenLink = `/admin/solicitacoes/${id}`;
+
       handleIsOpen(true);
-      handleSecPageContent(<Guideline guideline={guideline} />);
-      handleSecPageTitle(guideline.name);
-      handleFullScreenLink(`/admin/diretrizes/${id}`);
+      handleNode(<Guideline guideline={guideline} isRequest={isRequest} />);
+      handleTitle(guideline.name);
+      handleFullScreenLink(fullScreenLink);
     }
   };
 
@@ -398,16 +500,23 @@ function useGuidelineSecPage() {
     const guideline = await getGuideline(id);
 
     if ("id" in guideline) {
+      let fullScreenLink = "";
+
+      if (!isAdmin && isRequest) fullScreenLink = `/solicitacoes/editar/${id}`;
+      if (isAdmin && !isRequest)
+        fullScreenLink = `/admin/diretrizes/editar/${id}`;
+      if (isAdmin && isRequest) fullScreenLink = `/admin/solicitacoes/${id}`;
+
       handleIsOpen(true);
-      handleSecPageTitle(guideline.name);
-      handleSecPageContent(
-        <EditGuideline
+      handleTitle(guideline.name);
+      handleNode(
+        <AddEditGuideline
+          isEditPage={true}
+          isRequest={isRequest}
           guideline={guideline}
-          isSecPage={true}
-          handleSecPageTitle={handleSecPageTitle}
         />
       );
-      handleFullScreenLink(`/admin/diretrizes/${id}/editar`);
+      handleFullScreenLink(fullScreenLink);
     }
   };
 

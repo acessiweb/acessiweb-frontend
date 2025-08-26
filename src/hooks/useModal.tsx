@@ -1,3 +1,5 @@
+"use client";
+
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -33,7 +35,7 @@ export default function useModal(
     if (dialogRef.current && !dialogRef.current.contains(target)) {
       hideModal();
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);

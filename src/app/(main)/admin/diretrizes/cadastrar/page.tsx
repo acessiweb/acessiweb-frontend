@@ -1,13 +1,22 @@
 import { Metadata } from "next/types";
-import AddGuideline from "./AddGuideline";
+import { Page as PageType } from "@/types/page";
+import AddEditGuideline from "@/app/(main)/_components/AddEditGuideline";
 
 export const metadata: Metadata = {
   title: "Cadastrar diretriz",
 };
 
-export default function Page() {
+type AddGuidelineProps = PageType;
+
+export default function Page({
+  handleSecPageTitle,
+  isSecPage,
+}: AddGuidelineProps) {
   return (
-    <AddGuideline
+    <AddEditGuideline
+      isRequest={false}
+      isSecPage={isSecPage}
+      handleSecPageTitle={handleSecPageTitle}
       crumbs={[
         {
           desc: "DIRETRIZES",
@@ -15,7 +24,7 @@ export default function Page() {
         },
         {
           desc: "CADASTRAR DIRETRIZ",
-          link: `/diretrizes/cadastrar`,
+          link: `/admin/diretrizes/cadastrar`,
         },
       ]}
     />

@@ -1,3 +1,5 @@
+"use client";
+
 import { FiltersAvailable } from "@/types/filter";
 import { useState } from "react";
 

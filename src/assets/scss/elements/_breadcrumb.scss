@@ -8,6 +8,11 @@
     display: flex;
 
     li {
+      a:hover {
+        color: var.$purple !important;
+        font-weight: var.$bold !important;
+      }
+
       > span {
         padding: 0 var.$space-sm;
       }

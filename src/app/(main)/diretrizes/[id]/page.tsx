@@ -1,13 +1,6 @@
-import { Metadata } from "next";
-import Guideline from "./Guideline";
+import Guideline from "../../_components/Guideline";
 import { ParamsPromise } from "@/types/params";
 import { getGuideline } from "@/routes/guidelines";
-
-export async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: "É isso aí",
-  };
-}
 
 type PageProps = ParamsPromise;
 
@@ -29,6 +22,7 @@ export default async function Page({ params }: PageProps) {
             link: `/diretrizes/${guideline.id}`,
           },
         ]}
+        isRequest={false}
       />
     );
   }

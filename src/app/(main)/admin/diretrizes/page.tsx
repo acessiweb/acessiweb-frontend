@@ -1,7 +1,7 @@
 "use server";
 
-import Guidelines from "./Guidelines";
+import Guidelines from "../../_components/Guidelines";
 
 export default async function Page() {
-  return <Guidelines />;
+  return <Guidelines isAdmin={true} isRequest={false} />;
 }

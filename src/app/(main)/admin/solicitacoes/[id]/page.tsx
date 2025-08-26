@@ -1,6 +1,6 @@
-import Guideline from "@/app/(main)/diretrizes/[id]/Guideline";
 import { getGuideline } from "@/routes/guidelines";
 import { ParamsPromise } from "@/types/params";
+import Request from "./Request";
 
 type PageProps = ParamsPromise;
 
@@ -10,16 +10,16 @@ export default async function Page({ params }: PageProps) {
 
   if (guideline && "id" in guideline) {
     return (
-      <Guideline
-        guideline={guideline}
+      <Request
+        request={guideline}
         crumbs={[
           {
-            desc: "DIRETRIZES",
-            link: "/diretrizes",
+            desc: "SOLICITAÇÕES",
+            link: "/solicitacoes",
           },
           {
             desc: guideline.name,
-            link: `/diretrizes/${guideline.id}`,
+            link: `/solicitacoes/${guideline.id}`,
           },
         ]}
       />

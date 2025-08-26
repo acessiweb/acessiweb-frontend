@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import InputTextVoice from "@/components/InputTextVoice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Code from "@/components/Code";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import FileInput from "@/components/FileInput";
 import GuidelinesDeficiencesFilter from "@/components/DeficiencesCheckbox";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -25,6 +25,7 @@ import { createGuideline, updateGuideline } from "@/routes/guidelines";
 
 type AddEditGuidelineProps = Page & {
   guideline?: Guideline;
+  isRequest: boolean;
 };
 
 export default function AddEditGuideline({
@@ -33,6 +34,7 @@ export default function AddEditGuideline({
   isEditPage = false,
   crumbs,
   guideline,
+  isRequest,
 }: AddEditGuidelineProps) {
   const {
     handleHearing,
@@ -94,7 +96,9 @@ export default function AddEditGuideline({
 
   const handleResponse = () => {
     setPushMsg(
-      `Diretriz ${isEditPage ? "atualizada" : "cadastrada"} com sucesso 🎉`
+      `${isRequest ? "Solicitação" : "Diretriz"} ${
+        isEditPage ? "atualizada" : "cadastrada"
+      } com sucesso 🎉`
     );
     setShowPush(true);
     reset();
@@ -127,8 +131,8 @@ export default function AddEditGuideline({
             ? await updateGuideline(guideline.id, formData)
             : await createGuideline(formData);
 
-        if ("errors" in res) {
-          handleApiErrors([res]);
+        if ("apiRes" in res && "errors" in res.apiRes) {
+          handleApiErrors(res);
           setPushMsg("");
           setShowPush(false);
         } else {
@@ -139,13 +143,15 @@ export default function AddEditGuideline({
   };
 
   return (
-    <div className="add-guideline">
+    <div className={`${isRequest ? "add-request" : "add-guideline"}`}>
       {!isSecPage && crumbs && <Breadcrumb crumbs={crumbs} />}
       {!isSecPage && (
         <h1 className="heading-1">
           {isEditPage
-            ? `Editar diretriz ${guideline?.name}`
-            : "Cadastro de diretriz"}
+            ? `Editar ${guidelineName || guideline?.name}`
+            : `Cadastro de ${
+                isRequest ? "solicitação de diretriz" : "diretriz"
+              } `}
         </h1>
       )}
       <form className="form" method="POST" onSubmit={handleSubmit(onSubmit)}>

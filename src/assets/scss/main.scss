@@ -226,10 +226,9 @@ input[type="checkbox"]:focus-visible {
 @include meta.load-css("pages/project/add-project");
 @include meta.load-css("pages/project/edit-project");
 @include meta.load-css("pages/project/read-project");
-@include meta.load-css("pages/guideline/add-guideline");
-@include meta.load-css("pages/guideline/guidelines");
-@include meta.load-css("pages/guideline/read-guideline");
-@include meta.load-css("pages/guideline/requests");
+@include meta.load-css("pages/guideline/add");
+@include meta.load-css("pages/guideline/all");
+@include meta.load-css("pages/guideline/read");
 @include meta.load-css("pages/login");
 @include meta.load-css("pages/not-found");
 @include meta.load-css("pages/config/preferences");

@@ -11,12 +11,15 @@ export type PaginationResponse = PartialPaginationResponse & {
 };
 
 export type ApiError = {
-  message: string;
-  statusCode: number;
-  errors: {
+  ok: string;
+  apiRes: {
     message: string;
-    errorCode: string;
-    fields: string[];
-    httpErrorCode: number;
-  }[];
+    statusCode: number;
+    errors: {
+      message: string;
+      errorCode: string;
+      fields: string[];
+      httpErrorCode: number;
+    }[];
+  };
 };

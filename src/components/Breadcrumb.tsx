@@ -23,6 +23,7 @@ export function Breadcrumb({ crumbs }: BreadcrumbProps) {
             <Link
               href={crumb.link}
               style={{ fontWeight: crumbs.length - 1 === i ? 700 : 400 }}
+              className="cursor-pointer"
             >
               {capitalize(crumb.desc)}
             </Link>

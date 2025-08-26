@@ -15,6 +15,6 @@ export default async function fetchData({ endpoint, config }: FetchDataParams) {
 
   return {
     ok: response.ok,
-    ...responseJSON,
+    apiRes: { ...responseJSON },
   };
 }

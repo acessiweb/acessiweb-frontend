@@ -35,9 +35,9 @@ export default function useErrors({ alertMsg }: ErrorsProps = {}) {
     setErrorMsgs([err]);
   };
 
-  const handleApiErrors = (err: ApiError[]) => {
+  const handleApiErrors = (err: ApiError) => {
     const errs = [];
-    for (const e of err) {
+    for (const e of err.apiRes.errors) {
       errs.push(e.message);
     }
     setErrorMsgs(errs);

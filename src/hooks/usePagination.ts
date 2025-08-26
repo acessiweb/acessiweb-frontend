@@ -1,3 +1,5 @@
+"use client";
+
 import { PaginationResponse } from "@/types/response-api";
 import { useState } from "react";
 

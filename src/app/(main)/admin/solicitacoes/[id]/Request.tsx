@@ -1,10 +1,11 @@
 import { Guideline } from "@/types/guideline";
+import { Page } from "@/types/page";
 
-type RequestProps = {
+type RequestProps = Page & {
   request: Guideline;
 };
 
-export default function Request({ request }: RequestProps) {
+export default function Request({ request, crumbs }: RequestProps) {
   return (
     <div className="admin-request">
       <div>

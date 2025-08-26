@@ -1,5 +1,5 @@
-import GuidelinesUser from "../diretrizes/Guidelines";
+import Guidelines from "../_components/Guidelines";
 
 export default function Page() {
-  return <GuidelinesUser isRequest={true} />;
+  return <Guidelines isRequest={true} isAdmin={false} />;
 }

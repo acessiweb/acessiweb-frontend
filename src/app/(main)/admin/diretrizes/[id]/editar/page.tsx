@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import EditGuideline from "./EditGuideline";
 import { ParamsPromise } from "@/types/params";
 import { getGuideline } from "@/routes/guidelines";
+import AddEditGuideline from "@/app/(main)/_components/AddEditGuideline";
 
 export const metadata: Metadata = {
   title: "Diretrizes de acessibilidade",
@@ -15,7 +15,7 @@ export default async function Page({ params }: PageProps) {
 
   if (guideline && "id" in guideline) {
     return (
-      <EditGuideline
+      <AddEditGuideline
         guideline={guideline}
         crumbs={[
           {
@@ -24,9 +24,10 @@ export default async function Page({ params }: PageProps) {
           },
           {
             desc: `EDITAR ${guideline.name}`,
-            link: `/diretrizes/${guideline.id}/editar`,
+            link: `/admin/diretrizes/${guideline.id}/editar`,
           },
         ]}
+        isRequest={false}
       />
     );
   }

@@ -14,12 +14,14 @@ type GuidelineProps = {
     desc: string;
     link: string;
   }[];
+  isRequest: boolean;
 };
 
 export default function Guideline({
   guideline,
   isSecPage = false,
   crumbs,
+  isRequest,
 }: GuidelineProps) {
   return (
     <div className="read-page read-guideline">
@@ -52,26 +54,28 @@ export default function Guideline({
           </div>
         ))}
       </div>
-      <div className="read-guideline__situation">
-        <h3>Situação</h3>
-        {guideline.isRequest && (
-          <div className="read-guideline__situation__status-code">
-            {guideline.statusCode === "APPROVED" &&
-              STATUS_CODE_TRANSLATE.approved}
-            {guideline.statusCode === "PENDING" &&
-              STATUS_CODE_TRANSLATE.pending}
-            {guideline.statusCode === "REJECTED" &&
-              STATUS_CODE_TRANSLATE.rejected}
-            {guideline.statusCode === "STANDBY" &&
-              STATUS_CODE_TRANSLATE.standby}
-          </div>
-        )}
-        {guideline.statusMsg && (
-          <div className="read-guideline__situation__status-msg">
-            {guideline.statusMsg}
-          </div>
-        )}
-      </div>
+      {isRequest && (
+        <div className="read-guideline__situation">
+          <h3>Situação</h3>
+          {guideline.isRequest && (
+            <div className="read-guideline__situation__status-code">
+              {guideline.statusCode === "APPROVED" &&
+                STATUS_CODE_TRANSLATE.approved}
+              {guideline.statusCode === "PENDING" &&
+                STATUS_CODE_TRANSLATE.pending}
+              {guideline.statusCode === "REJECTED" &&
+                STATUS_CODE_TRANSLATE.rejected}
+              {guideline.statusCode === "STANDBY" &&
+                STATUS_CODE_TRANSLATE.standby}
+            </div>
+          )}
+          {guideline.statusMsg && (
+            <div className="read-guideline__situation__status-msg">
+              {guideline.statusMsg}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

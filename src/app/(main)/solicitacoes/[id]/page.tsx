@@ -1,5 +1,5 @@
 import { getGuideline } from "@/routes/guidelines";
-import Guideline from "../../diretrizes/[id]/Guideline";
+import Guideline from "../../_components/Guideline";
 import { ParamsPromise } from "@/types/params";
 
 type PageProps = ParamsPromise;
@@ -22,6 +22,7 @@ export default async function Page({ params }: PageProps) {
             link: `/diretrizes/${guideline.id}`,
           },
         ]}
+        isRequest={true}
       />
     );
   }

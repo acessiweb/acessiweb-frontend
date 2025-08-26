@@ -1,5 +1,5 @@
 import { Metadata } from "next/types";
-import AddGuidelineRequest from "./AddGuidelineRequest";
+import AddEditGuideline from "../../_components/AddEditGuideline";
 
 export const metadata: Metadata = {
   title: "Cadastrar solicitação de criação de diretriz",
@@ -7,7 +7,8 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <AddGuidelineRequest
+    <AddEditGuideline
+      isRequest={true}
       crumbs={[
         {
           desc: "SOLICITAÇÕES",

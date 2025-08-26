@@ -398,6 +398,11 @@ input[type=checkbox]:focus-visible {
   display: flex;
 }
 
+.breadcrumb > ol li a:hover {
+  color: #c1a6f9 !important;
+  font-weight: 700 !important;
+}
+
 .breadcrumb > ol li > span {
   padding: 0 0.7rem;
 }
@@ -1378,37 +1383,45 @@ button {
   margin-top: 0.7rem !important;
 }
 
-.add-guideline {
+.add-guideline,
+.add-request {
   margin: 1.1rem 0;
 }
 
-.add-guideline h1 {
+.add-guideline h1,
+.add-request h1 {
   margin-top: 1.9rem;
 }
 
 .add-guideline__deficiences-container > span:first-of-type,
-.add-guideline .code > div:first-of-type > span {
+.add-guideline .code > div:first-of-type > span,
+.add-request__deficiences-container > span:first-of-type,
+.add-request .code > div:first-of-type > span {
   font-size: 0.9rem;
   font-weight: 700;
 }
 
-.add-guideline__deficiences-container {
+.add-guideline__deficiences-container,
+.add-request__deficiences-container {
   margin-top: 1.1rem;
 }
 
-.add-guideline__deficiences-container .deficiences-checkbox {
+.add-guideline__deficiences-container .deficiences-checkbox,
+.add-request__deficiences-container .deficiences-checkbox {
   margin-top: 1.1rem;
   margin-left: 0.7rem;
 }
 
-.add-guideline__deficiences-container .deficiences-checkbox__group {
+.add-guideline__deficiences-container .deficiences-checkbox__group,
+.add-request__deficiences-container .deficiences-checkbox__group {
   display: flex;
   flex-wrap: wrap;
   gap: 1.1rem;
   column-gap: 1.1rem;
 }
 
-.add-guideline__deficiences-container .deficiences-checkbox__group > div {
+.add-guideline__deficiences-container .deficiences-checkbox__group > div,
+.add-request__deficiences-container .deficiences-checkbox__group > div {
   display: flex;
   align-items: center;
   column-gap: 0.7rem;
@@ -1475,6 +1488,56 @@ button {
 .guidelines h1 {
   text-align: center;
   margin-bottom: 1.1rem;
+}
+
+.requests {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.7rem;
+}
+
+.requests .guidelines-filters {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.1rem;
+  flex: 1;
+}
+
+.requests .guidelines-filters__search-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.requests .guidelines-filters__search-wrapper .search {
+  width: 60%;
+}
+
+.requests .deficiences-checkbox {
+  display: flex;
+}
+
+.requests .deficiences-checkbox > div:first-of-type {
+  flex: 1;
+}
+
+.requests .deficiences-checkbox__group {
+  display: flex;
+  flex: 16;
+  column-gap: 1.1rem;
+}
+
+.requests .deficiences-checkbox__group > div label {
+  margin-left: 0.3rem;
+}
+
+.requests .heading-1 {
+  display: flex;
+  flex-direction: column;
+}
+
+.requests .heading-1 span {
+  font-style: italic;
+  font-size: 1.3rem;
 }
 
 .two-pages .guidelines .heading-1 {
@@ -1567,56 +1630,6 @@ button {
 
 .dark .read-guideline__deficiences__checkbox {
   border-color: #f5f3fa;
-}
-
-.requests {
-  display: flex;
-  flex-direction: column;
-  row-gap: 0.7rem;
-}
-
-.requests .guidelines-filters {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1.1rem;
-  flex: 1;
-}
-
-.requests__search-wrapper {
-  display: flex;
-  justify-content: space-between;
-}
-
-.requests__search-wrapper .search {
-  width: 60%;
-}
-
-.requests .deficiences-checkbox {
-  display: flex;
-}
-
-.requests .deficiences-checkbox > div:first-of-type {
-  flex: 1;
-}
-
-.requests .deficiences-checkbox__group {
-  display: flex;
-  flex: 16;
-  column-gap: 1.1rem;
-}
-
-.requests .deficiences-checkbox__group > div label {
-  margin-left: 0.3rem;
-}
-
-.requests .heading-1 {
-  display: flex;
-  flex-direction: column;
-}
-
-.requests .heading-1 span {
-  font-style: italic;
-  font-size: 1.3rem;
 }
 
 .login__links-container, .login__social-media-container {

@@ -1,3 +1,5 @@
+"use client";
+
 import { FilterHandler } from "@/types/filter";
 import { useState } from "react";
 

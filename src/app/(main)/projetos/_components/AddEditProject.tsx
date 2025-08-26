@@ -15,7 +15,7 @@ import useSecPage from "@/hooks/useSecPage";
 import SecondPage from "@/components/SecondPage";
 import { useScreenType } from "@/hooks/useScreenType";
 import { getGuideline } from "@/routes/guidelines";
-import Guideline from "../../diretrizes/[id]/Guideline";
+import Guideline from "../../_components/Guideline";
 import { createProject, editProject } from "@/routes/projects";
 import { usePush } from "@/context/push";
 import { useRouter } from "next/navigation";

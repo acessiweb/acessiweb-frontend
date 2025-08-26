@@ -1,6 +1,7 @@
 @use "../../var";
 
-.add-guideline {
+.add-guideline,
+.add-request {
   margin: var.$space-md 0;
 
   h1 {
