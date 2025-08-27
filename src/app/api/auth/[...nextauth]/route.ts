@@ -86,8 +86,6 @@ const authOptions: NextAuthOptions = {
         if (account.provider === "google") {
           const res = await validateGoogleAuth(account?.id_token);
 
-          console.log(res);
-
           if (res.ok && "data" in res) {
             return {
               ...token,
