@@ -28,6 +28,14 @@ export async function middleware(req: NextRequest) {
   const loginUrl = new URL("/auth/logar", req.url);
   const accountUrl = new URL("/config/conta", req.url);
 
+  // ignora rotas públicas
+  if (
+    PUBLIC_PATHS.some((path) => pathname.startsWith(path)) ||
+    pathname === "/"
+  ) {
+    return NextResponse.next();
+  }
+
   const token = await getToken({
     req,
     secret: process.env.NEXTAUTH_SECRET,
@@ -40,22 +48,6 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(
       new URL(`/auth/logar?error=${token?.error}`, req.url)
     );
-  }
-
-  // ignora rotas públicas
-  if (
-    PUBLIC_PATHS.some((path) => pathname.startsWith(path)) ||
-    pathname === "/"
-  ) {
-    if (
-      isAdmin(token?.data?.user?.role) &&
-      (pathname === "/" || pathname === "/diretrizes")
-    ) {
-      const adminHomepageUrl = new URL("/admin", req.url);
-      return NextResponse.redirect(adminHomepageUrl);
-    }
-
-    return NextResponse.next();
   }
 
   if (pathname.startsWith("/admin") && !isAdmin(token?.data?.user?.role)) {

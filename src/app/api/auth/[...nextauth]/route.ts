@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import * as jose from "jose";
 import { validateGithubAuth, validateGoogleAuth } from "@/routes/common-users";
 import { refreshAccessToken } from "@/utils/refresh";
+import { login } from "@/routes/auth";
 
 function getUser(tokens: { accessToken: string; refreshToken: string }) {
   const accessToken = jose.decodeJwt(tokens.accessToken) as DecodedJWT;
@@ -47,31 +48,27 @@ const authOptions: NextAuthOptions = {
           isAdmin: string;
         };
 
-        const response = await fetch(
-          `${process.env.BACKEND_URL}/auth/${
-            isAdmin === "true" ? "admin/login" : "login"
-          }`,
+        const response = await login(
           {
-            method: "POST",
-            body: JSON.stringify({
-              email,
-              mobilePhone,
-              password,
-            }),
-            headers: { "Content-Type": "application/json" },
-          }
+            email,
+            mobilePhone,
+            password,
+          },
+          isAdmin
         );
 
-        const tokens = await response.json();
-
-        if (response.ok) {
-          if (tokens.accessToken) {
-            return getUser(tokens);
+        if (response.ok && "data" in response) {
+          if (response.data.accessToken) {
+            return getUser(response.data);
           }
           return null;
         }
 
-        throw new Error(JSON.stringify(tokens.errors));
+        if (!response.ok && "errors" in response) {
+          throw new Error(JSON.stringify(response.errors));
+        }
+
+        throw new Error("Ocorreu um erro.");
       },
     }),
     GoogleProvider({
@@ -84,6 +81,7 @@ const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    //ele tá redirecionando pro erro ao tentar acessar a página inicial, uma vez que foi tentado logar e deu erro
     async jwt({ token, account, user }) {
       if (user && account) {
         if (account.provider === "google") {
