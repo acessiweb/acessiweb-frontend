@@ -57,6 +57,8 @@ const authOptions: NextAuthOptions = {
           isAdmin
         );
 
+        console.log(response);
+
         if (response.ok && "data" in response) {
           if (response.data.accessToken) {
             return getUser(response.data);
