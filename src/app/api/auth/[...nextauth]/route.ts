@@ -81,11 +81,12 @@ const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    //ele tá redirecionando pro erro ao tentar acessar a página inicial, uma vez que foi tentado logar e deu erro
     async jwt({ token, account, user }) {
       if (user && account) {
         if (account.provider === "google") {
           const res = await validateGoogleAuth(account?.id_token);
+
+          console.log(res);
 
           if (res.ok && "data" in res) {
             return {
