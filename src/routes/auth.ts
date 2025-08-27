@@ -27,7 +27,7 @@ export async function login(
   isAdmin: string
 ): Promise<FetchTokens | ApiError> {
   return await fetchData({
-    endpoint: `/auth/${isAdmin === "true" ? "admin/login" : "login"}`,
+    endpoint: `auth/${isAdmin === "true" ? "admin/login" : "login"}`,
     config: {
       method: "POST",
       body: JSON.stringify(credentials),
