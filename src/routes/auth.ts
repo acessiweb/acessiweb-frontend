@@ -26,9 +26,8 @@ export async function login(
   credentials: { email?: string; mobilePhone?: string; password: string },
   isAdmin: string
 ): Promise<FetchTokens | ApiError> {
-  console.log(isAdmin);
   return await fetchData({
-    endpoint: `/auth/${isAdmin === "true" ? "admin/login" : "login"}`,
+    endpoint: `/auth/${isAdmin == "true" ? "admin/login" : "login"}`,
     config: {
       method: "POST",
       body: JSON.stringify(credentials),
