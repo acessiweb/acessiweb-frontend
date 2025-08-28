@@ -13,9 +13,9 @@ export default function CardLink({
     <article className="card">
       <Link className="card__content" href={readRoute}>
         <h3 className="heading-3 cursor-pointer">{mainText}</h3>
-        {secondaryText && <p>{secondaryText}</p>}
+        <div className="card__buttons">{children}</div>
       </Link>
-      <div className="card__buttons">{children}</div>
+      {secondaryText && <p>{secondaryText}</p>}
     </article>
   );
 }

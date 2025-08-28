@@ -2,6 +2,7 @@
 
 .card {
   display: flex;
+  flex-direction: column;
   flex: 1;
   column-gap: var.$space-sm;
   background-color: var.$contrast;
@@ -17,11 +18,9 @@
 
   &__content {
     display: flex;
-    flex-direction: column;
     row-gap: var.$space-md;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
-    width: 50%;
 
     .heading-3 {
       display: -webkit-box;
@@ -32,16 +31,16 @@
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
     }
+  }
 
-    > p {
-      display: -webkit-box;
-      -webkit-line-clamp: 7;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-size: var.$fs-x-small;
-      flex: 1;
-    }
+  > p {
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: var.$fs-x-small;
+    flex: 1;
   }
 
   &__buttons {

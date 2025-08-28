@@ -18,10 +18,10 @@ export function CardBtn({
         role="button"
         aria-label={`Clique para acessar ${mainText}`}
       >
-        <h3 className="heading-3 cursor-pointer">{mainText}</h3>
-        {secondaryText && <p className="cursor-pointer">{secondaryText}</p>}
+        <h3 className="heading-3 cursor-pointer">{mainText}</h3>{" "}
+        <div className="card__buttons">{children}</div>
       </div>
-      <div className="card__buttons">{children}</div>
+      {secondaryText && <p className="cursor-pointer">{secondaryText}</p>}
     </article>
   );
 }

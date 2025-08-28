@@ -742,6 +742,7 @@ button {
 
 .card {
   display: flex;
+  flex-direction: column;
   flex: 1;
   column-gap: 0.7rem;
   background-color: #f5f3fa;
@@ -758,11 +759,9 @@ button {
 
 .card__content {
   display: flex;
-  flex-direction: column;
   row-gap: 1.1rem;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  width: 50%;
 }
 
 .card__content .heading-3 {
@@ -775,7 +774,7 @@ button {
   -webkit-box-orient: vertical;
 }
 
-.card__content > p {
+.card > p {
   display: -webkit-box;
   -webkit-line-clamp: 7;
   -webkit-box-orient: vertical;
