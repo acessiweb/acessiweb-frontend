@@ -16,6 +16,8 @@ import Errors from "@/components/Errors";
 import { createAccount } from "@/routes/common-users";
 import { useRouter } from "next/navigation";
 import InputTextVoice from "@/components/InputTextVoice";
+import { useState } from "react";
+import LoaderBorder from "@/components/LoaderBorder";
 
 export default function CreateAccount() {
   const router = useRouter();
@@ -24,6 +26,7 @@ export default function CreateAccount() {
   const { hide: hideConfirmPassword, handlePassword: handleConfirmPassword } =
     usePassword();
   const { errorMsgs, handleApiErrors, handleUniqueMsg, isAlert } = useErrors();
+  const [isLoading, setIsLoading] = useState(false);
   const {
     handleSubmit,
     formState: { errors },
@@ -39,7 +42,11 @@ export default function CreateAccount() {
     if (!data.email && !data.mobilePhone) {
       handleUniqueMsg("Email ou número de celular precisa ser informado");
     } else {
+      setIsLoading(true);
+
       const res = await createAccount(data);
+
+      setIsLoading(false);
 
       if (!res.ok && "errors" in res) {
         handleApiErrors(res);
@@ -63,6 +70,7 @@ export default function CreateAccount() {
 
   return (
     <div className="create-account">
+      {isLoading && <LoaderBorder />}
       <h3 className="heading-3">Criar minha conta</h3>
       <form className="form" method="POST" onSubmit={handleSubmit(onSubmit)}>
         <InputTextVoice

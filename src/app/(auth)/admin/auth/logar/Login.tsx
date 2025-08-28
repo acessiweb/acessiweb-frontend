@@ -12,12 +12,15 @@ import Password from "@/app/(auth)/_components/Password";
 import usePassword from "@/app/(auth)/_hooks/usePassword";
 import Errors from "@/components/Errors";
 import { AlertMsgs } from "@/types/error";
+import { useState } from "react";
+import LoaderBorder from "@/components/LoaderBorder";
 
 type LoginProps = Params;
 
 export default function Login({ searchParams }: LoginProps) {
   const router = useRouter();
   const { hide, handlePassword } = usePassword();
+  const [isLoading, setIsLoading] = useState(false);
   const { errorMsgs, handleApiErrors, isAlert } = useErrorMsgs({
     alertMsg: searchParams.error as AlertMsgs,
   });
@@ -36,11 +39,15 @@ export default function Login({ searchParams }: LoginProps) {
   const onSubmit = async () => {
     const values = getValues();
 
+    setIsLoading(true);
+
     const result = await signIn("credentials", {
       ...values,
       isAdmin: true,
       redirect: false,
     });
+
+    setIsLoading(false);
 
     if (result && result.error) {
       handleApiErrors(JSON.parse(result.error));
@@ -58,6 +65,7 @@ export default function Login({ searchParams }: LoginProps) {
 
   return (
     <div className="login">
+      {isLoading && <LoaderBorder />}
       <h3 className="heading-3">Acesso admin</h3>
       <form className="form" onSubmit={handleSubmit(onSubmit)} method="POST">
         <InputTextVoice

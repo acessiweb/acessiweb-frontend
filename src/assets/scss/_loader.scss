@@ -32,11 +32,37 @@
   }
 }
 
+.loader-border {
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 2%;
+    background-image: conic-gradient(var.$purple);
+    animation: loader 1.5s linear infinite;
+  }
+}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes loader {
+  0% {
+    width: 15%;
+    left: 0;
+  }
+  50% {
+    width: 35%;
+    left: 30%;
+  }
+  100% {
+    width: 15%;
+    left: 100%;
   }
 }

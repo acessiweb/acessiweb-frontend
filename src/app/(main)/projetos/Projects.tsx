@@ -24,6 +24,7 @@ import AddEditProject from "./_components/AddEditProject";
 import Link from "next/link";
 import { GoPlus } from "react-icons/go";
 import Card from "@/components/Card";
+import Loader from "@/components/Loader";
 
 const filterOptions: FilterOptions = [
   {
@@ -76,7 +77,7 @@ export default function Projects() {
     node: secPageContent,
   } = useProjectsSecPage();
 
-  useQuery({
+  const { status } = useQuery({
     queryKey: ["projects", search, offset, session],
     queryFn: async () => {
       const res = await getProjects({
@@ -151,7 +152,8 @@ export default function Projects() {
             )}
           </FiltersApplied>
         )}
-        {store.length > 0 ? (
+        {status === "pending" && <Loader msg="Buscando projetos..." />}
+        {status === "success" && store.length > 0 && (
           <div className={`${view}`} aria-labelledby="page-heading">
             {store.map((project) => (
               <div className={`${view}__item`} key={project.id}>
@@ -181,7 +183,8 @@ export default function Projects() {
               </div>
             ))}
           </div>
-        ) : (
+        )}
+        {status === "success" && store.length === 0 && (
           <NoRegistersFound errorMsg="Oops! Você ainda não possui projetos." />
         )}
       </div>

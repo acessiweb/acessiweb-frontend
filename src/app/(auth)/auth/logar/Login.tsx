@@ -17,6 +17,8 @@ import Errors from "@/components/Errors";
 import { useHotkeys } from "react-hotkeys-hook";
 import InputTextVoice from "@/components/InputTextVoice";
 import { AlertMsgs } from "@/types/error";
+import { useState } from "react";
+import LoaderBorder from "@/components/LoaderBorder";
 
 type LoginProps = Params;
 
@@ -27,6 +29,7 @@ export default function Login({ searchParams }: LoginProps) {
     alertMsg: searchParams.error as AlertMsgs,
   });
   const { handleType, inputType } = useEmailOrMobilePhone();
+  const [isLoading, setIsLoading] = useState(false);
   const {
     handleSubmit,
     formState: { errors },
@@ -56,11 +59,15 @@ export default function Login({ searchParams }: LoginProps) {
     if (!data.email && !data.mobilePhone) {
       handleUniqueMsg("Email ou número de celular precisa ser informado");
     } else {
+      setIsLoading(true);
+
       const result = await signIn("credentials", {
         ...data,
         isAdmin: false,
         redirect: false,
       });
+
+      setIsLoading(false);
 
       if (result && result.error) {
         handleApiErrors(JSON.parse(result.error));
@@ -82,6 +89,7 @@ export default function Login({ searchParams }: LoginProps) {
 
   return (
     <div className="login">
+      {isLoading && <LoaderBorder />}
       <form className="form" method="POST" onSubmit={handleSubmit(onSubmit)}>
         <EmailorMobilePhone handleType={handleType} type={inputType}>
           {inputType === "E-mail" && (
