@@ -1839,7 +1839,8 @@ button {
   border-radius: 12px;
 }
 
-.auth form > button {
+.auth form > button,
+.auth form .btns-container > button:first-of-type {
   background-color: #c1a6f9;
 }
 

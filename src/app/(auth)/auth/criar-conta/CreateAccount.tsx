@@ -193,7 +193,7 @@ export default function CreateAccount() {
           </small>
         )}
         {errorMsgs.length > 0 && <Errors isAlert={isAlert} msgs={errorMsgs} />}
-        <div style={{ margin: "auto" }}>
+        <div className="btns-container" style={{ margin: "auto" }}>
           <button type="submit">Logar</button>
           <Link href="/auth/logar" aria-label="Voltar para página anterior">
             Voltar

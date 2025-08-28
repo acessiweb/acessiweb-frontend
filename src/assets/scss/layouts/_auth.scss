@@ -111,7 +111,8 @@
       border-radius: var.$border-radius-default;
     }
 
-    > button {
+    > button,
+    .btns-container > button:first-of-type {
       background-color: var.$purple;
     }
 
