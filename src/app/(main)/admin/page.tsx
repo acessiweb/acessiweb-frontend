@@ -3,21 +3,26 @@
 import { PiPersonArmsSpreadLight } from "react-icons/pi";
 import { SlEnvolope } from "react-icons/sl";
 import { useScreenType } from "@/hooks/useScreenType";
-import CardLink from "@/components/CardLink";
 import Guidelines from "../_components/Guidelines";
+import Card from "@/components/Card";
 
 function HomeMobile() {
   return (
     <div className="homepage-mobile">
-      <CardLink
+      <Card
+        isLink={true}
         mainText="Diretrizes de acessibilidade"
         readRoute="/admin/diretrizes"
       >
         <PiPersonArmsSpreadLight aria-hidden={true} focusable={false} />
-      </CardLink>
-      <CardLink mainText="Solicitações" readRoute="/admin/solicitacoes">
+      </Card>
+      <Card
+        isLink={true}
+        mainText="Solicitações"
+        readRoute="/admin/solicitacoes"
+      >
         <SlEnvolope aria-hidden={true} focusable={false} />
-      </CardLink>
+      </Card>
     </div>
   );
 }

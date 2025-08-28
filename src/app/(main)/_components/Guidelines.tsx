@@ -31,17 +31,16 @@ import {
   getGuidelines,
 } from "@/routes/guidelines";
 import useSecPage from "@/hooks/useSecPage";
-import { CardBtn } from "@/components/CardBtn";
 import { AddBtn } from "@/components/card/Add";
 import { UpdateBtn, UpdateLink } from "@/components/card/Update";
 import DeleteBtn from "@/components/card/Delete";
 import StatusBtn from "@/components/card/Status";
 import { BsSend } from "react-icons/bs";
-import CardLink from "@/components/CardLink";
 import Guideline from "./Guideline";
 import AddEditGuideline from "./AddEditGuideline";
 import RemovedFilter from "@/components/RemovedFilter";
 import { usePush } from "@/context/push";
+import Card from "@/components/Card";
 
 type GuidelinesProps = {
   isRequest: boolean;
@@ -307,11 +306,14 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
           <div className={`${view}`} aria-labelledby="page-heading">
             {store.map((guideline) => (
               <div className={`${view}__item`} key={guideline.id}>
-                {isRequest && isDesktop && (
-                  <CardBtn
+                {isRequest && (
+                  <Card
                     mainText={guideline.name}
                     onClick={() => handleReadSecPage(guideline.id)}
                     secondaryText={guideline.description}
+                    isLink={isDesktop}
+                    onKeyDown={() => handleReadSecPage(guideline.id)}
+                    readRoute={`solicitacoes/${guideline.id}`}
                   >
                     <StatusBtn status={guideline.statusCode} />
                     {guideline.statusCode === "STANDBY" && (
@@ -328,9 +330,17 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
                       guideline.statusCode!
                     ) && (
                       <>
-                        <UpdateBtn
-                          onUpdateClick={() => handleEditSecPage(guideline.id)}
-                        />
+                        {isDesktop ? (
+                          <UpdateBtn
+                            onUpdateClick={() =>
+                              handleEditSecPage(guideline.id)
+                            }
+                          />
+                        ) : (
+                          <UpdateLink
+                            updateRoute={`solicitacoes/${guideline.id}/editar`}
+                          />
+                        )}
                         <DeleteBtn
                           onDelete={() =>
                             handleDelete(guideline.id, deleteGuideline)
@@ -340,66 +350,30 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
                         />
                       </>
                     )}
-                  </CardBtn>
+                  </Card>
                 )}
-                {isRequest && !isDesktop && (
-                  <CardLink
-                    mainText={guideline.name}
-                    secondaryText={guideline.description}
-                    readRoute={`solicitacoes/${guideline.id}`}
-                  >
-                    <StatusBtn status={guideline.statusCode} />
-                    <UpdateLink
-                      updateRoute={`solicitacoes/${guideline.id}/editar`}
-                    />
-                    <DeleteBtn
-                      onDelete={() =>
-                        handleDelete(guideline.id, deleteGuideline)
-                      }
-                      registerId={guideline.id}
-                      registerName={guideline.name}
-                    />
-                  </CardLink>
-                )}
-                {!isRequest && isDesktop && (
-                  <CardBtn
+                {!isRequest && (
+                  <Card
                     mainText={guideline.name}
                     secondaryText={guideline.description}
                     onClick={() => handleReadSecPage(guideline.id)}
-                  >
-                    {isAdmin ? (
-                      <>
-                        <UpdateBtn
-                          onUpdateClick={() => handleEditSecPage(guideline.id)}
-                        />
-                        <DeleteBtn
-                          onDelete={() =>
-                            handleDelete(guideline.id, deleteGuideline)
-                          }
-                          registerId={guideline.id}
-                          registerName={guideline.name}
-                        />
-                      </>
-                    ) : (
-                      <AddBtn
-                        onAdd={addGuidelineToCart}
-                        registerId={guideline.id}
-                        registerName={guideline.name}
-                      />
-                    )}
-                  </CardBtn>
-                )}
-                {!isRequest && !isDesktop && (
-                  <CardLink
-                    mainText={guideline.name}
-                    secondaryText={guideline.description}
+                    onKeyDown={() => handleReadSecPage(guideline.id)}
+                    isLink={isDesktop}
                     readRoute={`/diretrizes/${guideline.id}`}
                   >
                     {isAdmin ? (
                       <>
-                        <UpdateLink
-                          updateRoute={`/admin/diretrizes/${guideline.id}/editar`}
-                        />
+                        {isDesktop ? (
+                          <UpdateBtn
+                            onUpdateClick={() =>
+                              handleEditSecPage(guideline.id)
+                            }
+                          />
+                        ) : (
+                          <UpdateLink
+                            updateRoute={`/admin/diretrizes/${guideline.id}/editar`}
+                          />
+                        )}
                         <DeleteBtn
                           onDelete={() =>
                             handleDelete(guideline.id, deleteGuideline)
@@ -415,7 +389,7 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
                         registerName={guideline.name}
                       />
                     )}
-                  </CardLink>
+                  </Card>
                 )}
               </div>
             ))}

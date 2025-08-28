@@ -18,13 +18,12 @@ import FiltersApplied from "@/components/FiltersApplied";
 import DateFilter from "@/components/DateFilter";
 import useDateFilter from "@/hooks/useDateFilter";
 import useSearch from "@/hooks/useSearch";
-import CardLink from "@/components/CardLink";
 import { UpdateBtn, UpdateLink } from "@/components/card/Update";
 import DeleteBtn from "@/components/card/Delete";
-import { CardBtn } from "@/components/CardBtn";
 import AddEditProject from "./_components/AddEditProject";
 import Link from "next/link";
 import { GoPlus } from "react-icons/go";
+import Card from "@/components/Card";
 
 const filterOptions: FilterOptions = [
   {
@@ -34,7 +33,7 @@ const filterOptions: FilterOptions = [
 ];
 
 export default function Projects() {
-  const { isTablet, isMobile, isDesktop } = useScreenType();
+  const { isDesktop } = useScreenType();
 
   const { data: session } = useSession();
 
@@ -156,38 +155,29 @@ export default function Projects() {
           <div className={`${view}`} aria-labelledby="page-heading">
             {store.map((project) => (
               <div className={`${view}__item`} key={project.id}>
-                {isTablet || isMobile ? (
-                  <CardLink
-                    mainText={project.name}
-                    readRoute={`/projetos/${project.id}`}
-                    secondaryText={project.description}
-                  >
-                    <UpdateLink
-                      updateRoute={`/projetos/${project.id}/editar`}
-                    />
-                    <DeleteBtn
-                      onDelete={() => handleDelete(project.id, deleteProject)}
-                      registerId={project.id}
-                      registerName={project.name}
-                    />
-                  </CardLink>
-                ) : (
-                  <CardBtn
-                    mainText={project.name}
-                    registerId={project.id}
-                    secondaryText={project.description}
-                    onClick={() => handleReadSecPage(project.id)}
-                  >
+                <Card
+                  mainText={project.name}
+                  readRoute={`/projetos/${project.id}`}
+                  secondaryText={project.description}
+                  onClick={() => handleReadSecPage(project.id)}
+                  isLink={isDesktop}
+                  onKeyDown={() => handleReadSecPage(project.id)}
+                >
+                  {isDesktop ? (
                     <UpdateBtn
                       onUpdateClick={() => handleEditSecPage(project.id)}
                     />
-                    <DeleteBtn
-                      onDelete={() => handleDelete(project.id, deleteProject)}
-                      registerId={project.id}
-                      registerName={project.name}
+                  ) : (
+                    <UpdateLink
+                      updateRoute={`/projetos/${project.id}/editar`}
                     />
-                  </CardBtn>
-                )}
+                  )}
+                  <DeleteBtn
+                    onDelete={() => handleDelete(project.id, deleteProject)}
+                    registerId={project.id}
+                    registerName={project.name}
+                  />
+                </Card>
               </div>
             ))}
           </div>

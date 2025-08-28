@@ -7,26 +7,34 @@ import { useSession } from "next-auth/react";
 import { isCommonUser } from "@/utils/authorization";
 import { useScreenType } from "@/hooks/useScreenType";
 import GuidelinesUser from "./diretrizes/page";
-import CardLink from "@/components/CardLink";
+import Card from "@/components/Card";
 
 function HomeUserMobile() {
   return (
     <HomeBase>
-      <CardLink mainText="Diretrizes de acessibilidade" readRoute="/diretrizes">
+      <Card
+        isLink={true}
+        mainText="Diretrizes de acessibilidade"
+        readRoute="/diretrizes"
+      >
         <div>
           <PiPersonArmsSpreadLight aria-hidden={true} focusable={false} />
         </div>
-      </CardLink>
-      <CardLink mainText="Meus projetos" readRoute="/projetos">
+      </Card>
+      <Card isLink={true} mainText="Meus projetos" readRoute="/projetos">
         <div>
           <SlFolder aria-hidden={true} focusable={false} />
         </div>
-      </CardLink>
-      <CardLink mainText="Minhas solicitações" readRoute="/solicitacoes">
+      </Card>
+      <Card
+        isLink={true}
+        mainText="Minhas solicitações"
+        readRoute="/solicitacoes"
+      >
         <div>
           <SlEnvolope aria-hidden={true} focusable={false} />
         </div>
-      </CardLink>
+      </Card>
     </HomeBase>
   );
 }
@@ -34,11 +42,15 @@ function HomeUserMobile() {
 function HomeVisitorMobile() {
   return (
     <HomeBase>
-      <CardLink mainText="Diretrizes de acessibilidade" readRoute="/diretrizes">
+      <Card
+        isLink={true}
+        mainText="Diretrizes de acessibilidade"
+        readRoute="/diretrizes"
+      >
         <div>
           <PiPersonArmsSpreadLight aria-hidden={true} focusable={false} />
         </div>
-      </CardLink>
+      </Card>
     </HomeBase>
   );
 }

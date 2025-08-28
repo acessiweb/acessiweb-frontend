@@ -1,21 +1,6 @@
 import { ReactNode } from "react";
 import { GuidelineStatus } from "./guideline";
 
-export type CardProps = {
-  registerId?: string;
-  mainText: string;
-  secondaryText?: string;
-  children?: ReactNode;
-};
-
-export type CardLinkProps = CardProps & {
-  readRoute: string;
-};
-
-export type CardBtnProps = CardProps & {
-  onClick: (_e) => void;
-};
-
 export type AddBtnProps = {
   registerId: string;
   registerName: string;

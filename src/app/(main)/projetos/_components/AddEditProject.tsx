@@ -27,10 +27,9 @@ import {
 } from "@/schemas/project.schema";
 import { useSession } from "next-auth/react";
 import { ApiError, FetchResponse, FetchUpdateResult } from "@/types/fetch";
-import { CardBtn } from "@/components/CardBtn";
 import DeleteBtn from "@/components/card/Delete";
-import CardLink from "@/components/CardLink";
 import { Guideline as GuidelineType } from "@/types/guideline";
+import Card from "@/components/Card";
 
 type AddEditProjectProps = Page & {
   project?: Project;
@@ -194,30 +193,19 @@ export default function AddEditProject({
       <div className="grid" id="guidelines-grid">
         {guides.map((guide) => (
           <div className="grid__item" key={guide.id}>
-            {isDesktop ? (
-              <CardBtn
-                mainText={guide.name}
-                registerId={guide.id}
-                onClick={() => handleReadSecPage(guide.id)}
-              >
-                <DeleteBtn
-                  onDelete={() => removeGuidelineOfCart(guide.id)}
-                  registerId=""
-                  registerName=""
-                ></DeleteBtn>
-              </CardBtn>
-            ) : (
-              <CardLink
-                mainText={guide.name}
-                readRoute={`/diretrizes/${guide.id}`}
-              >
-                <DeleteBtn
-                  onDelete={() => removeGuidelineOfCart(guide.id)}
-                  registerId={guide.id}
-                  registerName={guide.name}
-                ></DeleteBtn>
-              </CardLink>
-            )}
+            <Card
+              mainText={guide.name}
+              onClick={() => handleReadSecPage(guide.id)}
+              onKeyDown={() => handleReadSecPage(guide.id)}
+              isLink={isDesktop}
+              readRoute={`/diretrizes/${guide.id}`}
+            >
+              <DeleteBtn
+                onDelete={() => removeGuidelineOfCart(guide.id)}
+                registerId=""
+                registerName=""
+              ></DeleteBtn>
+            </Card>
           </div>
         ))}
       </div>
