@@ -311,9 +311,13 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
                     mainText={guideline.name}
                     onClick={() => handleReadSecPage(guideline.id)}
                     secondaryText={guideline.description}
-                    isLink={isDesktop}
+                    isLink={!isDesktop}
                     onKeyDown={() => handleReadSecPage(guideline.id)}
-                    readRoute={`solicitacoes/${guideline.id}`}
+                    readRoute={
+                      isAdmin
+                        ? `/admin/solicitacoes/${guideline.id}`
+                        : `/solicitacoes/${guideline.id}`
+                    }
                   >
                     <StatusBtn status={guideline.statusCode} />
                     {guideline.statusCode === "STANDBY" && (
@@ -338,7 +342,7 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
                           />
                         ) : (
                           <UpdateLink
-                            updateRoute={`solicitacoes/${guideline.id}/editar`}
+                            updateRoute={`/solicitacoes/${guideline.id}/editar`}
                           />
                         )}
                         <DeleteBtn
@@ -358,8 +362,12 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
                     secondaryText={guideline.description}
                     onClick={() => handleReadSecPage(guideline.id)}
                     onKeyDown={() => handleReadSecPage(guideline.id)}
-                    isLink={isDesktop}
-                    readRoute={`/diretrizes/${guideline.id}`}
+                    isLink={!isDesktop}
+                    readRoute={
+                      isAdmin
+                        ? `/admin/diretrizes/${guideline.id}`
+                        : `/diretrizes/${guideline.id}`
+                    }
                   >
                     {isAdmin ? (
                       <>

@@ -3,14 +3,16 @@
 .push-wrapper {
   background-color: var.$lighterPurple;
   position: absolute;
-  z-index: 1000;
+  z-index: 10000;
   bottom: 0;
   right: 10px;
   border-radius: var.$border-radius-default;
   max-width: 30rem;
 
   @media (max-width: var.$tablet) {
-    right: 0;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, -50%);
     margin: var.$space-sm;
   }
 

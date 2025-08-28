@@ -22,18 +22,26 @@
     align-items: center;
     justify-content: space-between;
 
+    > a:first-of-type,
+    > div:first-of-type {
+      max-width: 85%;
+    }
+
     .heading-3 {
       display: -webkit-box;
       font-size: var.$fs-medium;
       text-overflow: ellipsis;
       overflow: hidden;
-      width: 70%;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
     }
   }
 
-  > p {
+  > div:nth-child(2) {
+    flex: 1;
+  }
+
+  p {
     display: -webkit-box;
     -webkit-line-clamp: 7;
     -webkit-box-orient: vertical;

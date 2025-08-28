@@ -764,17 +764,25 @@ button {
   justify-content: space-between;
 }
 
+.card__content > a:first-of-type,
+.card__content > div:first-of-type {
+  max-width: 85%;
+}
+
 .card__content .heading-3 {
   display: -webkit-box;
   font-size: 1.3rem;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 70%;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
-.card > p {
+.card > div:nth-child(2) {
+  flex: 1;
+}
+
+.card p {
   display: -webkit-box;
   -webkit-line-clamp: 7;
   -webkit-box-orient: vertical;
@@ -820,7 +828,7 @@ button {
 .push-wrapper {
   background-color: #f9f6ff;
   position: absolute;
-  z-index: 1000;
+  z-index: 10000;
   bottom: 0;
   right: 10px;
   border-radius: 12px;
@@ -829,7 +837,9 @@ button {
 
 @media (max-width: 890px) {
   .push-wrapper {
-    right: 0;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, -50%);
     margin: 0.7rem;
   }
 }
@@ -1275,7 +1285,7 @@ button {
 
 .homepage-mobile .card__content {
   margin-top: 0;
-  width: 80%;
+  width: 100%;
 }
 
 .homepage-mobile .card__content h3 {
