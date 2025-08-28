@@ -41,6 +41,7 @@ import AddEditGuideline from "./AddEditGuideline";
 import RemovedFilter from "@/components/RemovedFilter";
 import { usePush } from "@/context/push";
 import Card from "@/components/Card";
+import Loader from "@/components/Loader";
 
 type GuidelinesProps = {
   isRequest: boolean;
@@ -114,7 +115,7 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
 
   const { setShowPush, setPushMsg } = usePush();
 
-  const { data: guidelines } = useQuery({
+  const { data: guidelines, status } = useQuery({
     queryKey: [
       "guidelines",
       search,
@@ -302,7 +303,12 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
             )}
           </FiltersApplied>
         )}
-        {store.length > 0 ? (
+        {status === "pending" && (
+          <Loader
+            msg={`Buscando ${isRequest ? "solicitações" : "diretrizes"}...`}
+          />
+        )}
+        {status === "success" && store.length > 0 && (
           <div className={`${view}`} aria-labelledby="page-heading">
             {store.map((guideline) => (
               <div className={`${view}__item`} key={guideline.id}>
@@ -402,7 +408,8 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
               </div>
             ))}
           </div>
-        ) : (
+        )}
+        {status === "success" && store.length === 0 && (
           <NoRegistersFound
             errorMsg={`Não foram encontradas ${
               isRequest ? "solicitações" : "diretrizes"

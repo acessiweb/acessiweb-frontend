@@ -246,3 +246,4 @@ input[type="checkbox"]:focus-visible {
 @include meta.load-css("fonts");
 @include meta.load-css("preferences");
 @include meta.load-css("cursor");
+@include meta.load-css("loader");

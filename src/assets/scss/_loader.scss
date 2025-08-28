@@ -1,0 +1,42 @@
+@use "./var";
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-sizing: border-box;
+  margin: 0 auto;
+
+  &__animation {
+    border: 3px solid var.$dark;
+    border-radius: 50%;
+    display: inline-block;
+    animation: rotation 1s linear infinite;
+    margin: 50px auto 10px;
+    width: 48px;
+    height: 48px;
+
+    &::after {
+      content: "";
+      box-sizing: border-box;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-bottom-color: var.$purple;
+    }
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
