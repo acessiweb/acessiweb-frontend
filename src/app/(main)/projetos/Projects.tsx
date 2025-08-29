@@ -162,7 +162,7 @@ export default function Projects() {
                   readRoute={`/projetos/${project.id}`}
                   secondaryText={project.description}
                   onClick={() => handleReadSecPage(project.id)}
-                  isLink={isDesktop}
+                  isLink={!isDesktop}
                   onKeyDown={() => handleReadSecPage(project.id)}
                 >
                   {isDesktop ? (
@@ -184,7 +184,7 @@ export default function Projects() {
             ))}
           </div>
         )}
-        {status === "success" && store.length === 0 && (
+        {(status === "error" || store.length === 0) && (
           <NoRegistersFound errorMsg="Oops! Você ainda não possui projetos." />
         )}
       </div>
