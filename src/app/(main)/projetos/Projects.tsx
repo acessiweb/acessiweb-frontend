@@ -184,7 +184,8 @@ export default function Projects() {
             ))}
           </div>
         )}
-        {(status === "error" || store.length === 0) && (
+        {(status === "error" ||
+          (status !== "pending" && store.length === 0)) && (
           <NoRegistersFound errorMsg="Oops! Você ainda não possui projetos." />
         )}
       </div>

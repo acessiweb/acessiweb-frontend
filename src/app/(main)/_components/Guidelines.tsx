@@ -409,7 +409,8 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
             ))}
           </div>
         )}
-        {(status === "error" || store.length === 0) && (
+        {(status === "error" ||
+          (status !== "pending" && store.length === 0)) && (
           <NoRegistersFound
             errorMsg={`Não foram encontradas ${
               isRequest ? "solicitações" : "diretrizes"
