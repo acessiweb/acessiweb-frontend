@@ -42,13 +42,19 @@ import RemovedFilter from "@/components/RemovedFilter";
 import { usePush } from "@/context/push";
 import Card from "@/components/Card";
 import Loader from "@/components/Loader";
+import RequestAnalyze from "../admin/solicitacoes/[id]/analisar/Request";
 
 type GuidelinesProps = {
   isRequest: boolean;
   isAdmin: boolean;
+  handleAdd?: (id: string, name: string) => void;
 };
 
-export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
+export default function Guidelines({
+  isAdmin,
+  isRequest,
+  handleAdd,
+}: GuidelinesProps) {
   const { addGuidelineToCart } = useCart();
 
   const {
@@ -315,7 +321,11 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
                 {isRequest && (
                   <Card
                     mainText={guideline.name}
-                    onClick={() => handleReadSecPage(guideline.id)}
+                    onClick={() =>
+                      isAdmin
+                        ? handleEditSecPage(guideline.id)
+                        : handleReadSecPage(guideline.id)
+                    }
                     secondaryText={guideline.description}
                     isLink={!isDesktop}
                     onKeyDown={() => handleReadSecPage(guideline.id)}
@@ -398,7 +408,11 @@ export default function Guidelines({ isAdmin, isRequest }: GuidelinesProps) {
                       </>
                     ) : (
                       <AddBtn
-                        onAdd={addGuidelineToCart}
+                        onAdd={
+                          handleAdd
+                            ? () => handleAdd(guideline.id, guideline.name)
+                            : addGuidelineToCart
+                        }
                         registerId={guideline.id}
                         registerName={guideline.name}
                       />
@@ -496,16 +510,21 @@ function useGuidelinesSecPage({
       if (!isAdmin && isRequest) fullScreenLink = `/solicitacoes/editar/${id}`;
       if (isAdmin && !isRequest)
         fullScreenLink = `/admin/diretrizes/editar/${id}`;
-      if (isAdmin && isRequest) fullScreenLink = `/admin/solicitacoes/${id}`;
+      if (isAdmin && isRequest)
+        fullScreenLink = `/admin/solicitacoes/${id}/analisar`;
 
       handleIsOpen(true);
       handleTitle(res.data.name);
       handleNode(
-        <AddEditGuideline
-          isEditPage={true}
-          isRequest={isRequest}
-          guideline={res.data}
-        />
+        isAdmin && isRequest ? (
+          <RequestAnalyze request={res.data} />
+        ) : (
+          <AddEditGuideline
+            isEditPage={true}
+            isRequest={isRequest}
+            guideline={res.data}
+          />
+        )
       );
       handleFullScreenLink(fullScreenLink);
     }

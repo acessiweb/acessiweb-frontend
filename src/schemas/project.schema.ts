@@ -27,7 +27,7 @@ export const editProjectSchema = z.object({
   projName,
   desc,
   guidelines,
-  feedback: z.string().trim().optional(),
+  feedback: z.string().optional(),
 });
 
 export type CreateProjectSchema = z.infer<typeof createProjectSchema>;

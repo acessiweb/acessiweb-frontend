@@ -229,6 +229,7 @@ input[type="checkbox"]:focus-visible {
 @include meta.load-css("pages/guideline/add");
 @include meta.load-css("pages/guideline/all");
 @include meta.load-css("pages/guideline/read");
+@include meta.load-css("pages/guideline/analyze");
 @include meta.load-css("pages/login");
 @include meta.load-css("pages/not-found");
 @include meta.load-css("pages/config/preferences");

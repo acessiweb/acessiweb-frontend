@@ -1437,6 +1437,22 @@ button {
   column-gap: 0.7rem;
 }
 
+.modal .guidelines {
+  margin-top: 13rem;
+}
+
+@media (max-width: 890px) {
+  .modal .guidelines {
+    margin-top: 0.7rem;
+  }
+}
+.modal:has(.guidelines) {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  transform: translate(-50%, -50%);
+}
+
 .guidelines,
 .requests {
   display: flex;
@@ -1628,6 +1644,66 @@ button {
 
 .dark .read-guideline__deficiences__checkbox {
   border-color: #f5f3fa;
+}
+
+.request-analyze {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.7rem;
+}
+
+.request-analyze > div {
+  display: flex;
+  align-items: center;
+  column-gap: 0.7rem;
+}
+
+.request-analyze__discriminator, .request-analyze__data,
+.request-analyze form > textarea,
+.request-analyze form button {
+  border-radius: 12px;
+  border: 2px solid rgb(25, 25, 24);
+  padding: 0.7rem;
+}
+
+.request-analyze__discriminator {
+  font-weight: 700;
+  background-color: #c1a6f9;
+  width: max-content;
+}
+
+.request-analyze__data {
+  background-color: #fff;
+  flex: 1;
+  height: 100%;
+}
+
+.request-analyze form {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  column-gap: 0.7rem;
+}
+
+.request-analyze form textarea {
+  flex: 1;
+}
+
+.request-analyze form > div {
+  display: flex;
+  column-gap: 0.7rem;
+}
+
+.request-analyze form button {
+  font-weight: 700;
+}
+
+.request-analyze form button:first-of-type {
+  background-color: #9fc494;
+}
+
+.request-analyze form button:nth-child(2) {
+  background-color: #cc695f;
 }
 
 .login__links-container, .login__social-media-container {

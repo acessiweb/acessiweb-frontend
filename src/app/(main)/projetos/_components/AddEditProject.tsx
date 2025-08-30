@@ -30,6 +30,9 @@ import { ApiError, FetchResponse, FetchUpdateResult } from "@/types/fetch";
 import DeleteBtn from "@/components/card/Delete";
 import { Guideline as GuidelineType } from "@/types/guideline";
 import Card from "@/components/Card";
+import useModal from "@/hooks/useModal";
+import { createPortal } from "react-dom";
+import GuidelinesPage from "@/app/(main)/_components/Guidelines";
 
 type AddEditProjectProps = Page & {
   project?: Project;
@@ -49,6 +52,7 @@ export default function AddEditProject({
     addNameToCart,
     cleanCart,
   } = useCart();
+
   const {
     isOpen: isSecPageOpen,
     handleIsOpen: handleIsSecPageOpen,
@@ -60,8 +64,13 @@ export default function AddEditProject({
     fullScreenLink,
     handleFullScreenLink,
   } = useSecPage();
+
   const [guidelinesShown, setGuidelinesShown] = useState(false);
+
   const { isDesktop } = useScreenType();
+
+  const { isModalOpen, showModal, modalRef } = useModal();
+
   const {
     register,
     handleSubmit,
@@ -69,6 +78,7 @@ export default function AddEditProject({
     setValue,
     watch,
     reset,
+    getValues,
   } = useForm<EditProjectSchema | CreateProjectSchema>({
     resolver: zodResolver(isEditPage ? editProjectSchema : createProjectSchema),
     defaultValues: {
@@ -78,6 +88,7 @@ export default function AddEditProject({
       feedback: project?.feedback || "",
     },
   });
+
   const { handleApiErrors, errorMsgs, isAlert } = useErrors();
   const { setPushMsg, setShowPush } = usePush();
   const router = useRouter();
@@ -212,6 +223,14 @@ export default function AddEditProject({
     );
   };
 
+  const handleAdd = (id: string, name: string) => {
+    const guides = [...getValues("guidelines")];
+
+    guides.push({ id, name });
+
+    setValue("guidelines", guides);
+  };
+
   return (
     <div className={getSecPageClass()}>
       <div
@@ -237,16 +256,49 @@ export default function AddEditProject({
             id="toggle-guidelines"
             aria-controls="guidelines-grid"
           >
-            {`${guidelinesShown ? "Ocultar" : "Mostrar"}`} Diretrizes
+            {`${guidelinesShown ? "Ocultar" : "Mostrar"}`} diretrizes
             selecionadas
           </button>
-          <Link
-            href="/diretrizes"
-            className="btn-link-default"
-            aria-label="Incluir diretrizes no carrinho (+)"
-          >
-            &#43;
-          </Link>
+          {isEditPage ? (
+            <>
+              <button
+                type="button"
+                aria-label="Incluir diretriz no projeto"
+                onClick={showModal}
+                aria-haspopup="dialog"
+                aria-expanded={isModalOpen}
+                aria-controls="guidelines-modal"
+                className="btn-default cursor-pointer"
+              >
+                &#43;
+              </button>
+              {isModalOpen &&
+                createPortal(
+                  <dialog
+                    className="modal"
+                    ref={modalRef}
+                    aria-label="Diretrizes de acessibilidade"
+                    aria-modal={true}
+                    id="guidelines-modal"
+                  >
+                    <GuidelinesPage
+                      isAdmin={false}
+                      isRequest={false}
+                      handleAdd={handleAdd}
+                    />
+                  </dialog>,
+                  document.getElementById("app")!
+                )}
+            </>
+          ) : (
+            <Link
+              href="/diretrizes"
+              className="btn-link-default"
+              aria-label="Incluir diretrizes no carrinho (+)"
+            >
+              &#43;
+            </Link>
+          )}
         </div>
         <form className="form" method="POST" onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="projName" className="sr-only">
@@ -318,11 +370,18 @@ export default function AddEditProject({
               <Guidelines guides={cart.guidelines} />
             )}
           {guidelinesShown && isEditPage && project && (
-            <Guidelines guides={project.guidelines} />
+            <Guidelines
+              guides={
+                project.guidelines.length > 0
+                  ? project.guidelines
+                  : getValues("guidelines")
+              }
+            />
           )}
           {guidelinesShown &&
             (cart?.guidelines.length === 0 ||
-              project?.guidelines.length === 0) && (
+              (getValues("guidelines").length === 0 &&
+                project?.guidelines.length === 0)) && (
               <div>
                 Ainda não foram selecionadas diretrizes para esse projeto
               </div>
@@ -346,7 +405,7 @@ export default function AddEditProject({
                 handleSetValue={handleSetValue}
                 keycut="alt+shift+f"
               >
-                <input
+                <textarea
                   {...register("feedback")}
                   placeholder="Feedback do projeto, exemplo: Após implementar as diretrizes selecionadas..."
                   id="feedback"
@@ -356,6 +415,7 @@ export default function AddEditProject({
                   aria-errormessage={
                     "feedback" in errors ? "invalid-project-name" : undefined
                   }
+                  rows={7}
                 />
               </InputTextVoice>
               {"feedback" in errors && (

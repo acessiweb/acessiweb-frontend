@@ -1,3 +1,5 @@
+"use client";
+
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { html } from "@codemirror/lang-html";
@@ -16,7 +18,7 @@ import { sublime } from "@uiw/codemirror-theme-sublime";
 type CodeProps = {
   editable: boolean;
   label?: string;
-  handleCode: Dispatch<SetStateAction<string>>;
+  handleCode?: Dispatch<SetStateAction<string>>;
   code: string | undefined;
 };
 
@@ -33,7 +35,12 @@ enum THEME_OPTIONS {
   "sublime" = "Sublime",
 }
 
-export default function Code({ label, editable, handleCode, code }: CodeProps) {
+export default function Code({
+  label,
+  editable,
+  handleCode = () => {},
+  code,
+}: CodeProps) {
   const [theme, setTheme] = useState(atomone);
 
   const handleTheme = (e: ChangeEvent<HTMLSelectElement>) => {

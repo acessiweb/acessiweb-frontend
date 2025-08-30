@@ -54,6 +54,7 @@ export async function updateGuidelineStatus(
         statusMsg,
       }),
       headers: {
+        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     },

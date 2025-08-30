@@ -1,0 +1,62 @@
+@use "../../var";
+
+.request-analyze {
+  display: flex;
+  flex-direction: column;
+  row-gap: var.$space-sm;
+
+  > div {
+    display: flex;
+    align-items: center;
+    column-gap: var.$space-sm;
+  }
+
+  &__discriminator,
+  &__data,
+  form > textarea,
+  form button {
+    border-radius: var.$border-radius-default;
+    border: var.$border-3;
+    padding: var.$space-sm;
+  }
+
+  &__discriminator {
+    font-weight: var.$bold;
+    background-color: var.$purple;
+    width: max-content;
+  }
+
+  &__data {
+    background-color: #fff;
+    flex: 1;
+    height: 100%;
+  }
+
+  form {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    column-gap: var.$space-sm;
+
+    textarea {
+      flex: 1;
+    }
+
+    > div {
+      display: flex;
+      column-gap: var.$space-sm;
+    }
+
+    button {
+      font-weight: var.$bold;
+    }
+
+    button:first-of-type {
+      background-color: var.$green;
+    }
+
+    button:nth-child(2) {
+      background-color: var.$red;
+    }
+  }
+}

@@ -57,7 +57,7 @@ export default function Guideline({
       {isRequest && (
         <div className="read-guideline__situation">
           <h3>Situação</h3>
-          {guideline.isRequest && (
+          {isRequest && (
             <div className="read-guideline__situation__status-code">
               {guideline.statusCode === "APPROVED" &&
                 STATUS_CODE_TRANSLATE.approved}

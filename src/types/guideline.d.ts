@@ -14,4 +14,7 @@ export type Guideline = {
   statusCode?: GuidelineStatus;
   statusMsg?: string;
   isRequest: boolean;
+  user: {
+    username: string;
+  };
 };
