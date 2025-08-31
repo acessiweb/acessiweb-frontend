@@ -29,6 +29,7 @@ import {
   deleteGuideline,
   getGuideline,
   getGuidelines,
+  restoreGuideline,
 } from "@/routes/guidelines";
 import useSecPage from "@/hooks/useSecPage";
 import { AddBtn } from "@/components/card/Add";
@@ -43,6 +44,7 @@ import { usePush } from "@/context/push";
 import Card from "@/components/Card";
 import Loader from "@/components/Loader";
 import RequestAnalyze from "../admin/solicitacoes/[id]/analisar/Request";
+import RestoreBtn from "@/components/card/Restore";
 
 type GuidelinesProps = {
   isRequest: boolean;
@@ -208,9 +210,19 @@ export default function Guidelines({
     }
   };
 
-  // const handleRestore = async (guidelineId: string) => {
-  //   await restoreGuideline(guidelineId);
-  // };
+  const handleRestore = async (guidelineId: string) => {
+    const res = await restoreGuideline(guidelineId);
+
+    if (res.ok && "data" in res) {
+      setShowPush(true);
+      setPushMsg("Diretriz restaurada com sucesso 🎉");
+    }
+
+    if (!res.ok && "errors" in res) {
+      setShowPush(true);
+      setPushMsg(res.errors[0].message);
+    }
+  };
 
   return (
     <div className={secPageClass}>
@@ -385,7 +397,7 @@ export default function Guidelines({
                         : `/diretrizes/${guideline.id}`
                     }
                   >
-                    {isAdmin ? (
+                    {isAdmin && !isFilterApplied("deleted") && (
                       <>
                         {isDesktop ? (
                           <UpdateBtn
@@ -406,7 +418,13 @@ export default function Guidelines({
                           registerName={guideline.name}
                         />
                       </>
-                    ) : (
+                    )}
+                    {isAdmin && isFilterApplied("deleted") && (
+                      <RestoreBtn
+                        onRestore={() => handleRestore(guideline.id)}
+                      />
+                    )}
+                    {!isAdmin && (
                       <AddBtn
                         onAdd={
                           handleAdd
@@ -504,7 +522,9 @@ function useGuidelinesSecPage({
   const handleEditSecPage = async (id: string) => {
     const res = await getGuideline(id);
 
-    if ("data" in res) {
+    console.log(res);
+
+    if (res.ok && "data" in res) {
       let fullScreenLink = "";
 
       if (!isAdmin && isRequest) fullScreenLink = `/solicitacoes/editar/${id}`;

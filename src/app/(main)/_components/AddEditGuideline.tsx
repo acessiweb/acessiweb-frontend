@@ -228,7 +228,7 @@ export default function AddEditGuideline({
           editable={true}
           label="Escreva aqui um código que exemplifica a aplicação dessa diretriz"
           handleCode={setCode}
-          code={code || guideline?.code}
+          code={guideline?.code ? guideline.code : code}
         />
         <label htmlFor="guideImage" className="sr-only">
           Imagem explicativa da diretriz

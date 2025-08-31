@@ -10,6 +10,7 @@ export default function RestoreBtn({ onRestore }: RestoreBtnProps) {
       className="btn-transparent cursor-pointer"
       aria-label="Ação de restaurar"
       onClick={onRestore}
+      title="Restaurar"
     >
       <MdRestore
         className="cursor-pointer"

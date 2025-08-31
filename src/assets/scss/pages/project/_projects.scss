@@ -36,4 +36,17 @@
   .filter-form {
     margin-bottom: var.$space-md;
   }
+
+  .card {
+    max-width: 85%;
+
+    h3 {
+      display: -webkit-box;
+      font-size: var.$fs-medium;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+  }
 }

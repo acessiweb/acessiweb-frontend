@@ -766,7 +766,7 @@ button {
 
 .card__content > a:first-of-type,
 .card__content > div:first-of-type {
-  max-width: 85%;
+  max-width: 65%;
 }
 
 .card__content .heading-3 {
@@ -778,6 +778,7 @@ button {
   -webkit-box-orient: vertical;
 }
 
+.card > a:first-of-type,
 .card > div:nth-child(2) {
   flex: 1;
 }
@@ -1284,20 +1285,14 @@ button {
 }
 
 .homepage-mobile .card__content {
+  display: flex;
   margin-top: 0;
   width: 100%;
+  justify-content: space-between;
 }
 
 .homepage-mobile .card__content h3 {
   font-size: 1.2rem;
-}
-
-.homepage-mobile .card > div {
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-  width: 20%;
-  top: 0;
 }
 
 .homepage-mobile .card svg {
@@ -1343,6 +1338,19 @@ button {
 
 .projects .filter-form {
   margin-bottom: 1.1rem;
+}
+
+.projects .card {
+  max-width: 85%;
+}
+
+.projects .card h3 {
+  display: -webkit-box;
+  font-size: 1.3rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .sec-page .add-project .toggle-guidelines {

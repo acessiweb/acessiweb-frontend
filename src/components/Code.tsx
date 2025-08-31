@@ -19,7 +19,7 @@ type CodeProps = {
   editable: boolean;
   label?: string;
   handleCode?: Dispatch<SetStateAction<string>>;
-  code: string | undefined;
+  code?: string;
 };
 
 enum THEME_OPTIONS {
@@ -39,7 +39,7 @@ export default function Code({
   label,
   editable,
   handleCode = () => {},
-  code,
+  code = "",
 }: CodeProps) {
   const [theme, setTheme] = useState(atomone);
 

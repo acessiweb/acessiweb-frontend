@@ -21,20 +21,14 @@
     }
 
     &__content {
+      display: flex;
       margin-top: 0;
       width: 100%;
+      justify-content: space-between;
 
       h3 {
         font-size: calc(var.$fs-small + 0.2rem);
       }
-    }
-
-    > div {
-      position: relative;
-      display: flex;
-      justify-content: flex-end;
-      width: 20%;
-      top: 0;
     }
 
     svg {

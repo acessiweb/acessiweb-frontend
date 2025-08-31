@@ -2,6 +2,7 @@
 
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Project as ProjectType } from "@/types/project";
+import Link from "next/link";
 
 type ProjectProps = {
   project: ProjectType;
@@ -27,10 +28,13 @@ export default function Project({
         <div className="grid" id="guidelines-grid">
           {project.guidelines.map((guide) => (
             <div className="grid__item" key={guide.id}>
-              <div className="card">
-                <h3>{guide.name}</h3>
-                <p>{guide.description}</p>
-              </div>
+              <Link
+                href={`/diretrizes/${guide.id}`}
+                className="card cursor-pointer"
+              >
+                <h3 className="cursor-pointer">{guide.name}</h3>
+                <p className="cursor-pointer">{guide.description}</p>
+              </Link>
             </div>
           ))}
         </div>

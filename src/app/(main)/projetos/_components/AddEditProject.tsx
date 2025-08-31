@@ -208,7 +208,7 @@ export default function AddEditProject({
               mainText={guide.name}
               onClick={() => handleReadSecPage(guide.id)}
               onKeyDown={() => handleReadSecPage(guide.id)}
-              isLink={isDesktop}
+              isLink={!isDesktop}
               readRoute={`/diretrizes/${guide.id}`}
             >
               <DeleteBtn

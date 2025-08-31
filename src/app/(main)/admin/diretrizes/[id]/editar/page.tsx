@@ -13,6 +13,8 @@ export default async function Page({ params }: PageProps) {
   const { id } = await params;
   const res = await getGuideline(id);
 
+  console.log(res);
+
   if (res.ok && "data" in res) {
     return (
       <AddEditGuideline
