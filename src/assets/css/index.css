@@ -1340,10 +1340,6 @@ button {
   margin-bottom: 1.1rem;
 }
 
-.projects .card {
-  max-width: 85%;
-}
-
 .projects .card h3 {
   display: -webkit-box;
   font-size: 1.3rem;

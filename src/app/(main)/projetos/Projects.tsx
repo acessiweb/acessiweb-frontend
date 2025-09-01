@@ -95,8 +95,7 @@ export default function Projects() {
   });
 
   const cleanAllFilters = () => {
-    handleInitialDate("");
-    handleEndDate("");
+    cleanDateFilter();
   };
 
   return (

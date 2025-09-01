@@ -12,6 +12,8 @@ import { SessionProvider } from "next-auth/react";
 import { usePush } from "@/context/push";
 import Push from "@/components/Push";
 import PrefsProvider from "@/context/prefs";
+import { QueryParamProvider } from "use-query-params";
+import NextAdapterApp from "next-query-params/app";
 
 const queryClient = new QueryClient();
 
@@ -22,25 +24,27 @@ export default function App({ children }: { children?: React.ReactNode }) {
 
   return (
     <div id="app">
-      <QueryClientProvider client={queryClient}>
-        <SessionProvider>
-          <CartProvider>
-            <PrefsProvider>
-              <div className="content">
-                {isTablet || isMobile ? (
-                  <HeaderMobile />
-                ) : (
-                  <HeaderDesktop onToggleKeyboard={toggleKeyboard} />
-                )}
-                <main>{children}</main>
-                {showKeyboard && <Keyboard isKeyboardOpened={showKeyboard} />}
-              </div>
-              {(isTablet || isMobile) && <FooterMobile />}
-              {showPush && <Push />}
-            </PrefsProvider>
-          </CartProvider>
-        </SessionProvider>
-      </QueryClientProvider>
+      <QueryParamProvider adapter={NextAdapterApp}>
+        <QueryClientProvider client={queryClient}>
+          <SessionProvider>
+            <CartProvider>
+              <PrefsProvider>
+                <div className="content">
+                  {isTablet || isMobile ? (
+                    <HeaderMobile />
+                  ) : (
+                    <HeaderDesktop onToggleKeyboard={toggleKeyboard} />
+                  )}
+                  <main>{children}</main>
+                  {showKeyboard && <Keyboard isKeyboardOpened={showKeyboard} />}
+                </div>
+                {(isTablet || isMobile) && <FooterMobile />}
+                {showPush && <Push />}
+              </PrefsProvider>
+            </CartProvider>
+          </SessionProvider>
+        </QueryClientProvider>
+      </QueryParamProvider>
     </div>
   );
 }

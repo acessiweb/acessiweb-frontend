@@ -1,17 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { StringParam, useQueryParam } from "use-query-params";
 
 export default function useDateFilter() {
-  const [initialDate, setInitialDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [initialDate, setInitialDate] = useQueryParam(
+    "initialDate",
+    StringParam
+  );
+  const [endDate, setEndDate] = useQueryParam("endDate", StringParam);
 
   const handleInitialDate = (date: string) => {
-    setInitialDate(date);
+    setInitialDate(date === "" ? undefined : date, "replaceIn");
   };
 
   const handleEndDate = (date: string) => {
-    setEndDate(date);
+    setEndDate(date === "" ? undefined : date, "replaceIn");
   };
 
   const cleanDateFilter = () => {
@@ -22,8 +25,8 @@ export default function useDateFilter() {
   return {
     handleInitialDate,
     handleEndDate,
-    initialDate,
-    endDate,
+    initialDate: initialDate || "",
+    endDate: endDate || "",
     cleanDateFilter,
   };
 }

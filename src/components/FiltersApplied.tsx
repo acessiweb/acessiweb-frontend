@@ -17,6 +17,7 @@ export default function FiltersApplied({
     handleFilters();
     cleanFilters();
   };
+
   return (
     <div className="filters-applied">
       {children}

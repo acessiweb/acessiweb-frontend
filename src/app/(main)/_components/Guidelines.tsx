@@ -196,8 +196,7 @@ export default function Guidelines({
   }, [isAdmin]);
 
   const cleanAllFilters = () => {
-    handleInitialDate("");
-    handleEndDate("");
+    cleanDateFilter();
   };
 
   const handleGuidelineShip = async (id: string) => {
@@ -214,6 +213,7 @@ export default function Guidelines({
     const res = await restoreGuideline(guidelineId);
 
     if (res.ok && "data" in res) {
+      updateItemFromStore(res.data as GuidelineType); // NÃO TÁ FUNCIONANDO
       setShowPush(true);
       setPushMsg("Diretriz restaurada com sucesso 🎉");
     }

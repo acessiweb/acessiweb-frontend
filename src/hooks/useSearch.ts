@@ -1,20 +1,20 @@
 "use client";
 
 import { FilterHandler } from "@/types/filter";
-import { useState } from "react";
+import { StringParam, useQueryParam } from "use-query-params";
 
 type SearchProps = FilterHandler;
 
 export default function useSearch({ handleFiltering }: SearchProps) {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useQueryParam("search", StringParam);
 
   const handleSearch = (text: string) => {
-    setSearch(text);
+    setSearch(text === "" ? undefined : text, "replaceIn");
     handleFiltering(true);
   };
 
   return {
     handleSearch,
-    search,
+    search: search || "",
   };
 }
