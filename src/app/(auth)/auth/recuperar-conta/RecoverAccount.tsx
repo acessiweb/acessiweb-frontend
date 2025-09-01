@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 // import Link from "next/link";
 // import { useRef, useState } from "react";
 // import useEmailOrMobilePhone from "../../_hooks/useEmailOrMobilePhone";
@@ -63,5 +65,17 @@ export default function RecoverAccount() {
   //   </div>
   // );
 
-  return <div>Em construção... 👩‍🔧</div>;
+  return (
+    <div style={{ display: "flex", flexDirection: "column", rowGap: "40px" }}>
+      <div>Em construção... 👩‍🔧</div>
+      <Link
+        className="btn-link-default"
+        href="/auth/logar"
+        aria-label="Voltar para página anterior"
+        style={{ margin: "auto", textDecoration: "none" }}
+      >
+        Voltar
+      </Link>
+    </div>
+  );
 }
