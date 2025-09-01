@@ -167,7 +167,7 @@ export default function AddEditProject({
       res = await editProject(project.id, {
         name: data.projName,
         desc: data.desc,
-        guidelines: data.guidelines.map((guide) => guide.id),
+        guidelines: data.guidelines?.map((guide) => guide.id) || [],
         feedback: data.feedback || "",
       });
     }
@@ -176,7 +176,7 @@ export default function AddEditProject({
       res = await createProject({
         name: data.projName,
         desc: data.desc,
-        guidelines: data.guidelines.map((guide) => guide.id),
+        guidelines: data.guidelines?.map((guide) => guide.id) || [],
       });
     }
 
@@ -224,7 +224,7 @@ export default function AddEditProject({
   };
 
   const handleAdd = (id: string, name: string) => {
-    const guides = [...getValues("guidelines")];
+    const guides = [...(getValues("guidelines") || [])];
 
     guides.push({ id, name });
 
@@ -374,13 +374,13 @@ export default function AddEditProject({
               guides={
                 project.guidelines.length > 0
                   ? project.guidelines
-                  : getValues("guidelines")
+                  : getValues("guidelines") || []
               }
             />
           )}
           {guidelinesShown &&
             (cart?.guidelines.length === 0 ||
-              (getValues("guidelines").length === 0 &&
+              (getValues("guidelines")?.length === 0 &&
                 project?.guidelines.length === 0)) && (
               <div>
                 Ainda não foram selecionadas diretrizes para esse projeto
