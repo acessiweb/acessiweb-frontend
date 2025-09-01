@@ -35,6 +35,10 @@
   height: 9px;
   border-radius: 3px;
 
+  @media (max-width: var.$tablet) {
+    display: inline-block;
+  }
+
   &:checked {
     &::after {
       content: "";

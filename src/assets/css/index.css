@@ -315,6 +315,11 @@ input[type=checkbox]:focus-visible {
   border-radius: 3px;
 }
 
+@media (max-width: 890px) {
+  .input-checkbox {
+    display: inline-block;
+  }
+}
 .input-checkbox:checked::after {
   content: "";
   position: absolute;
