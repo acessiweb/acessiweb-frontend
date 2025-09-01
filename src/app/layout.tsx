@@ -1,4 +1,5 @@
 import "@/assets/css/index.css";
+import PushProvider from "@/context/push";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,7 +11,9 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
-      <body className="tahoma">{children}</body>
+      <body className="tahoma">
+        <PushProvider>{children}</PushProvider>
+      </body>
     </html>
   );
 }

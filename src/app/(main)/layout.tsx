@@ -1,5 +1,4 @@
 import App from "./App";
-import PushProvider from "@/context/push";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,9 +10,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <PushProvider>
-      <App>{children}</App>
-    </PushProvider>
-  );
+  return <App>{children}</App>;
 }

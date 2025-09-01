@@ -20,13 +20,13 @@ const guidelines = z.array(guidelinesSchema);
 export const createProjectSchema = z.object({
   projName,
   desc,
-  guidelines,
+  guidelines: guidelines.optional(),
 });
 
 export const editProjectSchema = z.object({
   projName,
   desc,
-  guidelines,
+  guidelines: guidelines.optional(),
   feedback: z.string().optional(),
 });
 

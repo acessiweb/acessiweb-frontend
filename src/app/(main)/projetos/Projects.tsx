@@ -78,12 +78,14 @@ export default function Projects() {
   } = useProjectsSecPage();
 
   const { status } = useQuery({
-    queryKey: ["projects", search, offset, session],
+    queryKey: ["projects", search, offset, session, initialDate, endDate],
     queryFn: async () => {
       const res = await getProjects({
         userId: session?.user.id,
         offset,
         keyword: search,
+        initialDate,
+        endDate,
       });
 
       if (res.ok && "data" in res) {

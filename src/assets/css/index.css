@@ -1970,6 +1970,12 @@ button {
   padding: 0 1.1rem;
 }
 
+@media (max-width: 890px) {
+  .config {
+    flex-direction: column;
+    row-gap: 1.9rem;
+  }
+}
 .config__tab--active {
   background-color: #e5d9ff;
 }

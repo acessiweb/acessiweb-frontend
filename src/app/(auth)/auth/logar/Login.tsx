@@ -173,13 +173,19 @@ export default function Login({ searchParams }: LoginProps) {
       <div className="login__links-container">
         <div>
           <span aria-hidden={true}>Não possui conta? </span>
-          <Link href="/auth/criar-conta" aria-label="Criar conta">
+          <Link
+            href="/auth/criar-conta"
+            aria-label="Criar conta"
+            className="cursor-pointer"
+          >
             Crie aqui
           </Link>
         </div>
         <div>
           <span aria-hidden={true}>Esqueceu sua senha? </span>
-          <Link href="/auth/recuperar-conta">Recuperar conta</Link>
+          <Link href="/auth/recuperar-conta" className="cursor-pointer">
+            Recuperar conta
+          </Link>
         </div>
       </div>
       <div className="login__social-media-container">

@@ -81,8 +81,8 @@ export async function deleteProject(
 export async function getProjects(query: {
   userId?: string;
   keyword?: string;
-  initialDate?: Date;
-  endDate?: Date;
+  initialDate?: string;
+  endDate?: string;
   limit?: number;
   offset?: number;
 }): Promise<FetchProjects | ApiError> {

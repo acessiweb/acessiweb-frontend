@@ -1,5 +1,12 @@
 "use client";
 
+import ConfigLayout from "../../config/layout";
+import Preferences from "../../config/preferencias/preferences";
+
 export default function Settings() {
-  return <div></div>;
+  return (
+    <ConfigLayout>
+      <Preferences />
+    </ConfigLayout>
+  );
 }

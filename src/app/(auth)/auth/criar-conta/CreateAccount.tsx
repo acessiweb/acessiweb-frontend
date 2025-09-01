@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import InputTextVoice from "@/components/InputTextVoice";
 import { useState } from "react";
 import LoaderBorder from "@/components/LoaderBorder";
+import { usePush } from "@/context/push";
 
 export default function CreateAccount() {
   const router = useRouter();
@@ -37,6 +38,7 @@ export default function CreateAccount() {
     resolver: zodResolver(createCommonUserSchema),
     mode: "onBlur",
   });
+  const { setPushMsg, setShowPush } = usePush();
 
   const onSubmit = async (data: CreateCommonUserSchema) => {
     if (!data.email && !data.mobilePhone) {
@@ -52,7 +54,12 @@ export default function CreateAccount() {
         handleApiErrors(res);
       } else {
         reset();
-        router.push("/auth/logar");
+        setShowPush(true);
+        setPushMsg("Conta criada com sucesso 🎉");
+
+        setTimeout(() => {
+          router.push("/auth/logar");
+        }, 1500);
       }
     }
   };
@@ -202,7 +209,7 @@ export default function CreateAccount() {
         )}
         {errorMsgs.length > 0 && <Errors isAlert={isAlert} msgs={errorMsgs} />}
         <div className="btns-container" style={{ margin: "auto" }}>
-          <button type="submit">Logar</button>
+          <button type="submit">Criar conta</button>
           <Link href="/auth/logar" aria-label="Voltar para página anterior">
             Voltar
           </Link>

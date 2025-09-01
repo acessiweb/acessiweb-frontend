@@ -9,11 +9,14 @@ import { useRouter } from "next/navigation";
 import Keyboard from "@/components/Keyboard";
 import KeyboardNav from "@/components/nav/Keyboard";
 import { useKeyboard } from "@/hooks/useKeyboard";
+import { usePush } from "@/context/push";
+import Push from "@/components/Push";
 
 export default function App({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { showKeyboard, toggleKeyboard } = useKeyboard();
   useHotkeys("shift+h", () => router.push("/"));
+  const { showPush } = usePush();
 
   useEffect(() => {
     document.body.className = "tahoma cursor-black cursor-small";
@@ -30,6 +33,7 @@ export default function App({ children }: { children: ReactNode }) {
         {children}
       </div>
       {showKeyboard && <Keyboard isKeyboardOpened={showKeyboard} />}
+      {showPush && <Push />}
     </main>
   );
 }

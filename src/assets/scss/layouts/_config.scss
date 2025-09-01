@@ -6,6 +6,11 @@
   column-gap: var.$space-lg;
   padding: 0 var.$space-md;
 
+  @media (max-width: var.$tablet) {
+    flex-direction: column;
+    row-gap: var.$space-lg;
+  }
+
   &__tab {
     &--active {
       background-color: var.$lightPurple;
