@@ -10,11 +10,11 @@ export default function useDateFilter() {
   const [endDate, setEndDate] = useQueryParam("endDate", StringParam);
 
   const handleInitialDate = (date: string) => {
-    setInitialDate(date === "" ? undefined : date, "replaceIn");
+    setInitialDate(date === "" ? undefined : date, "replace");
   };
 
   const handleEndDate = (date: string) => {
-    setEndDate(date === "" ? undefined : date, "replaceIn");
+    setEndDate(date === "" ? undefined : date, "replace");
   };
 
   const cleanDateFilter = () => {

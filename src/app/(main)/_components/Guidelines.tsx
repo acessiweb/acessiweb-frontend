@@ -308,8 +308,8 @@ export default function Guidelines({
                 handleInitialDate={handleInitialDate}
                 initialDate={initialDate}
                 cleanDateFilter={() => {
-                  deleteFilter("creation-date");
                   cleanDateFilter();
+                  deleteFilter("creation-date");
                 }}
               />
             )}

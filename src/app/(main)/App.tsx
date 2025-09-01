@@ -14,6 +14,7 @@ import Push from "@/components/Push";
 import PrefsProvider from "@/context/prefs";
 import { QueryParamProvider } from "use-query-params";
 import NextAdapterApp from "next-query-params/app";
+import { Suspense } from "react";
 
 const queryClient = new QueryClient();
 
@@ -24,27 +25,31 @@ export default function App({ children }: { children?: React.ReactNode }) {
 
   return (
     <div id="app">
-      <QueryParamProvider adapter={NextAdapterApp}>
-        <QueryClientProvider client={queryClient}>
-          <SessionProvider>
-            <CartProvider>
-              <PrefsProvider>
-                <div className="content">
-                  {isTablet || isMobile ? (
-                    <HeaderMobile />
-                  ) : (
-                    <HeaderDesktop onToggleKeyboard={toggleKeyboard} />
-                  )}
-                  <main>{children}</main>
-                  {showKeyboard && <Keyboard isKeyboardOpened={showKeyboard} />}
-                </div>
-                {(isTablet || isMobile) && <FooterMobile />}
-                {showPush && <Push />}
-              </PrefsProvider>
-            </CartProvider>
-          </SessionProvider>
-        </QueryClientProvider>
-      </QueryParamProvider>
+      <Suspense>
+        <QueryParamProvider adapter={NextAdapterApp}>
+          <QueryClientProvider client={queryClient}>
+            <SessionProvider>
+              <CartProvider>
+                <PrefsProvider>
+                  <div className="content">
+                    {isTablet || isMobile ? (
+                      <HeaderMobile />
+                    ) : (
+                      <HeaderDesktop onToggleKeyboard={toggleKeyboard} />
+                    )}
+                    <main>{children}</main>
+                    {showKeyboard && (
+                      <Keyboard isKeyboardOpened={showKeyboard} />
+                    )}
+                  </div>
+                  {(isTablet || isMobile) && <FooterMobile />}
+                  {showPush && <Push />}
+                </PrefsProvider>
+              </CartProvider>
+            </SessionProvider>
+          </QueryClientProvider>
+        </QueryParamProvider>
+      </Suspense>
     </div>
   );
 }
