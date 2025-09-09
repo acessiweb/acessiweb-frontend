@@ -41,15 +41,15 @@ export default function Login({ searchParams }: LoginProps) {
     mode: "onBlur",
   });
 
-  const loginWithGoogle = () => {
-    signIn("google", {
+  const loginWithGoogle = async () => {
+    await signIn("google", {
       callbackUrl: "/",
       redirect: true,
     });
   };
 
-  const loginWithGithub = () => {
-    signIn("github", {
+  const loginWithGithub = async () => {
+    await signIn("github", {
       callbackUrl: "/",
       redirect: true,
     });

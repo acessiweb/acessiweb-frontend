@@ -27,6 +27,29 @@ export async function middleware(req: NextRequest) {
   const homepageUrl = new URL("/", req.url);
   const loginUrl = new URL("/auth/logar", req.url);
   const accountUrl = new URL("/config/conta", req.url);
+  const flag = req.cookies.get("errorProcessed")?.value;
+
+  const token = await getToken({
+    req,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
+
+  if (
+    token &&
+    !flag &&
+    !pathname.includes("auth/logar") &&
+    ["GoogleAuthError", "RefreshTokenExpired"].includes(token.error)
+  ) {
+    const res = NextResponse.redirect(
+      new URL(`/auth/logar?error=${token?.error}`, req.url)
+    );
+    res.cookies.set("errorProcessed", "true", {
+      path: "/",
+      httpOnly: true,
+    });
+
+    return res;
+  }
 
   // ignora rotas públicas
   if (
@@ -36,25 +59,11 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  const token = await getToken({
-    req,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
-
-  if (
-    !pathname.includes("auth/logar") &&
-    ["GoogleAuthError", "RefreshTokenExpired"].includes(token?.error)
-  ) {
-    return NextResponse.redirect(
-      new URL(`/auth/logar?error=${token?.error}`, req.url)
-    );
-  }
-
   if (pathname.startsWith("/admin") && !isAdmin(token?.data?.user?.role)) {
     return NextResponse.redirect(homepageUrl);
   }
 
-  if (pathname === "/config") {
+  if (pathname === "/config" && token) {
     return NextResponse.redirect(accountUrl);
   }
 

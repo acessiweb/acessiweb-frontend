@@ -80,6 +80,9 @@ const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     }),
   ],
+  pages: {
+    signIn: "/auth/logar",
+  },
   callbacks: {
     async jwt({ token, account, user }) {
       if (user && account) {
@@ -97,7 +100,6 @@ const authOptions: NextAuthOptions = {
 
           return {
             ...token,
-            data: {} as User,
             error: "GoogleAuthError",
           };
         }
@@ -140,14 +142,9 @@ const authOptions: NextAuthOptions = {
 
           return { ...token, data: user };
         }
-
-        return { ...token };
       }
 
-      return {
-        ...token,
-        error: "",
-      };
+      return token;
     },
     async session({ session, token }) {
       session.user = token.data.user;

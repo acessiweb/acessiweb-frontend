@@ -522,8 +522,6 @@ function useGuidelinesSecPage({
   const handleEditSecPage = async (id: string) => {
     const res = await getGuideline(id);
 
-    console.log(res);
-
     if (res.ok && "data" in res) {
       let fullScreenLink = "";
 
