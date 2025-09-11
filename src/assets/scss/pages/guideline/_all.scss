@@ -80,6 +80,24 @@ $SCREEN_SIZE: 600px;
   }
 }
 
+.two-pages .guidelines,
+.two-pages .requests {
+  .guidelines-filters {
+    .deficiences-checkbox {
+      &__group {
+        flex: 4;
+        gap: var.$space-md;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(auto, 90px));
+
+        > div:nth-child(5) {
+          grid-column: span 2;
+        }
+      }
+    }
+  }
+}
+
 .guidelines {
   .guidelines-filters {
     @media (min-width: $SCREEN_SIZE) {

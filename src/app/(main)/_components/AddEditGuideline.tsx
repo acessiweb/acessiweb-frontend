@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import InputTextVoice from "@/components/InputTextVoice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Code from "@/components/Code";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import FileInput from "@/components/FileInput";
 import GuidelinesDeficiencesFilter from "@/components/DeficiencesCheckbox";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -36,6 +36,15 @@ export default function AddEditGuideline({
   guideline,
   isRequest,
 }: AddEditGuidelineProps) {
+  const guideName = useMemo(() => guideline?.name, [guideline?.name]);
+  const desc = useMemo(() => guideline?.description, [guideline?.description]);
+  const deficiences = useMemo(
+    () => guideline?.deficiences?.map((def) => def.name),
+    [guideline?.deficiences]
+  );
+  const guideImage = useMemo(() => guideline?.image, [guideline?.image]);
+  const imageDesc = useMemo(() => guideline?.imageDesc, [guideline?.imageDesc]);
+
   const {
     handleHearing,
     handleMotor,
@@ -59,9 +68,11 @@ export default function AddEditGuideline({
   } = useForm<CreateEditGuidelineSchema>({
     resolver: zodResolver(createEditGuidelineSchema),
     defaultValues: {
-      guideName: guideline?.name,
-      imageDesc: guideline?.imageDesc || "",
-      desc: guideline?.description,
+      guideName,
+      desc,
+      deficiences,
+      guideImage,
+      imageDesc,
     },
   });
   const [filename, setFilename] = useState("");
@@ -72,16 +83,6 @@ export default function AddEditGuideline({
   const { handleApiErrors, handleUniqueMsg, errorMsgs, isAlert } = useErrors();
   const guidelineImage = watch("guideImage");
   const guidelineName = watch("guideName");
-  setValue("deficiences", [hearing, visual, motor, neural, tea]);
-
-  useEffect(() => {
-    if (guideline) {
-      setValue("guideName", guideline.name);
-      setValue("guideImage", guideline.image);
-      setValue("desc", guideline.description);
-      setValue("imageDesc", guideline.imageDesc);
-    }
-  }, [guideline, setValue]);
 
   useEffect(() => {
     if (isSecPage && handleSecPageTitle) {
@@ -93,7 +94,7 @@ export default function AddEditGuideline({
 
   useEffect(() => {
     if (guidelineImage instanceof FileList) {
-      setFilename(guidelineImage[0]?.name || "");
+      setFilename(guidelineImage[0].name);
     }
   }, [guidelineImage, setFilename]);
 
@@ -129,7 +130,7 @@ export default function AddEditGuideline({
 
       formData.append("name", data.guideName);
       formData.append("desc", data.desc);
-      formData.append("image", data.guideImage[0]);
+      formData.append("image", data.guideImage ? data.guideImage[0] : null);
       formData.append("imageDesc", data.imageDesc!);
       formData.append("deficiences", JSON.stringify(data.deficiences));
       formData.append("code", code);

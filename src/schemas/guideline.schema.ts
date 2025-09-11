@@ -19,12 +19,12 @@ const guideImage = z
   .any()
   .optional()
   .refine(
-    (files) => !files[0]?.size || files[0]?.size <= 5000000,
+    (files) => files === null || files[0].size <= 5000000,
     "O tamanho máximo permitido para imagem é de 5MB"
   )
   .refine(
     (files) =>
-      !files[0]?.size || ["image/jpeg", "image/png"].includes(files[0]?.type),
+      files === null || ["image/jpeg", "image/png"].includes(files[0].type),
     "Apenas imagem permitido"
   );
 
