@@ -42,7 +42,6 @@ export default function AddEditGuideline({
     () => guideline?.deficiences?.map((def) => def.name),
     [guideline?.deficiences]
   );
-  const guideImage = useMemo(() => guideline?.image, [guideline?.image]);
   const imageDesc = useMemo(() => guideline?.imageDesc, [guideline?.imageDesc]);
 
   const {
@@ -71,7 +70,6 @@ export default function AddEditGuideline({
       guideName,
       desc,
       deficiences,
-      guideImage,
       imageDesc,
     },
   });
@@ -93,7 +91,7 @@ export default function AddEditGuideline({
   }, [handleSecPageTitle, isEditPage, guidelineName, isSecPage]);
 
   useEffect(() => {
-    if (guidelineImage instanceof FileList) {
+    if (guidelineImage instanceof FileList && guidelineImage.length !== 0) {
       setFilename(guidelineImage[0].name);
     }
   }, [guidelineImage, setFilename]);
