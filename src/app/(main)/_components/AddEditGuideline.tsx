@@ -131,7 +131,10 @@ export default function AddEditGuideline({
       formData.append("image", data.guideImage ? data.guideImage[0] : null);
       formData.append("imageDesc", data.imageDesc!);
       formData.append("deficiences", JSON.stringify(data.deficiences));
-      formData.append("code", code);
+      formData.append(
+        "code",
+        isEditPage && guideline?.code ? guideline.code : code
+      );
 
       if (sessionData && sessionData.user && sessionData.user.id) {
         const res =
