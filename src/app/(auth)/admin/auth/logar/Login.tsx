@@ -3,7 +3,6 @@
 import InputTextVoice from "@/components/InputTextVoice";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useErrorMsgs from "@/hooks/useErrors";
 import { signIn } from "next-auth/react";
 import { Params } from "@/types/params";
 import { adminLoginSchema, AdminLoginSchema } from "@/schemas/user.schema";
@@ -14,6 +13,7 @@ import Errors from "@/components/Errors";
 import { AlertMsgs } from "@/types/error";
 import { useState } from "react";
 import LoaderBorder from "@/components/LoaderBorder";
+import useErrors from "@/hooks/useErrors";
 
 type LoginProps = Params;
 
@@ -21,7 +21,7 @@ export default function Login({ searchParams }: LoginProps) {
   const router = useRouter();
   const { hide, handlePassword } = usePassword();
   const [isLoading, setIsLoading] = useState(false);
-  const { errorMsgs, handleApiErrors, isAlert } = useErrorMsgs({
+  const { errorMsgs, handleApiErrors, isAlert } = useErrors({
     alertMsg: searchParams.error as AlertMsgs,
   });
   const {
@@ -41,7 +41,7 @@ export default function Login({ searchParams }: LoginProps) {
 
     setIsLoading(true);
 
-    const result = await signIn("credentials", {
+    const res = await signIn("credentials", {
       ...values,
       isAdmin: true,
       redirect: false,
@@ -49,8 +49,8 @@ export default function Login({ searchParams }: LoginProps) {
 
     setIsLoading(false);
 
-    if (result && result.error) {
-      handleApiErrors(JSON.parse(result.error));
+    if (res && !res.ok && res.error) {
+      handleApiErrors(JSON.parse(res.error));
     } else {
       reset();
       router.push("/admin");

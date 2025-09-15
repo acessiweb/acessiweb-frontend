@@ -65,7 +65,7 @@ const authOptions: NextAuthOptions = {
         }
 
         if (!response.ok && "errors" in response) {
-          throw new Error(JSON.stringify(response.errors));
+          throw new Error(JSON.stringify(response));
         }
 
         throw new Error("Ocorreu um erro.");

@@ -2,6 +2,7 @@
 
 import { AlertMsgs } from "@/types/error";
 import { ApiError } from "@/types/fetch";
+import { SignInResponse } from "next-auth/react";
 import { useState } from "react";
 
 type ErrorsProps = {
@@ -35,11 +36,15 @@ export default function useErrors({ alertMsg }: ErrorsProps = {}) {
     setErrorMsgs([err]);
   };
 
-  const handleApiErrors = (err: ApiError) => {
+  const handleApiErrors = (err: ApiError | SignInResponse) => {
     const errs = [];
-    for (const e of err.errors) {
-      errs.push(e.message);
+
+    if ("errors" in err) {
+      for (const e of err.errors) {
+        errs.push(e.message);
+      }
     }
+
     setErrorMsgs(errs);
   };
 
