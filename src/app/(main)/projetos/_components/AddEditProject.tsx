@@ -8,7 +8,7 @@ import useErrors from "@/hooks/useErrors";
 import Errors from "@/components/Errors";
 import { Project } from "@/types/project";
 import { Page } from "@/types/page";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useCart } from "@/context/cart";
 import Link from "next/link";
 import useSecPage from "@/hooks/useSecPage";
@@ -33,6 +33,7 @@ import Card from "@/components/Card";
 import useModal from "@/hooks/useModal";
 import { createPortal } from "react-dom";
 import GuidelinesPage from "@/app/(main)/_components/Guidelines";
+import { IoCloseOutline } from "react-icons/io5";
 
 type AddEditProjectProps = Page & {
   project?: Project;
@@ -45,6 +46,11 @@ export default function AddEditProject({
   project,
   handleSecPageTitle,
 }: AddEditProjectProps) {
+  const projName = useMemo(() => project?.name, [project?.name]);
+  const projDesc = useMemo(() => project?.description, [project?.description]);
+  const projGuides = useMemo(() => project?.guidelines, [project?.guidelines]);
+  const projFeedback = useMemo(() => project?.feedback, [project?.feedback]);
+
   const {
     cart,
     removeGuidelineOfCart,
@@ -69,7 +75,7 @@ export default function AddEditProject({
 
   const { isDesktop } = useScreenType();
 
-  const { isModalOpen, showModal, modalRef } = useModal();
+  const { isModalOpen, showModal, modalRef, hideModal } = useModal();
 
   const {
     register,
@@ -82,10 +88,10 @@ export default function AddEditProject({
   } = useForm<EditProjectSchema | CreateProjectSchema>({
     resolver: zodResolver(isEditPage ? editProjectSchema : createProjectSchema),
     defaultValues: {
-      projName: cart && !isEditPage ? cart.name : project?.name,
-      desc: cart && !isEditPage ? cart.description : project?.description,
-      guidelines: cart && !isEditPage ? cart.guidelines : project?.guidelines,
-      feedback: project?.feedback || "",
+      projName: cart && !isEditPage ? cart.name : projName,
+      desc: cart && !isEditPage ? cart.description : projDesc,
+      guidelines: cart && !isEditPage ? cart.guidelines : projGuides,
+      feedback: projFeedback || "",
     },
   });
 
@@ -94,15 +100,6 @@ export default function AddEditProject({
   const router = useRouter();
   const projectName = watch("projName");
   const { data: session } = useSession();
-
-  useEffect(() => {
-    if (project) {
-      setValue("projName", project.name);
-      setValue("desc", project.description);
-      setValue("feedback", project.feedback);
-      setValue("guidelines", project.guidelines);
-    }
-  }, [project, setValue]);
 
   useEffect(() => {
     if (handleSecPageTitle) {
@@ -281,6 +278,13 @@ export default function AddEditProject({
                     aria-modal={true}
                     id="guidelines-modal"
                   >
+                    <button
+                      style={{ position: "absolute" }}
+                      className="btn-default"
+                      onClick={hideModal}
+                    >
+                      <IoCloseOutline />
+                    </button>
                     <GuidelinesPage
                       isAdmin={false}
                       isRequest={false}

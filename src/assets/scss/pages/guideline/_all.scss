@@ -2,14 +2,6 @@
 
 $SCREEN_SIZE: 600px;
 
-.modal .guidelines {
-  margin-top: calc(var.$space-xl + 10rem);
-
-  @media (max-width: var.$tablet) {
-    margin-top: var.$space-sm;
-  }
-}
-
 .modal {
   &:has(.guidelines) {
     top: 50%;

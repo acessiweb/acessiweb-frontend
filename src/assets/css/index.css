@@ -872,7 +872,7 @@ button {
   display: flex;
   z-index: 1000;
   width: max-content;
-  max-width: 80vw;
+  max-width: 95vw;
   height: max-content;
   max-height: 95vh;
   margin-left: auto;
@@ -1447,15 +1447,6 @@ button {
   column-gap: 0.7rem;
 }
 
-.modal .guidelines {
-  margin-top: 13rem;
-}
-
-@media (max-width: 890px) {
-  .modal .guidelines {
-    margin-top: 0.7rem;
-  }
-}
 .modal:has(.guidelines) {
   top: 50%;
   left: 50%;
