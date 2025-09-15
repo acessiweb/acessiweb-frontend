@@ -1503,7 +1503,7 @@ button {
 
 .guidelines .guidelines-filters .deficiences-checkbox > div:first-of-type,
 .requests .guidelines-filters .deficiences-checkbox > div:first-of-type {
-  width: 5%;
+  width: 50px;
 }
 
 @media (min-width: 600px) {
@@ -1515,8 +1515,10 @@ button {
 .guidelines .guidelines-filters .deficiences-checkbox__group,
 .requests .guidelines-filters .deficiences-checkbox__group {
   display: flex;
-  width: 95%;
+  width: calc(95% - 50px);
+  row-gap: 1.5rem;
   column-gap: 1.3rem;
+  width: max-content;
 }
 
 @media (max-width: 599px) {

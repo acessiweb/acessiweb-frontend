@@ -50,7 +50,7 @@ $SCREEN_SIZE: 600px;
       margin-left: var.$space-sm;
 
       > div:first-of-type {
-        width: 5%;
+        width: 50px;
 
         @media (min-width: $SCREEN_SIZE) {
           display: none;
@@ -59,8 +59,10 @@ $SCREEN_SIZE: 600px;
 
       &__group {
         display: flex;
-        width: 95%;
+        width: calc(95% - 50px);
+        row-gap: calc(var.$space-md + 0.4rem);
         column-gap: calc(var.$space-md + 0.2rem);
+        width: max-content;
 
         @media (max-width: calc($SCREEN_SIZE - 1px)) {
           display: grid;
