@@ -38,7 +38,6 @@ import StatusBtn from "@/components/card/Status";
 import { BsSend } from "react-icons/bs";
 import Guideline from "./Guideline";
 import AddEditGuideline from "./AddEditGuideline";
-import RemovedFilter from "@/components/RemovedFilter";
 import { usePush } from "@/context/push";
 import Card from "@/components/Card";
 import Loader from "@/components/Loader";
@@ -185,13 +184,6 @@ export default function Guidelines({
       },
     ];
 
-    if (isAdmin) {
-      fo.push({
-        id: "deleted",
-        desc: "Removidas",
-      });
-    }
-
     return fo;
   }, [isAdmin]);
 
@@ -233,7 +225,7 @@ export default function Guidelines({
           filtersOptions={filterOptions}
           handleFilters={handleFiltersChosen}
           handleFiltering={handleFiltering}
-          showMoreOptions={isRequest && isAdmin}
+          showMoreOptions={!isRequest && isAdmin}
           moreOptions={["Buscar por removidas"]}
         />
         <h1 className="heading-1" id="page-heading">
@@ -311,12 +303,6 @@ export default function Guidelines({
                   cleanDateFilter();
                   deleteFilter("creation-date");
                 }}
-              />
-            )}
-            {isFilterApplied("deleted") && (
-              <RemovedFilter
-                desc="Diretrizes removidas"
-                onClick={() => deleteFilter("deleted")}
               />
             )}
           </FiltersApplied>

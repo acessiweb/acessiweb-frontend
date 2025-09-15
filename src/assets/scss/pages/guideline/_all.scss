@@ -29,24 +29,28 @@ $SCREEN_SIZE: 600px;
     display: flex;
     flex-direction: column;
     row-gap: var.$space-md;
-    flex: 1;
 
     &__search-wrapper {
       display: flex;
       justify-content: space-between;
       column-gap: var.$space-sm;
+      align-items: center;
 
       .search {
         width: 60%;
       }
+
+      .btn-default {
+        padding: var.$space-sm;
+      }
     }
 
     .deficiences-checkbox {
-      flex: 1;
       display: flex;
+      margin-left: var.$space-sm;
 
       > div:first-of-type {
-        flex: 1;
+        width: 5%;
 
         @media (min-width: $SCREEN_SIZE) {
           display: none;
@@ -54,8 +58,9 @@ $SCREEN_SIZE: 600px;
       }
 
       &__group {
-        flex: 4;
-        gap: var.$space-md;
+        display: flex;
+        width: 95%;
+        column-gap: calc(var.$space-md + 0.2rem);
 
         @media (max-width: calc($SCREEN_SIZE - 1px)) {
           display: grid;
@@ -71,27 +76,13 @@ $SCREEN_SIZE: 600px;
         }
 
         > div {
+          display: flex;
+          column-gap: var.$space-xs;
+          align-items: center;
+
           label {
             margin-left: var.$space-xs;
           }
-        }
-      }
-    }
-  }
-}
-
-.two-pages .guidelines,
-.two-pages .requests {
-  .guidelines-filters {
-    .deficiences-checkbox {
-      &__group {
-        flex: 4;
-        gap: var.$space-md;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(auto, 90px));
-
-        > div:nth-child(5) {
-          grid-column: span 2;
         }
       }
     }
@@ -134,19 +125,40 @@ $SCREEN_SIZE: 600px;
       text-align: start;
     }
 
-    .guidelines-filters {
-      &__form {
-        &__guideline-checkbox-group {
-          margin-left: 10px;
-        }
-      }
-    }
-
     .guidelines-filters,
     .guidelines-filters > div:first-of-type,
     .guidelines-filters > div:first-of-type .search {
       margin: 0;
-      flex: 1;
+    }
+  }
+
+  .guidelines-filters {
+    &__search-wrapper {
+      display: flex;
+      justify-content: space-between;
+      column-gap: var.$space-sm;
+      align-items: center;
+
+      .search {
+        width: auto;
+        flex: 1;
+      }
+    }
+
+    .deficiences-checkbox {
+      > div:first-of-type {
+        display: block;
+      }
+
+      &__group {
+        gap: var.$space-md;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(auto, 90px));
+
+        > div:nth-child(5) {
+          grid-column: span 2;
+        }
+      }
     }
   }
 }
