@@ -34,6 +34,7 @@ import useModal from "@/hooks/useModal";
 import { createPortal } from "react-dom";
 import GuidelinesPage from "@/app/(main)/_components/Guidelines";
 import { IoCloseOutline } from "react-icons/io5";
+import { SlTrash } from "react-icons/sl";
 
 type AddEditProjectProps = Page & {
   project?: Project;
@@ -208,11 +209,13 @@ export default function AddEditProject({
               isLink={!isDesktop}
               readRoute={`/diretrizes/${guide.id}`}
             >
-              <DeleteBtn
-                onDelete={() => removeGuidelineOfCart(guide.id)}
-                registerId=""
-                registerName=""
-              ></DeleteBtn>
+              <button type="button" onClick={() => handleDelete(guide.id)}>
+                <SlTrash
+                  className="cursor-pointer"
+                  aria-hidden={true}
+                  focusable={false}
+                />
+              </button>
             </Card>
           </div>
         ))}
@@ -223,9 +226,25 @@ export default function AddEditProject({
   const handleAdd = (id: string, name: string) => {
     const guides = [...(getValues("guidelines") || [])];
 
-    guides.push({ id, name });
+    const guide = guides.find((g) => g.id === id);
 
-    setValue("guidelines", guides);
+    if (!guide) {
+      guides.push({ id, name });
+      setValue("guidelines", guides);
+      setShowPush(true);
+      setPushMsg("Diretriz incluída com sucesso");
+    } else {
+      setShowPush(true);
+      setPushMsg("Essa diretriz já foi incluída");
+    }
+  };
+
+  const handleDelete = (id: string) => {
+    const guides = [...(getValues("guidelines") || [])];
+
+    const newGuides = guides.filter((g) => g.id !== id);
+
+    setValue("guidelines", newGuides);
   };
 
   return (
@@ -382,10 +401,12 @@ export default function AddEditProject({
               }
             />
           )}
+          {guidelinesShown && !isEditPage && cart?.guidelines.length === 0 && (
+            <div>Ainda não foram selecionadas diretrizes para esse projeto</div>
+          )}
           {guidelinesShown &&
-            (cart?.guidelines.length === 0 ||
-              (getValues("guidelines")?.length === 0 &&
-                project?.guidelines.length === 0)) && (
+            isEditPage &&
+            getValues("guidelines")?.length === 0 && (
               <div>
                 Ainda não foram selecionadas diretrizes para esse projeto
               </div>
