@@ -1603,10 +1603,9 @@ button {
 }
 
 .read-guideline__deficiences {
-  margin-top: 1.1rem;
+  margin: 1.1rem 0.3rem;
   display: flex;
-  flex-direction: column;
-  row-gap: 1.1rem;
+  column-gap: 1.9rem;
 }
 
 .read-guideline__deficiences > div {
@@ -1661,6 +1660,22 @@ button {
 }
 
 .read-guideline__situation__status-msg {
+  margin-top: 0.7rem;
+}
+
+.read-guideline__graphic {
+  display: flex;
+  column-gap: 1.1rem;
+  padding-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.read-guideline__graphic .code,
+.read-guideline__graphic .read-guideline__img-wrapper {
+  width: 50%;
+}
+
+.read-guideline .heading-3 {
   margin-top: 0.7rem;
 }
 

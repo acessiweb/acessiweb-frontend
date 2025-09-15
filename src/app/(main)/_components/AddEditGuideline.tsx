@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Code from "@/components/Code";
 import { useEffect, useMemo, useState } from "react";
 import FileInput from "@/components/FileInput";
-import GuidelinesDeficiencesFilter from "@/components/DeficiencesCheckbox";
+import DeficiencesCheckbox from "@/components/DeficiencesCheckbox";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { useSession } from "next-auth/react";
 import { usePush } from "@/context/push";
@@ -56,7 +56,9 @@ export default function AddEditGuideline({
     tea,
     visual,
   } = useDeficiencyFilters({ defaultValues: guideline?.deficiences });
+
   const { data: sessionData } = useSession();
+
   const {
     register,
     handleSubmit,
@@ -73,6 +75,7 @@ export default function AddEditGuideline({
       imageDesc,
     },
   });
+
   const [filename, setFilename] = useState("");
   const { setPushMsg, setShowPush } = usePush();
   const router = useRouter();
@@ -130,7 +133,10 @@ export default function AddEditGuideline({
       formData.append("desc", data.desc);
       formData.append("image", data.guideImage ? data.guideImage[0] : null);
       formData.append("imageDesc", data.imageDesc!);
-      formData.append("deficiences", JSON.stringify(data.deficiences));
+      formData.append(
+        "deficiences",
+        JSON.stringify([hearing, visual, motor, neural, tea])
+      );
       formData.append(
         "code",
         isEditPage && guideline?.code ? guideline.code : code
@@ -293,7 +299,7 @@ export default function AddEditGuideline({
         )}
         <div className="add-guideline__deficiences-container">
           <span>Selecione quais deficiências essa diretriz engloba:</span>
-          <GuidelinesDeficiencesFilter
+          <DeficiencesCheckbox
             onHearingChange={handleHearing}
             onMotorChange={handleMotor}
             onNeuralChange={handleNeural}

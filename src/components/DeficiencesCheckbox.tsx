@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useMemo } from "react";
 
 type DeficiencesCheckboxProps = {
   onVisualChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -13,6 +13,11 @@ type DeficiencesCheckboxProps = {
   tea: string;
 };
 
+function getRandom(name: string) {
+  const random = Math.random();
+  return `${name}-${random}`;
+}
+
 export default function DeficiencesCheckbox({
   onHearingChange,
   onMotorChange,
@@ -25,6 +30,12 @@ export default function DeficiencesCheckbox({
   tea,
   visual,
 }: DeficiencesCheckboxProps) {
+  const visualId = useMemo(() => getRandom("visual"), []);
+  const teaId = useMemo(() => getRandom("tea"), []);
+  const motorId = useMemo(() => getRandom("motor"), []);
+  const hearingId = useMemo(() => getRandom("hearing"), []);
+  const neuralId = useMemo(() => getRandom("neural"), []);
+
   return (
     <div className="deficiences-checkbox">
       <div></div>
@@ -37,61 +48,61 @@ export default function DeficiencesCheckbox({
           <input
             className="input-checkbox"
             type="checkbox"
-            id="visual"
-            name="visual"
+            id={visualId}
+            name={visualId}
             value="Visual"
             checked={!!visual}
             onChange={onVisualChange}
           />
-          <label htmlFor="visual"> Visual</label>
+          <label htmlFor={visualId}> Visual</label>
         </div>
         <div>
           <input
             className="input-checkbox"
             type="checkbox"
-            id="tea"
-            name="tea"
+            id={teaId}
+            name={teaId}
             value="TEA"
             checked={!!tea}
             onChange={onTeaChange}
           />
-          <label htmlFor="tea"> TEA</label>
+          <label htmlFor={teaId}> TEA</label>
         </div>
         <div>
           <input
             className="input-checkbox"
             type="checkbox"
-            id="motor"
-            name="motor"
+            id={motorId}
+            name={motorId}
             value="Motora"
             checked={!!motor}
             onChange={onMotorChange}
           />
-          <label htmlFor="motor"> Motora</label>
+          <label htmlFor={motorId}> Motora</label>
         </div>
         <div>
           <input
             className="input-checkbox"
             type="checkbox"
-            id="hearing"
-            name="hearing"
+            id={hearingId}
+            name={hearingId}
             value="Auditiva"
             checked={!!hearing}
             onChange={onHearingChange}
           />
-          <label htmlFor="hearing"> Auditiva</label>
+          <label htmlFor={hearingId}> Auditiva</label>
         </div>
         <div>
           <input
             className="input-checkbox"
             type="checkbox"
-            id="neural"
-            name="neural"
+            id={neuralId}
+            name={neuralId}
             checked={!!neural}
             value="Cognitiva e neural"
             onChange={onNeuralChange}
           />
-          <label htmlFor="neural"> Cognitiva e neural</label>
+          <label htmlFor={neuralId}> Cognitiva e neural</label>
         </div>
       </div>
     </div>

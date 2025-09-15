@@ -1,64 +1,42 @@
-"use client";
-
-import { FilterHandler } from "@/types/filter";
-import { ChangeEvent } from "react";
-import { StringParam, useQueryParams, withDefault } from "use-query-params";
-
-function findDeficiency(
-  deficiency: string,
-  defaultValues?: { id: string; name: string }[]
-): string {
-  if (defaultValues && defaultValues.length > 0) {
-    const found = defaultValues.find(
-      (val) => val.name.toLowerCase() === deficiency.toLowerCase()
-    );
-    if (found) return found.name;
-  }
-  return "";
-}
-
-type DeficiencyFiltersProps = Partial<FilterHandler> & {
-  defaultValues?: { id: string; name: string }[] | undefined;
-};
+import { DeficiencyFiltersProps } from "@/types/deficiency";
+import { findDeficiency } from "@/utils/find-deficiency";
+import { ChangeEvent, useState } from "react";
 
 export default function useDeficiencyFilters({
   defaultValues,
-  handleFiltering,
 }: DeficiencyFiltersProps) {
-  const [filters, setFilters] = useQueryParams({
-    visual: withDefault(StringParam, findDeficiency("visual", defaultValues)),
-    motor: withDefault(StringParam, findDeficiency("motora", defaultValues)),
-    hearing: withDefault(
-      StringParam,
-      findDeficiency("auditiva", defaultValues)
-    ),
-    neural: withDefault(
-      StringParam,
-      findDeficiency("cognitiva e neural", defaultValues)
-    ),
-    tea: withDefault(StringParam, findDeficiency("tea", defaultValues)),
+  const [visual, setVisual] = useState(() => {
+    return findDeficiency("visual", defaultValues);
+  });
+  const [motor, setMotor] = useState(() => {
+    return findDeficiency("motora", defaultValues);
+  });
+  const [hearing, setHearing] = useState(() => {
+    return findDeficiency("auditiva", defaultValues);
+  });
+  const [neural, setNeural] = useState(() => {
+    return findDeficiency("cognitiva e neural", defaultValues);
+  });
+  const [tea, setTea] = useState(() => {
+    return findDeficiency("tea", defaultValues);
   });
 
   const createHandlerCheckbox =
-    (filterKey: keyof typeof filters) => (e: ChangeEvent<HTMLInputElement>) => {
+    (setter: (value: string) => void) => (e: ChangeEvent<HTMLInputElement>) => {
       const checked = e.target.checked;
-      setFilters(
-        { [filterKey]: checked ? e.target.value : undefined },
-        "replaceIn"
-      );
-      handleFiltering?.(true);
+      setter(checked ? e.target.value : "");
     };
 
   return {
-    visual: filters.visual,
-    handleVisual: createHandlerCheckbox("visual"),
-    motor: filters.motor,
-    handleMotor: createHandlerCheckbox("motor"),
-    hearing: filters.hearing,
-    handleHearing: createHandlerCheckbox("hearing"),
-    neural: filters.neural,
-    handleNeural: createHandlerCheckbox("neural"),
-    tea: filters.tea,
-    handleTea: createHandlerCheckbox("tea"),
+    visual,
+    handleVisual: createHandlerCheckbox(setVisual),
+    motor,
+    handleMotor: createHandlerCheckbox(setMotor),
+    hearing,
+    handleHearing: createHandlerCheckbox(setHearing),
+    neural,
+    handleNeural: createHandlerCheckbox(setNeural),
+    tea,
+    handleTea: createHandlerCheckbox(setTea),
   };
 }

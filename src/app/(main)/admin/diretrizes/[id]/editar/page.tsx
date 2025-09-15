@@ -28,6 +28,7 @@ export default async function Page({ params }: PageProps) {
           },
         ]}
         isRequest={false}
+        isEditPage={true}
       />
     );
   }

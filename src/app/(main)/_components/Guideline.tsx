@@ -27,25 +27,6 @@ export default function Guideline({
     <div className="read-page read-guideline">
       {!isSecPage && crumbs && <Breadcrumb crumbs={crumbs} />}
       <h1 className="heading-1">{guideline.name}</h1>
-      <p>{guideline.description}</p>
-      {guideline.code && (
-        <Code
-          code={guideline.code || ""}
-          editable={false}
-          handleCode={() => {}}
-        />
-      )}
-      {guideline && guideline.image && guideline.imageDesc && (
-        <div className="read-guideline__img-wrapper">
-          <Image
-            loader={() => imageKitLoader(guideline.image!)}
-            src={guideline.image}
-            alt={guideline.imageDesc}
-            width={600}
-            height={1000}
-          />
-        </div>
-      )}
       <div className="read-guideline__deficiences">
         {guideline.deficiences?.map((def, i) => (
           <div key={i}>
@@ -53,6 +34,29 @@ export default function Guideline({
             <span>{def.name}</span>
           </div>
         ))}
+      </div>
+      <p>{guideline.description}</p>
+      <h3 className="heading-3">Exemplo de implementação: </h3>
+      <div className="read-guideline__graphic">
+        {guideline.code && (
+          <Code
+            code={guideline.code || ""}
+            editable={false}
+            handleCode={() => {}}
+          />
+        )}
+
+        {guideline && guideline.image && guideline.imageDesc && (
+          <div className="read-guideline__img-wrapper">
+            <Image
+              loader={() => imageKitLoader(guideline.image!)}
+              src={guideline.image}
+              alt={guideline.imageDesc}
+              width={600}
+              height={1000}
+            />
+          </div>
+        )}
       </div>
       {isRequest && (
         <div className="read-guideline__situation">

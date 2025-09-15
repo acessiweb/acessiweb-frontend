@@ -7,7 +7,6 @@ import { FilterOptions } from "@/types/filter";
 import { useMemo } from "react";
 import { Guideline as GuidelineType } from "@/types/guideline";
 import useSearch from "@/hooks/useSearch";
-import useDeficiencyFilters from "@/hooks/useDeficiencyFilters";
 import useDateFilter from "@/hooks/useDateFilter";
 import { useScreenType } from "@/hooks/useScreenType";
 import { useCart } from "@/context/cart";
@@ -45,6 +44,7 @@ import Card from "@/components/Card";
 import Loader from "@/components/Loader";
 import RequestAnalyze from "../admin/solicitacoes/[id]/analisar/Request";
 import RestoreBtn from "@/components/card/Restore";
+import useDeficiencyFiltersQuery from "@/hooks/useDeficiencyFiltersQuery";
 
 type GuidelinesProps = {
   isRequest: boolean;
@@ -105,7 +105,7 @@ export default function Guidelines({
     neural,
     tea,
     visual,
-  } = useDeficiencyFilters({
+  } = useDeficiencyFiltersQuery({
     handleFiltering,
   });
 
@@ -527,7 +527,7 @@ function useGuidelinesSecPage({
 
       if (!isAdmin && isRequest) fullScreenLink = `/solicitacoes/editar/${id}`;
       if (isAdmin && !isRequest)
-        fullScreenLink = `/admin/diretrizes/editar/${id}`;
+        fullScreenLink = `/admin/diretrizes/${id}/editar`;
       if (isAdmin && isRequest)
         fullScreenLink = `/admin/solicitacoes/${id}/analisar`;
 

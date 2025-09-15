@@ -13,10 +13,9 @@
   }
 
   &__deficiences {
-    margin-top: var.$space-md;
+    margin: var.$space-md var.$space-xs;
     display: flex;
-    flex-direction: column;
-    row-gap: var.$space-md;
+    column-gap: var.$space-lg;
 
     > div {
       display: flex;
@@ -72,6 +71,22 @@
     &__status-msg {
       margin-top: var.$space-sm;
     }
+  }
+
+  &__graphic {
+    display: flex;
+    column-gap: var.$space-md;
+    padding-bottom: var.$space-xl;
+    flex-wrap: wrap;
+
+    .code,
+    .read-guideline__img-wrapper {
+      width: 50%;
+    }
+  }
+
+  .heading-3 {
+    margin-top: var.$space-sm;
   }
 }
 
