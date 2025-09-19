@@ -69,10 +69,10 @@ export default function AddEditGuideline({
   } = useForm<CreateEditGuidelineSchema>({
     resolver: zodResolver(createEditGuidelineSchema),
     defaultValues: {
-      guideName,
-      desc,
-      deficiences,
-      imageDesc,
+      guideName: guideName || "",
+      desc: desc || "",
+      deficiences: deficiences || [],
+      imageDesc: imageDesc || "",
     },
   });
 
@@ -84,6 +84,7 @@ export default function AddEditGuideline({
   const { handleApiErrors, handleUniqueMsg, errorMsgs, isAlert } = useErrors();
   const guidelineImage = watch("guideImage");
   const guidelineName = watch("guideName");
+  setValue("deficiences", [hearing, visual, motor, neural, tea]);
 
   useEffect(() => {
     if (isSecPage && handleSecPageTitle) {
@@ -133,10 +134,7 @@ export default function AddEditGuideline({
       formData.append("desc", data.desc);
       formData.append("image", data.guideImage ? data.guideImage[0] : null);
       formData.append("imageDesc", data.imageDesc!);
-      formData.append(
-        "deficiences",
-        JSON.stringify([hearing, visual, motor, neural, tea])
-      );
+      formData.append("deficiences", JSON.stringify(data.deficiences));
       formData.append(
         "code",
         isEditPage && guideline?.code ? guideline.code : code
@@ -297,7 +295,11 @@ export default function AddEditGuideline({
             {errors.imageDesc.message}
           </small>
         )}
-        <div className="add-guideline__deficiences-container">
+        <div
+          className="add-guideline__deficiences-container"
+          aria-invalid={errors.desc ? true : false}
+          aria-errormessage={errors.desc ? "invalid-guideline-desc" : undefined}
+        >
           <span>Selecione quais deficiências essa diretriz engloba:</span>
           <DeficiencesCheckbox
             onHearingChange={handleHearing}
@@ -312,6 +314,15 @@ export default function AddEditGuideline({
             visual={visual}
           />
         </div>
+        {errors.deficiences && (
+          <small
+            role="status"
+            className="form-error-msg"
+            id="invalid-guideline-desc"
+          >
+            {errors.deficiences.message}
+          </small>
+        )}
         <Errors msgs={errorMsgs} isAlert={isAlert} />
         <div className="cart__form__btn">
           <button type="submit" className="btn-default">
