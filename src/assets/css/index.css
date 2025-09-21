@@ -146,8 +146,7 @@ input[type=checkbox]:focus-visible {
 #app .content > main h1 {
   font-style: italic;
 }
-#app .content > main > div:first-of-type,
-#app .content > main > div:first-of-type > div:first-of-type {
+#app .content > main > div:first-of-type {
   flex: 1;
   padding: 0 0.7rem 1.1rem;
 }
