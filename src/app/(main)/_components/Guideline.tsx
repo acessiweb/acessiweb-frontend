@@ -36,7 +36,9 @@ export default function Guideline({
         ))}
       </div>
       <p>{guideline.description}</p>
-      <h3 className="heading-3">Exemplo de implementação: </h3>
+      {(guideline.code || guideline.image) && (
+        <h3 className="heading-3">Exemplo de implementação: </h3>
+      )}
       <div className="read-guideline__graphic">
         {guideline.code && (
           <Code
