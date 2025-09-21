@@ -1611,6 +1611,10 @@ button {
   grid-column: span 2;
 }
 
+.read-guideline {
+  width: 100%;
+}
+
 .read-guideline__img-wrapper {
   height: auto;
   max-width: 100%;
@@ -1688,6 +1692,7 @@ button {
   column-gap: 1.1rem;
   padding-bottom: 3rem;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .read-guideline__graphic .code {
@@ -1697,6 +1702,7 @@ button {
 .read-guideline__graphic .code,
 .read-guideline__graphic .read-guideline__img-wrapper {
   width: auto;
+  max-width: 100%;
 }
 
 .read-guideline .heading-3 {
