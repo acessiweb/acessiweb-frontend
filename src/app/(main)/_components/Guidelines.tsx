@@ -527,6 +527,7 @@ function useGuidelinesSecPage({
             isEditPage={true}
             isRequest={isRequest}
             guideline={res.data}
+            handleSecPageTitle={handleTitle}
           />
         )
       );

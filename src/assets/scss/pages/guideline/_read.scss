@@ -13,7 +13,7 @@
   }
 
   &__deficiences {
-    margin: var.$space-md var.$space-xs;
+    margin: var.$space-xs var.$space-md var.$space-xs var.$space-xs;
     display: flex;
     column-gap: var.$space-lg;
 
@@ -79,14 +79,24 @@
     padding-bottom: var.$space-xl;
     flex-wrap: wrap;
 
+    .code {
+      flex: 1;
+    }
+
     .code,
     .read-guideline__img-wrapper {
-      width: 50%;
+      width: auto;
     }
   }
 
   .heading-3 {
     margin-top: var.$space-sm;
+  }
+}
+
+.sec-page .read-guideline {
+  &__deficiences {
+    margin: var.$space-xs var.$space-md var.$space-md var.$space-xs;
   }
 }
 

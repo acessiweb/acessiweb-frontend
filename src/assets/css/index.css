@@ -358,6 +358,7 @@ input[type=checkbox]:focus-visible {
 
 .file-input span {
   flex: 1;
+  word-break: break-all;
 }
 
 .input-text-voice {
@@ -1447,6 +1448,11 @@ button {
   column-gap: 0.7rem;
 }
 
+.sec-page .add-guideline h1 {
+  margin-top: 0;
+  margin-bottom: 1.1rem;
+}
+
 .modal:has(.guidelines) {
   top: 50%;
   left: 50%;
@@ -1617,7 +1623,7 @@ button {
 }
 
 .read-guideline__deficiences {
-  margin: 1.1rem 0.3rem;
+  margin: 0.3rem 1.1rem 0.3rem 0.3rem;
   display: flex;
   column-gap: 1.9rem;
 }
@@ -1684,13 +1690,21 @@ button {
   flex-wrap: wrap;
 }
 
+.read-guideline__graphic .code {
+  flex: 1;
+}
+
 .read-guideline__graphic .code,
 .read-guideline__graphic .read-guideline__img-wrapper {
-  width: 50%;
+  width: auto;
 }
 
 .read-guideline .heading-3 {
   margin-top: 0.7rem;
+}
+
+.sec-page .read-guideline__deficiences {
+  margin: 0.3rem 1.1rem 1.1rem 0.3rem;
 }
 
 .dark .read-guideline__deficiences__checkbox {

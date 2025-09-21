@@ -87,12 +87,8 @@ export default function AddEditGuideline({
   setValue("deficiences", [hearing, visual, motor, neural, tea]);
 
   useEffect(() => {
-    if (isSecPage && handleSecPageTitle) {
-      handleSecPageTitle(
-        `${isEditPage ? "Editar" : "Cadastrar"} ${guidelineName || "diretriz"}`
-      );
-    }
-  }, [handleSecPageTitle, isEditPage, guidelineName, isSecPage]);
+    handleSecPageTitle?.(guidelineName);
+  }, [guidelineName]);
 
   useEffect(() => {
     if (guidelineImage instanceof FileList && guidelineImage.length !== 0) {
@@ -135,10 +131,7 @@ export default function AddEditGuideline({
       formData.append("image", data.guideImage ? data.guideImage[0] : null);
       formData.append("imageDesc", data.imageDesc!);
       formData.append("deficiences", JSON.stringify(data.deficiences));
-      formData.append(
-        "code",
-        isEditPage && guideline?.code ? guideline.code : code
-      );
+      formData.append("code", code);
 
       if (sessionData && sessionData.user && sessionData.user.id) {
         const res =
