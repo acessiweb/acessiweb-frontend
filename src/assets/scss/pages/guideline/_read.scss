@@ -15,19 +15,19 @@
   }
 
   &__deficiences {
-    margin: var.$space-xs var.$space-md var.$space-xs var.$space-xs;
+    margin: var.$space-xs var.$space-md var.$space-lg var.$space-xs;
     display: flex;
     column-gap: var.$space-lg;
 
     > div {
       display: flex;
-      column-gap: var.$space-md;
+      column-gap: var.$space-sm;
       align-items: center;
     }
 
     &__checkbox {
-      width: 12px;
-      height: 12px;
+      width: 9px;
+      height: 9px;
       transform: scale(2);
       outline: none;
       border: 0.1ex solid rgba(0, 0, 0, 0.8);
