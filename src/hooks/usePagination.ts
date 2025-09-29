@@ -56,7 +56,15 @@ export default function usePagination<T>({ data = [] }: PaginationProps<T>) {
       const prevStored = [...stored];
 
       if (newData.data && newData.limit) {
-        prevStored.splice(store.length - newData.limit, store.length - 1);
+        const isDivisible = store.length % newData.limit === 0;
+        let initialValue = store.length - newData.limit;
+
+        if (!isDivisible) {
+          const fit = Math.floor(store.length / newData.limit);
+          initialValue = fit * newData.limit;
+        }
+
+        prevStored.splice(initialValue, store.length - 1);
       }
 
       return prevStored;
