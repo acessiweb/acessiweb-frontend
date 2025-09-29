@@ -136,6 +136,7 @@ export default function Guidelines({
       endDate,
       isFilterApplied("deleted"),
     ],
+    refetchOnWindowFocus: false,
     queryFn: async () => {
       const res = isRequest
         ? await getGuidelinesRequests({
