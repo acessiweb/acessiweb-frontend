@@ -1241,7 +1241,9 @@ button {
 }
 
 .pagination {
-  margin: 1.9rem auto;
+  display: flex;
+  column-gap: 1.1rem;
+  margin: 3rem auto;
 }
 
 .code {

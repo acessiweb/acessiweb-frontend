@@ -3,7 +3,6 @@
 import { usePush } from "@/context/push";
 import { ApiError, FetchUpdateResult, PaginationResponse } from "@/types/fetch";
 import { useState } from "react";
-import { NumberParam, useQueryParam, withDefault } from "use-query-params";
 
 type PaginationProps<T> = Partial<PaginationResponse> & {
   data?: T[];
@@ -22,10 +21,7 @@ export default function usePagination<T>({ data = [] }: PaginationProps<T>) {
   const [isFiltering, setIsFiltering] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
   const [loadLess, setLoadLess] = useState(false);
-  const [offset, setOffset] = useQueryParam(
-    "offset",
-    withDefault(NumberParam, 0)
-  );
+  const [offset, setOffset] = useState(0);
   const [store, setStore] = useState(data);
   const { setPushMsg, setShowPush } = usePush();
 
@@ -60,7 +56,7 @@ export default function usePagination<T>({ data = [] }: PaginationProps<T>) {
       const prevStored = [...stored];
 
       if (newData.data && newData.limit) {
-        prevStored.splice(store.length - (store.length - newData.limit));
+        prevStored.splice(store.length - newData.limit, store.length - 1);
       }
 
       return prevStored;

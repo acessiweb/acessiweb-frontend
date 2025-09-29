@@ -1,5 +1,7 @@
 @use "../var";
 
 .pagination {
-  margin: var.$space-lg auto;
+  display: flex;
+  column-gap: var.$space-md;
+  margin: var.$space-xl auto;
 }
