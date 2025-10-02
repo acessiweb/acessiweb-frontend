@@ -79,6 +79,7 @@ export default function Projects() {
 
   const { status } = useQuery({
     queryKey: ["projects", search, offset, session, initialDate, endDate],
+    refetchOnWindowFocus: false,
     queryFn: async () => {
       const res = await getProjects({
         userId: session?.user.id,
